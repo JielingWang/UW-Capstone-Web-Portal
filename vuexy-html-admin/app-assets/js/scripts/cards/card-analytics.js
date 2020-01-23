@@ -301,7 +301,7 @@ $(window).on("load", function(){
           dashArray: 8
       },
       series: [83],
-      labels: ['Completed Tickets'],
+      labels: ['Completed Orders'],
     }
 
    var supportChart = new ApexCharts(

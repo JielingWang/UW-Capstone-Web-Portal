@@ -16,13 +16,14 @@
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+	<link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/apexcharts.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
 	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/dark-layout.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/semi-dark-layout.css"> 
 	    
@@ -31,6 +32,7 @@
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
+	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/card-analytics.css">
 
     <!-- END: Page CSS-->
 
@@ -80,7 +82,7 @@
                                         <div class="media d-flex align-items-start">
                                             <div class="media-left"><i class="feather icon-plus-square font-medium-5 primary"></i></div>
                                             <div class="media-body">
-                                                <h6 class="primary media-heading">You have new order!</h6><small class="notification-text"> Are your going to meet me tonight?</small>
+                                                <h6 class="primary media-heading">You have new order!</h6><small class="notification-text"> Amazon Web Services - Standard Order</small>
                                             </div><small>
                                                 <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">9 hours ago</time></small>
                                         </div>
@@ -88,7 +90,7 @@
                                         <div class="media d-flex align-items-start">
                                             <div class="media-left"><i class="feather icon-download-cloud font-medium-5 success"></i></div>
                                             <div class="media-body">
-                                                <h6 class="success media-heading red darken-1">99% Server load</h6><small class="notification-text">You got new order of goods.</small>
+                                                <h6 class="success media-heading red darken-1">Reimbursement accepted!</h6><small class="notification-text">Your reimbursement request has been accepted by the department</small>
                                             </div><small>
                                                 <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">5 hour ago</time></small>
                                         </div>
@@ -96,7 +98,7 @@
                                         <div class="media d-flex align-items-start">
                                             <div class="media-left"><i class="feather icon-alert-triangle font-medium-5 danger"></i></div>
                                             <div class="media-body">
-                                                <h6 class="danger media-heading yellow darken-3">Warning notifixation</h6><small class="notification-text">Server have 99% CPU usage.</small>
+                                                <h6 class="danger media-heading yellow darken-3">Budget Report due today</h6><small class="notification-text">CEE budget report due today at 2pm</small>
                                             </div><small>
                                                 <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Today</time></small>
                                         </div>
@@ -104,7 +106,7 @@
                                         <div class="media d-flex align-items-start">
                                             <div class="media-left"><i class="feather icon-check-circle font-medium-5 info"></i></div>
                                             <div class="media-body">
-                                                <h6 class="info media-heading">Complete the task</h6><small class="notification-text">Cake sesame snaps cupcake</small>
+                                                <h6 class="info media-heading">Task completed</h6><small class="notification-text">2019 budget report exported to you local storage</small>
                                             </div><small>
                                                 <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Last week</time></small>
                                         </div>
@@ -112,7 +114,7 @@
                                         <div class="media d-flex align-items-start">
                                             <div class="media-left"><i class="feather icon-file font-medium-5 warning"></i></div>
                                             <div class="media-body">
-                                                <h6 class="warning media-heading">Generate monthly report</h6><small class="notification-text">Chocolate cake oat cake tiramisu marzipan</small>
+                                                <h6 class="warning media-heading">Monthly report generated</h6><small class="notification-text">Your monthly report has been successfuly generated</small>
                                             </div><small>
                                                 <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Last month</time></small>
                                         </div>
@@ -121,9 +123,9 @@
                             </ul>
                         </li>
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">John Doe</span><span class="user-status">Available</span></div><span><img class="round" src="../../../app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40"></span>
+                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">Ted Hanson</span><span class="user-status">CEE Administrator</span></div><span><img class="round" src="../../../app-assets/images/portrait/small/avatar-s-9.jpg" alt="avatar" height="40" width="40"></span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a><a class="dropdown-item" href="app-chat.html"><i class="feather icon-message-square"></i> Chats</a>
+                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a>
                                 <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i class="feather icon-power"></i> Logout</a>
                             </div>
                         </li>
@@ -206,9 +208,346 @@
                 <!-- Dashboard Ecommerce Starts -->
                 <section id="dashboard-ecommerce">
 				
-				
+                                <div class="card text-white bg-gradient-primary text-center">
+                                    <div class="card-content">
+                                        <div class="card-body">
+                                            <img src="../../../app-assets/images/elements/UW.png" alt="element 05" width="120" class="mb-1 img-fluid">
+                                            <h1 class="text-white " style="font-size:50px;"><b>Good Morning Ted !</b></h1>
+                                            <p class="card-text text-white"><i class="feather icon-map-pin"></i> Civil & Environmental Engineering</p>
+                                        </div>
+                                    </div>
+                                </div>
+								
+								
+					<div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="mb-0">My Team</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="table-responsive mt-1">
+                                        <table class="table table-hover-animation mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>UW ID</th>
+                                                    <th>Name</th>
+													<th>Profile</th>
+                                                    <th>Department</th>
+                                                    <th>Position</th>
+													<th>Advisor</th>
+													<th>Last Order Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1969737</td>
+                                                    <td>John Doe</td>
+                                                    <td class="p-1">
+                                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
+                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Vinnie Mostowy" class="avatar pull-up">
+                                                                <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-5.jpg" alt="Avatar" height="30" width="30">
+                                                            </li>
 
+                                                        </ul>
+                                                    </td>
+                                                    <td>CEE</td>
+                                                    <td>Research Assistant</td>
+													<td>Radha Poovendran</td>
+													<td><i class="fa fa-circle font-small-3 text-success mr-50"></i>Accepted</td>
+                                                </tr>
+												
+												<tr>
+                                                    <td>1964537</td>
+                                                    <td>Paul Brennan</td>
+                                                    <td class="p-1">
+                                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
+                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Alberto Glotzbach" class="avatar pull-up">
+                                                                <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-3.jpg" alt="Avatar" height="30" width="30">
+                                                            </li>
 
+                                                        </ul>
+                                                    </td>
+                                                    <td>EE</td>
+                                                    <td>Teaching Assistant</td>
+													<td>Linda Bushnell</td>
+													<td><i class="fa fa-circle font-small-3 text-warning mr-50"></i>Pending</td>
+                                                </tr>
+												
+												<tr>
+                                                    <td>1346635</td>
+                                                    <td>Kenndy Brown</td>
+                                                    <td class="p-1">
+                                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
+                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Julee Rossignol" class="avatar pull-up">
+                                                                <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-10.jpg" alt="Avatar" height="30" width="30">
+                                                            </li>
+
+                                                        </ul>
+                                                    </td>
+                                                    <td>ECE</td>
+                                                    <td>Research Assistant</td>
+													<td>Brenda Larson</td>
+													<td><i class="fa fa-circle font-small-3 text-danger mr-50"></i>Rejected</td>
+                                                </tr>
+												
+												<tr>
+                                                    <td>1568075</td>
+                                                    <td>Ash Mahain</td>
+                                                    <td class="p-1">
+                                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
+                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Jeffrey Gerondale" class="avatar pull-up">
+                                                                <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-9.jpg" alt="Avatar" height="30" width="30">
+                                                            </li>
+
+                                                        </ul>
+                                                    </td>
+                                                    <td>CEE</td>
+                                                    <td>Teaching Assistant</td>
+													<td>Brenda Larson</td>
+													<td><i class="fa fa-circle font-small-3 text-warning mr-50"></i>Pending</td>
+                                                </tr>												
+                                                
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+								
+						
+					<div class="row">
+
+                        <div class="col-md-6 col-12">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center border-bottom pb-1">
+                                    <div>
+                                        <p class="mb-75"><strong>2 task completed </strong>out of 10</p>
+                                        <div class="progress progress-bar-primary">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="20" aria-valuemax="100" style="width:20%"></div>
+                                        </div>
+                                    </div>
+                                    <p>23 Jan 2020</p>
+                                </div>
+                                <div class="card-content">
+                                    <div class="list-group analytics-list">
+                                        <div class="list-group-item d-lg-flex justify-content-between align-items-start py-1">
+                                            <div class="float-left">
+                                                <p class="text-bold-600 font-medium-2 mb-0 mt-25">Submit budget report</p>
+                                                <small>31 Jan 2020 - 2 hrs</small>
+                                            </div>
+                                            <div class="float-right">
+                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary mr-50">
+                                                    <i class="feather icon-check"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary mr-50">
+                                                    <i class="feather icon-edit-2"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary">
+                                                    <i class="feather icon-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="list-group-item d-lg-flex justify-content-between align-items-start py-1">
+                                            <div class="float-left">
+                                                <p class="text-bold-600 font-medium-2 mb-0 mt-25">Create a purchase order</p>
+                                                <small>16 Feb 2020 - 2 hrs</small>
+                                            </div>
+                                            <div class="float-right">
+                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary mr-50">
+                                                    <i class="feather icon-check"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary mr-50">
+                                                    <i class="feather icon-edit-2"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary">
+                                                    <i class="feather icon-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="list-group-item d-lg-flex justify-content-between align-items-start py-1">
+                                            <div class="float-left">
+                                                <p class="text-bold-600 font-medium-2 mb-0 mt-25">Prepare presentation</p>
+                                                <small>18 Feb 2019 - 2 hrs</small>
+                                            </div>
+                                            <div class="float-right">
+                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary mr-50">
+                                                    <i class="feather icon-check"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary mr-50">
+                                                    <i class="feather icon-edit-2"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary">
+                                                    <i class="feather icon-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="list-group-item d-lg-flex justify-content-between align-items-start py-1">
+                                            <div class="float-left">
+                                                <p class="text-bold-600 font-medium-2 mb-0 mt-25">Prepare Monthly Department Spendings Report</p>
+                                                <small>20 Feb 2019 - 2 hrs</small>
+                                            </div>
+                                            <div class="float-right">
+                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary mr-50">
+                                                    <i class="feather icon-check"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary mr-50">
+                                                    <i class="feather icon-edit-2"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary">
+                                                    <i class="feather icon-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						
+						<div class="col-md-6 col-12">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between pb-0">
+                                    <h4 class="card-title">Order Tracker</h4>
+                                    <div class="dropdown chart-dropdown">
+                                        <button class="btn btn-sm border-0 dropdown-toggle p-50" type="button" id="dropdownItem4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Last 7 Days
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownItem4">
+                                            <a class="dropdown-item" href="#">Last 28 Days</a>
+                                            <a class="dropdown-item" href="#">Last Month</a>
+                                            <a class="dropdown-item" href="#">Last Year</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body pt-0">
+                                        <div class="row">
+                                            <div class="col-sm-2 col-12 d-flex flex-column flex-wrap text-center">
+                                                <h1 class="font-large-2 text-bold-700 mt-2 mb-0">163</h1>
+                                                <small>Orders</small>
+                                            </div>
+                                            <div class="col-sm-10 col-12 d-flex justify-content-center">
+                                                <div id="support-tracker-chart"></div>
+                                            </div>
+                                        </div>
+                                        <div class="chart-info d-flex justify-content-between">
+                                            <div class="text-center">
+                                                <p class="mb-50">New Orders</p>
+                                                <span class="font-large-1">29</span>
+                                            </div>
+                                            <div class="text-center">
+                                                <p class="mb-50">Open Orders</p>
+                                                <span class="font-large-1">63</span>
+                                            </div>
+                                            <div class="text-center">
+                                                <p class="mb-50">Response Time</p>
+                                                <span class="font-large-1">5d</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+						
+								
+					<div class="row">
+                        <div class="col-12">
+                            <div class="card collapse-icon accordion-icon-rotate">
+							    <div class="card-header">
+                                    <h4 class="mb-0">Fiscal</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="accordion" id="accordionExample" data-toggle-hover="true">
+                                        <div class="collapse-margin">
+                                            <div class="card-header" id="headingOne" data-toggle="collapse" role="button" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                <span class="lead collapse-title collapsed">
+                                                    Purchase Request #1265092
+                                                </span>
+                                            </div>
+
+                                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                <div class="card-body">
+                                                    Stranded. Yes, she was now the first person ever to land on Venus, but that was of little consequence. Her name would be read by millions in school as the first to land here, but that celebrity would never actually be seen by her. She looked at the control panel and knew there was nothing that would ever get it back into working order. She was the first and it was not clear this would also be her last.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="collapse-margin">
+                                            <div class="card-header" id="headingTwo" data-toggle="collapse" role="button" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                <span class="lead collapse-title collapsed">
+                                                    Reimbursement request #011507035
+                                                </span>
+                                            </div>
+                                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                                <div class="card-body">
+                                                    Don't be scared. The things out there that are unknown aren't scary in themselves. They are just unknown at the moment. Take the time to know them before you list them as scary. Then the world will be a much less scary place for you.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="collapse-margin">
+                                            <div class="card-header" id="headingThree" data-toggle="collapse" role="button" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                <span class="lead collapse-title">
+                                                    CEE Budget Report
+                                                </span>
+                                            </div>
+                                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                                <div class="card-body">
+                                                    The boy walked down the street in a carefree way, playing without notice of what was about him. He didn't hear the sound of the car as his ball careened into the road. He took a step toward it, and in doing so sealed his fate.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="collapse-margin">
+                                            <div class="card-header" id="headingFour" data-toggle="collapse" role="button" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                                                <span class="lead collapse-title">
+                                                  Standard Order #08892392  
+                                                </span>
+                                            </div>
+                                            <div id="collapseFour" class="collapse " aria-labelledby="headingFour" data-parent="#accordionExample">
+                                                <div class="card-body">
+                                                    He heard the crack echo in the late afternoon about a mile away. His heart started racing and he bolted into a full sprint. "It wasn't a gunshot, it wasn't a gunshot," he repeated under his breathlessness as he continued to sprint.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					
+					<div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-end">
+                                    <h4 class="card-title">Department Purchase History</h4>
+                                    <p class="font-medium-5 mb-0"><i class="feather icon-settings text-muted cursor-pointer"></i></p>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body pb-0">
+                                        <div class="d-flex justify-content-start">
+                                            <div class="mr-2">
+                                                <p class="mb-50 text-bold-600">This Month</p>
+                                                <h2 class="text-bold-400">
+                                                    <sup class="font-medium-1">$</sup>
+                                                    <span class="text-success">86,589</span>
+                                                </h2>
+                                            </div>
+                                            <div>
+                                                <p class="mb-50 text-bold-600">Last Month</p>
+                                                <h2 class="text-bold-400">
+                                                    <sup class="font-medium-1">$</sup>
+                                                    <span>73,683</span>
+                                                </h2>
+                                            </div>
+
+                                        </div>
+                                        <div id="revenue-chart"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>					
+					</div>
                 </section>
                 <!-- Dashboard Ecommerce ends -->
 
@@ -229,6 +568,7 @@
 
     <!-- BEGIN: Vendor JS-->
     <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+	<script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
     <!-- BEGIN Vendor JS-->
 
 
@@ -240,6 +580,7 @@
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
+	<script src="../../../app-assets/js/scripts/cards/card-analytics.js"></script>
     <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
     <!-- END: Page JS-->
 
