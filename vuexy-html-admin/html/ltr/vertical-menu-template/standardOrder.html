@@ -16,6 +16,9 @@
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/pickers/pickadate/pickadate.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -24,9 +27,9 @@
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
 	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/dark-layout.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/semi-dark-layout.css"> 
-	    
-	
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/semi-dark-layout.css">
+
+
 
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
@@ -53,10 +56,10 @@
                     <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
                       <ul class="nav navbar-nav">
                             <li class="nav-item mobile-menu d-xl-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ficon feather icon-menu"></i></a></li>
-                        </ul>  
+                        </ul>
 
                     </div>
-					
+
                     <ul class="nav navbar-nav float-right">
 
                         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
@@ -127,7 +130,7 @@
                                 <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i class="feather icon-power"></i> Logout</a>
                             </div>
                         </li>
-                    </ul> 
+                    </ul>
                 </div>
             </div>
         </div>
@@ -152,7 +155,7 @@
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 			<li><a href="dashboard.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
-				
+
 				<li class=" navigation-header"><span>Orders &amp Products </span></li>
 				<li class=" nav-item"><a href="#"><i class="feather icon-file-plus"></i><span class="menu-title" data-i18n="User">Create Order</span></a>
                     <ul class="menu-content" style="margin-left:10px;">
@@ -171,21 +174,21 @@
                 <li class=" nav-item"><a href=""><i class="feather icon-shopping-cart"></i><span class="menu-title" data-i18n="Products">Products</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">Pending Orders</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-search"></i><span class="menu-title" data-i18n="SearchOrders">Search Orders</span></a></li>
-				
+
 				<li class=" navigation-header"><span>User</span></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-bell"></i><span class="menu-title" data-i18n="Notifications">Notifications</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-power"></i><span class="menu-title" data-i18n="Logout">Logout</span></a></li>
-				
-				
+
+
 				<li class=" navigation-header"><span>Help</span></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-file-text"></i><span class="menu-title" data-i18n="Manual">Davinci Manual</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-mail"></i><span class="menu-title" data-i18n="MailingList">Mailing List</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-book"></i><span class="menu-title" data-i18n="ReimbursmentInstructions">Reimbursment Instructions</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-credit-card"></i><span class="menu-title" data-i18n="PurchasingQuestions">Purchasing Questions</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-tv"></i><span class="menu-title" data-i18n="TechnicalQuestions">Technical Questions</span></a></li>
-				
-				
+
+
 
 
 
@@ -205,19 +208,19 @@
             <div class="content-body">
                 <!-- Dashboard Ecommerce Starts -->
                 <section id="dashboard-ecommerce">
-					
+
 
 
                 </section>
                 <!-- Dashboard Ecommerce ends -->
-				
-				 <!-- // Basic multiple Column Form section start -->
+
+				 <!-- // Contact Details -->
                 <section id="multiple-column-form">
                     <div class="row match-height">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Multiple Column</h4>
+                                    <h4 class="card-title">Contact Details</h4>
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
@@ -225,58 +228,50 @@
                                             <div class="form-body">
                                                 <div class="row">
                                                     <div class="col-md-6 col-12">
-                                                        <div class="form-label-group">
-                                                            <input type="text" id="first-name-column" class="form-control" placeholder="First Name" name="fname-column">
-                                                            <label for="first-name-column">First Name</label>
+                                                        <div class="form-group">
+                                                          <label for="first-name-icon">First Name</label>
+                                                          <div class="position-relative has-icon-left">
+                                                          <input type="text" id="first-name-icon" class="form-control" name="fname-icon" placeholder="First Name">
+                                                          <div class="form-control-position">
+                                                              <i class="feather icon-user"></i>
+                                                          </div>
+                                                        </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-12">
-                                                        <div class="form-label-group">
-                                                            <input type="text" id="last-name-column" class="form-control" placeholder="Last Name" name="lname-column">
-                                                            <label for="last-name-column">Last Name</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 col-12">
-                                                        <div class="form-label-group">
-                                                            <input type="text" id="city-column" class="form-control" placeholder="City" name="city-column">
-                                                            <label for="city-column">City</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 col-12">
-                                                        <div class="form-label-group">
-                                                            <input type="text" id="country-floating" class="form-control" name="country-floating" placeholder="Country">
-                                                            <label for="country-floating">Country</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 col-12">
-                                                        <div class="form-label-group">
-                                                            <input type="text" id="company-column" class="form-control" name="company-column" placeholder="Company">
-                                                            <label for="company-column">Company</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 col-12">
-                                                        <div class="form-label-group">
-                                                            <input type="email" id="email-id-column" class="form-control" name="email-id-column" placeholder="Email">
-                                                            <label for="email-id-column">Email</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group col-12">
-                                                        <fieldset class="checkbox">
-                                                            <div class="vs-checkbox-con vs-checkbox-primary">
-                                                                <input type="checkbox">
-                                                                <span class="vs-checkbox">
-                                                                    <span class="vs-checkbox--check">
-                                                                        <i class="vs-icon feather icon-check"></i>
-                                                                    </span>
-                                                                </span>
-                                                                <span class="">Remember me</span>
+                                                        <div class="form-group">
+                                                            <label for="last-name-icon">Last Name</label>
+                                                            <div class="position-relative has-icon-left">
+                                                            <input type="text" id="last-name-icon" class="form-control" name="lname-icon" placeholder="Last Name">
+                                                            <div class="form-control-position">
+                                                                <i class="feather icon-users"></i>
                                                             </div>
-                                                        </fieldset>
+                                                          </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-12">
-                                                        <button type="submit" class="btn btn-primary mr-1 mb-1">Submit</button>
-                                                        <button type="reset" class="btn btn-outline-warning mr-1 mb-1">Reset</button>
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                          <label for="email-id-icon">Email</label>
+                                                          <div class="position-relative has-icon-left">
+                                                              <input type="email" id="email-id-icon" class="form-control" name="email-id-icon" placeholder="Email">
+                                                              <div class="form-control-position">
+                                                                  <i class="feather icon-mail"></i>
+                                                              </div>
+                                                          </div>
+                                                        </div>
                                                     </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                          <label for="contact-info-icon">Phone</label>
+                                                          <div class="position-relative has-icon-left">
+                                                              <input type="number" id="contact-info-icon" class="form-control" name="contact-icon" placeholder="Phone">
+                                                              <div class="form-control-position">
+                                                                  <i class="feather icon-phone"></i>
+                                                              </div>
+                                                          </div>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </form>
@@ -286,8 +281,101 @@
                         </div>
                     </div>
                 </section>
-                <!-- // Basic Floating Label Form section end -->
-				
+                <!-- End of contact details-->
+                <!-- // Basic multiple Column Form section start -->
+                       <section id="multiple-column-form">
+                           <div class="row match-height">
+                               <div class="col-12">
+                                   <div class="card">
+                                       <div class="card-header">
+                                           <h4 class="card-title">Order Details</h4>
+                                       </div>
+                                       <div class="card-content">
+                                           <div class="card-body">
+                                               <form class="form">
+                                                   <div class="form-body">
+                                                       <div class="row">
+                                                           <div class="col-md-6 col-12">
+                                                               <div class="form-group">
+                                                                 <label for="first-name-icon">Attention</label>
+                                                                 <div class="position-relative has-icon-left">
+                                                                 <input type="text" id="first-name-icon" class="form-control" name="attention-icon" placeholder="Attention">
+                                                                 <div class="form-control-position">
+                                                                     <i class="feather icon-bell"></i>
+                                                                 </div>
+                                                               </div>
+                                                               </div>
+                                                           </div>
+                                                           <div class="col-md-6 col-12">
+                                                               <div class="form-group">
+                                                                   <label for="last-name-icon">Box Number</label>
+                                                                   <div class="position-relative has-icon-left">
+                                                                   <input type="text" id="last-name-icon" class="form-control" name="bnumber-icon" placeholder="Box Number">
+                                                                   <div class="form-control-position">
+                                                                       <i class="feather icon-box"></i>
+                                                                   </div>
+                                                                 </div>
+                                                               </div>
+                                                           </div>
+
+                                                           <div class="col-md-6 col-12">
+                                                               <div class="form-group">
+                                                                 <label for="email-id-icon">Date Desired</label>
+                                                                 <div class="position-relative has-icon-left">
+                                                                     <input type='text' class="form-control format-picker" placeholder="Date Desired"/>
+                                                                     <div class="form-control-position">
+                                                                         <i class="feather icon-calendar"></i>
+                                                                     </div>
+                                                                 </div>
+                                                               </div>
+                                                           </div>
+
+
+                                                           <div class="col-md-6 col-12">
+                                                               <div class="form-group">
+                                                                 <label for="email-id-icon">Shiping Instructions</label>
+                                                                 <div class="position-relative has-icon-left">
+                                                                   <select class="custom-select form-control" id="location1" name="location" placeholder="Shiping Instructions">
+                                                                       <option value="overnightAM">Overnight-AM</option>
+                                                                       <option value="overnightPM">Overnight-PM</option>
+                                                                       <option value="secondday">Second day</option>
+                                                                       <option value="3day">3 Day Service</option>
+                                                                       <option value="surface">Surface</option>
+                                                                       <option value="standard">Standard</option>
+                                                                   </select>
+                                                                     <div class="form-control-position">
+                                                                         <i class="feather icon-map"></i>
+                                                                     </div>
+                                                                 </div>
+                                                               </div>
+                                                           </div>
+
+
+                                                           <div class="col-md-6 col-12">
+                                                               <div class="form-group">
+                                                                 <label for="contact-info-icon">Shiping Address</label>
+                                                                 <div class="position-relative has-icon-left">
+                                                                     <textarea name="shortDescription" id="shortDescription1" rows="5" class="form-control" placeholder="Shiping Address"></textarea>
+                                                                     <div class="form-control-position">
+                                                                         <i class="feather icon-map-pin"></i>
+                                                                     </div>
+                                                                 </div>
+                                                               </div>
+                                                           </div>
+                                                           <div class="col-12">
+                                                               <button type="button" class="btn btn-primary mr-1 mb-1 pull-right" id="confirm-submission">Submit</button>
+                                                           </div>
+
+                                                       </div>
+                                                   </div>
+                                               </form>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </section>
+                       <!-- // Basic Floating Label Form section end -->
 
             </div>
         </div>
@@ -308,7 +396,25 @@
     <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
 
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.js"></script>
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
+    <!-- END: Page Vendor JS-->
 
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>
+    <!-- END: Page JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/polyfill.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/extensions/sweet-alerts.js"></script>
+    <!-- END: Page JS-->
 
     <!-- BEGIN: Theme JS-->
     <script src="../../../app-assets/js/core/app-menu.js"></script>
@@ -319,6 +425,7 @@
     <!-- BEGIN: Page JS-->
     <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
     <!-- END: Page JS-->
+
 
 </body>
 <!-- END: Body-->
