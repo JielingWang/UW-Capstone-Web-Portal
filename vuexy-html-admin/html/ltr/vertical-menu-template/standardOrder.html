@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/pickers/pickadate/pickadate.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/animate/animate.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/datatables.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -28,14 +29,19 @@
 	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/dark-layout.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/semi-dark-layout.css">
-
+    <!-- END: Theme CSS-->
 
 
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
-
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/forms/wizard.css">
     <!-- END: Page CSS-->
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/select/select2.min.css">
+    <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
@@ -156,7 +162,7 @@
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 			<li><a href="dashboard.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
 
-				<li class=" navigation-header"><span>Orders &amp Products </span></li>
+				<li class=" navigation-header"><span>Orders &amp; Products </span></li>
 				<li class=" nav-item"><a href="#"><i class="feather icon-file-plus"></i><span class="menu-title" data-i18n="User">Create Order</span></a>
                     <ul class="menu-content" style="margin-left:10px;">
                         <li class="active"><a href="standardOrder.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Standard Order</span></a>
@@ -214,66 +220,801 @@
                 </section>
                 <!-- Dashboard Ecommerce ends -->
 
-				 <!-- // Contact Details -->
-                <section id="multiple-column-form">
-                    <div class="row match-height">
+
+                <!-- Form wizard with icon tabs section start -->
+                <section id="icon-tabs">
+                    <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Contact Details</h4>
+                                    <h4 class="card-title">Reimbursement Form</h4>
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <form class="form">
-                                            <div class="form-body">
+                                        <form action="#" class="icons-tab-steps wizard-circle">
+
+                                            <!-- Step 1 -->
+                                            <h6><i class="step-icon feather icon-home"></i>Title</h6>
+                                            <fieldset>
                                                 <div class="row">
-                                                    <div class="col-md-6 col-12">
+                                                    <div class="col-sm-10">
                                                         <div class="form-group">
-                                                          <label for="first-name-icon">First Name</label>
-                                                          <div class="position-relative has-icon-left">
-                                                          <input type="text" id="first-name-icon" class="form-control" name="fname-icon" placeholder="First Name">
-                                                          <div class="form-control-position">
-                                                              <i class="feather icon-user"></i>
+                                                            <label for="title-icon">Title</label>
+                                                            <div class="position-relative has-icon-left">
+                                                            <input type="text" id="title-icon" class="form-control" name="fname-icon" placeholder="">
+                                                            <div class="form-control-position">
+                                                                <i class="feather icon-type"></i>
+                                                            </div>
                                                           </div>
+                                                          </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <label class="mr-2" >Is this an allowable Travel Expense? </label>
                                                         </div>
+                                                    </div> 
+                                                    
+                                                    <div class="col-sm-9">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <div class="c-inputs-stacked">
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false" id="travelExpense_YES_Box" onclick="travelableExpense_CheckBox_actions(1)">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class="">Yes</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false" id="travelExpense_NO_Box" onclick="travelableExpense_CheckBox_actions(0)">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class="">No</span>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <label class="mr-2" >UW Travel Policy <a href="https://finance.uw.edu/travel/" target="_blank">HERE</a></label>
+                                                        <div id="yesMessage" style="display: none;"> <label class="mr-2 danger" ><b>STOP: ** Travel Reimbursements must be submitted by creating an expense report, for further assistance please <a href="mailto:traveluw@uw.edu" >contact the Travel Office.</a></b></label> </div>
+                                                    </div>    
+                                                    
+                                                </div>
+                                           
+
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <label class="mr-2" >Is Payee a UW Employee</label>
+                                                        </div>
+                                                    </div> 
+                                                    
+                                                    <div class="col-sm-9">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <div class="c-inputs-stacked">
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false" id="uwEmployee_YES_Box" onclick="uwEmployee_CheckBox_actions(1)">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class="">Yes</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false" id="uwEmployee_NO_Box"  onclick="uwEmployee_CheckBox_actions(0)">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class="">No</span>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>    
+                                                    
+                                                </div>                                                
+
+                                                <div class="row" id="uwAffiliation" style="display: none;">
+                                                    <div class="col-sm-6">
+                                                        <label for="first-name-icon">UW Affiliation</label>
+                                                        <div class="form-group">
+                                                            <select class="custom-select form-control" id="uwAffiliation_dropdown" name="affiliation" onchange="uwAffiliation_dropdown_onChange()">
+                                                                <option value="Student">Student</option>
+                                                                <option value="Other">Other</option>
+                                                            </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6 col-12">
-                                                        <div class="form-group">
-                                                            <label for="last-name-icon">Last Name</label>
-                                                            <div class="position-relative has-icon-left">
-                                                            <input type="text" id="last-name-icon" class="form-control" name="lname-icon" placeholder="Last Name">
+                                                </div>
+
+                                                <div class="row" id="uwAffiliation_other" style="display: none; padding-bottom: 20px;">
+                                                    <div class="col-sm-6">
+                                                        <label for="first-name-icon">Other UW Affiliation</label>
+                                                        <div class="position-relative has-icon-left">
+                                                            <input type="text" id="other-icon" class="form-control" name="fname-icon" placeholder="">
                                                             <div class="form-control-position">
                                                                 <i class="feather icon-users"></i>
                                                             </div>
                                                           </div>
-                                                        </div>
                                                     </div>
-                                                    <div class="col-md-6 col-12">
-                                                        <div class="form-group">
-                                                          <label for="email-id-icon">Email</label>
-                                                          <div class="position-relative has-icon-left">
-                                                              <input type="email" id="email-id-icon" class="form-control" name="email-id-icon" placeholder="Email">
-                                                              <div class="form-control-position">
-                                                                  <i class="feather icon-mail"></i>
-                                                              </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <label for="first-name-icon">Payee Name</label>
+                                                        <div class="form-group" id="payeeName_withSearch" style="display: block;">
+                                                            <select class="select2 form-control">
+                                                                <option value="square">Square</option>
+                                                                <option value="rectangle">Rectangle</option>
+                                                                <option value="rombo">Rombo</option>
+                                                                <option value="romboid">Romboid</option>
+                                                                <option value="trapeze">Trapeze</option>
+                                                                <option value="traible">Triangle</option>
+                                                                <option value="polygon">Polygon</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-group" id="payeeName_withOutSearch" style="display: none;">
+                                                            <div class="position-relative has-icon-left">
+                                                            <input type="text" id="payee-icon" class="form-control" name="fname-icon" placeholder="">
+                                                            <div class="form-control-position">
+                                                                <i class="feather icon-user"></i>
+                                                            </div>
                                                           </div>
                                                         </div>
+
                                                     </div>
-                                                    <div class="col-md-6 col-12">
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <label class="mr-2" >Food or beverages</label>
+                                                        </div>
+                                                    </div> 
+                                                    
+                                                    <div class="col-sm-9">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <div class="c-inputs-stacked">
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false" id="foodAndBeverages_YES_Box" onclick="foodAndBeverages_CheckBox_actions(1)">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class="">Yes</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false" id="foodAndBeverages_NO_Box" onclick="foodAndBeverages_CheckBox_actions(0)">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class="">No</span>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>    
+                                                    
+                                                </div>
+
+                                                <div class="row hidden"  id="iWillAttach">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <label class="mr-2" ><i>I will attach a list of all attendees</i></label>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-sm-9">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <div class="c-inputs-stacked">
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false" id="iWillAttachBox">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>    
+                                                </div>
+
+                                                <div class="row hidden" id="foodApprovedBudget" >
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <label class="mr-2" ><i>Food approved budget</i></label>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-sm-9">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <div class="c-inputs-stacked">
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false" id="foodApprovedBudget_YES_box" onclick="foodApprovedBudget_CheckBox_actions(1)">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class=""><i>Yes</i></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-inline-block">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false" id="foodApprovedBudget_NO_box" onclick="foodApprovedBudget_CheckBox_actions(0)">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class=""><i>No</i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="hidden" id="foodApprovedBudget_popup"><label class="mr-2" ><a href="https://finance.uw.edu/food-approval" target="_blank"><b>**Form 1798 must be on file in department</b></a></label></div>
+                                                    </div>    
+                                                </div>
+                                                
+                                                <div class="row hidden" id="foodCompliance" >
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <label class="mr-2" ><i>Are you within Food per Diem compliance?</i></label>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-sm-9">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <div class="c-inputs-stacked">
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false" id="foodCompliance_YES_box" onclick="foodCompliance_CheckBox_actions(1)">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class=""><i>Yes</i></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-inline-block">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false" id="foodCompliance_NO_box" onclick="foodCompliance_CheckBox_actions(0)">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class=""><i>No</i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="hidden" id="foodCompliance_popup"><label class="mr-2" ><a href="https://finance.uw.edu/food-approval" target="_blank"><b>Food Approval Policy Here.</b></a></label></div>
+                                                    </div>    
+                                                </div>
+                                                
+                                                <div class="row hidden" id="approvedbyAdmin" >
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <label class="mr-2" ><i>Has this been approved by Department Administration?</i></label>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-sm-9">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <div class="c-inputs-stacked">
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false" id="approvedbyAdmin_YES_box" onclick="approvedbyAdmin_CheckBox_actions(1)">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class=""><i>Yes</i></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-inline-block">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false" id="approvedbyAdmin_NO_box" onclick="approvedbyAdmin_CheckBox_actions(0)">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class=""><i>No</i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="hidden" id="approvedbyAdmin_popup"><label class="mr-2 danger" ><b>STOP: You may not be eligible for full reimbursement. Please review with your Department Administrator to obtain the proper approval.</b></label></div>
+                                                    </div>    
+                                                </div> 
+                                                
+                                                <div class="row hidden"  id="iWillAttach_admin_approval">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <label class="mr-2" ><i>I will attach a copy of the Department Administration approval</i></label>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-sm-9">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <div class="c-inputs-stacked">
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false" id="iWillAttach_admin_approvalBox">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>    
+                                                </div>
+                                                
+                                                <div class="row hidden"  id="iUnderstand_amount">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <label class="mr-2" ><i>I understand that I will use a non-restricted funding source (budget) for those individual expenses over the per diem amount</i></label>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-sm-9">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <div class="c-inputs-stacked">
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false" id="iUnderstand_amountBox">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>    
+                                                </div>                                                    
+                                                
+                                                
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <label class="mr-2" >Preferred Payment Method</label>
+                                                        </div>
+                                                    </div> 
+                                                    
+                                                    <div class="col-sm-9">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <div class="c-inputs-stacked">
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class="">Direct Deposit</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class="">Check</span>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <label class="mr-2" >Further information can be found <a href="https://finance.uw.edu/ps/how-to-pay/reimbursements" target="_blank">HERE</a></label>
+                                                    </div>    
+                                                </div> 
+                                                
+                                                <div class="row">
+                                                    <div class="col-sm-5">
                                                         <div class="form-group">
-                                                          <label for="contact-info-icon">Phone</label>
-                                                          <div class="position-relative has-icon-left">
-                                                              <input type="number" id="contact-info-icon" class="form-control" name="contact-icon" placeholder="Phone">
-                                                              <div class="form-control-position">
-                                                                  <i class="feather icon-phone"></i>
-                                                              </div>
+                                                            <label for="case-icon">In Care Of</label>
+                                                            <div class="position-relative has-icon-left">
+                                                            <input type="text" id="case-icon" class="form-control" name="fname-icon" placeholder="">
+                                                            <div class="form-control-position">
+                                                                <i class="feather icon-inbox"></i>
+                                                            </div>
                                                           </div>
                                                         </div>
                                                     </div>
 
+                                                </div>                                                
+ 
+                                                <div class="row">
+                                                    <div class="col-sm-5">
+                                                        <div class="form-group">
+                                                            <label for="case-icon">UW Box Number</label>
+                                                            <div class="position-relative has-icon-left">
+                                                            <input type="text" id="case-icon" class="form-control" name="fname-icon" placeholder="">
+                                                            <div class="form-control-position">
+                                                                <i class="feather icon-hash"></i>
+                                                            </div>
+                                                          </div>
+                                                          </div>
+                                                    </div>
+
                                                 </div>
-                                            </div>
+                                                
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                          <label for="contact-info-icon">Remittance Notes</label>
+                                                          <div class="position-relative has-icon-left">
+                                                              <textarea name="shortDescription" id="reimbursementNotes" rows="5" class="form-control" placeholder=""></textarea>
+                                                              <div class="form-control-position">
+                                                                  <i class="feather icon-file-text"></i>
+                                                              </div>
+                                                          </div>
+                                                          <label class="mr-2" ><b>	*Receipts should be scanned and attached in Ariba for audit and retention purposes.</b></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-5">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <label class="mr-2" >Do you have the appropriate receipts for all of the expenses submitted?</label>
+                                                        </div>
+                                                    </div> 
+                                                    
+                                                    <div class="col-sm-7">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <div class="c-inputs-stacked">
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class="">Yes</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class="">No</span>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <label class="mr-2" >Note: Full reimbursement may not apply if receipt, department policy and funding source (budget) do not comply with the UW Receipt Policy.</label>
+                                                        <label class="mr-2" ><a href="https://finance.uw.edu/ps/resources/receiptpolicy" target="_blank"><b>Receipt Policy Information Here.</b></a></label>
+                                                    </div>    
+                                                </div>                                                
+
+
+                                            </fieldset>
+
+                                            <!-- Step 2 -->
+                                            <h6><i class="step-icon feather icon-briefcase"></i>Add Items</h6>
+                                            <fieldset>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="expense-icon">Expense Description</label>
+                                                            <div class="position-relative has-icon-left">
+                                                            <input type="text" id="expense-icon" class="form-control" name="fname-icon" placeholder="">
+                                                            <div class="form-control-position">
+                                                                <i class="feather icon-clipboard"></i>
+                                                            </div>
+                                                          </div>
+                                                          </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="business-icon">Business Purpose</label>
+                                                            <div class="position-relative has-icon-left">
+                                                            <input type="text" id="business-icon" class="form-control" name="fname-icon" placeholder="">
+                                                            <div class="form-control-position">
+                                                                <i class="feather icon-briefcase"></i>
+                                                            </div>
+                                                          </div>
+                                                          </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="amount-icon">Amount (USD)</label>
+                                                            <div class="position-relative has-icon-left">
+                                                            <input type="text" id="amount-icon" class="form-control" name="fname-icon" placeholder="">
+                                                            <div class="form-control-position">
+                                                                <i class="feather icon-credit-card"></i>
+                                                            </div>
+                                                          </div>
+                                                          </div>
+                                                    </div>
+                                                </div>  
+                                                
+                                               
+
+                                                <div class="row">
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <label class="mr-2" >Was Sales Tax Paid</label>
+                                                        </div>
+                                                    </div> 
+                                                    
+                                                    <div class="col-sm-10">
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <div class="c-inputs-stacked">
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class="">Yes</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class="">No</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-inline-block">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class="">Item Not Taxable</span>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>    
+                                                </div> 
+                                                
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <label for="first-name-icon">Budget Number</label>
+                                                        <div class="form-group">
+                                                            <select class="select2 form-control">
+                                                                <option value="square">Square</option>
+                                                                <option value="rectangle">Rectangle</option>
+                                                                <option value="rombo">Rombo</option>
+                                                                <option value="romboid">Romboid</option>
+                                                                <option value="trapeze">Trapeze</option>
+                                                                <option value="traible">Triangle</option>
+                                                                <option value="polygon">Polygon</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <label for="first-name-icon">Account Code</label>
+                                                        <div class="form-group">
+                                                            <select class="select2 form-control">
+                                                                <option value="square">Square</option>
+                                                                <option value="rectangle">Rectangle</option>
+                                                                <option value="rombo">Rombo</option>
+                                                                <option value="romboid">Romboid</option>
+                                                                <option value="trapeze">Trapeze</option>
+                                                                <option value="traible">Triangle</option>
+                                                                <option value="polygon">Polygon</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                
+                                               
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="subsub-icon">SubSubObject Code</label>
+                                                            <div class="position-relative has-icon-left">
+                                                            <input type="text" id="subsub-icon" class="form-control" name="fname-icon" placeholder="">
+                                                            <div class="form-control-position">
+                                                                <i class="feather icon-hash"></i>
+                                                            </div>
+                                                          </div>
+                                                          </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="task-icon">Task (optional)</label>
+                                                            <div class="position-relative has-icon-left">
+                                                            <input type="text" id="task-icon" class="form-control" name="fname-icon" placeholder="">
+                                                            <div class="form-control-position">
+                                                                <i class="feather icon-edit"></i>
+                                                            </div>
+                                                          </div>
+                                                          </div>
+                                                    </div>
+
+                                                </div> 
+                                                
+                                               
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="task-icon">Option (optional)</label>
+                                                            <div class="position-relative has-icon-left">
+                                                            <input type="text" id="task-icon" class="form-control" name="fname-icon" placeholder="">
+                                                            <div class="form-control-position">
+                                                                <i class="feather icon-list"></i>
+                                                            </div>
+                                                          </div>
+                                                          </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="project-icon">Project (optional)</label>
+                                                            <div class="position-relative has-icon-left">
+                                                            <input type="text" id="project-icon" class="form-control" name="fname-icon" placeholder="">
+                                                            <div class="form-control-position">
+                                                                <i class="feather icon-layers"></i>
+                                                            </div>
+                                                          </div>
+                                                          </div>
+                                                    </div>
+
+                                                </div>
+                                                
+                                                <div class="row" style="padding-top: 20px; padding-bottom: 20px;">
+                                                    <div class="col-sm-12 text-center">
+                                                        <button type="button" class="btn btn-outline-primary mr-1 mb-1 waves-effect waves-light">Add</button>
+                                                        <div><label for="task-icon"><b><i>*You must click Add to add items before clicking Next.</i></b></label></div>
+                                                        
+                                                    </div>
+
+                                                </div>   
+
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <table class="table zero-configuration">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Expense Description</th>
+                                                                    <th>Budget Number</th>
+                                                                    <th>Account</th>
+                                                                    <th>Amount</th>
+                                                                 </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                              
+                                                
+                                            </fieldset>
+
+                                            <!-- Step 3 -->
+                                            <h6><i class="step-icon feather icon-image"></i>Summary</h6>
+                                            <fieldset>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="eventName11">Event Name :</label>
+                                                            <input type="text" class="form-control" id="eventName11">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="eventType11">Event Status :</label>
+                                                            <select class="custom-select form-control" id="eventType11" data-placeholder="Type to search cities" name="eventType11">
+                                                                <option value="Banquet">Planning</option>
+                                                                <option value="Fund Raiser">In Process</option>
+                                                                <option value="Dinner Party">Finished</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="eventLocation11">Event Location :</label>
+                                                            <select class="custom-select form-control" id="eventLocation11" name="location">
+                                                                <option value="new-york">New York</option>
+                                                                <option value="chicago">Chicago</option>
+                                                                <option value="san-francisco">San Francisco</option>
+                                                                <option value="boston">Boston</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group d-flex align-items-center pt-md-2">
+                                                            <label class="mr-2">Requirements :</label>
+                                                            <div class="c-inputs-stacked">
+                                                                <div class="d-inline-block mr-2">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class="">Staffing</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-inline-block">
+                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                        <input type="checkbox" value="false">
+                                                                        <span class="vs-checkbox">
+                                                                            <span class="vs-checkbox--check">
+                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            </span>
+                                                                        </span>
+                                                                        <span class="">Catering</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
                                         </form>
                                     </div>
                                 </div>
@@ -281,101 +1022,8 @@
                         </div>
                     </div>
                 </section>
-                <!-- End of contact details-->
-                <!-- // Basic multiple Column Form section start -->
-                       <section id="multiple-column-form">
-                           <div class="row match-height">
-                               <div class="col-12">
-                                   <div class="card">
-                                       <div class="card-header">
-                                           <h4 class="card-title">Order Details</h4>
-                                       </div>
-                                       <div class="card-content">
-                                           <div class="card-body">
-                                               <form class="form">
-                                                   <div class="form-body">
-                                                       <div class="row">
-                                                           <div class="col-md-6 col-12">
-                                                               <div class="form-group">
-                                                                 <label for="first-name-icon">Attention</label>
-                                                                 <div class="position-relative has-icon-left">
-                                                                 <input type="text" id="first-name-icon" class="form-control" name="attention-icon" placeholder="Attention">
-                                                                 <div class="form-control-position">
-                                                                     <i class="feather icon-bell"></i>
-                                                                 </div>
-                                                               </div>
-                                                               </div>
-                                                           </div>
-                                                           <div class="col-md-6 col-12">
-                                                               <div class="form-group">
-                                                                   <label for="last-name-icon">Box Number</label>
-                                                                   <div class="position-relative has-icon-left">
-                                                                   <input type="text" id="last-name-icon" class="form-control" name="bnumber-icon" placeholder="Box Number">
-                                                                   <div class="form-control-position">
-                                                                       <i class="feather icon-box"></i>
-                                                                   </div>
-                                                                 </div>
-                                                               </div>
-                                                           </div>
-
-                                                           <div class="col-md-6 col-12">
-                                                               <div class="form-group">
-                                                                 <label for="email-id-icon">Date Desired</label>
-                                                                 <div class="position-relative has-icon-left">
-                                                                     <input type='text' class="form-control format-picker" placeholder="Date Desired"/>
-                                                                     <div class="form-control-position">
-                                                                         <i class="feather icon-calendar"></i>
-                                                                     </div>
-                                                                 </div>
-                                                               </div>
-                                                           </div>
-
-
-                                                           <div class="col-md-6 col-12">
-                                                               <div class="form-group">
-                                                                 <label for="email-id-icon">Shiping Instructions</label>
-                                                                 <div class="position-relative has-icon-left">
-                                                                   <select class="custom-select form-control" id="location1" name="location" placeholder="Shiping Instructions">
-                                                                       <option value="overnightAM">Overnight-AM</option>
-                                                                       <option value="overnightPM">Overnight-PM</option>
-                                                                       <option value="secondday">Second day</option>
-                                                                       <option value="3day">3 Day Service</option>
-                                                                       <option value="surface">Surface</option>
-                                                                       <option value="standard">Standard</option>
-                                                                   </select>
-                                                                     <div class="form-control-position">
-                                                                         <i class="feather icon-map"></i>
-                                                                     </div>
-                                                                 </div>
-                                                               </div>
-                                                           </div>
-
-
-                                                           <div class="col-md-6 col-12">
-                                                               <div class="form-group">
-                                                                 <label for="contact-info-icon">Shiping Address</label>
-                                                                 <div class="position-relative has-icon-left">
-                                                                     <textarea name="shortDescription" id="shortDescription1" rows="5" class="form-control" placeholder="Shiping Address"></textarea>
-                                                                     <div class="form-control-position">
-                                                                         <i class="feather icon-map-pin"></i>
-                                                                     </div>
-                                                                 </div>
-                                                               </div>
-                                                           </div>
-                                                           <div class="col-12">
-                                                               <button type="button" class="btn btn-primary mr-1 mb-1 pull-right" id="confirm-submission">Submit</button>
-                                                           </div>
-
-                                                       </div>
-                                                   </div>
-                                               </form>
-                                           </div>
-                                       </div>
-                                   </div>
-                               </div>
-                           </div>
-                       </section>
-                       <!-- // Basic Floating Label Form section end -->
+                <!-- Form wizard with icon tabs section end -->
+ 
 
             </div>
         </div>
@@ -424,6 +1072,43 @@
 
     <!-- BEGIN: Page JS-->
     <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <!-- END: Page JS-->
+
+
+     <!-- BEGIN: Page Vendor JS-->
+     <script src="../../../app-assets/vendors/js/extensions/jquery.steps.min.js"></script>
+     <script src="../../../app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
+     <!-- END: Page Vendor JS-->
+
+     <!-- BEGIN: Page JS-->
+     <script src="../../../app-assets/js/scripts/forms/wizard-steps.js"></script>
+     <!-- END: Page JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/forms/select/form-select2.js"></script>
+    <!-- END: Page JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/tables/datatable/pdfmake.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/vfs_fonts.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/buttons.html5.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/buttons.print.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/datatables/datatable.js"></script>
+    <!-- END: Page JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/webAppScripts/forms/reimbursementsform.js"></script>
     <!-- END: Page JS-->
 
 
