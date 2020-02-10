@@ -9,7 +9,7 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Dashboard</title>
+    <title>Approve</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
@@ -40,6 +40,10 @@
     <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
     <!-- END: Custom CSS-->
 
+    <!--pop up window-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 </head>
 <!-- END: Head-->
 
@@ -67,7 +71,44 @@
                                 <div class="search-input-icon"><i class="feather icon-search primary"></i></div>
                                 <input class="input" type="text" placeholder="Search..." tabindex="-1" data-search="template-list">
                                 <div class="search-input-close"><i class="feather icon-x"></i></div>
-                                <ul class="search-list search-list-main"></ul>
+                                <ul class="search-list search-list-main"> 
+                                    <!--search sample-->
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-content">
+                                                    <div class="table-responsive mt-1">
+                                                        <table class="table table-hover-animation mb-0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Order ID</th>
+                                                                    <th>Name</th>
+                                                                    <th>Department</th>
+                                                                    <th>Amount</th>
+                                                                    <th>Date</th>
+                                                                    <th>Last Order Status</th>
+                                                                    <th>Details</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>1969737</td>
+                                                                    <td>John Doe</td>
+                                                                    <td>CEE</td>
+                                                                    <td>53.83$</td>
+                                                                    <td>1-23-2020</td>
+                                                                    <td><i class="fa fa-circle font-small-3 text-success mr-50"></i>Accepted</td>
+                                                                    <td><a href="orderDetails.html">More...</a></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </ul>
                             </div>
                         </li>
 
@@ -145,7 +186,7 @@
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item mr-auto"><a class="navbar-brand" href="../../../html/ltr/vertical-menu-template/index.html">
                         <div class="brand-logo"></div>
-                        <h2 class="brand-text mb-0">Davinci</h2>
+                        <h2 class="brand-text mb-0">UW Capstone</h2>
                     </a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary" data-ticon="icon-disc"></i></a></li>
             </ul>
@@ -154,25 +195,6 @@
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 			<li class="active"><a href="dashboard.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
-				
-				<li class=" navigation-header"><span>Orders &amp Products </span></li>
-				<li class=" nav-item"><a href="#"><i class="feather icon-file-plus"></i><span class="menu-title" data-i18n="User">Create Order</span></a>
-                    <ul class="menu-content" style="margin-left:10px;">
-                        <li><a href="standardOrder.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Standard Order</span></a>
-                        </li>
-                        <li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="View">Radiation Order</span></a>
-                        </li>
-                        <li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Standing Order</span></a>
-                        </li>
-						<li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">UWMC Order</span></a>
-                        </li>
-						<li><a href="reimbursement.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Reimbursment</span></a>
-                        </li>
-                    </ul>
-                </li>
-                <li class=" nav-item"><a href=""><i class="feather icon-shopping-cart"></i><span class="menu-title" data-i18n="Products">Products</span></a></li>
-				<li class=" nav-item"><a href=""><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">Pending Orders</span></a></li>
-				<li class=" nav-item"><a href=""><i class="feather icon-search"></i><span class="menu-title" data-i18n="SearchOrders">Search Orders</span></a></li>
 				
 				<li class=" navigation-header"><span>User</span></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
@@ -223,20 +245,32 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="mb-0">My Team</h4>
+                                    <h4 class="mb-0">Orders</h4> 
+                                    
+                                    <p>    Sort by
+                                        <select  id="basicSelect">
+                                            <option></option>
+                                            <option>Name</option>
+                                            <option>Department</option>
+                                            <option>Date</option>
+                                        </select>
+                                    </p>
+                                    
+                                    
                                 </div>
                                 <div class="card-content">
                                     <div class="table-responsive mt-1">
                                         <table class="table table-hover-animation mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th>UW ID</th>
+                                                    <th>Order ID</th>
                                                     <th>Name</th>
 													<th>Profile</th>
                                                     <th>Department</th>
-                                                    <th>Position</th>
-													<th>Advisor</th>
-													<th>Last Order Status</th>
+                                                    <th>Amount</th>
+													<th>Date</th>
+                                                    <th>Last Order Status</th>
+                                                    <th>Details</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -252,9 +286,11 @@
                                                         </ul>
                                                     </td>
                                                     <td>CEE</td>
-                                                    <td>Research Assistant</td>
-													<td>Radha Poovendran</td>
-													<td><i class="fa fa-circle font-small-3 text-success mr-50"></i>Accepted</td>
+                                                    <td>53.83$</td>
+													<td>1-23-2020</td>
+                                                    <td><i class="fa fa-circle font-small-3 text-success mr-50"></i>Accepted</td>
+                                                    <td><a href="orderDetails.html">More...</a></td>
+                                                    
                                                 </tr>
 												
 												<tr>
@@ -269,9 +305,10 @@
                                                         </ul>
                                                     </td>
                                                     <td>EE</td>
-                                                    <td>Teaching Assistant</td>
-													<td>Linda Bushnell</td>
-													<td><i class="fa fa-circle font-small-3 text-warning mr-50"></i>Pending</td>
+                                                    <td>102.88$</td>
+													<td>1-23-2020</td>
+                                                    <td><i class="fa fa-circle font-small-3 text-warning mr-50"></i>Pending</td>
+                                                    <td><a href="orderDetails.html">More...</a></td>
                                                 </tr>
 												
 												<tr>
@@ -286,9 +323,10 @@
                                                         </ul>
                                                     </td>
                                                     <td>ECE</td>
-                                                    <td>Research Assistant</td>
-													<td>Brenda Larson</td>
-													<td><i class="fa fa-circle font-small-3 text-danger mr-50"></i>Rejected</td>
+                                                    <td>929.01$</td>
+													<td>1-30-2020</td>
+                                                    <td><i class="fa fa-circle font-small-3 text-danger mr-50"></i>Rejected</td>
+                                                    <td><a href="orderDetails.html">More...</a></td>
                                                 </tr>
 												
 												<tr>
@@ -303,9 +341,10 @@
                                                         </ul>
                                                     </td>
                                                     <td>CEE</td>
-                                                    <td>Teaching Assistant</td>
-													<td>Brenda Larson</td>
-													<td><i class="fa fa-circle font-small-3 text-warning mr-50"></i>Pending</td>
+                                                    <td>388.20$</td>
+													<td>2-1-2020</td>
+                                                    <td><i class="fa fa-circle font-small-3 text-danger mr-50"></i>Rejected</td>
+                                                    <td><a href="orderDetails.html">More...</a></td>
                                                 </tr>												
                                                 
 
@@ -316,240 +355,11 @@
                             </div>
                         </div>
                     </div>
-								
-						
-					<div class="row">
-
-                        <div class="col-md-6 col-12">
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between align-items-center border-bottom pb-1">
-                                    <div>
-                                        <p class="mb-75"><strong>2 task completed </strong>out of 10</p>
-                                        <div class="progress progress-bar-primary">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="20" aria-valuemax="100" style="width:20%"></div>
-                                        </div>
-                                    </div>
-                                    <p>23 Jan 2020</p>
-                                </div>
-                                <div class="card-content">
-                                    <div class="list-group analytics-list">
-                                        <div class="list-group-item d-lg-flex justify-content-between align-items-start py-1">
-                                            <div class="float-left">
-                                                <p class="text-bold-600 font-medium-2 mb-0 mt-25">Submit budget report</p>
-                                                <small>31 Jan 2020 - 2 hrs</small>
-                                            </div>
-                                            <div class="float-right">
-                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary mr-50">
-                                                    <i class="feather icon-check"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary mr-50">
-                                                    <i class="feather icon-edit-2"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary">
-                                                    <i class="feather icon-trash"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="list-group-item d-lg-flex justify-content-between align-items-start py-1">
-                                            <div class="float-left">
-                                                <p class="text-bold-600 font-medium-2 mb-0 mt-25">Create a purchase order</p>
-                                                <small>16 Feb 2020 - 2 hrs</small>
-                                            </div>
-                                            <div class="float-right">
-                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary mr-50">
-                                                    <i class="feather icon-check"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary mr-50">
-                                                    <i class="feather icon-edit-2"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary">
-                                                    <i class="feather icon-trash"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="list-group-item d-lg-flex justify-content-between align-items-start py-1">
-                                            <div class="float-left">
-                                                <p class="text-bold-600 font-medium-2 mb-0 mt-25">Prepare presentation</p>
-                                                <small>18 Feb 2019 - 2 hrs</small>
-                                            </div>
-                                            <div class="float-right">
-                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary mr-50">
-                                                    <i class="feather icon-check"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary mr-50">
-                                                    <i class="feather icon-edit-2"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary">
-                                                    <i class="feather icon-trash"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="list-group-item d-lg-flex justify-content-between align-items-start py-1">
-                                            <div class="float-left">
-                                                <p class="text-bold-600 font-medium-2 mb-0 mt-25">Prepare Monthly Department Spendings Report</p>
-                                                <small>20 Feb 2019 - 2 hrs</small>
-                                            </div>
-                                            <div class="float-right">
-                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary mr-50">
-                                                    <i class="feather icon-check"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary mr-50">
-                                                    <i class="feather icon-edit-2"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-sm btn-icon rounded-circle btn-outline-primary">
-                                                    <i class="feather icon-trash"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-						
-						<div class="col-md-6 col-12">
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between pb-0">
-                                    <h4 class="card-title">Order Tracker</h4>
-                                    <div class="dropdown chart-dropdown">
-                                        <button class="btn btn-sm border-0 dropdown-toggle p-50" type="button" id="dropdownItem4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Last 7 Days
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownItem4">
-                                            <a class="dropdown-item" href="#">Last 28 Days</a>
-                                            <a class="dropdown-item" href="#">Last Month</a>
-                                            <a class="dropdown-item" href="#">Last Year</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-content">
-                                    <div class="card-body pt-0">
-                                        <div class="row">
-                                            <div class="col-sm-2 col-12 d-flex flex-column flex-wrap text-center">
-                                                <h1 class="font-large-2 text-bold-700 mt-2 mb-0">163</h1>
-                                                <small>Orders</small>
-                                            </div>
-                                            <div class="col-sm-10 col-12 d-flex justify-content-center">
-                                                <div id="support-tracker-chart"></div>
-                                            </div>
-                                        </div>
-                                        <div class="chart-info d-flex justify-content-between">
-                                            <div class="text-center">
-                                                <p class="mb-50">New Orders</p>
-                                                <span class="font-large-1">29</span>
-                                            </div>
-                                            <div class="text-center">
-                                                <p class="mb-50">Open Orders</p>
-                                                <span class="font-large-1">63</span>
-                                            </div>
-                                            <div class="text-center">
-                                                <p class="mb-50">Response Time</p>
-                                                <span class="font-large-1">5d</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-						
-								
-					<div class="row">
-                        <div class="col-12">
-                            <div class="card collapse-icon accordion-icon-rotate">
-							    <div class="card-header">
-                                    <h4 class="mb-0">Fiscal</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div class="accordion" id="accordionExample" data-toggle-hover="true">
-                                        <div class="collapse-margin">
-                                            <div class="card-header" id="headingOne" data-toggle="collapse" role="button" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                                <span class="lead collapse-title collapsed">
-                                                    Purchase Request #1265092
-                                                </span>
-                                            </div>
-
-                                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                <div class="card-body">
-                                                    Stranded. Yes, she was now the first person ever to land on Venus, but that was of little consequence. Her name would be read by millions in school as the first to land here, but that celebrity would never actually be seen by her. She looked at the control panel and knew there was nothing that would ever get it back into working order. She was the first and it was not clear this would also be her last.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="collapse-margin">
-                                            <div class="card-header" id="headingTwo" data-toggle="collapse" role="button" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                <span class="lead collapse-title collapsed">
-                                                    Reimbursement request #011507035
-                                                </span>
-                                            </div>
-                                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                                <div class="card-body">
-                                                    Don't be scared. The things out there that are unknown aren't scary in themselves. They are just unknown at the moment. Take the time to know them before you list them as scary. Then the world will be a much less scary place for you.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="collapse-margin">
-                                            <div class="card-header" id="headingThree" data-toggle="collapse" role="button" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                <span class="lead collapse-title">
-                                                    CEE Budget Report
-                                                </span>
-                                            </div>
-                                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                                                <div class="card-body">
-                                                    The boy walked down the street in a carefree way, playing without notice of what was about him. He didn't hear the sound of the car as his ball careened into the road. He took a step toward it, and in doing so sealed his fate.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="collapse-margin">
-                                            <div class="card-header" id="headingFour" data-toggle="collapse" role="button" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                                                <span class="lead collapse-title">
-                                                  Standard Order #08892392  
-                                                </span>
-                                            </div>
-                                            <div id="collapseFour" class="collapse " aria-labelledby="headingFour" data-parent="#accordionExample">
-                                                <div class="card-body">
-                                                    He heard the crack echo in the late afternoon about a mile away. His heart started racing and he bolted into a full sprint. "It wasn't a gunshot, it wasn't a gunshot," he repeated under his breathlessness as he continued to sprint.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+							
 					
-					<div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between align-items-end">
-                                    <h4 class="card-title">Department Purchase History</h4>
-                                    <p class="font-medium-5 mb-0"><i class="feather icon-settings text-muted cursor-pointer"></i></p>
-                                </div>
-                                <div class="card-content">
-                                    <div class="card-body pb-0">
-                                        <div class="d-flex justify-content-start">
-                                            <div class="mr-2">
-                                                <p class="mb-50 text-bold-600">This Month</p>
-                                                <h2 class="text-bold-400">
-                                                    <sup class="font-medium-1">$</sup>
-                                                    <span class="text-success">86,589</span>
-                                                </h2>
-                                            </div>
-                                            <div>
-                                                <p class="mb-50 text-bold-600">Last Month</p>
-                                                <h2 class="text-bold-400">
-                                                    <sup class="font-medium-1">$</sup>
-                                                    <span>73,683</span>
-                                                </h2>
-                                            </div>
-
-                                        </div>
-                                        <div id="revenue-chart"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>					
-					</div>
                 </section>
                 <!-- Dashboard Ecommerce ends -->
+              
 
             </div>
         </div>
@@ -584,6 +394,8 @@
     <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
     <!-- END: Page JS-->
 
+
+   
 </body>
 <!-- END: Body-->
 
