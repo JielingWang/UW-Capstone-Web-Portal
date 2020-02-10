@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>User-Reimbursement</title>
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/pickers/pickadate/pickadate.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/semi-dark-layout.css">
+
+
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
+
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+
+    <!-- BEGIN: Header-->
+    <nav class="header-navbar navbar-expand-lg navbar navbar-with-menu floating-nav navbar-light navbar-shadow" >
+        <div class="navbar-wrapper" >
+            <div class="navbar-container content" ,>
+                <div class="navbar-collapse" id="navbar-mobile">
+                    <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
+                      <ul class="nav navbar-nav">
+                            <li class="nav-item mobile-menu d-xl-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ficon feather icon-menu"></i></a></li>
+                        </ul>
+
+                    </div>
+
+                    <ul class="nav navbar-nav float-right">
+
+                        <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
+                        <li class="nav-item nav-search"><a class="nav-link nav-link-search"><i class="ficon feather icon-search"></i></a>
+                            <div class="search-input">
+                                <div class="search-input-icon"><i class="feather icon-search primary"></i></div>
+                                <input class="input" type="text" placeholder="Search..." tabindex="-1" data-search="template-list">
+                                <div class="search-input-close"><i class="feather icon-x"></i></div>
+                                <ul class="search-list search-list-main"></ul>
+                            </div>
+                        </li>
+
+                        <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon feather icon-bell"></i><span class="badge badge-pill badge-primary badge-up">5</span></a>
+                            <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
+                                <li class="dropdown-menu-header">
+                                    <div class="dropdown-header m-0 p-2">
+                                        <h3 class="white">5 New</h3><span class="notification-title">App Notifications</span>
+                                    </div>
+                                </li>
+                                <li class="scrollable-container media-list"><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                        <div class="media d-flex align-items-start">
+                                            <div class="media-left"><i class="feather icon-plus-square font-medium-5 primary"></i></div>
+                                            <div class="media-body">
+                                                <h6 class="primary media-heading">You have new order!</h6><small class="notification-text"> Amazon Web Services - Standard Order</small>
+                                            </div><small>
+                                                <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">9 hours ago</time></small>
+                                        </div>
+                                    </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                        <div class="media d-flex align-items-start">
+                                            <div class="media-left"><i class="feather icon-download-cloud font-medium-5 success"></i></div>
+                                            <div class="media-body">
+                                                <h6 class="success media-heading red darken-1">Reimbursement accepted!</h6><small class="notification-text">Your reimbursement request has been accepted by the department</small>
+                                            </div><small>
+                                                <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">5 hour ago</time></small>
+                                        </div>
+                                    </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                        <div class="media d-flex align-items-start">
+                                            <div class="media-left"><i class="feather icon-alert-triangle font-medium-5 danger"></i></div>
+                                            <div class="media-body">
+                                                <h6 class="danger media-heading yellow darken-3">Budget Report due today</h6><small class="notification-text">CEE budget report due today at 2pm</small>
+                                            </div><small>
+                                                <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Today</time></small>
+                                        </div>
+                                    </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                        <div class="media d-flex align-items-start">
+                                            <div class="media-left"><i class="feather icon-check-circle font-medium-5 info"></i></div>
+                                            <div class="media-body">
+                                                <h6 class="info media-heading">Task completed</h6><small class="notification-text">2019 budget report exported to you local storage</small>
+                                            </div><small>
+                                                <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Last week</time></small>
+                                        </div>
+                                    </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                        <div class="media d-flex align-items-start">
+                                            <div class="media-left"><i class="feather icon-file font-medium-5 warning"></i></div>
+                                            <div class="media-body">
+                                                <h6 class="warning media-heading">Monthly report generated</h6><small class="notification-text">Your monthly report has been successfuly generated</small>
+                                            </div><small>
+                                                <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Last month</time></small>
+                                        </div>
+                                    </a></li>
+                                <li class="dropdown-menu-footer"><a class="dropdown-item p-1 text-center" href="javascript:void(0)">View all notifications</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
+                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">Ted Hanson</span><span class="user-status">CEE Administrator</span></div><span><img class="round" src="../../../app-assets/images/portrait/small/avatar-s-9.jpg" alt="avatar" height="40" width="40"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i class="feather icon-power"></i> Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- END: Header-->
+
+
+    <!-- BEGIN: Main Menu-->
+    <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav flex-row">
+                <li class="nav-item mr-auto"><a class="navbar-brand" href="../../../html/ltr/vertical-menu-template/index.html">
+                        <div class="brand-logo"></div>
+                        <h2 class="brand-text mb-0">Davinci</h2>
+                    </a></li>
+                <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary" data-ticon="icon-disc"></i></a></li>
+            </ul>
+        </div>
+        <div class="shadow-bottom"></div>
+        <div class="main-menu-content">
+            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+			    <li><a href="user-dashboard.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
+				
+				<li class=" navigation-header"><span>Fiscal Requests </span></li>
+				<li class=" nav-item"><a href="#"><i class="feather icon-file-plus"></i><span class="menu-title" data-i18n="User">Create Order</span></a>
+                    <ul class="menu-content" style="margin-left:10px;">
+                        <li class="active"><a href="user-reimbursement.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Reimbursement</span></a>
+                        </li>
+                        <li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="View">Travel Reimbursement</span></a>
+                        </li>
+                        <li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Purchase Request</span></a>
+                        </li>
+						<li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Pay an Invoice</span></a>
+                        </li>
+						<li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Procard Receipt</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class=" nav-item"><a href=""><i class="feather icon-shopping-cart"></i><span class="menu-title" data-i18n="Products">Products</span></a></li>
+                
+				<li class=" nav-item"><a href=""><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">Pending Orders</span></a></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-search"></i><span class="menu-title" data-i18n="SearchOrders">Search Orders</span></a></li>
+				
+				<li class=" navigation-header"><span>User</span></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-bell"></i><span class="menu-title" data-i18n="Notifications">Notifications</span></a></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-power"></i><span class="menu-title" data-i18n="Logout">Logout</span></a></li>
+				
+				
+				<li class=" navigation-header"><span>Help</span></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-file-text"></i><span class="menu-title" data-i18n="Manual">Davinci Manual</span></a></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-mail"></i><span class="menu-title" data-i18n="MailingList">Mailing List</span></a></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-book"></i><span class="menu-title" data-i18n="ReimbursmentInstructions">Reimbursment Instructions</span></a></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-credit-card"></i><span class="menu-title" data-i18n="PurchasingQuestions">Purchasing Questions</span></a></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-tv"></i><span class="menu-title" data-i18n="TechnicalQuestions">Technical Questions</span></a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+				<!-- Contact Details -->
+                <section id="multiple-column-form">
+                    <div class="row match-height">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Basic Info</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <form class="form form-horizontal">
+                                            <div class="form-body">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-8">
+                                                                <span>I am requesting reimbursement for myself</span>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <ul class="list-unstyled mb-0">
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="myselfRadio" id="myselfRadio_Yes" onclick="myselfRadio_actions(1)">
+                                                                                <label class="custom-control-label" for="myselfRadio_Yes">Yes</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="myselfRadio" id="myselfRadio_No" onclick="myselfRadio_actions(0)">
+                                                                                <label class="custom-control-label" for="myselfRadio_No">No</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 hidden" id="myself_Yes">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-1">
+                                                                <span></span>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <span>Are you a UW student?</span>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <ul class="list-unstyled mb-0">
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="UWStudentRadio" id="UWStudentRadio_Yes">
+                                                                                <label class="custom-control-label" for="UWStudentRadio_Yes">Yes</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="UWStudentRadio" id="UWStudentRadio_No">
+                                                                                <label class="custom-control-label" for="UWStudentRadio_No">No</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-8">
+                                                                <span>I am requesting on someone behalf</span>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <ul class="list-unstyled mb-0">
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="onBehalfRadio" id="onBehalfRadio_Yes" onclick="onBehalfRadio_actions(1)">
+                                                                                <label class="custom-control-label" for="onBehalfRadio_Yes">Yes</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="onBehalfRadio" id="onBehalfRadio_No" onclick="onBehalfRadio_actions(1)">
+                                                                                <label class="custom-control-label" for="onBehalfRadio_No">No</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 hidden" id="onBehalf_Yes">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-1">
+                                                                <span></span>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <span>Name</span>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <input type="text" id="name" class="form-control" name="submitter-name" placeholder="Name">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 hidden" id="onBehalf_Yes_2">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-1">
+                                                                <span></span>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <span>Affliation</span>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <input type="text" id="name" class="form-control" name="submitter-affiliation" placeholder="Affliation">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-12">
+                                                                <span>If you are asking for travel reimbursement, please click 
+                                                                    <button type="button" class="btn btn-link">here</button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Title</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <form class="form form-horizontal">
+                                            <div class="form-body">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Title</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input type="text" id="title" class="form-control" name="fname" placeholder="Untitled Reimbursement">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Is this an allowable Travel Expense?</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <ul class="list-unstyled mb-0">
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="travelRadio" id="travelRadio1">
+                                                                                <label class="custom-control-label" for="travelRadio1">Yes</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="travelRadio" id="travelRadio2">
+                                                                                <label class="custom-control-label" for="travelRadio2">No</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Food or Beverages?</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <ul class="list-unstyled mb-0">
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="foodAndBeverages_Radio" id="foodAndBeverages_YES" onclick="foodAndBeverages_Radio_actions(1)">
+                                                                                <label class="custom-control-label" for="foodAndBeverages_YES">Yes</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="foodAndBeverages_Radio" id="foodAndBeverages_NO" onclick="foodAndBeverages_Radio_actions(0)">
+                                                                                <label class="custom-control-label" for="foodAndBeverages_NO">No</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 hidden" id="foodAndBeverages">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-1">
+                                                                <span></span>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <span>Attendees:</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input type="text" id="name" class="form-control" name="submitter-name" placeholder="Name">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Preferred Payment Method:</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <ul class="list-unstyled mb-0">
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" id="Deposit" onclick="checkMail_actions(0)">
+                                                                                <label class="custom-control-label" for="Deposit">Direct Deposit</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" id="checkDepartment" onclick="checkMail_actions(0)">
+                                                                                <label class="custom-control-label" for="checkDepartment">Check (picked up in department)</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" id="checkMail" onclick="checkMail_actions(1)">
+                                                                                <label class="custom-control-label" for="checkMail">Check (mail)</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 hidden" id="mailAddr">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-1">
+                                                                <span></span>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <span>Mail Address:</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input type="text" id="name" class="form-control" name="submitter-name" placeholder="Name">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>In Care Of</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input type="text" id="title" class="form-control" name="fname" placeholder="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>UW Box Number</span>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <input type="text" id="title" class="form-control" name="fname" placeholder="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Remittance Notes</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input type="text" id="title" class="form-control" name="fname" placeholder="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-8">
+                                                                <span>I will attach all invoices/receipts per the policy and guidelines:</span>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <ul class="list-unstyled mb-0">
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" name="receiptCheck" id="receiptCheck1">
+                                                                                <label class="custom-control-label" for="receiptCheck1"></label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="col-md-8 offset-md-4">
+                                                        <button type="submit" class="btn btn-primary mr-1 mb-1">Submit</button>
+                                                        <button type="reset" class="btn btn-outline-warning mr-1 mb-1">Reset</button>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Add Items</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <form class="form form-horizontal">
+                                            <div class="form-body">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Expense Description</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input type="text" id="title" class="form-control" name="fname" placeholder="Expense Description">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Business Purpose</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input type="text" id="title" class="form-control" name="fname" placeholder="Business Purpose">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Amount</span>
+                                                            </div>
+                                                            <div class="col-md-4 col-12 mb-1">
+                                                                <fieldset>
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">$</span>
+                                                                        </div>
+                                                                        <input type="text" class="form-control" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
+                                                                    </div>
+                                                                </fieldset>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Was Sales Tax Paid?</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <ul class="list-unstyled mb-0">
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="taxRadio" id="taxRadio1">
+                                                                                <label class="custom-control-label" for="taxRadio1">Yes</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="taxRadio" id="taxRadio2">
+                                                                                <label class="custom-control-label" for="taxRadio2">No</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="taxRadio" id="taxRadio3">
+                                                                                <label class="custom-control-label" for="taxRadio3">Item Not Taxable</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Budget Number</span>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <input type="text" id="title" class="form-control" name="fname" placeholder="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Task/Option/Project (Optional)?</span>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <ul class="list-unstyled mb-0">
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" name="optional" id="optional_check" onclick="optional_actions(1)">
+                                                                                <label class="custom-control-label" for="optional_check"></label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 hidden" id="option">
+                                                        <input type="text" id="title" class="form-control" name="fname" placeholder="Task/Option/Project">
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="col-md-12 form-group row">
+                                                            <div style="padding-top: 20px; padding-bottom: 20px;">
+                                                                <button type="button" class="btn btn-outline-primary mr-1 mb-1" id="add-item">Add</button>
+                                                                <div><label for="task-icon"><b><i>*You must click Add to add items before clicking Next.</i></b></label></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <table class="table zero-configuration">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Expense Description</th>
+                                                                        <th>Budget Number</th>
+                                                                        <th>Account</th>
+                                                                        <th>Amount</th>
+                                                                     </tr>
+                                                                </thead>
+                                                                <tbody>
+    
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <button type="button" class="btn btn-primary mr-1 mb-1 pull-right" id="confirm-submission">Submit</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End of contact details-->
+                <!-- Basic multiple Column Form section start -->
+                       <!-- <section id="multiple-column-form">
+                           <div class="row match-height">
+                               <div class="col-12">
+                                   <div class="card">
+                                       <div class="card-header">
+                                           <h4 class="card-title">Order Details</h4>
+                                       </div>
+                                       <div class="card-content">
+                                           <div class="card-body">
+                                               <form class="form">
+                                                   <div class="form-body">
+                                                       <div class="row">
+                                                           <div class="col-md-6 col-12">
+                                                               <div class="form-group">
+                                                                 <label for="first-name-icon">Attention</label>
+                                                                 <div class="position-relative has-icon-left">
+                                                                 <input type="text" id="first-name-icon" class="form-control" name="attention-icon" placeholder="Attention">
+                                                                 <div class="form-control-position">
+                                                                     <i class="feather icon-bell"></i>
+                                                                 </div>
+                                                               </div>
+                                                               </div>
+                                                           </div>
+                                                           <div class="col-md-6 col-12">
+                                                               <div class="form-group">
+                                                                   <label for="last-name-icon">Box Number</label>
+                                                                   <div class="position-relative has-icon-left">
+                                                                   <input type="text" id="last-name-icon" class="form-control" name="bnumber-icon" placeholder="Box Number">
+                                                                   <div class="form-control-position">
+                                                                       <i class="feather icon-box"></i>
+                                                                   </div>
+                                                                 </div>
+                                                               </div>
+                                                           </div>
+                                                           <div class="col-md-6 col-12">
+                                                               <div class="form-group">
+                                                                 <label for="email-id-icon">Date Desired</label>
+                                                                 <div class="position-relative has-icon-left">
+                                                                     <input type='text' class="form-control format-picker" placeholder="Date Desired"/>
+                                                                     <div class="form-control-position">
+                                                                         <i class="feather icon-calendar"></i>
+                                                                     </div>
+                                                                 </div>
+                                                               </div>
+                                                           </div>
+                                                           <div class="col-md-6 col-12">
+                                                               <div class="form-group">
+                                                                 <label for="email-id-icon">Shiping Instructions</label>
+                                                                 <div class="position-relative has-icon-left">
+                                                                   <select class="custom-select form-control" id="location1" name="location" placeholder="Shiping Instructions">
+                                                                       <option value="overnightAM">Overnight-AM</option>
+                                                                       <option value="overnightPM">Overnight-PM</option>
+                                                                       <option value="secondday">Second day</option>
+                                                                       <option value="3day">3 Day Service</option>
+                                                                       <option value="surface">Surface</option>
+                                                                       <option value="standard">Standard</option>
+                                                                   </select>
+                                                                     <div class="form-control-position">
+                                                                         <i class="feather icon-map"></i>
+                                                                     </div>
+                                                                 </div>
+                                                               </div>
+                                                           </div>
+                                                           <div class="col-md-6 col-12">
+                                                               <div class="form-group">
+                                                                 <label for="contact-info-icon">Shiping Address</label>
+                                                                 <div class="position-relative has-icon-left">
+                                                                     <textarea name="shortDescription" id="shortDescription1" rows="5" class="form-control" placeholder="Shiping Address"></textarea>
+                                                                     <div class="form-control-position">
+                                                                         <i class="feather icon-map-pin"></i>
+                                                                     </div>
+                                                                 </div>
+                                                               </div>
+                                                           </div>
+                                                           <div class="col-12">
+                                                               <button type="button" class="btn btn-primary mr-1 mb-1 pull-right" id="confirm-submission">Submit</button>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                               </form>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </section> -->
+                       <!-- Basic Floating Label Form section end -->
+
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <footer class="footer footer-static footer-light">
+
+    </footer>
+    <!-- END: Footer-->
+
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.js"></script>
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>
+    <!-- END: Page JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/polyfill.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/extensions/sweet-alerts.js"></script>
+    <!-- END: Page JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <script src="../../../app-assets/js/scripts/components.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <!-- END: Page JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/myScripts/users/reimbursement.js"></script>
+    <!-- END: Page JS-->
+
+
+</body>
+<!-- END: Body-->
+
+</html>
