@@ -7,9 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "express": "*",
     "body-parser": "*",
-    "mongoose": "*"
+    "express": "*",
+    "express-fileupload": "*",
+    "fs": "*",
+    "mongoose": "*",
+    "package.json": "^2.0.1"
   },
   "author": "Kalana Sahabandu",
   "license": "ISC"

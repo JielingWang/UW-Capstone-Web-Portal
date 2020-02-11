@@ -2,20 +2,25 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongose = require('mongoose');
+var fileUpload  = require('express-fileupload');
 
 app.use(bodyParser.json());
+app.use(fileUpload());
 
 //adding all the required Models to the App
 Departments = require('./models/Departments');
 Users = require('./models/Users');
 Units = require('./models/Units');
 SubUnits = require('./models/SubUnits');
-
+Orders = require('./models/Orders');
 
 
 //connect to mongoose
 mongose.connect('mongodb://localhost/backendDB', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 var db = mongose.connection;
+
+app.listen(3000);
+console.log("Backend Running on Port 3000");
 
 // ------ API Routes -------------
 
@@ -68,11 +73,11 @@ app.post('/api/users',function(req,res){
 app.post('/api/units',function(req,res){
     var Unit_JSON = req.body;
 
-    Units.addUnit(Unit_JSON,function(err,user){
+    Units.addUnit(Unit_JSON,function(err,unit){
         if(err){
             res.json({"status":false, "data":err});
         }else{
-            res.json({"status":true, "data":user});
+            res.json({"status":true, "data":unit});
         }
     });
 });
@@ -81,11 +86,11 @@ app.post('/api/units',function(req,res){
 app.put('/api/units/:_id',function(req,res){
     var Unit_users = req.body;
     var Unit_ID = req.params._id;
-    Units.addUsers_to_Unit_byID(Unit_ID,Unit_users.userIDs,function(err,user){
+    Units.addUsers_to_Unit_byID(Unit_ID,Unit_users.userIDs,function(err,unit){
         if(err){
             res.json({"status":false, "data":err});
         }else{
-            res.json({"status":true, "data":user});
+            res.json({"status":true, "data":unit});
         }
     });
 });
@@ -97,16 +102,27 @@ app.put('/api/units/:_id',function(req,res){
 app.post('/api/subunits',function(req,res){
     var Unit_JSON = req.body;
 
-    SubUnits.addSubUnits(Unit_JSON,function(err,user){
+    SubUnits.addSubUnits(Unit_JSON,function(err,unit){
         if(err){
             res.json({"status":false, "data":err});
         }else{
-            res.json({"status":true, "data":user});
+            res.json({"status":true, "data":unit});
         }
     });
 });
 // ---- End of SubUnit Routes ------
 
 
-app.listen(3000);
-console.log("Backend Running on Port 3000");
+// ---- Orders Routes -------
+//this API route will upload files to the server
+app.post('/api/uploadOrder',function(req,res){
+    var Unit_JSON = req.body;
+    var files = req.files;
+    console.log(Object.keys(files).length);
+    //console.log(typeof req.files);
+    //console.log(req.files);
+    res.json(req.body);
+});
+// ---- End of Orders Routes ------
+
+
