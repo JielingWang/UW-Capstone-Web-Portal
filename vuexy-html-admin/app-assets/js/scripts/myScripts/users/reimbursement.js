@@ -1,47 +1,48 @@
 // alert("CONNECTED!");
 
 //this function is called at onlick of each travelable expense check boxes
-function  myselfRadio_actions(RadioLogic) //CheckboxLogic = 1 -- YES, CheckboxLogic == 0 -- NO
+function  myselfOrBehalfRadio_actions(RadioLogic) //CheckboxLogic = 1 -- YES, CheckboxLogic == 0 -- NO
 {
-    var yesRadio = document.getElementById("myselfRadio_Yes");
-    var noRadio = document.getElementById("myselfRadio_No");
+    var myselfRadio = document.getElementById("myselfRadio_Yes");
+    var onBehalfRadio = document.getElementById("onBehalfRadio_Yes");
 
     // -- UI manipulations ----
     if(RadioLogic == 1) //if yes is checked then no is unchecked
-        noRadio.checked = false;
+        onBehalfRadio.checked = false;
     else
-        yesRadio.checked = false;
+        myselfRadio.checked = false;
 
     
     //actually checking which one's checked and displaying any additional messages
-    if(yesRadio.checked)
+    if (myselfRadio.checked) {
         document.getElementById("myself_Yes").className = "col-12 visible";
-    else
-        document.getElementById("myself_Yes").className = "col-12 hidden"; 
-
-}
-
-function  onBehalfRadio_actions(RadioLogic) //CheckboxLogic = 1 -- YES, CheckboxLogic == 0 -- NO
-{
-    var yesRadio = document.getElementById("onBehalfRadio_Yes");
-    var noRadio = document.getElementById("onBehalfRadio_No");
-
-    // -- UI manipulations ----
-    if(RadioLogic == 1)
-        noRadio.checked = false;
-    else
-        yesRadio.checked = false;
-
-    
-    if(yesRadio.checked) {
-        document.getElementById("onBehalf_Yes").className = "col-12 visible";
-        document.getElementById("onBehalf_Yes_2").className = "col-12 visible";
-    }
-    else {
         document.getElementById("onBehalf_Yes").className = "col-12 hidden"; 
         document.getElementById("onBehalf_Yes_2").className = "col-12 hidden";
     }
+    else {
+        document.getElementById("myself_Yes").className = "col-12 hidden";
+        document.getElementById("onBehalf_Yes").className = "col-12 visible";
+        document.getElementById("onBehalf_Yes_2").className = "col-12 visible";
+    }
 
+}
+
+function splitBudget_actions() {
+    var checked = document.getElementById("optional_check");
+    
+    if(checked.checked)
+        document.getElementById("split").className = "col-12 visible";
+    else
+        document.getElementById("split").className = "col-12 hidden"; 
+
+}
+
+function categorySelected_actions(value) {
+    if (value === "food") {
+        document.getElementById("foodAndBeverages").className = "col-12 visible";
+    } else {
+        document.getElementById("foodAndBeverages").className = "col-12 hidden";
+    }
 }
 
 //this function is called at onlick of each uw employee check boxes
@@ -329,7 +330,7 @@ function checkMail_actions(RadioLogic) {
 
 }
 
-function optional_actions(RadioLogic) {
+function optional_actions() {
     var yesCheckBox = document.getElementById("optional_check");
     
     if(yesCheckBox.checked)
