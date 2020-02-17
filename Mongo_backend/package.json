@@ -12,6 +12,7 @@
     "express-fileupload": "*",
     "fs": "*",
     "mongoose": "*",
+    "rimraf": "*",
     "package.json": "^2.0.1"
   },
   "author": "Kalana Sahabandu",

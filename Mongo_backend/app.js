@@ -16,7 +16,7 @@ Orders = require('./models/Orders');
 
 
 //connect to mongoose
-mongose.connect('mongodb://localhost/backendDB', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
+mongose.connect('mongodb://localhost/backendDB', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true,  useFindAndModify: false });
 var db = mongose.connection;
 
 app.listen(3000);
@@ -114,15 +114,85 @@ app.post('/api/subunits',function(req,res){
 
 
 // ---- Orders Routes -------
+
 //this API route will upload files to the server
 app.post('/api/uploadOrder',function(req,res){
-    var Unit_JSON = req.body;
+    var Order_JSON = req.body;
     var files = req.files;
-    console.log(Object.keys(files).length);
-    //console.log(typeof req.files);
-    //console.log(req.files);
-    res.json(req.body);
+
+    Orders.addOrder(JSON.parse(Order_JSON.JSON_body),files,function(err,order){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":order});
+        }
+    });
 });
+
+//this API route upload files to a given order given Order ID
+app.put('/api/uploadFiles/:_orderID',function(req,res){
+    const Order_ID = req.params._orderID;
+    const files = req.files;
+    Orders.uploadFiles(Order_ID,files,function(err,unit){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":unit});
+        }
+    });
+});
+
+//this API route will update the OrderInfo given OrderID
+app.put('/api/updateOrderInfo/:_orderID',function(req,res){
+    const Order_ID = req.params._orderID;
+    const Order_JSON = req.body;
+    Orders.updateOrderInfo(Order_ID,Order_JSON,function(err,unit){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":unit});
+        }
+    });
+});
+
+//this API route will update the updateOrderStatus given OrderID
+app.put('/api/updateOrderStatus/:_orderID',function(req,res){
+    const Order_ID = req.params._orderID;
+    const Order_JSON = req.body;
+    Orders.updateOrderStatus(Order_ID,Order_JSON,function(err,unit){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":unit});
+        }
+    });
+});
+
+//this API route will update the chatinfo given OrderID
+app.put('/api/updateChatInfo/:_orderID',function(req,res){
+    const Order_ID = req.params._orderID;
+    const Order_JSON = req.body;
+    Orders.updateChatInfo(Order_ID,Order_JSON,function(err,unit){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":unit});
+        }
+    });
+});
+
+//this API route will remove the order given orderID
+app.delete('/api/removeOrder/:_orderID',function(req,res){
+    const Order_ID = req.params._orderID;
+    Orders.removeOrder(Order_ID,function(err,unit){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":unit});
+        }
+    });
+});
+
 // ---- End of Orders Routes ------
 
 

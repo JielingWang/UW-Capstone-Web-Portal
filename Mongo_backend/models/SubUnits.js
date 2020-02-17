@@ -75,7 +75,11 @@ function validate_and_copy_passedJSON(JSON_Obj, callback) {
     if(err_list.length == 0)
         return User_JSON_Obj;
     else
+    {
         callback(err_list,null);
+        return null;
+    }
+        
 }
 
 //this function will check whether if given SubUnit exists in the collection by its name
@@ -144,8 +148,11 @@ module.exports.addSubUnits = async function(Subunit_JSON,callback){
     if(SubUnit_result)
     {
             try{
+                const subUnit_validated = validate_and_copy_passedJSON(Subunit_JSON,callback);
+                if(subUnit_validated == null)
+                    return;
                 //adding new subunit to the collection
-                const return_result = await SubUnit.create(validate_and_copy_passedJSON(Subunit_JSON,callback));
+                const return_result = await SubUnit.create(subUnit_validated);
                 //adding the subunit to units subunitIDs array
                 const update_results = await Units_ref.addSubunits_to_SubUnitIDs_array([return_result._id],return_result.UnitID_ref)
                 if(update_results !=null)
