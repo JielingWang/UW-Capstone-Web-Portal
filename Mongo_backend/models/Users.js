@@ -34,6 +34,8 @@ var User = module.exports = mongoose.model('User', userSchema);
 
 //This validator function will validate Passed in JSON object contains correct data types
 function validate_and_copy_passedJSON(JSON_Obj, callback) {
+
+    var err_list = []; //this will keep all the error messages
     //Empty template of a user JSON object
     var User_JSON_Obj = {
         "Name": null,
@@ -45,32 +47,38 @@ function validate_and_copy_passedJSON(JSON_Obj, callback) {
     };
 
     if (typeof JSON_Obj.Name != 'string')
-        callback("Name is not String type", null);
+        err_list.push("Name is not String type");
     else
         User_JSON_Obj.Name = JSON_Obj.Name;
 
     if (typeof JSON_Obj.email != 'string')
-        callback("email is not String type", null);
+        err_list.push("email is not String type");
     else
         User_JSON_Obj.email = JSON_Obj.email;
 
     if (typeof JSON_Obj.UWID != 'string')
-        callback("UWID is not String type", null);
+        err_list.push("UWID is not String type");
     else
         User_JSON_Obj.UWID = JSON_Obj.UWID;  
 
     if (typeof JSON_Obj.profile_imageURL != 'string')
-        callback("profile_imageURL is not String type", null);
+        err_list.push("profile_imageURL is not String type");
     else
         User_JSON_Obj.profileImage_URL = JSON_Obj.profile_imageURL;
 
     if (typeof JSON_Obj.verified_user != 'boolean')
-        callback("verified_user is not Boolean type", null);
+        err_list.push("verified_user is not Boolean type");
     else
         User_JSON_Obj.verified_user = JSON_Obj.verified_user;
 
 
-    return User_JSON_Obj;
+    if(err_list.length == 0)
+        return User_JSON_Obj;
+    else
+    {
+        callback(err_list,null);
+        return null;
+    }
 }
 
 
@@ -93,7 +101,11 @@ module.exports.validate_UserID = async function (UserID)
 module.exports.addUser = function (user, callback) {
     
     //ToDO; Check if user already exists before adding
-    User.create(validate_and_copy_passedJSON(user,callback), callback);
+    const validated_results = validate_and_copy_passedJSON(user,callback);
+    if(validated_results == null)
+        return;
+
+    User.create(validated_results, callback);
 }
 
 //this method will find user by given id

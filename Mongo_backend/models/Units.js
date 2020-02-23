@@ -35,6 +35,7 @@ var Unit = module.exports = mongoose.model('Unit', unitSchema);
 //This validator function will validate Passed in JSON object contains correct data types
 function validate_and_copy_passedJSON(JSON_Obj, callback)
 {
+    var err_list = []; //this will keep all the error messages
     //Empty template of a department JSON object
     var Unit_JSON_Obj = {
         "unitName":null,
@@ -44,21 +45,27 @@ function validate_and_copy_passedJSON(JSON_Obj, callback)
 
     //check passed in JSON fields have correct data types
     if(typeof JSON_Obj.unitName != 'string')
-       callback("Name is not String type", null);
+        err_list.push("Name is not String type");
     else
         Unit_JSON_Obj.unitName = JSON_Obj.unitName;
 
     if (!Array.isArray(JSON_Obj.userIDs))
-        callback("UserIDs is not array type", null);
+        err_list.push("UserIDs is not array type");
     else
         Unit_JSON_Obj.userIDs = validate_UserIDs(JSON_Obj.userIDs,callback);   
 
     if (!Array.isArray(JSON_Obj.subUnitIDs))
-        callback("subUnitIDs is not array type", null);
+        err_list.push("subUnitIDs is not array type");
     else
         Unit_JSON_Obj.subUnitIDs = JSON_Obj.subUnitIDs; 
     
-    return Unit_JSON_Obj;
+    if(err_list.length == 0)
+        return Unit_JSON_Obj;
+    else
+    {
+        callback(err_list,null);
+        return null;
+    }
 }
 
 //this function will validate if content inside the userIDs array is correct, if yes return the object, not call the callback
@@ -180,7 +187,14 @@ module.exports.addUnit = async function(unit,callback)
 {
 
     if(await Unit_exsits_inColleciton_byName(unit.unitName,unit.Owned_Department) == null)
-        Unit.create(validate_and_copy_passedJSON(unit,callback), callback);
+    {
+        const validated_results = validate_and_copy_passedJSON(unit,callback);
+        if(validated_results == null)
+            return;
+
+        Unit.create(validated_results, callback);
+    }
+        
     else
         callback(`Unit "${unit.unitName}" exists under units collection`,null);
 }
