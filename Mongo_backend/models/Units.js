@@ -25,11 +25,6 @@ var unitSchema = mongoose.Schema({
     subUnitIDs:{
         type:[mongoose.Schema.Types.ObjectId],
         ref:'SubUnit'
-    },
-    Owned_Department:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref: 'Department',
-        required: true
     }
 });
 
@@ -44,8 +39,7 @@ function validate_and_copy_passedJSON(JSON_Obj, callback)
     var Unit_JSON_Obj = {
         "unitName":null,
         "userIDs":[],
-        "subUnitIDs":[],
-        "Owned_Department":null
+        "subUnitIDs":[]
     };
 
     //check passed in JSON fields have correct data types
@@ -64,12 +58,6 @@ function validate_and_copy_passedJSON(JSON_Obj, callback)
     else
         Unit_JSON_Obj.subUnitIDs = JSON_Obj.subUnitIDs; 
     
-    if(typeof JSON_Obj.Owned_Department != 'string')
-       callback("Department is not String type", null);
-    else
-        Unit_JSON_Obj.Owned_Department = JSON_Obj.Owned_Department;    
-
-
     return Unit_JSON_Obj;
 }
 
@@ -124,7 +112,7 @@ module.exports.Unit_exsists_inCollection_byID = async function (UnitID)
 async function Unit_exsits_inColleciton_byName(Unit_name, owned_department)
 {
     try{
-        return (await Unit.findOne({"unitName":Unit_name, "Owned_Department":owned_department}));
+        return (await Unit.findOne({"unitName":Unit_name}));
     }catch{
         return null;
     }
@@ -194,7 +182,7 @@ module.exports.addUnit = async function(unit,callback)
     if(await Unit_exsits_inColleciton_byName(unit.unitName,unit.Owned_Department) == null)
         Unit.create(validate_and_copy_passedJSON(unit,callback), callback);
     else
-        callback(`Unit "${unit.unitName}" exists under given department`,null);
+        callback(`Unit "${unit.unitName}" exists under units collection`,null);
 }
 
 

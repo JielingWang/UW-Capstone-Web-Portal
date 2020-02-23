@@ -28,6 +28,18 @@ var orderScheme = mongoose.Schema({
     ChatInfo:{
         type:String,
         required:true
+    },
+    assignedTo:{
+        type:mongoose.Types.ObjectId,
+        ref:'User'
+    },
+    submittedOn:{
+        type:Date,
+        default: Date.now
+    },
+    lastModified:{
+        type:Date,
+        default: Date.now
     }
 
 });
@@ -47,7 +59,8 @@ function validate_and_copy_passedJSON(JSON_Obj, callback) {
         "OrderType": null,
         "OrderInfo": null,
         "OrderStatus": null,
-        "ChatInfo": null
+        "ChatInfo": null,
+        "assignedTo":null
 
     };
 
@@ -74,7 +87,13 @@ function validate_and_copy_passedJSON(JSON_Obj, callback) {
     if (typeof JSON_Obj.ChatInfo != 'string')
         err_list.push("ChatInfo is not String type")
     else
-        Order_JSON_Obj.ChatInfo = JSON_Obj.ChatInfo;   
+        Order_JSON_Obj.ChatInfo = JSON_Obj.ChatInfo;
+        
+    console.log(typeof JSON_Obj.assignedTo);
+    if (typeof JSON_Obj.assignedTo != 'string' && JSON_Obj.assignedTo != null)
+        err_list.push("assignedTo is not String type")
+    else
+        Order_JSON_Obj.assignedTo = JSON_Obj.assignedTo; 
            
     if(err_list.length == 0)
         return Order_JSON_Obj;
@@ -172,9 +191,18 @@ module.exports.uploadFiles = async function(orderID,files,callback){
     //get number of files uploaded
     const file_names = Object.keys(files);
 
-    if(await Order.check_Order_exists_byID(orderID) == null)
+
+    if( await Order.check_Order_exists_byID(orderID) == null) 
     {
         callback("Invalid Order ID",null);
+        return;
+    }
+
+    //update last modified field
+    try{
+        await Order.findOneAndUpdate({_id:orderID},{lastModified:Date.now()},{new: true});
+    }catch{
+        callback("Internal server error occured while updating modified time",null);
         return;
     }
 
@@ -208,7 +236,7 @@ module.exports.updateOrderInfo = async function(orderID,Order_JSON,callback){
     }
 
     //if found then update with the information
-    Order.findOneAndUpdate({_id:orderID},{OrderInfo:Order_JSON.OrderInfo},{new: true},callback);
+    Order.findOneAndUpdate({_id:orderID},{OrderInfo:Order_JSON.OrderInfo,lastModified:Date.now()},{new: true},callback);
 
 }
 
@@ -224,7 +252,7 @@ module.exports.updateOrderStatus = async function(orderID,Order_JSON,callback){
     }
 
     //if found then update with the information
-    Order.findOneAndUpdate({_id:orderID},{OrderStatus:Order_JSON.OrderStatus},{new: true},callback);
+    Order.findOneAndUpdate({_id:orderID},{OrderStatus:Order_JSON.OrderStatus,lastModified:Date.now()},{new: true},callback);
 
 }
 
@@ -268,6 +296,27 @@ module.exports.removeOrder = async function(orderID,callback){
 
 }
 
+//this function will assign a user to an Order
+module.exports.assignOrder = async function(orderID,UserID,callback){
+
+    //check userID exists
+    if(await Users_ref.validate_UserID(UserID) == null)
+    {
+        callback("Invalid User ID",null);
+        return;
+    }
+
+    //check order exists in the collection
+    if(await Order.check_Order_exists_byID(orderID) == null)
+    {
+        callback("Invalid Order ID",null);
+        return;
+    }
+    
+    //if found then update with the information
+    Order.findOneAndUpdate({_id:orderID},{assignedTo:UserID},{new: true},callback);
+
+}
 
 
 

@@ -16,12 +16,6 @@ var userSchema = mongoose.Schema({
         required: true,
         unique: true
     },
-    department: [
-        {
-            type: [mongoose.Schema.Types.ObjectId],
-            ref: 'Department'
-        }
-    ],
     profileImage_URL: {
         type: String,
     },
@@ -45,7 +39,6 @@ function validate_and_copy_passedJSON(JSON_Obj, callback) {
         "Name": null,
         "email": null,
         "UWID": null,
-        "department": [],
         "profileImage_URL": null,
         "verified_user": false
 
@@ -64,12 +57,7 @@ function validate_and_copy_passedJSON(JSON_Obj, callback) {
     if (typeof JSON_Obj.UWID != 'string')
         callback("UWID is not String type", null);
     else
-        User_JSON_Obj.UWID = JSON_Obj.UWID;
-
-    if (!Array.isArray(JSON_Obj.department))
-        callback("Department is not array type", null);
-    else
-        User_JSON_Obj.department = JSON_Obj.department;        
+        User_JSON_Obj.UWID = JSON_Obj.UWID;  
 
     if (typeof JSON_Obj.profile_imageURL != 'string')
         callback("profile_imageURL is not String type", null);

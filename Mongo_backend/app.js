@@ -193,6 +193,20 @@ app.delete('/api/removeOrder/:_orderID',function(req,res){
     });
 });
 
+//this API route will assign an order to financial staff given OrderID and userID
+app.put('/api/assignOrder/:_orderID/:_userID',function(req,res){
+    const Order_ID = req.params._orderID;
+    const userID = req.params._userID;
+    Orders.assignOrder(Order_ID,userID,function(err,unit){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":unit});
+        }
+    });
+});
+
+
 // ---- End of Orders Routes ------
 
 
