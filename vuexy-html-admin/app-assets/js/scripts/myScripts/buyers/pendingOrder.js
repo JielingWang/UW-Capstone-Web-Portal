@@ -1,4 +1,4 @@
-alert("CONNECTED!");
+// alert("CONNECTED!");
 
 //this function is called at onlick of each travelable expense check boxes
 function  myselfRadio_actions(RadioLogic) //CheckboxLogic = 1 -- YES, CheckboxLogic == 0 -- NO

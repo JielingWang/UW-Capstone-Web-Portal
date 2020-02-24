@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/pickers/pickadate/pickadate.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/animate/animate.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/select/select2.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -156,8 +157,8 @@
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 			    <li><a href="user-dashboard.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
 				
-				<li class=" navigation-header"><span>Fiscal Requests </span></li>
-				<li class=" nav-item"><a href="#"><i class="feather icon-file-plus"></i><span class="menu-title" data-i18n="User">Create Order</span></a>
+				<li class=" navigation-header"><span>General User</span></li>
+				<li class=" nav-item"><a href="#"><i class="feather icon-file-plus"></i><span class="menu-title" data-i18n="User">Create Request</span></a>
                     <ul class="menu-content" style="margin-left:10px;">
                         <li class="active"><a href="user-reimbursement.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Reimbursement</span></a>
                         </li>
@@ -171,12 +172,10 @@
                         </li>
                     </ul>
                 </li>
-                <li class=" nav-item"><a href=""><i class="feather icon-shopping-cart"></i><span class="menu-title" data-i18n="Products">Products</span></a></li>
                 
-				<li class=" nav-item"><a href=""><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">Pending Orders</span></a></li>
-				<li class=" nav-item"><a href=""><i class="feather icon-search"></i><span class="menu-title" data-i18n="SearchOrders">Search Orders</span></a></li>
-				
-				<li class=" navigation-header"><span>User</span></li>
+				<li class="nav-item"><a href=""><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">My Requests</span></a></li>
+                
+				<li class=" navigation-header"><span>Settings</span></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-bell"></i><span class="menu-title" data-i18n="Notifications">Notifications</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-power"></i><span class="menu-title" data-i18n="Logout">Logout</span></a></li>
@@ -185,7 +184,7 @@
 				<li class=" navigation-header"><span>Help</span></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-file-text"></i><span class="menu-title" data-i18n="Manual">Davinci Manual</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-mail"></i><span class="menu-title" data-i18n="MailingList">Mailing List</span></a></li>
-				<li class=" nav-item"><a href=""><i class="feather icon-book"></i><span class="menu-title" data-i18n="ReimbursmentInstructions">Reimbursment Instructions</span></a></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-book"></i><span class="menu-title" data-i18n="ReimbursmentInstructions">Instructions</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-credit-card"></i><span class="menu-title" data-i18n="PurchasingQuestions">Purchasing Questions</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-tv"></i><span class="menu-title" data-i18n="TechnicalQuestions">Technical Questions</span></a></li>
             </ul>
@@ -207,7 +206,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Basic Info</h4>
+                                    <!-- <h4 class="card-title">Basic Info</h4> -->
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
@@ -216,28 +215,21 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="form-group row">
-                                                            <div class="col-md-8">
-                                                                <span>I am requesting reimbursement for myself</span>
-                                                            </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-1">
                                                                 <ul class="list-unstyled mb-0">
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="myselfRadio" id="myselfRadio_Yes" onclick="myselfRadio_actions(1)">
-                                                                                <label class="custom-control-label" for="myselfRadio_Yes">Yes</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="myselfRadio" id="myselfRadio_No" onclick="myselfRadio_actions(0)">
-                                                                                <label class="custom-control-label" for="myselfRadio_No">No</label>
+                                                                                <input type="radio" class="custom-control-input" name="myselfOrBehalfRadio" id="myselfRadio_Yes" onclick="myselfOrBehalfRadio_actions(1)">
+                                                                                <label class="custom-control-label" for="myselfRadio_Yes"></label>
                                                                             </div>
                                                                         </fieldset>
                                                                     </li>
                                                                 </ul>
+                                                            </div>
+                                                            <div class="col-md-10">
+                                                                <span>I am requesting reimbursement for myself</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -247,7 +239,7 @@
                                                                 <span></span>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <span>Are you a UW student?</span>
+                                                                <span>Are you a UW employee?</span>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <ul class="list-unstyled mb-0">
@@ -273,28 +265,21 @@
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-group row">
-                                                            <div class="col-md-8">
-                                                                <span>I am requesting on someone behalf</span>
-                                                            </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-1">
                                                                 <ul class="list-unstyled mb-0">
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="onBehalfRadio" id="onBehalfRadio_Yes" onclick="onBehalfRadio_actions(1)">
-                                                                                <label class="custom-control-label" for="onBehalfRadio_Yes">Yes</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="onBehalfRadio" id="onBehalfRadio_No" onclick="onBehalfRadio_actions(1)">
-                                                                                <label class="custom-control-label" for="onBehalfRadio_No">No</label>
+                                                                                <input type="radio" class="custom-control-input" name="myselfOrBehalfRadio" id="onBehalfRadio_Yes" onclick="myselfOrBehalfRadio_actions(0)">
+                                                                                <label class="custom-control-label" for="onBehalfRadio_Yes"></label>
                                                                             </div>
                                                                         </fieldset>
                                                                     </li>
                                                                 </ul>
+                                                            </div>
+                                                            <div class="col-md-10">
+                                                                <span>I am requesting on someone behalf</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -303,7 +288,7 @@
                                                             <div class="col-md-1">
                                                                 <span></span>
                                                             </div>
-                                                            <div class="col-md-3">
+                                                            <div class="col-md-2">
                                                                 <span>Name</span>
                                                             </div>
                                                             <div class="col-md-4">
@@ -316,7 +301,7 @@
                                                             <div class="col-md-1">
                                                                 <span></span>
                                                             </div>
-                                                            <div class="col-md-3">
+                                                            <div class="col-md-2">
                                                                 <span>Affliation</span>
                                                             </div>
                                                             <div class="col-md-4">
@@ -324,12 +309,15 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-12 form-group row"></div>
                                                     <div class="col-12">
                                                         <div class="form-group row">
-                                                            <div class="col-md-12">
-                                                                <span>If you are asking for travel reimbursement, please click 
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-11">
+                                                                <label for="task-icon"><b><i>*If you are asking for travel reimbursement, please click <a>here</a>.</i></b></label>
+                                                                <!-- <span>If you are asking for travel reimbursement, please click 
                                                                     <button type="button" class="btn btn-link">here</button>
-                                                                </span>
+                                                                </span> -->
                                                             </div>
                                                         </div>
                                                     </div>
@@ -341,90 +329,13 @@
                             </div>
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Title</h4>
+                                    <h4 class="card-title">Delivery</h4>
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
                                         <form class="form form-horizontal">
                                             <div class="form-body">
                                                 <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-4">
-                                                                <span>Title</span>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <input type="text" id="title" class="form-control" name="fname" placeholder="Untitled Reimbursement">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-4">
-                                                                <span>Is this an allowable Travel Expense?</span>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="travelRadio" id="travelRadio1">
-                                                                                <label class="custom-control-label" for="travelRadio1">Yes</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="travelRadio" id="travelRadio2">
-                                                                                <label class="custom-control-label" for="travelRadio2">No</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-4">
-                                                                <span>Food or Beverages?</span>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="foodAndBeverages_Radio" id="foodAndBeverages_YES" onclick="foodAndBeverages_Radio_actions(1)">
-                                                                                <label class="custom-control-label" for="foodAndBeverages_YES">Yes</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="foodAndBeverages_Radio" id="foodAndBeverages_NO" onclick="foodAndBeverages_Radio_actions(0)">
-                                                                                <label class="custom-control-label" for="foodAndBeverages_NO">No</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 hidden" id="foodAndBeverages">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-1">
-                                                                <span></span>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <span>Attendees:</span>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <input type="text" id="name" class="form-control" name="submitter-name" placeholder="Name">
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
@@ -473,55 +384,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-12">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-4">
-                                                                <span>In Care Of</span>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <input type="text" id="title" class="form-control" name="fname" placeholder="">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-4">
-                                                                <span>UW Box Number</span>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <input type="text" id="title" class="form-control" name="fname" placeholder="">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-4">
-                                                                <span>Remittance Notes</span>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <input type="text" id="title" class="form-control" name="fname" placeholder="">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-8">
-                                                                <span>I will attach all invoices/receipts per the policy and guidelines:</span>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-checkbox">
-                                                                                <input type="checkbox" class="custom-control-input" name="receiptCheck" id="receiptCheck1">
-                                                                                <label class="custom-control-label" for="receiptCheck1"></label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                     <!-- <div class="col-md-8 offset-md-4">
                                                         <button type="submit" class="btn btn-primary mr-1 mb-1">Submit</button>
                                                         <button type="reset" class="btn btn-outline-warning mr-1 mb-1">Reset</button>
@@ -558,6 +420,33 @@
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <input type="text" id="title" class="form-control" name="fname" placeholder="Business Purpose">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Category</span>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <select class="select2 form-control" id="category" onChange="categorySelected_actions(this.value)">
+                                                                    <option value="">Please select</option>
+                                                                    <option value="food">Food and Beverage</option>
+                                                                    <option value="other">Other</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 hidden" id="foodAndBeverages">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-1">
+                                                                <span></span>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <span>Attendees:</span>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <input type="text" id="name" class="form-control" name="submitter-name" placeholder="Name">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -616,10 +505,37 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
+                                                                <span>Need to split budget?</span>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <ul class="list-unstyled mb-0">
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" name="splitBudget" id="splitBudget_check" onclick="splitBudget_actions()">
+                                                                                <label class="custom-control-label" for="splitBudget_check"></label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
                                                                 <span>Budget Number</span>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <input type="text" id="title" class="form-control" name="fname" placeholder="">
+                                                                <select class="select2 form-control">
+                                                                    <option value="food">Please select</option>
+                                                                    <option value="square">61-2692</option>
+                                                                    <option value="rectangle">66-1981</option>
+                                                                    <option value="rombo">80-2535</option>
+                                                                    <option value="romboid">61-2692</option>
+                                                                    <option value="trapeze">66-1981</option>
+                                                                    <option value="traible">80-2535</option>
+                                                                </select>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -643,13 +559,57 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-12 hidden" id="option">
-                                                        <input type="text" id="title" class="form-control" name="fname" placeholder="Task/Option/Project">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <fieldset class="form-label-group mb-0 counter-textarea">
+                                                                    <textarea data-length=20 class="form-control" id="textarea-counter" rows="3" placeholder="Task"></textarea>
+                                                                    <label for="textarea-counter">Task</label>
+                                                                </fieldset>
+                                                                <small class="counter-value float-right"><span class="char-count">0</span> / 20 </small>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <fieldset class="form-label-group mb-0 counter-textarea">
+                                                                    <textarea data-length=20 class="form-control" id="textarea-counter" rows="3" placeholder="Option"></textarea>
+                                                                    <label for="textarea-counter">Option</label>
+                                                                </fieldset>
+                                                                <small class="counter-value float-right"><span class="char-count">0</span> / 20 </small>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <fieldset class="form-label-group mb-0 counter-textarea">
+                                                                    <textarea data-length=20 class="form-control" id="textarea-counter" rows="3" placeholder="Project"></textarea>
+                                                                    <label for="textarea-counter">Project</label>
+                                                                </fieldset>
+                                                                <small class="counter-value float-right"><span class="char-count">0</span> / 20 </small>
+                                                            </div>
+                                                        </div>
+                                                        <!-- <input type="text" id="title" class="form-control" name="fname" placeholder="Task/Option/Project"> -->
                                                     </div>
                                                     <div class="col-12">
-                                                        <div class="col-md-12 form-group row">
-                                                            <div style="padding-top: 20px; padding-bottom: 20px;">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Upload Receipt</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <fieldset>
+                                                                    <div class="custom-file">
+                                                                        <input type="file" class="custom-file-input" id="inputGroupFile01">
+                                                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                                                    </div>
+                                                                </fieldset>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-12" style="text-align: center;">
                                                                 <button type="button" class="btn btn-outline-primary mr-1 mb-1" id="add-item">Add</button>
-                                                                <div><label for="task-icon"><b><i>*You must click Add to add items before clicking Next.</i></b></label></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 text-center">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-12" style="padding-bottom: 20px;">
+                                                                <label for="task-icon"><b><i>*You must click Add to add items before clicking Next.</i></b></label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -797,11 +757,13 @@
     <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
 
+
     <!-- BEGIN: Page Vendor JS-->
     <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.js"></script>
     <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
     <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
     <script src="../../../app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
+    <script src="../../../app-assets/vendors/js/forms/select/select2.full.min.js"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Page JS-->
@@ -824,11 +786,8 @@
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
-    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
-    <!-- END: Page JS-->
-
-    <!-- BEGIN: Page JS-->
     <script src="../../../app-assets/js/scripts/myScripts/users/reimbursement.js"></script>
+    <script src="../../../app-assets/js/scripts/forms/select/form-select2.js"></script>
     <!-- END: Page JS-->
 
 

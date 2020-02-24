@@ -9,32 +9,37 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Dashboard</title>
+    <title>Buyer-dashboard</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/datatables.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/pickers/pickadate/pickadate.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/animate/animate.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/apexcharts.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/tether-theme-arrows.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/tether.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/shepherd-theme-default.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
-	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/dark-layout.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/semi-dark-layout.css">
-
-
 
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
-
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/dashboard-analytics.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/card-analytics.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/tour/tour.css">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -167,13 +172,16 @@
                         </li>
 						<li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Pay an Invoice</span></a>
                         </li>
-						<li class="active"><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Procard Receipt</span></a>
+						<li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Procard Receipt</span></a>
                         </li>
                     </ul>
                 </li>
                 
 				<li class="nav-item"><a href=""><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">My Requests</span></a></li>
                 
+                <li class=" navigation-header"><span>Financial Staff</span></li>
+				<li class="active nav-item"><a href=""><i class="feather icon-aperture"></i><span class="menu-title" data-i18n="UserSettings">Pending Requests</span></a></li>
+				
 				<li class=" navigation-header"><span>Settings</span></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-bell"></i><span class="menu-title" data-i18n="Notifications">Notifications</span></a></li>
@@ -197,275 +205,201 @@
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
             <div class="content-header row">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="col-12">
+                            <h2 class="content-header-title float-left mb-0">My Pending Requests</h2>
+                            <div class="breadcrumb-wrapper col-12">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">Home</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">Pending Requests
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+                    <div class="form-group breadcrum-right">
+                        <div class="dropdown">
+                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-settings"></i></button>
+                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">Chat</a><a class="dropdown-item" href="#">Email</a><a class="dropdown-item" href="#">Calendar</a></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="content-body">
-                <!-- Dashboard Ecommerce Starts -->
-                <section id="dashboard-ecommerce">
-
-
-
+                <!-- Basic example and Profile cards section start -->
+                <section id="basic-examples">
+                    <div class="row match-height">
+                        <div class="col-xl-4 col-md-6 col-sm-12">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <!-- <img class="card-img img-fluid mb-1" src="../../../app-assets/images/pages/content-img-2.jpg" alt="Card image cap"> -->
+                                        <h5 class="mt-1"># 12345</h5>
+                                        <p class="card-text">By Pixinvent Creative Studio</p>
+                                        <hr class="my-1">
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <div class="float-left">
+                                                <p class="font-medium-2 mb-0">$ 4785.78</p>
+                                                <p class="">Budget</p>
+                                            </div>
+                                            <div class="float-right">
+                                                <p class="font-medium-2 mb-0">12 June 2019</p>
+                                                <p class="">Delivery Date</p>
+                                            </div>
+                                        </div>
+                                        <button class="btn gradient-light-primary btn-block mt-2"><a style="color: white;" href="buyer-pendingOrder.html">Edit</a></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 col-sm-12">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <!-- <img class="card-img img-fluid mb-1" src="../../../app-assets/images/pages/content-img-2.jpg" alt="Card image cap"> -->
+                                        <h5 class="mt-1"># 12345</h5>
+                                        <p class="card-text">By Pixinvent Creative Studio</p>
+                                        <hr class="my-1">
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <div class="float-left">
+                                                <p class="font-medium-2 mb-0">$ 4785.78</p>
+                                                <p class="">Budget</p>
+                                            </div>
+                                            <div class="float-right">
+                                                <p class="font-medium-2 mb-0">12 June 2019</p>
+                                                <p class="">Delivery Date</p>
+                                            </div>
+                                        </div>
+                                        <button class="btn gradient-light-primary btn-block mt-2">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
                 </section>
-                <!-- Dashboard Ecommerce ends -->
-
-                <!-- Receipt -->
-                <fieldset>
-                    <h2>Add a Receipt</h2>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="expense-icon">Vendor</label>
-                                <div class="position-relative has-icon-left">
-                                <input type="text" id="vendor-icon" class="form-control" name="fname-icon" placeholder="">
-                                <div class="form-control-position">
-                                    <i class="feather icon-clipboard"></i>
-                                </div>
-                              </div>
-                              </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="expense-icon">Expense Description</label>
-                                <div class="position-relative has-icon-left">
-                                <input type="text" id="expense-icon" class="form-control" name="fname-icon" placeholder="">
-                                <div class="form-control-position">
-                                    <i class="feather icon-clipboard"></i>
-                                </div>
-                              </div>
-                              </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="business-icon">Business Purpose</label>
-                                <div class="position-relative has-icon-left">
-                                <input type="text" id="business-icon" class="form-control" name="fname-icon" placeholder="">
-                                <div class="form-control-position">
-                                    <i class="feather icon-briefcase"></i>
-                                </div>
-                              </div>
-                              </div>
-                        </div>
-                        
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="amount-icon">Amount (USD)</label>
-                                <div class="position-relative has-icon-left">
-                                <input type="text" id="amount-icon" class="form-control" name="fname-icon" placeholder="">
-                                <div class="form-control-position">
-                                    <i class="feather icon-credit-card"></i>
-                                </div>
-                              </div>
-                              </div>
-                        </div>
-                       
-
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <div class="form-group d-flex align-items-center pt-md-2">
-                                <label class="mr-2" >Was Sales Tax Paid</label>
-                            </div>
-                        </div> 
-
-
-                        
-                        <div class="col-sm-10">
-                            <div class="form-group d-flex align-items-center pt-md-2">
-                                <div class="c-inputs-stacked">
-                                    <div class="d-inline-block mr-2">
-                                        <div class="vs-checkbox-con vs-checkbox-primary">
-                                            <input type="checkbox" value="false">
-                                            <span class="vs-checkbox">
-                                                <span class="vs-checkbox--check">
-                                                    <i class="vs-icon feather icon-check"></i>
-                                                </span>
-                                            </span>
-                                            <span class="">Yes</span>
-                                        </div>
-                                    </div>
-                                    <div class="d-inline-block mr-2">
-                                        <div class="vs-checkbox-con vs-checkbox-primary">
-                                            <input type="checkbox" value="false">
-                                            <span class="vs-checkbox">
-                                                <span class="vs-checkbox--check">
-                                                    <i class="vs-icon feather icon-check"></i>
-                                                </span>
-                                            </span>
-                                            <span class="">No</span>
-                                        </div>
-                                    </div>
-                                    <div class="d-inline-block">
-                                        <div class="vs-checkbox-con vs-checkbox-primary">
-                                            <input type="checkbox" value="false">
-                                            <span class="vs-checkbox">
-                                                <span class="vs-checkbox--check">
-                                                    <i class="vs-icon feather icon-check"></i>
-                                                </span>
-                                            </span>
-                                            <span class="">Item Not Taxable</span>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>    
-                    </div> 
-
-
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <div class="form-group d-flex align-items-center pt-md-2">
-                                <label class="mr-2" >Add a Receipt File </label>
-                                
-                            </div>        
-                        </div>
-                        
-                        <div class="col-sm-10">
-                            <div class="form-group d-flex align-items-center pt-md-2">
-                                <div class="c-inputs-stacked">
-                                    <div class="d-inline-block mr-2">
-                                        <input type="file">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-
-                    
-
-                   
-                                    
-                    
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label for="first-name-icon">Budget Number</label>
-                            <div class="form-group">
-                                <select class="select2 form-control">
-                                    <option value="square">Square</option>
-                                    <option value="rectangle">Rectangle</option>
-                                    <option value="rombo">Rombo</option>
-                                    <option value="romboid">Romboid</option>
-                                    <option value="trapeze">Trapeze</option>
-                                    <option value="traible">Triangle</option>
-                                    <option value="polygon">Polygon</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <label for="first-name-icon">Account Code</label>
-                            <div class="form-group">
-                                <select class="select2 form-control">
-                                    <option value="square">Square</option>
-                                    <option value="rectangle">Rectangle</option>
-                                    <option value="rombo">Rombo</option>
-                                    <option value="romboid">Romboid</option>
-                                    <option value="trapeze">Trapeze</option>
-                                    <option value="traible">Triangle</option>
-                                    <option value="polygon">Polygon</option>
-                                </select>
-                            </div>
-                        </div>
-
-                    </div>
-                    
-                   
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="subsub-icon">SubSubObject Code</label>
-                                <div class="position-relative has-icon-left">
-                                <input type="text" id="subsub-icon" class="form-control" name="fname-icon" placeholder="">
-                                <div class="form-control-position">
-                                    <i class="feather icon-hash"></i>
-                                </div>
-                              </div>
-                              </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="task-icon">Task (optional)</label>
-                                <div class="position-relative has-icon-left">
-                                <input type="text" id="task-icon" class="form-control" name="fname-icon" placeholder="">
-                                <div class="form-control-position">
-                                    <i class="feather icon-edit"></i>
-                                </div>
-                              </div>
-                              </div>
-                        </div>
-
-                    </div> 
-                    
-                   
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="task-icon">Option (optional)</label>
-                                <div class="position-relative has-icon-left">
-                                <input type="text" id="task-icon" class="form-control" name="fname-icon" placeholder="">
-                                <div class="form-control-position">
-                                    <i class="feather icon-list"></i>
-                                </div>
-                              </div>
-                              </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="project-icon">Project (optional)</label>
-                                <div class="position-relative has-icon-left">
-                                <input type="text" id="project-icon" class="form-control" name="fname-icon" placeholder="">
-                                <div class="form-control-position">
-                                    <i class="feather icon-layers"></i>
-                                </div>
-                              </div>
-                              </div>
-                        </div>
-
-                    </div>
-                    
-                    <div class="row" style="padding-top: 20px; padding-bottom: 20px;">
-                        <div class="col-sm-12 text-center">
-                            <button type="button" class="btn btn-outline-primary mr-1 mb-1 waves-effect waves-light">Add</button>
-                            <div><label for="task-icon"><b><i>*You must click Add to add items before clicking Next.</i></b></label></div>
-                            
-                        </div>
-
-                    </div>   
-
-                    <div class="row">
+                <!-- // Basic example and Profile cards section end -->
+            </div>
+            <div class="content-header row">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <table class="table zero-configuration">
-                                <thead>
-                                    <tr>
-                                        <th>Expense Description</th>
-                                        <th>Budget Number</th>
-                                        <th>Account</th>
-                                        <th>Amount</th>
-                                     </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
+                            <h2 class="content-header-title float-left mb-0">General Requests</h2>
+                            <div class="breadcrumb-wrapper col-12">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">Home</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">Pending Requests
+                                    </li>
+                                </ol>
+                            </div>
                         </div>
                     </div>
-                  
-                    
-                </fieldset>
-                <!-- End of Receipt -->
+                </div>
+                <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+                    <div class="form-group breadcrum-right">
+                        <div class="dropdown">
+                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-settings"></i></button>
+                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">Chat</a><a class="dropdown-item" href="#">Email</a><a class="dropdown-item" href="#">Calendar</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="mb-0">All Requests</h4> 
+                                
+                                <p>    Sort by
+                                    <select  id="basicSelect">
+                                        <option></option>
+                                        <option>Requester</option>
+                                        <option>Department</option>
+                                        <option>Date</option>
+                                    </select>
+                                </p>
+                                
+                                
+                            </div>
+                            <div class="card-content">
+                                <div class="table-responsive mt-1">
+                                    <table class="table table-hover-animation mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Request ID</th>
+                                                <th>Requester</th>
+                                                <th>Type of Request</th>
+                                                <th>Sub-unit</th>
+                                                <th>Amount</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                                <th>Assigned To</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1969737</td>
+                                                <td>John Doe</td>
+                                                <td>Reimbursement</td>
+                                                <td>PI-Ben Hall EnvE Lab</td>
+                                                <td>$53.83</td>
+                                                <td>1-23-2020</td>
+                                                <td><i class="fa fa-circle font-small-3 text-success mr-50"></i>Accepted</td>
+                                                <td>Ted</td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>1964537</td>
+                                                <td>Paul Brennan</td>
+                                                <td>Purchase Request</td>
+                                                <td>PI-Ben Hall EnvE Lab</td>
+                                                <td>$102.88</td>
+                                                <td>1-23-2020</td>
+                                                <td><i class="fa fa-circle font-small-3 text-warning mr-50"></i>Pending</td>
+                                                <td style="color: green;"><a href="buyer-dashboard-response.html">Take</a></td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>1346635</td>
+                                                <td>Kenndy Brown</td>
+                                                <td>Travel Request</td>
+                                                <td>PI-Ben Hall EnvE Lab</td>
+                                                <td>$929.01</td>
+                                                <td>1-30-2020</td>
+                                                <td><i class="fa fa-circle font-small-3 text-danger mr-50"></i>Rejected</td>
+                                                <td>Bridget</td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>1568075</td>
+                                                <td>Ash Mahain</td>
+                                                <td>Procard Receipt</td>
+                                                <td>PI-Ben Hall EnvE Lab</td>
+                                                <td>$388.20</td>
+                                                <td>2-1-2020</td>
+                                                <td><i class="fa fa-circle font-small-3 text-danger mr-50"></i>Rejected</td>
+                                                <td>Ted</td>
+                                            </tr>												
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <!-- END: Content-->
-
-   
-      
 
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>
@@ -482,24 +416,21 @@
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
-    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.js"></script>
-    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
-    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
-    <script src="../../../app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/pdfmake.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/vfs_fonts.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/buttons.html5.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/buttons.print.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
     <!-- END: Page Vendor JS-->
-
-    <!-- BEGIN: Page JS-->
-    <script src="../../../app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>
-    <!-- END: Page JS-->
 
     <!-- BEGIN: Page Vendor JS-->
-    <script src="../../../app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
-    <script src="../../../app-assets/vendors/js/extensions/polyfill.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/tether.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/shepherd.min.js"></script>
     <!-- END: Page Vendor JS-->
-
-    <!-- BEGIN: Page JS-->
-    <script src="../../../app-assets/js/scripts/extensions/sweet-alerts.js"></script>
-    <!-- END: Page JS-->
 
     <!-- BEGIN: Theme JS-->
     <script src="../../../app-assets/js/core/app-menu.js"></script>
@@ -511,7 +442,11 @@
     <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
     <!-- END: Page JS-->
 
-   
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/datatables/datatable.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/buyers/pendingOrder.js"></script>
+    <!-- END: Page JS-->
+
 
 </body>
 <!-- END: Body-->
