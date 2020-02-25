@@ -1,5 +1,7 @@
 //this will allow us to access methods defined in Units model
 var Units_ref = require('./Units');
+//this will allow us to access methods defined in Users model
+var Users_ref = require('./Users');
 
 var mongoose = require('mongoose');
 
@@ -121,6 +123,19 @@ async function check_subUnit_exsists_under_unit(subUnitName,UnitID)
 
 }
 
+//this function will help to find if a given userID is alreadye exists in UserIDs => if found true, not found false
+function check_UserID_exists_in_UserIDs(userID, SubUnit_JSON)
+{
+ 
+    for(var x=0;x<SubUnit_JSON.UserIDs.length;x++)
+        if(SubUnit_JSON.userIDs[x].ID == userID)
+            return true;
+
+
+
+    return false;
+}
+
 
 // ------------------- End of Helper Functions --------------------------------------------------------
 
@@ -171,4 +186,72 @@ module.exports.addSubUnits = async function(Subunit_JSON,callback){
 
 
 }
+
+//Method to add add new users to the Unit by ID of the Unit
+module.exports.addUsers_to_SubUnit_byID = async function(SubunitID,UserIDs_array,callback)
+{
+    
+    const results_subunit = await Subunit_exsits_inColleciton_byID(SubunitID);
+    var valid_UserIDs = []; //this will keep track of all the valid User IDs 
+
+    //this will filter out all the valid user IDs and save it in valid_UserIDs array
+    for(var x=0;x<UserIDs_array.length;x++)
+        if(await Users_ref.validate_UserID(UserIDs_array[x].ID))
+            valid_UserIDs.push(UserIDs_array[x]);
+
+
+            
+    if(results_subunit)
+    {
+        //Now lets remove any userIDs that already exsists in the fetched Unit record
+        for(var x=0;x<(valid_UserIDs.length);x++)
+            if(check_UserID_exists_in_UserIDs(valid_UserIDs[x].ID,results_subunit) == false)
+            {
+                //now lets push IDs that are not already in the array
+                try{
+                    await SubUnit.findByIdAndUpdate({"_id":SubunitID},{$push: {UserIDs:{ID:valid_UserIDs[x].ID, Approver:valid_UserIDs[x].Approver}}})
+                }catch{
+                    callback(`Error occured inserting ID:${valid_UserIDs[x].ID} to collection`);
+                    return;
+                }
+            }
+
+        callback(null,"Successfully added users");
+
+    }else //means we didn't find the Unit under Units collection
+        callback(`SubUnitID: ${SubunitID} not found !`,null);
+
+}
+
+
+//this method will find all the users and return their information given subunit ID
+module.exports.getUsers_with_information = async function(SubUnit_ID,callback){
+    //this will keep track of all the user information
+    var userInfo = [];
+    //check subunit exisists in the database
+    const subunit_fetched = await Subunit_exsits_inColleciton_byID(SubUnit_ID);;
+
+    if(subunit_fetched == null)
+    {
+        callback(`Invalid Sub Unit ID ${SubUnit_ID}`,null);
+        return;
+    }
+
+    //adding all the information to an array
+    for(var x=0;x<subunit_fetched.UserIDs.length;x++)
+    {
+        var tempInfo = (await Users_ref.User_exsists_inCollection_byID(subunit_fetched.UserIDs[x].ID)).toObject();
+        //adding admin information to the JSON object
+        tempInfo.Approver = subunit_fetched.UserIDs[x].Approver;
+        userInfo.push(tempInfo);
+    }
+        
+    //finally send all the information to the client
+    callback(null,userInfo);
+
+}
+
+//TODO : route to add submitters !!
+
+
 // ------------------- End of API Functions ------------------------------------------------------------------

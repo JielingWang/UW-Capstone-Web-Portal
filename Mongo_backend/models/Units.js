@@ -130,6 +130,7 @@ async function Unit_exsits_inColleciton_byName(Unit_name, owned_department)
 //this function will help to find if a given userID is alreadye exists in UserIDs => if found true, not found false
 function check_UserID_exists_in_UserIDs(userID, Unit_JSON)
 {
+    console.log(Unit_JSON);
     for(var x=0;x<Unit_JSON.userIDs.length;x++)
         if(Unit_JSON.userIDs[x].ID == userID)
             return true;
@@ -230,6 +231,34 @@ module.exports.addUsers_to_Unit_byID = async function(unitID,UserIDs_array,callb
         callback(null,"Successfully added users");
 
     }else //means we didn't find the Unit under Units collection
-        callback(`UnitID: ${unitID} not found !`,valid_UserIDs);
+        callback(`UnitID: ${unitID} not found !`,null);
+
+}
+
+
+//this method will find all the users and return their information given unit ID
+module.exports.getUsers_with_information = async function(Unit_ID,callback){
+    //this will keep track of all the user information
+    var userInfo = [];
+    //check unit exisists in the database
+    const unit_fetched = await Unit.Unit_exsists_inCollection_byID(Unit_ID);
+
+    if(unit_fetched == null)
+    {
+        callback(`Invalid Unit ID ${Unit_ID}`,null);
+        return;
+    }
+
+    //adding all the information to an array
+    for(var x=0;x<unit_fetched.userIDs.length;x++)
+    {
+        var tempInfo = (await Users_ref.User_exsists_inCollection_byID(unit_fetched.userIDs[x].ID)).toObject();
+        //adding admin information to the JSON object
+        tempInfo.Admin = unit_fetched.userIDs[x].Admin;
+        userInfo.push(tempInfo);
+    }
+        
+    //finally send all the information to the client
+    callback(null,userInfo);
 
 }

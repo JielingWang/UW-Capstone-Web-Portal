@@ -92,6 +92,28 @@ module.exports.validate_UserID = async function (UserID)
     }
 }
 
+//this function will return the user information if user existis in the collection, given user ID
+module.exports.User_exsists_inCollection_byID = async function(userID){
+
+    try{
+        return (await User.findById(userID));
+    }catch //cath will be executed when mongoose cant find the record !
+    {
+        return null;
+    }
+}
+
+
+//this function will check whether if given Unit exists in the collection by its name
+async function User_exsits_inColleciton_byName(User_name)
+{
+    try{
+        return (await User.findOne({"Name":User_name}));
+    }catch{
+        return null;
+    }
+}
+
 // ------------------- End of Helper Functions --------------------------------------------------------
 
 

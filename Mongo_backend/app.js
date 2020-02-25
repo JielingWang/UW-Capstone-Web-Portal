@@ -95,10 +95,24 @@ app.put('/api/units/:_id',function(req,res){
     });
 });
 
+//route to get information about all the users in the unit
+app.get('/api/units/getUserInfomation/:_id',function(req,res){
+    var Unit_ID = req.params._id;
+    Units.getUsers_with_information(Unit_ID,function(err,unit){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":unit});
+        }
+    });
+});
+
+
 // ---- End of Unit Routes ------
 
 
 // ---- SubUnit Routes -------
+//route to add subunits to the collection
 app.post('/api/subunits',function(req,res){
     var Unit_JSON = req.body;
 
@@ -110,6 +124,33 @@ app.post('/api/subunits',function(req,res){
         }
     });
 });
+
+//route to add new users to Unit
+app.put('/api/subunits/:_id',function(req,res){
+    var SubUnit_users = req.body;
+    var SubUnit_ID = req.params._id;
+    SubUnits.addUsers_to_SubUnit_byID(SubUnit_ID,SubUnit_users.userIDs,function(err,unit){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":unit});
+        }
+    });
+});
+
+//route to get information about all the users in the subunit
+app.get('/api/subunits/getUserInfomation/:_id',function(req,res){
+    var Unit_ID = req.params._id;
+    SubUnits.getUsers_with_information(Unit_ID,function(err,unit){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":unit});
+        }
+    });
+});
+
+
 // ---- End of SubUnit Routes ------
 
 
