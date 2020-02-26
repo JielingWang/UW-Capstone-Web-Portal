@@ -2,6 +2,8 @@
 var Units_ref = require('./Units');
 //this will allow us to access methods defined in Users model
 var Users_ref = require('./Users');
+//this will allows us to use Budget document in this model
+var Budget_Model = require('./Budget');
 
 var mongoose = require('mongoose');
 
@@ -12,18 +14,6 @@ var subUnitScheme = mongoose.Schema({
         type:String,
         required: true
     },
-    //acts as managers to a given SubUnit, but we can set each manager to be able to an approver or just a manager has viewing capabilities
-    UserIDs:[{
-        ID:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-            required: true
-        },
-        Approver:{
-            type:Boolean,
-            required: true
-        }
-    }],
     Submitters_IDs:[
         {
             type: [mongoose.Schema.Types.ObjectId],
@@ -33,7 +23,8 @@ var subUnitScheme = mongoose.Schema({
     UnitID_ref:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Unit'
-    }
+    },
+    BudgetTable:[Budget_Model]
 });
 
 var SubUnit = module.exports = mongoose.model('SubUnit', subUnitScheme);
@@ -41,41 +32,135 @@ var SubUnit = module.exports = mongoose.model('SubUnit', subUnitScheme);
 // ------------------- Helper Functions --------------------------------------------------------
 
 //This validator function will validate Passed in JSON object contains correct data types
-function validate_and_copy_passedJSON(JSON_Obj, callback) {
+async function validate_and_copy_passedJSON(JSON_Obj, callback) {
 
     var err_list = []; //this will keep all the error messages
 
-    //Empty template of a user JSON object
-    var User_JSON_Obj = {
+    //Empty template of a subunit JSON object
+    var SubUnit_JSON_Obj = {
         "subUnitName": null,
-        "UserIDs": [],
         "Submitters_IDs": [],
-        "UnitID_ref": null
+        "UnitID_ref": null,
+        "BudgetTable":[]
     };
+
+    //Empty template of a Budget JSON object
+    var Buget_JSON_Obj = {
+        "budgetNumber": null,
+        "budgetName": null,
+        "startDate": null,
+        "endDate": null,
+        "approvers": [],
+        "approvalLogic": null
+    }
+
+
+
 
     if (typeof JSON_Obj.subUnitName != 'string')
         err_list.push("subUnitName is not String type")
     else
-        User_JSON_Obj.subUnitName = JSON_Obj.subUnitName;
-
-    if (!Array.isArray(JSON_Obj.UserIDs))
-        err_list.push("Department is not array type")
-    else
-        User_JSON_Obj.UserIDs = JSON_Obj.UserIDs;
+        SubUnit_JSON_Obj.subUnitName = JSON_Obj.subUnitName;
         
     if (!Array.isArray(JSON_Obj.Submitters_IDs))
         err_list.push("Submitters_IDs is not array type")
     else
-        User_JSON_Obj.Submitters_IDs = JSON_Obj.Submitters_IDs;    
+        SubUnit_JSON_Obj.Submitters_IDs = JSON_Obj.Submitters_IDs;    
         
     if (typeof JSON_Obj.UnitID_ref != 'string')
         err_list.push("UnitID_ref is not String type")
     else
-        User_JSON_Obj.UnitID_ref = JSON_Obj.UnitID_ref;    
+        SubUnit_JSON_Obj.UnitID_ref = JSON_Obj.UnitID_ref;
+        
+    if (!Array.isArray(JSON_Obj.BudgetTable))
+        err_list.push("BudgetTable is not array type")
+    else
+        //check if client has provided BudgetTable information, if not (if array is empty) we just skip this part 
+        if(JSON_Obj.BudgetTable.length > 0)
+        {
+            for(var x=0;x<JSON_Obj.BudgetTable.length;x++)
+            {
+                if (typeof JSON_Obj.BudgetTable[x].budgetNumber != 'string')
+                    err_list.push(`budgetNumber at BudgetTable element ${x+1} is not String type`)
+                else
+                    Buget_JSON_Obj.budgetNumber = JSON_Obj.BudgetTable[x].budgetNumber;    
+                    
+                if (typeof JSON_Obj.BudgetTable[x].budgetName != 'string')
+                    err_list.push(`budgetName at BudgetTable element ${x+1} is not String type`)
+                else
+                    Buget_JSON_Obj.budgetName = JSON_Obj.BudgetTable[x].budgetName;  
 
+                //check if client sent a valid date for start date
+                if(Date.parse(JSON_Obj.BudgetTable[x].startDate) == null)
+                    err_list.push(`startDate at BudgetTable element ${x+1} is not valid date type`)
+                else
+                    Buget_JSON_Obj.startDate = new Date(JSON_Obj.BudgetTable[x].startDate);
+
+                //check if client sent a valid date for end date
+                if(JSON_Obj.BudgetTable[x].endDate != "" ||  JSON_Obj.BudgetTable[x].endDate != null) //check if there's a date, if not skip this part
+                    if(Date.parse(JSON_Obj.BudgetTable[x].endDate) == null)
+                        err_list.push(`endDate at BudgetTable element ${x+1} is not valid date type`)
+                    else
+                        Buget_JSON_Obj.endDate = new Date(JSON_Obj.BudgetTable[x].endDate);
+
+                if (typeof JSON_Obj.BudgetTable[x].approvalLogic != 'string')
+                    err_list.push(`approvalLogic at BudgetTable element ${x+1} is not String type`)
+                else
+                    Buget_JSON_Obj.approvalLogic = JSON_Obj.BudgetTable[x].approvalLogic;  
+                
+                //check if the approver field contains an array
+                if (!Array.isArray(JSON_Obj.BudgetTable[x].approvers))
+                    err_list.push(`approvers at BudgetTable element ${x+1} is not array type`)
+                else
+                    //less go through all the elements and validate them
+                    for(var y=0;y<JSON_Obj.BudgetTable[x].approvers.length;y++)
+                    {
+                        //check passed in user ID is actually exists
+                        const fetched_User_info = await Users_ref.User_exsists_inCollection_byID(JSON_Obj.BudgetTable[x].approvers[y].ID);
+                        if(fetched_User_info == null)
+                        {
+                            err_list.push(`BudgetTable element ${x+1}, approver element ${y+1} user ID doesnot exists in the user table`);
+                            break;
+                        }
+                        //check limit is a number
+                        if(typeof JSON_Obj.BudgetTable[x].approvers[y].limit != 'number')
+                        {
+                            err_list.push(`BudgetTable element ${x+1}, approver element ${y+1} limit is not a number`);
+                            break;
+                        }
+                        //check allowedRequests is an array type
+                        if(!Array.isArray(JSON_Obj.BudgetTable[x].approvers[y].allowedRequests))
+                        {
+                            err_list.push(`BudgetTable element ${x+1}, approver element ${y+1} allowedRequests is not array type`);
+                            break;
+                        }
+                        
+                        //if we pass all the checks then push this bad boy to the array
+                        Buget_JSON_Obj.approvers.push(JSON_Obj.BudgetTable[x].approvers[y]);
+                        
+                    }
+
+                //if we pass all the checks then push this budget to the SubUnit_JSON_Obj's BudgetTable
+                var temp = new Object(); //creating a new object, otherwise it'll save a reference to the object
+                SubUnit_JSON_Obj.BudgetTable.push(Object.assign(temp,Buget_JSON_Obj));
+                //now less reset the Buget_JSON_Obj for next iteration
+                Buget_JSON_Obj.budgetNumber = null;
+                Buget_JSON_Obj.budgetName = null;
+                Buget_JSON_Obj.startDate = null;
+                Buget_JSON_Obj.endDate = null;
+                Buget_JSON_Obj.approvers = [];
+                Buget_JSON_Obj.approvalLogic = null;
+            }
+        }
+
+        /*TODO:
+            1. Check if budget already exists under subunit if yes we dont need a duplicate
+            2. If Mentioned in the submitter array is mentioned in the approver array then remove him from the submitter array. And wiseversa*/
+            
+            
 
     if(err_list.length == 0)
-        return User_JSON_Obj;
+        return SubUnit_JSON_Obj;
     else
     {
         callback(err_list,null);
@@ -143,6 +228,11 @@ function check_UserID_exists_in_UserIDs(userID, SubUnit_JSON)
 // ------------------- API Functions ------------------------------------------------------------------
 //Method to add a new SubUnit to the mongoDB 
 module.exports.addSubUnits = async function(Subunit_JSON,callback){
+    /*const subUnit_validated = await validate_and_copy_passedJSON(Subunit_JSON,callback);
+    if(subUnit_validated == null)
+        return;
+    else
+        callback(null,subUnit_validated);*/
 
 
     const Unit_results = await Units_ref.Unit_exsists_inCollection_byID(Subunit_JSON.UnitID_ref);
@@ -163,7 +253,7 @@ module.exports.addSubUnits = async function(Subunit_JSON,callback){
     if(SubUnit_result)
     {
             try{
-                const subUnit_validated = validate_and_copy_passedJSON(Subunit_JSON,callback);
+                const subUnit_validated = await validate_and_copy_passedJSON(Subunit_JSON,callback);
                 if(subUnit_validated == null)
                     return;
                 //adding new subunit to the collection
@@ -187,71 +277,7 @@ module.exports.addSubUnits = async function(Subunit_JSON,callback){
 
 }
 
-//Method to add add new users to the Unit by ID of the Unit
-module.exports.addUsers_to_SubUnit_byID = async function(SubunitID,UserIDs_array,callback)
-{
-    
-    const results_subunit = await Subunit_exsits_inColleciton_byID(SubunitID);
-    var valid_UserIDs = []; //this will keep track of all the valid User IDs 
 
-    //this will filter out all the valid user IDs and save it in valid_UserIDs array
-    for(var x=0;x<UserIDs_array.length;x++)
-        if(await Users_ref.validate_UserID(UserIDs_array[x].ID))
-            valid_UserIDs.push(UserIDs_array[x]);
-
-
-            
-    if(results_subunit)
-    {
-        //Now lets remove any userIDs that already exsists in the fetched Unit record
-        for(var x=0;x<(valid_UserIDs.length);x++)
-            if(check_UserID_exists_in_UserIDs(valid_UserIDs[x].ID,results_subunit) == false)
-            {
-                //now lets push IDs that are not already in the array
-                try{
-                    await SubUnit.findByIdAndUpdate({"_id":SubunitID},{$push: {UserIDs:{ID:valid_UserIDs[x].ID, Approver:valid_UserIDs[x].Approver}}})
-                }catch{
-                    callback(`Error occured inserting ID:${valid_UserIDs[x].ID} to collection`);
-                    return;
-                }
-            }
-
-        callback(null,"Successfully added users");
-
-    }else //means we didn't find the Unit under Units collection
-        callback(`SubUnitID: ${SubunitID} not found !`,null);
-
-}
-
-
-//this method will find all the users and return their information given subunit ID
-module.exports.getUsers_with_information = async function(SubUnit_ID,callback){
-    //this will keep track of all the user information
-    var userInfo = [];
-    //check subunit exisists in the database
-    const subunit_fetched = await Subunit_exsits_inColleciton_byID(SubUnit_ID);;
-
-    if(subunit_fetched == null)
-    {
-        callback(`Invalid Sub Unit ID ${SubUnit_ID}`,null);
-        return;
-    }
-
-    //adding all the information to an array
-    for(var x=0;x<subunit_fetched.UserIDs.length;x++)
-    {
-        var tempInfo = (await Users_ref.User_exsists_inCollection_byID(subunit_fetched.UserIDs[x].ID)).toObject();
-        //adding admin information to the JSON object
-        tempInfo.Approver = subunit_fetched.UserIDs[x].Approver;
-        userInfo.push(tempInfo);
-    }
-        
-    //finally send all the information to the client
-    callback(null,userInfo);
-
-}
-
-//TODO : route to add submitters !!
 
 
 // ------------------- End of API Functions ------------------------------------------------------------------
