@@ -1,4 +1,10 @@
+//this will give us access to Units model
+var Units_ref = require('./Units');
+//this will give us access to SubUnits model
+var SubUnits_ref = require('./SubUnits');
+
 var mongoose = require('mongoose');
+
 
 //schema for users
 var userSchema = mongoose.Schema({
@@ -134,6 +140,100 @@ module.exports.addUser = function (user, callback) {
 module.exports.searchUser_byObjectID = function(userID,callback){
 
     User.findById(userID,callback);
+}
+
+
+//this will login a user given its UWID
+module.exports.loginUser = async function(UWID,callback){
+
+    try{
+        var userInfo = await User.findOne({"UWID":UWID});
+        if(userInfo == null)
+        {
+            callback(`User with UW net ID: ${UWID} does not exist in the database`,null);
+            return;
+        }
+
+        var accessInfo =        {
+                                    "userInfo":userInfo
+
+                                }
+        const user_ObjID = userInfo._id;
+        //now lets traverse through all the units and find if the user exists in the Units collection
+
+            var fetched_Unit_info = await Units_ref.getAllUnits();
+            if(fetched_Unit_info != null)
+                for(var x=0;x<fetched_Unit_info.length;x++)
+                    for(var y=0;y<fetched_Unit_info[x].userIDs.length;y++)
+                        if(fetched_Unit_info[x].userIDs[y].ID.equals(user_ObjID) && fetched_Unit_info[x].userIDs[y].Admin == true)
+                        {
+                            accessInfo.AccessLevel =  "Financial Admin";
+                            accessInfo.UnitName = fetched_Unit_info[x].unitName;
+                            accessInfo.UnitID = fetched_Unit_info[x]._id;
+                            callback(null,accessInfo);
+                            return;
+                        }else if (fetched_Unit_info[x].userIDs[y].ID.equals(user_ObjID) && fetched_Unit_info[x].userIDs[y].Admin == false)
+                        {
+                            accessInfo.AccessLevel =  "Financial Staff";
+                            accessInfo.UnitName = fetched_Unit_info[x].unitName;
+                            accessInfo.UnitID = fetched_Unit_info[x]._id;
+                            callback(null,accessInfo);
+                            return;
+                        }
+
+        
+        
+                        
+        //now lets traverse through all the subunits and find if the user exists under submitters in the SubUnits collection        
+        var fetched_subUnit_info = await SubUnits_ref.getAllSubUnits();
+        if(fetched_subUnit_info != null)
+        {
+            for(var xx=0;xx<fetched_subUnit_info.length;xx++)
+            {
+                for(var yy=0;yy<fetched_subUnit_info[xx].Submitters_IDs.length;yy++)
+                {
+                    if(fetched_subUnit_info[xx].Submitters_IDs[yy].equals(user_ObjID))
+                    {
+                        accessInfo.AccessLevel =  "Submitter";
+                        accessInfo.SubUnitName = fetched_subUnit_info[xx].subUnitName;
+                        accessInfo.SubUnitID = fetched_subUnit_info[xx]._id;
+                        callback(null,accessInfo);
+                        return;                        
+                    }
+                }
+            }
+
+            //now lets traverse through all the subunits and find if the user exists under approver in the SubUnits collection
+            for(var xx=0;xx<fetched_subUnit_info.length;xx++)
+            {
+                for(var yy=0;yy<fetched_subUnit_info[xx].BudgetTable.length;yy++)
+                {
+                    //console.log(fetched_subUnit_info[xx].BudgetTable[yy]);
+                    for(var zz=0;zz<fetched_subUnit_info[xx].BudgetTable[yy].approvers.length;zz++)
+                    {
+                        if(fetched_subUnit_info[xx].BudgetTable[yy].approvers[zz].ID == user_ObjID)
+                        {
+                            
+                            accessInfo.AccessLevel =  "Approver";
+                            accessInfo.SubUnitName = fetched_subUnit_info[xx].subUnitName;
+                            accessInfo.SubUnitID = fetched_subUnit_info[xx]._id;
+                            callback(null,accessInfo);
+                            return;                             
+                        }
+                    }
+                }
+            }
+        }
+
+
+        //incase we didn't find that user just say cant find him/her
+        callback(`User with UW net ID: ${UWID} is not assigned with a access Level. Please assign the user first to login`,null);
+        return;                            
+        
+    }catch{
+        callback(`Login Error Occured while looking for UWID`,null);
+        return;
+    }
 }
 
 // ------------------- End of API Functions ------------------------------------------------------------------

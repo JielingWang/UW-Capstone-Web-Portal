@@ -64,6 +64,18 @@ app.post('/api/users',function(req,res){
     });
 });
 
+app.get('/api/login/:_netID',function(req,res){
+    var User_JSON = req.params._netID;
+
+    Users.loginUser(User_JSON,function(err,user){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":user});
+        }
+    });
+});
+
 // ---- End of User Routes ------
 
 
@@ -112,6 +124,7 @@ app.get('/api/units/getUserInfomation/:_id',function(req,res){
 
 
 // ---- SubUnit Routes -------
+
 //route to add subunits to the collection
 app.post('/api/subunits',function(req,res){
     var Unit_JSON = req.body;
@@ -126,6 +139,121 @@ app.post('/api/subunits',function(req,res){
 });
 
 
+//route to add submitters to the collection
+app.post('/api/submitters/:_id',function(req,res){
+    const Unit_JSON = req.body;
+    const SubUnit_ID = req.params._id;
+
+    SubUnits.addSubmitters(Unit_JSON,SubUnit_ID,function(err,unit){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":unit});
+        }
+    });
+});
+
+
+//route to remove submitters to the collection
+app.put('/api/submitters/:_id',function(req,res){
+    const Unit_JSON = req.body;
+    const SubUnit_ID = req.params._id;
+
+    SubUnits.removeSubmitter(Unit_JSON,SubUnit_ID,function(err,unit){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":unit});
+        }
+    });
+});
+
+
+
+//route to add approvers to the collection
+app.post('/api/approvers/:_id/:_budgetID',function(req,res){
+    const approver_JSON = req.body;
+    const SubUnit_ID = req.params._id;
+    const Budget_ID = req.params._budgetID
+
+    SubUnits.addApprover(SubUnit_ID,Budget_ID,approver_JSON,function(err,unit){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":unit});
+        }
+    });
+});
+
+//route to add new budget to a subunit given its subunit ID 
+app.post('/api/addNewBudgets/:_id',function(req,res){
+    const budgets_JSON = req.body;
+    const SubUnit_ID = req.params._id;
+
+    SubUnits.addBudget(SubUnit_ID,budgets_JSON,function(err,unit){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":unit});
+        }
+    });
+});
+
+
+//route to add new budget to a subunit given its subunit ID 
+app.get('/api/removeBudget/:_subUnitID/:_BudgetNumber',function(req,res){
+    const SubUnit_ID = req.params._subUnitID;
+    const BudgetNumber = req.params._BudgetNumber;
+
+    SubUnits.removeBudget(SubUnit_ID,BudgetNumber,function(err,unit){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":unit});
+        }
+    });
+});
+
+
+//route to get information about given subunit
+app.get('/api/subunits/:_subUnitID',function(req,res){
+    const SubUnit_ID = req.params._subUnitID;
+
+    SubUnits.getSubUnitDetails(SubUnit_ID,function(err,unit){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":unit});
+        }
+    });
+});
+
+
+//route to get information about given subunit
+app.get('/api/getBudget/:_budgetID/',function(req,res){
+    const budgetID = req.params._budgetID;
+
+    SubUnits.getBudgetDetails(budgetID,function(err,unit){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":unit});
+        }
+    });
+});
+
+//route to get information about submitters given subunit ID
+app.get('/api/getSubmitterInfo/:_subUnitID/',function(req,res){
+    const subUnitID = req.params._subUnitID;
+
+    SubUnits.getSubmitterInfo(subUnitID,function(err,unit){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":unit});
+        }
+    });
+});
 
 
 // ---- End of SubUnit Routes ------

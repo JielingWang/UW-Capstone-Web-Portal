@@ -6,7 +6,8 @@ require('mongoose-currency').loadType(mongoose);
 var budgetScheme = mongoose.Schema({
     budgetNumber:{
         type:String,
-        required: true
+        required: true,
+        unique: true
     },
     budgetName:{
         type:String,

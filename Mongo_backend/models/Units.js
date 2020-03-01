@@ -103,6 +103,18 @@ function validate_UserIDs(UserIDs_array, callback){
 
 }
 
+//this function will return all the Units in the colleciton
+module.exports.getAllUnits = async function ()
+{
+    try{
+        return (await Unit.find({}));
+    }catch //cath will be executed when mongoose cant find the record !
+    {
+        return null;
+    }
+    
+}
+
 //this function will check whether if given Unit exists in the collection by its ID
 module.exports.Unit_exsists_inCollection_byID = async function (UnitID)
 {
