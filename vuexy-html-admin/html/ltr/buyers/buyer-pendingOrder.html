@@ -250,7 +250,7 @@
                                 <h1>Reimbursement</h1>
                             </div>
                             <div class="col-sm-6 col-12 text-right">
-                                <h1>#0012020</h1>
+                                <h1>Request ID: 0012020</h1>
                             </div>
                         </div>
                         <div id="invoice-company-details" class="row">
@@ -258,14 +258,14 @@
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">REQUESTER</h6>
                                     <p>Jieling Wang</p>
-                                    <h6 class="mt-2">Category</h6>
-                                    <p>Food and Beverage</p>
+                                    <h6 class="mt-2">SUB-UNIT</h6>
+                                    <p>Qwertt Lab</p>
                                 </div>
                             </div>
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">REQUEST DATE</h6>
-                                    <p>10 Dec 2018</p>
+                                    <p>21 Feb 2020</p>
                                     <h6 class="mt-2">PAYEE</h6>
                                     <p>Jieling Wang</p>
                                 </div>
@@ -281,109 +281,90 @@
                         </div>
                         <!--/ Invoice Company Details -->
 
-                        <!-- Invoice Recipient Details -->
-                        <div id="invoice-customer-details" class="row pt-2">
-                            <div class="col-sm-6 col-12 text-left">
-                                <h5>Delivery Method: Mail Check</h5>
-                                <div class="recipient-info my-2">
-                                    <p>Jieling Wang</p>
-                                    <p>3927 Adams Lane NE</p>
-                                    <p>Seattle, WA</p>
-                                    <p>98105</p>
-                                </div>
-                                <div class="recipient-contact pb-2">
-                                    <p>
-                                        <i class="feather icon-mail"></i>
-                                        jielingw@uw.edu
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- <div class="col-sm-6 col-12 text-right">
-                                <h5>Microsion Technologies Pvt. Ltd.</h5>
-                                <div class="company-info my-2">
-                                    <p>9 N. Sherwood Court</p>
-                                    <p>Elyria, OH</p>
-                                    <p>94203</p>
-                                </div>
-                                <div class="company-contact">
-                                    <p>
-                                        <i class="feather icon-mail"></i>
-                                        hello@pixinvent.net
-                                    </p>
-                                    <p>
-                                        <i class="feather icon-phone"></i>
-                                        +91 999 999 9999
-                                    </p>
-                                </div>
-                            </div> -->
-                        </div>
-                        <!--/ Invoice Recipient Details -->
-
-                        <!-- Invoice Items Details -->
                         <div id="invoice-items-details" class="pt-1 invoice-items-table">
                             <div class="row">
                                 <div class="table-responsive col-12">
                                     <table class="table table-borderless">
                                         <thead>
                                             <tr>
-                                                <th>DESCRIPTION</th>
-                                                <th>BUSINESS PURPOSE</th>
-                                                <th>CATEGORY</th>
-                                                <th>BUDGET NUMBER</th>
-                                                <th>AMOUNT</th>
-                                                <th>TAX</th>
+                                                <th>SHIPPING ADDRESS</th>
+                                                <th>DELIVERY METHODS</th>
+                                                <th colspan="2">REQUEST SUMMARY</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody class="recipient-info my2">
                                             <tr>
-                                                <td>Website Redesign</td>
-                                                <td>Website Redesign</td>
-                                                <td>Food and Beverage</td>
-                                                <td>#68-123</td>
-                                                <td>$1234</td>
-                                                <td>$123.4</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Newsletter Design</td>
-                                                <td>Template Redesign</td>
-                                                <td>Other</td>
-                                                <td>#68-123</td>
-                                                <td>$1234</td>
-                                                <td>$123.4</td>
+                                                <td style="vertical-align: top;">
+                                                    <p>Jieling Wang</p>
+                                                    <p>3927 Adams Lane NE</p>
+                                                    <p>Seattle, WA</p>
+                                                    <p>98105</p>
+                                                </td>
+                                                <td style="vertical-align: top;">Mail Check</td>
+                                                <td style="vertical-align: top;">
+                                                    <p>Subtotal:</p>
+                                                    <p>Shipping & Handling:</p>
+                                                    <p>Total before tax:</p>
+                                                    <p>Estimated tax to be:</p>
+                                                    <p><strong>Grand total:</strong></p>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    <p>$1234.4</p>
+                                                    <p>$3.89</p>
+                                                    <p>$26.87</p>
+                                                    <p>$2.71</p>
+                                                    <p>$29.58</p>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                        <div id="invoice-total-details" class="invoice-total-table">
-                            <div class="row">
-                                <div class="col-5 offset-7">
-                                    <div class="table-responsive">
-                                        <table class="table table-borderless">
-                                            <tbody>
-                                                <tr>
-                                                    <th>SUBTOTAL</th>
-                                                    <td>$1357.4</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>SHIPPING</th>
-                                                    <td>$0</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>TOTAL</th>
-                                                    <td>$1357.4</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+
+                        <!-- Invoice Items Details -->
+                        <div class="col-12" style="margin-top: 1rem;">
+                            <div class="form-group row">
+                                <table class="table zero-configuration">
+                                    <thead>
+                                        <!-- <tr>
+                                            <th colspan="2">Description</th>
+                                        </tr> -->
+                                        <tr>
+                                            <th>Expense Description</th>
+                                            <th>Category</th>
+                                            <th>Amount</th>
+                                            <th>Receipt</th>
+                                         </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Template Design</td>
+                                            <td>Food and Beverage</td>
+                                            <td>$123</td>
+                                            <td>
+                                                <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-file"></i></button>
+                                                <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-edit"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Template Design</td>
+                                            <td>Food and Beverage</td>
+                                            <td>$123</td>
+                                            <td>
+                                                <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-file-plus"></i></button>
+                                                <!-- <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-edit"></i></button> -->
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
+                        
 
                         <!-- Invoice Footer -->
                         <div id="invoice-footer" class="text-right pt-3">
-                            <p>Transfer the amounts to the business amount below. Please include invoice number on your check.
+                            <!-- <p>Transfer the amounts to the business amount below. Please include invoice number on your check. -->
                                 <p class="bank-details mb-0">
                                     <span class="mr-4">Apartment: <strong>ECE</strong></span>
                                     <span>Phone: <strong>G882-1111-2222-3333</strong></span>
@@ -395,7 +376,65 @@
                 </section>
                 <!-- invoice page end -->
 
-                <div class="row">
+                <!-- Timeline Starts -->
+                <section id="timeline-card">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Request History</h4>
+                                    <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                                    <div class="heading-elements">
+                                        <ul class="list-inline mb-0">
+                                            <li><a data-action="collapse"><i class="feather icon-chevron-down"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-content collapse">
+                                    <div class="card-body">
+                                        <ul class="activity-timeline timeline-left list-unstyled">
+                                            <li>
+                                                <div class="timeline-icon bg-primary">
+                                                    <i class="feather icon-plus font-medium-2"></i>
+                                                </div>
+                                                <div class="timeline-info">
+                                                    <p class="font-weight-bold">Task Added</p>
+                                                    <span>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</span>
+                                                </div>
+                                                <small class="">25 days ago</small>
+                                            </li>
+                                            <li>
+                                                <div class="timeline-icon bg-warning">
+                                                    <i class="feather icon-alert-circle font-medium-2"></i>
+                                                </div>
+                                                <div class="timeline-info">
+                                                    <p class="font-weight-bold">Task Updated</p>
+                                                    <span>Cupcake gummi bears soufflé caramels candy</span>
+                                                </div>
+                                                <small class="">15 days ago</small>
+                                            </li>
+                                            <li>
+                                                <div class="timeline-icon bg-success">
+                                                    <i class="feather icon-check font-medium-2"></i>
+                                                </div>
+                                                <div class="timeline-info">
+                                                    <p class="font-weight-bold">Task Completed</p>
+                                                    <span>Candy ice cream cake. Halvah gummi bears
+                                                    </span>
+                                                </div>
+                                                <small class="">20 minutes ago</small>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+                <!-- Timeline Ends -->
+
+                <!-- <div class="row">
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-content">
@@ -406,7 +445,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="row">
                     <div class="col-md-12">

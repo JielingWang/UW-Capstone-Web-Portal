@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Page Title</title>
+</head>
+
+<body>
+
+    <h1>Documentation</h1>
+    <h2>Result Section<h2>
+    <p id="result"></p>
+    
+
+   <h3 style="padding-top:50px;">Requests</h3>
+
+   <div style="padding-bottom: 20px;padding-top:5px;">
+    <p>POST Request Examples:</p>
+    <button type="button" onclick="addUsers()">Add User</button>
+    <button type="button" onclick="addUnit()">Add Unit</button>
+   </div>
+
+   <div style="padding-bottom: 20px;padding-top:5px;">
+    <p>GET Request Examples:</p>
+    <button type="button" onclick="login()">Login</button>
+   </div>
+
+
+   <div style="padding-bottom: 20px;padding-top:5px;"> 
+    <p>PUT Request Examples:</p>
+    <button type="button" onclick="addNewUsers()">Add Users to Unit</button>
+   </div>
+
+   <div style="padding-bottom: 20px;padding-top:5px;"> 
+    <p>DELETE Request Examples:</p>
+    <button type="button" onclick="deleteOrder()">Delete Order</button>
+   </div>
+
+   <form style="padding-top:50px;">
+    <p>Order Upload:</p>
+    <p>Link for tutotial: https://dev.to/imben1109/html-form-ajax-file-upload-front-end-2klc</p>
+    <input type="file" id="fileSelect"/>
+    <label for="fname">JSON String:</label>
+    <input type="text" id="input1" name="fname" value='{"userID_ref": "5e5c0de60acb7314e6bbe8d4", "OrderType":"Procard", "OrderInfo":"TEST ORDER INFO", "OrderStatus":"Submitted", "ChatInfo":"Test Chat INFO","assignedTo":null}'>
+    <button type="button" onclick="uploadOrder()">Submit</button>
+  </form>
+
+  <form style="padding-top:50px;">
+    <p>Upload Files to a Order:</p>
+    <input type="file" id="fileSelect1"/>
+    <label for="fname">Order ID (MongoDB ID):</label>
+    <input type="text" id="orderID" name="fname" >
+    <button type="button" onclick="uploadFiles()">Submit</button>
+  </form>
+   
+
+
+</body>
+
+
+
+
+<!--Adding JQuery plugin-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="Examples.js"></script>
+
+</html>
