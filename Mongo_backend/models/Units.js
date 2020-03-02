@@ -219,12 +219,13 @@ module.exports.addUsers_to_Unit_byID = async function(unitID,UserIDs_array,callb
 
     const results_unit = await Unit.Unit_exsists_inCollection_byID(unitID);
     var valid_UserIDs = []; //this will keep track of all the valid User IDs 
-
+    
     //this will filter out all the valid user IDs and save it in valid_UserIDs array
     for(var x=0;x<UserIDs_array.length;x++)
         if(await Users_ref.validate_UserID(UserIDs_array[x].ID))
             valid_UserIDs.push(UserIDs_array[x]);
-
+    
+        
     if(results_unit)
     {
         //Now lets remove any userIDs that already exsists in the fetched Unit record
@@ -260,7 +261,6 @@ module.exports.getUsers_with_information = async function(Unit_ID,callback){
         callback(`Invalid Unit ID ${Unit_ID}`,null);
         return;
     }
-
     //adding all the information to an array
     for(var x=0;x<unit_fetched.userIDs.length;x++)
     {

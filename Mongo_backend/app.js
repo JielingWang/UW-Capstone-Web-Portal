@@ -64,17 +64,7 @@ app.post('/api/users',function(req,res){
     });
 });
 
-app.get('/api/login/:_netID',function(req,res){
-    var User_JSON = req.params._netID;
 
-    Users.loginUser(User_JSON,function(err,user){
-        if(err){
-            res.json({"status":false, "data":err});
-        }else{
-            res.json({"status":true, "data":user});
-        }
-    });
-});
 
 // ---- End of User Routes ------
 
@@ -200,7 +190,7 @@ app.post('/api/addNewBudgets/:_id',function(req,res){
 });
 
 
-//route to add new budget to a subunit given its subunit ID 
+//route to remove budget
 app.get('/api/removeBudget/:_subUnitID/:_BudgetNumber',function(req,res){
     const SubUnit_ID = req.params._subUnitID;
     const BudgetNumber = req.params._BudgetNumber;
@@ -229,7 +219,7 @@ app.get('/api/subunits/:_subUnitID',function(req,res){
 });
 
 
-//route to get information about given subunit
+//route to budget information given Budget number
 app.get('/api/getBudget/:_budgetID/',function(req,res){
     const budgetID = req.params._budgetID;
 
@@ -251,6 +241,18 @@ app.get('/api/getSubmitterInfo/:_subUnitID/',function(req,res){
             res.json({"status":false, "data":err});
         }else{
             res.json({"status":true, "data":unit});
+        }
+    });
+});
+
+app.get('/api/login/:_netID',function(req,res){
+    var User_JSON = req.params._netID;
+
+    SubUnits.loginUser(User_JSON,function(err,user){
+        if(err){
+            res.json({"status":false, "data":err});
+        }else{
+            res.json({"status":true, "data":user});
         }
     });
 });
@@ -279,6 +281,7 @@ app.post('/api/uploadOrder',function(req,res){
 app.put('/api/uploadFiles/:_orderID',function(req,res){
     const Order_ID = req.params._orderID;
     const files = req.files;
+    console.log(files);
     Orders.uploadFiles(Order_ID,files,function(err,unit){
         if(err){
             res.json({"status":false, "data":err});
