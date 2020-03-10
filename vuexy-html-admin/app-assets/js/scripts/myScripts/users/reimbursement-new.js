@@ -113,3 +113,8 @@ $(document).on('click', '#option_project', function() {
         $('#project_checked').attr('class', 'col-md-3 hidden');
     }
 });
+
+/** hardcode for presentation */
+$(document).on('click', '#confirm_item', function() {
+    $('#added_line_item_1').attr('class', 'visible');
+})
