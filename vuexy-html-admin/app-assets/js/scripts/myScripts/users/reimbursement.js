@@ -1,7 +1,7 @@
 // alert("CONNECTED!");
 
 //this function is called at onlick of each travelable expense check boxes
-function  myselfOrBehalfRadio_actions(RadioLogic) //CheckboxLogic = 1 -- YES, CheckboxLogic == 0 -- NO
+function myselfOrBehalfRadio_actions(RadioLogic) //CheckboxLogic = 1 -- YES, CheckboxLogic == 0 -- NO
 {
     var myselfRadio = document.getElementById("myselfRadio_Yes");
     var onBehalfRadio = document.getElementById("onBehalfRadio_Yes");
@@ -15,17 +15,36 @@ function  myselfOrBehalfRadio_actions(RadioLogic) //CheckboxLogic = 1 -- YES, Ch
     
     //actually checking which one's checked and displaying any additional messages
     if (myselfRadio.checked) {
-        document.getElementById("myself_Yes").className = "col-12 visible";
-        document.getElementById("onBehalf_Yes").className = "col-12 hidden"; 
-        document.getElementById("onBehalf_Yes_2").className = "col-12 hidden";
+        document.getElementById("onBehalf_Yes").className = "hidden"; 
     }
     else {
-        document.getElementById("myself_Yes").className = "col-12 hidden";
-        document.getElementById("onBehalf_Yes").className = "col-12 visible";
-        document.getElementById("onBehalf_Yes_2").className = "col-12 visible";
+        document.getElementById("onBehalf_Yes").className = "visible";
     }
 
 }
+
+$("#chekMail").click(function() {
+    alert("clicked!");
+})
+
+// function checkMail_actions()
+// {
+//     alert("clicked");
+//     var deposit = document.getElementById("deposit");
+//     var checkDepartment = document.getElementById("checkDepartment");
+//     var checkMail = document.getElementById("checkMail");
+
+    
+//     //actually checking which one's checked and displaying any additional messages
+//     if (checkMail.checked) {
+//         document.getElementById("mail-addr").className = "visible"; 
+//         alert("clicked!!");
+//     }
+//     else {
+//         document.getElementById("mail-addr").className = "hidden";
+//     }
+
+// }
 
 function splitBudget_actions() {
     var checked = document.getElementById("optional_check");

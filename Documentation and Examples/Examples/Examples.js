@@ -63,9 +63,9 @@ function addUsers()
 {
     //this is the data we need to send to backend to add a new user
     var JSON_data = {
-        "Name": "Test user",
-        "email": "test@uw.edu",
-        "UWID":"131131131",
+        "Name": "Test user2",
+        "email": "test2@uw.edu",
+        "UWID":"131131132",
         "profile_imageURL":"",
         "verified_user":true
     }
@@ -147,7 +147,7 @@ function addNewUsers()
 {
     //this is the data we need to send to backend to add a new user
     var JSON_data = {
-        "userIDs": [{"ID":"5e5c0de60acb7314e6bbe8d4","Admin":false},{"ID":"5e5c13340acb7314e6bbe8e6","Admin":true}]
+        "userIDs": [{"ID":"5e5d5d76701e1d1d386475be","Admin":false},{"ID":"5e5d5c22701e1d1d386475bb","Admin":true}]
     }
     //this function will be called in a successfull data exchange with the backend
     var onSuccess = function(data)
@@ -164,7 +164,7 @@ function addNewUsers()
         document.getElementById("result").innerHTML = "Backend faliure occured";
     }
 
-    makePutRequest("units/5e5c1d4198a27a5e0f467376",JSON_data,onSuccess,onFaliure);
+    makePutRequest("units/5e5d5c2b701e1d1d386475bc",JSON_data,onSuccess,onFaliure);
 
 
 }
