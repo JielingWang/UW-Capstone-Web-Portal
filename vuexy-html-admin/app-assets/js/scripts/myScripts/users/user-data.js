@@ -116,23 +116,25 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
 
     //now lets set up the JSON_toServer JSON Object
     JSON_toServer.userID_ref = user_id;  // 5e63127145f8e019d1f26ddc
-    JSON_toServer.OrderType = "Test Orderzz";
+    JSON_toServer.OrderType = "Test Orderzz_TEST";
     JSON_toServer.OrderInfo = JSON.stringify(JSON_OrderInfo_inForm);
     JSON_toServer.OrderStatus = "Submitted"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
     JSON_toServer.ChatInfo = "TEST CHAT INFO"; //leaving this empty since there's no chat when user upload a order first
     JSON_toServer.assignedTo = null; //leaving this as null since there's no one assigned when a user upload/submit a order.
 
 
-    // var fileSelect = document.getElementById("fileField1");
-    // console.log("HErHEWr");
-    // for(var x = 0; x < fileSelect.files.length; x++) {
-    //     formData.append(fileSelect.files[x].name, fileSelect.files[x]);
-    // }
-        //formData.append("files", fileSelect.files[x]); //"files" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request"
+    var fileSelect = document.getElementById("fileField1");
+        for(var x = 0; x < fileSelect.files.length; x++) {
+            formData.append(fileSelect.files[x].name, fileSelect.files[x]);
+        }
+       formData.append("files", fileSelect.files[x]); //"files" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request"
+    
+    
 
 
     //here we just pass in the JSON object we need to pass to the server. "JSON_body" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request
     formData.set("JSON_body", JSON.stringify(JSON_toServer));
+    console.log(JSON_toServer);
     // Http Request  
     var request = new XMLHttpRequest();
     //this function will get the response from the server after we upload the order
