@@ -134,17 +134,16 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
 
     //here we just pass in the JSON object we need to pass to the server. "JSON_body" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request
     formData.set("JSON_body", JSON.stringify(JSON_toServer));
-    console.log(JSON_toServer);
     // Http Request  
     var request = new XMLHttpRequest();
     //this function will get the response from the server after we upload the order
     request.onreadystatechange = function() {
-        if (request.readyState == XMLHttpRequest.DONE) {
-            alert(request.responseText);
+        console.log("HERE");
+        if (request.readyState == 4) {
+            callback(request.response);
         }
     }
     request.open('POST', baseURL + "uploadOrder");
-    console.log(formData);
     request.send(formData);
 });
 
