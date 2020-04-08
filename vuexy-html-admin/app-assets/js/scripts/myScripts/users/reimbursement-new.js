@@ -7,35 +7,27 @@ $(document).on('click', '#myselfRadio_Yes', function(){
     $('#onBehalf_Yes').attr('class', 'hidden');
 });
 
-/** control payment method part */
-$(document).on('click', '#individual_emplyee', function(){
-    alert('emplyee');
-    $('#emplyee_payment').attr('class', 'col-11 visible');
-    $('#nonemplyee_payment').attr('class', 'col-11 hidden');
-})
+/** control radio selected */
+$(document).on('click', 'input', function(){
+    /** payment method part */
+    var individual = $("input[name='individual-reimbursed']:checked").val();
+    if (individual == "employee") {
+        $('#emplyee_payment').attr('class', 'col-11 visible');
+        $('#nonemplyee_payment').attr('class', 'col-11 hidden');
+    } else {
+        $('#emplyee_payment').attr('class', 'col-11 hidden');
+        $('#nonemplyee_payment').attr('class', 'col-11 visible');
+    }
 
-$(document).on('click', '#student', function(){
-    $('#emplyee_payment').attr('class', 'col-11 hidden');
-    $('#nonemplyee_payment').attr('class', 'col-11 visible');
-})
-
-$(document).on('click', '#nonuw', function(){
-    $('#emplyee_payment').attr('class', 'col-11 hidden');
-    $('#nonemplyee_payment').attr('class', 'col-11 visible');
-})
-
-/** control mail-addr part */
-$(document).on('click', '#emplyee_checkMail', function(){
-    $('#mail-addr').attr('class', 'visible');
+    /** control mail-addr */
+    var needsAddr = $("input[name='paymentRadio']:checked").val();
+    if (needsAddr == "nonemployee_checkMail") {
+        $('#mail-addr').attr('class', 'visible');
+    } else {
+        $('#mail-addr').attr('class', 'hidden');
+    }
 });
 
-$(document).on('click', '#emplyee_deposit', function(){
-    $('#mail-addr').attr('class', 'hidden');
-});
-
-$(document).on('click', '#emplyee_checkDepartment', function(){
-    $('#mail-addr').attr('class', 'hidden');
-});
 
 /** control repeat */
 

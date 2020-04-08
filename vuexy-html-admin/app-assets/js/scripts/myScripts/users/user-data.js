@@ -1,5 +1,5 @@
 const baseURL = "http://localhost:3000/api/";
-var user_id = "5e63127145f8e019d1f26ddc";
+var user_id = "5e5d5c22701e1d1d386475bb";
 
 
 // Template POst request Ajax call
@@ -104,15 +104,15 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
     }
 
     //lets setup JSON_OrderInfo_inForm JSON Object according to the information from the frontend form --> actual field names varies according to your frontend form
-    JSON_OrderInfo_inForm.ReimburseFor = "test";
-    JSON_OrderInfo_inForm.Individual = "";
-    JSON_OrderInfo_inForm.PaymentMethod = "";
-    JSON_OrderInfo_inForm.ExpenseDescription = "";
-    JSON_OrderInfo_inForm.BusinessPurpose = "";
-    JSON_OrderInfo_inForm.Category = "test";
-    JSON_OrderInfo_inForm.Amount = "12345";
-    JSON_OrderInfo_inForm.TaxPaid = "";
-    JSON_OrderInfo_inForm.BudgetNum = "888";
+    JSON_OrderInfo_inForm.ReimburseFor = $("input[name='myselfOrBehalfRadio']:checked").val();
+    JSON_OrderInfo_inForm.Individual = $("input[name='individual-reimbursed']:checked").val();
+    JSON_OrderInfo_inForm.PaymentMethod = $("input[name='paymentRadio']:checked").val();
+    JSON_OrderInfo_inForm.ExpenseDescription = $("input[name='expense']").val();
+    JSON_OrderInfo_inForm.BusinessPurpose = $("input[name='business']").val();
+    JSON_OrderInfo_inForm.Category = $("select#category option:checked").val();
+    JSON_OrderInfo_inForm.Amount = $("input[name='amount']").val();
+    JSON_OrderInfo_inForm.TaxPaid = $("input[name='taxRadio']").val();
+    JSON_OrderInfo_inForm.BudgetNum = $("select#budgetNum option:checked").val();
 
     //now lets set up the JSON_toServer JSON Object
     JSON_toServer.userID_ref = user_id;  // 5e63127145f8e019d1f26ddc
@@ -124,10 +124,10 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
 
 
     var fileSelect = document.getElementById("fileField1");
-        for(var x = 0; x < fileSelect.files.length; x++) {
-            formData.append(fileSelect.files[x].name, fileSelect.files[x]);
-        }
-       formData.append("files", fileSelect.files[x]); //"files" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request"
+    for(var x = 0; x < fileSelect.files.length; x++) {
+        formData.append(fileSelect.files[x].name, fileSelect.files[x]);
+    }
+    formData.append("files", fileSelect.files[x]); //"files" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request"
     
     
 
@@ -140,7 +140,7 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
     request.onreadystatechange = function() {
         console.log("HERE");
         if (request.readyState == 4) {
-            callback(request.response);
+            console.log(request.response);
         }
     }
     request.open('POST', baseURL + "uploadOrder");
