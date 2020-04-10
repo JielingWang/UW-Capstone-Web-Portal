@@ -1,5 +1,5 @@
-const baseURL = "http://localhost:3000/api/";
-var user_id = "5e5d5c22701e1d1d386475bb";
+const baseURL = "https://coe-api.azurewebsites.net/api/";
+var user_id = "5e8e45eea148b9004420651f";
 
 
 // Template POst request Ajax call
@@ -76,6 +76,30 @@ var makeGetRequest = function(url, onSuccess, onFailure) {
 
 // })
 
+// var editeditems = [];
+// ...
+
+// $('#SaveChanges').click(function() {
+//     $('.portlet').each(function() {
+//         var settings = [];
+//         $('.settingInput').each(function() {
+//             settings.push({
+//                 settingkey: $(this).attr('name'),
+//                 settingvalue: $(this).attr('value')
+//             });
+//         });
+
+//         editeditems.push({
+//             itemname: $(this).data('itemname'),
+//             settings: settings
+//         });
+//     });
+
+//     ...
+// });
+
+// var requestInfo = [];
+
 $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS() {
     alert('send data to database');
     var formData = new FormData();
@@ -90,34 +114,49 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
         "assignedTo": null
     }
 
-    //this is the information, you need to collect from the frontend. Field in the JSON object will be different according to the type of Form user is submitting
-    var JSON_OrderInfo_inForm = {
-        "ReimburseFor": null,
-        "Individual": null,
-        "PaymentMethod": null,
-        "ExpenseDescription": null,
-        "BusinessPurpose": null,
-        "Category": null,
-        "Amount": null,
-        "TaxPaid": null,
-        "BudgetNum": null
+    var requestInfo = {
+        ReimburseFor: $("input[name='myselfOrBehalfRadio']:checked").val(),
+        Individual: $("input[name='individual-reimbursed']:checked").val(),
+        PaymentMethod: $("input[name='paymentRadio']:checked").val(),
+        ExpenseDescription: $("input[name='expense']").val(),
+        BusinessPurpose: $("input[name='business']").val(),
+        Category: $("select#category option:checked").val(),
+        Amount: $("input[name='amount']").val(),
+        TaxPaid: $("input[name='taxRadio']").val(),
+        BudgetNum: $("select#budgetNum option:checked").val()
     }
 
+    //this is the information, you need to collect from the frontend. Field in the JSON object will be different according to the type of Form user is submitting
+    // var JSON_OrderInfo_inForm = {
+    //     "ReimburseFor": null,
+    //     "Individual": null,
+    //     "PaymentMethod": null,
+    //     "ExpenseDescription": null,
+    //     "BusinessPurpose": null,
+    //     "Category": null,
+    //     "Amount": null,
+    //     "TaxPaid": null,
+    //     "BudgetNum": null
+    // }
+
     //lets setup JSON_OrderInfo_inForm JSON Object according to the information from the frontend form --> actual field names varies according to your frontend form
-    JSON_OrderInfo_inForm.ReimburseFor = $("input[name='myselfOrBehalfRadio']:checked").val();
-    JSON_OrderInfo_inForm.Individual = $("input[name='individual-reimbursed']:checked").val();
-    JSON_OrderInfo_inForm.PaymentMethod = $("input[name='paymentRadio']:checked").val();
-    JSON_OrderInfo_inForm.ExpenseDescription = $("input[name='expense']").val();
-    JSON_OrderInfo_inForm.BusinessPurpose = $("input[name='business']").val();
-    JSON_OrderInfo_inForm.Category = $("select#category option:checked").val();
-    JSON_OrderInfo_inForm.Amount = $("input[name='amount']").val();
-    JSON_OrderInfo_inForm.TaxPaid = $("input[name='taxRadio']").val();
-    JSON_OrderInfo_inForm.BudgetNum = $("select#budgetNum option:checked").val();
+    // JSON_OrderInfo_inForm.ReimburseFor = $("input[name='myselfOrBehalfRadio']:checked").val();
+    // JSON_OrderInfo_inForm.Individual = $("input[name='individual-reimbursed']:checked").val();
+    // JSON_OrderInfo_inForm.PaymentMethod = $("input[name='paymentRadio']:checked").val();
+    // JSON_OrderInfo_inForm.ExpenseDescription = $("input[name='expense']").val();
+    // JSON_OrderInfo_inForm.BusinessPurpose = $("input[name='business']").val();
+    // JSON_OrderInfo_inForm.Category = $("select#category option:checked").val();
+    // JSON_OrderInfo_inForm.Amount = $("input[name='amount']").val();
+    // JSON_OrderInfo_inForm.TaxPaid = $("input[name='taxRadio']").val();
+    // JSON_OrderInfo_inForm.BudgetNum = $("select#budgetNum option:checked").val();
 
     //now lets set up the JSON_toServer JSON Object
     JSON_toServer.userID_ref = user_id;  // 5e63127145f8e019d1f26ddc
     JSON_toServer.OrderType = "Test Orderzz_TEST";
-    JSON_toServer.OrderInfo = JSON.stringify(JSON_OrderInfo_inForm);
+    // JSON_toServer.OrderInfo = JSON.stringify(JSON_OrderInfo_inForm);
+    // JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
+    JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
+    // console.log(typeof(requestInfo));
     JSON_toServer.OrderStatus = "Submitted"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
     JSON_toServer.ChatInfo = "TEST CHAT INFO"; //leaving this empty since there's no chat when user upload a order first
     JSON_toServer.assignedTo = null; //leaving this as null since there's no one assigned when a user upload/submit a order.
@@ -140,7 +179,15 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
     request.onreadystatechange = function() {
         console.log("HERE");
         if (request.readyState == 4) {
-            console.log(request.response);
+
+            // show it in the console
+            const response_obj = JSON.parse(request.response);
+            const data_obj = response_obj.data;
+            //convert order info to JSON
+            const orderInfo_obj = JSON.parse(data_obj.OrderInfo);
+            console.log(orderInfo_obj);
+
+            // show it in the summary table
         }
     }
     request.open('POST', baseURL + "uploadOrder");
