@@ -9,12 +9,14 @@ function login()
     {
         if(data.status)
         {
+            console.log(data);
             //saving following data in session storage
             window.sessionStorage.setItem("id",data.data.userInfo._id);
             window.sessionStorage.setItem("name",data.data.userInfo.Name);
             window.sessionStorage.setItem("uwid",data.data.userInfo.UWID);
             window.sessionStorage.setItem("unitID",data.data.UnitID);
             window.sessionStorage.setItem("unitName",data.data.UnitName);
+            window.sessionStorage.setItem("profile_pic_url",data.data.userInfo.profileImage_URL);
 
             if(data.data.AccessLevel == "Financial Admin")
             {

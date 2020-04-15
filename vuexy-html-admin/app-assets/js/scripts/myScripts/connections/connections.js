@@ -30,6 +30,19 @@ var makePutRequest = function(url, data, onSuccess, onFailure) {
 };
 
 
+// Template PUT request Ajax call without a body
+var makePutRequest_NoBody = function(url, onSuccess, onFailure) {
+    $.ajax({
+        async:false,
+        type: 'PUT',
+        url: baseURL + url,
+        dataType: "json",
+        success: onSuccess,
+        error: onFailure
+    });
+};
+
+
 // Template Delete request Ajax call
 var makeDeleteRequest = function(url, onSuccess, onFailure) {
     $.ajax({
@@ -44,7 +57,6 @@ var makeDeleteRequest = function(url, onSuccess, onFailure) {
 
 // Template GET request Ajax call
 var makeGetRequest = function(url, onSuccess, onFailure) {
-    console.log(baseURL + url);
    $.ajax({
        async:false,
        type: 'GET',

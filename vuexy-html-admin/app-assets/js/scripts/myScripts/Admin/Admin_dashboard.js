@@ -1,21 +1,26 @@
+var administrative_staff_table = null
+
 window.onload = function()
 {
+
     update_Dashboard_welcomebar_navigationbar();
     update_administrativeStaff_table();
     update_subunit_table();
+
+
 }
 
 
 
 function update_Dashboard_welcomebar_navigationbar()
 {
-    //as soon as we get here lets set user name and Unit information to the dashboard
-    document.getElementById("navigationBarName").textContent = sessionStorage.getItem("name");
+    
     //Now welcome mesaage
     const welcome_message = welcomeMessage() + " " + sessionStorage.getItem("name").split(" ")[0] + " !";
     document.getElementById("welcome_userName").innerHTML = "<b>"+welcome_message+"</b>";
     //adding unit name
     document.getElementById("welcome-unitName").innerHTML = '<i class="feather icon-map-pin"></i> ' + sessionStorage.getItem("unitName");
+
 }
 
 
@@ -52,6 +57,7 @@ function update_subunit_table()
             subunit_table_body.appendChild(subunit_table_row_generator(data.data[x].subUnitName,data.data[x].type));
         }
         
+
     }
 
     //this function will be called when data exchange with backend occured an error
@@ -78,7 +84,7 @@ function build_administrative_table_rows(profile_img_url,name,admin)
     li.setAttribute('data-popup','tooltip-custom');
     li.setAttribute('data-placement','bottom');
     li.setAttribute('data-original-title',name);
-    li.setAttribute('class','avatar pull-up');
+    li.setAttribute('class','avatar mr-1 avatar-lg');
     var img = document.createElement('img');
     img.setAttribute('class','media-object rounded-circle');
     if(profile_img_url=="" || profile_img_url == null)
@@ -100,16 +106,26 @@ function build_administrative_table_rows(profile_img_url,name,admin)
     var td_name = document.createElement('td');
     td_name.innerHTML = name;
 
+    //accesslevel cell
     var td_accessLevel = document.createElement('td');
+    var chip = document.createElement('div');
+    var chip_body = document.createElement('div');
+    chip_body.setAttribute('class','chip-body');
+    var chip_text = document.createElement('div');
+    chip_text.setAttribute('class','chip-text');
     if(admin)
     {
-        td_accessLevel.setAttribute('style','color:Tomato');
-        td_accessLevel.innerHTML = "<b>Administrator</b>";
+        chip.setAttribute('class','chip chip-danger');
+        chip_text.innerHTML = "Administrator";
     }else
     {
-        td_accessLevel.setAttribute('style','color:MediumSeaGreen');
-        td_accessLevel.innerHTML = "<b>Staff</b>";
+        chip.setAttribute('class','chip chip-success');
+        chip_text.innerHTML = "Fiscal Staff";
     }
+
+    chip_body.appendChild(chip_text);
+    chip.appendChild(chip_body);
+    td_accessLevel.appendChild(chip);
         
     
 
@@ -138,4 +154,7 @@ function subunit_table_row_generator(name,type)
     return tr;
 
 }
+
+
+
 //----------------------------- End of Helpers   ------------------------------

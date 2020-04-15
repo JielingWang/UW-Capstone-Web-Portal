@@ -9,7 +9,7 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Dashboard</title>
+    <title>My Unit</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
@@ -17,6 +17,7 @@
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/datatables.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/toastr.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -32,8 +33,9 @@
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
-
-
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/forms/validation/form-validation.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/extensions/toastr.css">
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -156,11 +158,11 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-			<li class="active"><a href="dashboard_admin.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
+			<li class="nav-item"><a href="dashboard_admin.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
                 
             
                 <li class=" navigation-header"><span>Manage</span></li>
-                <li class=" nav-item"><a href="manage_myUnits.html"><i class="feather icon-square"></i><span class="menu-title" data-i18n="UserSettings">My Unit</span></a></li>
+                <li class="active"><a href="manage_myUnits.html"><i class="feather icon-square"></i><span class="menu-title" data-i18n="UserSettings">My Unit</span></a></li>
                 <li class=" nav-item"><a href="manage_subunits.html"><i class="feather icon-layers"></i><span class="menu-title" data-i18n="Notifications">Subunits</span></a></li>
                 <li class=" nav-item"><a href=""><i class="feather icon-clipboard"></i><span class="menu-title" data-i18n="Logout">All Budgets</span></a></li>
 
@@ -191,79 +193,155 @@
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
             <div class="content-header row">
-            </div>
-            <div class="content-body">
-                <!-- Dashboard Ecommerce Starts -->
-                <section id="dashboard-ecommerce">
-				
-                                <div class="card text-white bg-gradient-primary text-center">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <img src="../../../app-assets/images/elements/UW.png" alt="element 05" width="120" class="mb-1 img-fluid">
-                                            <h1 class="text-white " id="welcome_userName" style="font-size:50px;"><b></b></h1>
-                                            <p class="card-text text-white" id="welcome-unitName"><i class="feather icon-map-pin"></i></p>
-                                        </div>
-                                    </div>
-                                </div>
-								
-								
-					<div class="row">
-                        <div class="col-md-6 col-12" >
-                            <div class="card h-100" >
-                                <div class="card-header">
-                                    <h4 class="mb-0"><b>Administrative Staff</b></h4>
-                                </div>
-                                <div class="card-content">
-                                    <div class="table-responsive mt-1">
-                                        <table id="administrative_staff_table_" class="table table-hover-animation mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Profile</th>
-                                                    <th>Name</th>
-                                                    <th>Access Level</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="adminnistrative_staff_table_body">
-                                             
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    
-                                </div>
-                               
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12">
-                            <div class="card h-100">
-                                <div class="card-header">
-                                    <h4 class="mb-0"><b>Subunits</b></h4>
-                                </div>
-                                <div class="card-content">
-                                    <div class="table-responsive mt-1" id="subunits_table_content">
-                                        <table class="table table-hover-animation mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Type</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="subunits_table_body">
-  
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="col-12">
+                            <h2 class="content-header-title float-left mb-0">Manage My Unit</h2>
                         </div>
                     </div>
-							
-					
+                </div>
+            </div>
+            <div class="content-body">
+
+                
+                <!-- Dashboard Ecommerce Starts -->
+                <section >	
+                    
+					<div class="row">
+                        <div class="col-md-12 col-12" >
+                            <div class="card h-100" >
+                                <div class="card-header">
+                                    <h4 class="mb-0"><b>Staff Overview</b></h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body card-dashboard">
+                                        
+                                        <div class="table-responsive">
+                                            <table id="staff_overview_table" class="table zero-configuration" style="cursor: pointer;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>_id</th>
+                                                        <th></th>
+                                                        <th>Name</th>
+                                                        <th>UW ID</th>
+                                                        <th>Email</th>
+                                                        <th>Access Level</th>
+                                                        <th>Verified User</th>
+                                                        <th>Profile Picture URL</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="staff_overview_table_body">
+      
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!--Input part-->
+                                    <div class="row" style="margin-left: 10px; margin-right:10px;">
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="first-name-icon">Name</label>
+                                                <div class="position-relative has-icon-left">
+                                                    <input type="text" id="name_staff_overview" class="form-control" name="fname-icon" placeholder="Name" onkeyup="manage_Unit_updateBtn_hide_unhide();">
+                                                    <div class="form-control-position">
+                                                        <i class="feather icon-user"></i>
+                                                    </div>
+                                                </div>
+                                                <label id="nameErrorField" style="color: #e74c3c;"></label>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="first-name-icon">Email</label>
+                                                <div class="position-relative has-icon-left">
+                                                    <input type="text" id="email_staff_overview" class="form-control" name="fname-icon" placeholder="Email" onkeyup="manage_Unit_addBtn_hide_unhide(); manage_Unit_updateBtn_hide_unhide();">
+                                                    <div class="form-control-position">
+                                                        <i class="feather icon-mail"></i>
+                                                    </div>
+                                                </div>
+                                                <label id="emailErrorField" style="color: #e74c3c;"></label>
+                                            </div>
+
+                                        </div>
+                    
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="first-name-icon">UW ID</label>
+                                                <div class="position-relative has-icon-left">
+                                                    <input type="text" id="uw_ID_staff_overview" class="form-control" name="fname-icon" placeholder="UW ID" onkeyup="manage_Unit_addBtn_hide_unhide(); manage_Unit_updateBtn_hide_unhide();">
+                                                    <div class="form-control-position">
+                                                        <i class="feather icon-hash"></i>
+                                                    </div>
+                                                </div>
+                                                <label id="UWIDErrorField" style="color: #e74c3c;"></label>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="location1">Access Level</label>
+                                                <select class="custom-select form-control" id="accessLevel_staff_overview" name="accessLevel" onchange="manage_Unit_updateBtn_hide_unhide();">
+                                                    <option value="empty"></option>
+                                                    <option value="Administrator">Administrator</option>
+                                                    <option value="Fiscal_Staff">Fiscal Staff</option>
+                                                </select>   
+                                                <label id="accessLevelErrorField" style="color: #e74c3c;"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End of Input part-->
+
+
+
+                                    
+                                    <div id="buttons_staff_overview" style="margin-right: 10px; padding-top: 30px;">
+                                        <button type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="ManageUnit_clearBtn_logic()">Clear</button>
+                                        <button id="ManageUnit_removeBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="ManageUnitRemove()">Remove</button>
+                                        <button id="ManageUnit_updateBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="ManageUnitUpdate()">Update</button>
+                                        <button id="ManageUnit_addBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="ManageUnitAdd()">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+								
+					<div class="row" style="padding-top: 20px;">
+                        <div class="col-md-12 col-12" >
+                            <div class="card h-100" >
+                                <div class="card-header">
+                                    <h4 class="mb-0"><b>Manage Unit Name</b></h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="row" style="margin-left: 10px; margin-right:10px; padding-top: 50px;">
+                                        <div class="col-md-12 col-12">
+                                            <div class="form-group">
+                                                <div class="position-relative has-icon-left">
+                                                    <input type="text" id="Manage_unit_name_field" class="form-control" name="fname-icon" placeholder="Unit Name" onkeyup="Manage_unit_name_button_hide_unhide_logic();">
+                                                    <div class="form-control-position">
+                                                        <i class="feather icon-square"></i>
+                                                    </div>
+                                                </div>
+                                                <label id="nameErrorField" style="color: #e74c3c;"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="buttons_staff_overview" style="margin-right: 10px; ">
+                                        <button id="ManageUnitNameUpdate" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="ManageUnitNameUpdate()">Update</button>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+					</div>
+
+  
+                                        
                 </section>
                 <!-- Dashboard Ecommerce ends -->
-              
+
 
             </div>
         </div>
@@ -294,15 +372,13 @@
     <script src="../../../app-assets/js/scripts/components.js"></script>
     <!-- END: Theme JS-->
 
-    <!-- BEGIN: Page JS-->
-    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
-    <!-- END: Page JS-->
+
 
     <!--My Scripts-->
     <script src="../../../app-assets/js/scripts/myScripts/connections/connections.js"></script>
-    <script src="../../../app-assets/js/scripts/myScripts/connections/welcomeGenerator.js"></script>
     <script src="../../../app-assets/js/scripts/myScripts/Admin/navigation_handler.js"></script>
-    <script src="../../../app-assets/js/scripts/myScripts/Admin/Admin_dashboard.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/Admin/manage_myUnits.js"></script>
+
     <!--End of My Scripts-->
 
     <!-- BEGIN: Page Vendor JS-->
@@ -316,13 +392,17 @@
     <script src="../../../app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
     <!-- END: Page Vendor JS-->
 
-    
     <!-- BEGIN: Page JS-->
     <script src="../../../app-assets/js/scripts/datatables/datatable.js"></script>
     <!-- END: Page JS-->
+    
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <script src="../../../app-assets/js/scripts/extensions/toastr.js"></script>
+    <!-- END: Page Vendor JS-->
 
-    <script src="https://kit.fontawesome.com/5f63d837ee.js" crossorigin="anonymous"></script>
-   
+
+
 </body>
 <!-- END: Body-->
 
