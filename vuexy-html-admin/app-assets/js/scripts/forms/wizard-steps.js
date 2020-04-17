@@ -69,7 +69,7 @@ $(".steps-validation").steps({
     },
     onFinished: function (event, currentIndex) {
         alert("Submitted!");
-        window.location.href = "../../../html/ltr/users/user-summary.html";
+        // window.location.href = "../../../html/ltr/users/user-summary.html";
     }
 });
 

@@ -57,24 +57,24 @@ var makeGetRequest = function(url, onSuccess, onFailure) {
 
 
 // $(document).on('click', '#add_item_button', function() {
-    // var JSON_data = {
-    //     "Name": null,
-    //     "email": null,
-    //     "UWID": null,
-    //     "profile_imageURL": "",
-    //     "verified_user": false
-    // }
-    // JSON_data.name
+//     var JSON_data = {
+//         "Name": null,
+//         "email": null,
+//         "UWID": null,
+//         "profile_imageURL": "",
+//         "verified_user": false
+//     }
+//     JSON_data.name
 
-    // // delete the head and tail space
-    // var expense_description = $('input[name=expense]').val().replace(/(^\s*)|(\s*$)/g, "");
-    // JSON_data += '"expense":' + '"' + expense_description + '",';
-    // var business_purpose = $('input[name=business]').val().replace(/(^\s*)|(\s*$)/g, "");
-    // JSON_data += '"business":' + '"' + business_purpose + '",';
-    // var category = $('input[name=category]').val().replace(/(^\s*)|(\s*$)/g, "");
-    // JSON_data += '"category":' + '"' + category + '",';
+//     // delete the head and tail space
+//     var expense_description = $('input[name=expense]').val().replace(/(^\s*)|(\s*$)/g, "");
+//     JSON_data += '"expense":' + '"' + expense_description + '",';
+//     var business_purpose = $('input[name=business]').val().replace(/(^\s*)|(\s*$)/g, "");
+//     JSON_data += '"business":' + '"' + business_purpose + '",';
+//     var category = $('input[name=category]').val().replace(/(^\s*)|(\s*$)/g, "");
+//     JSON_data += '"category":' + '"' + category + '",';
 
-// })
+// });
 
 // var editeditems = [];
 // ...
@@ -98,7 +98,7 @@ var makeGetRequest = function(url, onSuccess, onFailure) {
 //     ...
 // });
 
-// var requestInfo = [];
+var lineItem = [];
 
 $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS() {
     alert('send data to database');
@@ -126,29 +126,11 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
         BudgetNum: $("select#budgetNum option:checked").val()
     }
 
-    //this is the information, you need to collect from the frontend. Field in the JSON object will be different according to the type of Form user is submitting
-    // var JSON_OrderInfo_inForm = {
-    //     "ReimburseFor": null,
-    //     "Individual": null,
-    //     "PaymentMethod": null,
-    //     "ExpenseDescription": null,
-    //     "BusinessPurpose": null,
-    //     "Category": null,
-    //     "Amount": null,
-    //     "TaxPaid": null,
-    //     "BudgetNum": null
-    // }
-
-    //lets setup JSON_OrderInfo_inForm JSON Object according to the information from the frontend form --> actual field names varies according to your frontend form
-    // JSON_OrderInfo_inForm.ReimburseFor = $("input[name='myselfOrBehalfRadio']:checked").val();
-    // JSON_OrderInfo_inForm.Individual = $("input[name='individual-reimbursed']:checked").val();
-    // JSON_OrderInfo_inForm.PaymentMethod = $("input[name='paymentRadio']:checked").val();
-    // JSON_OrderInfo_inForm.ExpenseDescription = $("input[name='expense']").val();
-    // JSON_OrderInfo_inForm.BusinessPurpose = $("input[name='business']").val();
-    // JSON_OrderInfo_inForm.Category = $("select#category option:checked").val();
-    // JSON_OrderInfo_inForm.Amount = $("input[name='amount']").val();
-    // JSON_OrderInfo_inForm.TaxPaid = $("input[name='taxRadio']").val();
-    // JSON_OrderInfo_inForm.BudgetNum = $("select#budgetNum option:checked").val();
+    lineItem.push({
+        ExpenseDescription: $("input[name='expense']").val(),
+        Category: $("select#category option:checked").val(),
+        Amount: $("input[name='amount']").val()
+    });
 
     //now lets set up the JSON_toServer JSON Object
     JSON_toServer.userID_ref = user_id;  // 5e63127145f8e019d1f26ddc
@@ -168,9 +150,6 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
     }
     formData.append("files", fileSelect.files[x]); //"files" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request"
     
-    
-
-
     //here we just pass in the JSON object we need to pass to the server. "JSON_body" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request
     formData.set("JSON_body", JSON.stringify(JSON_toServer));
     // Http Request  
@@ -184,13 +163,24 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
             const response_obj = JSON.parse(request.response);
             const data_obj = response_obj.data;
             //convert order info to JSON
-            const orderInfo_obj = JSON.parse(data_obj.OrderInfo);
-            console.log(orderInfo_obj);
+            const requestInfo_obj = JSON.parse(data_obj.OrderInfo);
+            console.log(requestInfo_obj);
 
             // show it in the summary table
+            var tableRef = document.getElementById('summary_table').getElementsByTagName('tbody')[0];
+            var newRow = tableRef.insertRow(-1);
+            var cell1 = newRow.insertCell(0);
+            cell1.innerHTML = "Item " + lineItem.length;
+            var cell2 = newRow.insertCell(1);
+            cell2.innerHTML = requestInfo_obj.ExpenseDescription;
+            var cell3 = newRow.insertCell(2);
+            cell3.innerHTML = requestInfo_obj.Category;
+            var cell4 = newRow.insertCell(3);
+            cell4.innerHTML = requestInfo_obj.Amount;
+            var cell5 = newRow.insertCell(4);
+            cell5.innerHTML = "placeholder";
         }
     }
     request.open('POST', baseURL + "uploadOrder");
     request.send(formData);
 });
-

@@ -254,25 +254,25 @@
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">REQUESTER</h6>
-                                    <p>Drew Daniel</p>
+                                    <p id="requester">Drew Daniel</p>
                                     <h6 class="mt-2">SUB-UNIT</h6>
-                                    <p>SEAL</p>
+                                    <p id="subunit">SEAL</p>
                                 </div>
                             </div>
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">REQUEST DATE</h6>
-                                    <p>Mar 10 2020</p>
+                                    <p id="date">Mar 10 2020</p>
                                     <h6 class="mt-2">PAYEE</h6>
-                                    <p>Drew Daniel</p>
+                                    <p id="payee">Drew Daniel</p>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-12 text-right">
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">STATUS</h6>
-                                    <p><i class="fa fa-circle font-small-3 text-warning mr-50"></i>Pending</p>
+                                    <p id="status"><i class="fa fa-circle font-small-3 text-warning mr-50"></i>Pending</p>
                                     <h6 class="mt-2">ASSIGNED TO</h6>
-                                    <p>Not assigned yet</p>
+                                    <p id="assignedto">Not assigned yet</p>
                                 </div>
                             </div>
                         </div>
@@ -297,7 +297,7 @@
                                                     <p>Seattle, WA</p>
                                                     <p>98105</p>
                                                 </td>
-                                                <td style="vertical-align: top;">Mail Check</td>
+                                                <td style="vertical-align: top;" id="deliveryMethod">Mail Check</td>
                                                 <td style="vertical-align: top;">
                                                     <p>Subtotal:</p>
                                                     <p>Shipping & Handling:</p>
@@ -322,7 +322,7 @@
                         <!-- Invoice Items Details -->
                         <div class="col-12" style="margin-top: 1rem;">
                             <div class="form-group row">
-                                <table class="table table-hover-animation zero-configuration">
+                                <table class="table table-hover-animation zero-configuration" id="summary_table">
                                     <thead>
                                         <tr>
                                             <th>Expense Description</th>
@@ -331,8 +331,8 @@
                                             <th>Receipt</th>
                                          </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
+                                    <tbody id="tbody">
+                                        <!-- <tr>
                                             <td>Template Design</td>
                                             <td>Food and Beverage</td>
                                             <td>$123</td>
@@ -340,7 +340,7 @@
                                                 <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-file"></i></button>
                                                 <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-edit"></i></button>
                                             </td>
-                                        </tr>
+                                        </tr> -->
                                         <!-- <tr>
                                             <td>Template Design</td>
                                             <td>Food and Beverage</td>
@@ -462,6 +462,7 @@
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/myScripts/users/summary.js"></script>
     <script src="../../../app-assets/js/scripts/pages/invoice.js"></script>
     <!-- END: Page JS-->
 

@@ -235,7 +235,7 @@
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <form action="#" class="steps-validation wizard-circle">
+                                        <form action="#" method="POST" class="steps-validation wizard-circle">
                                             <!-- Step 1 -->
                                             <h6><i class="step-icon feather icon-home"></i>Requester Information</h6>
                                             <fieldset>
@@ -362,7 +362,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="emplyee_deposit" id="emplyee_deposit">
+                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="Direct deposit" id="emplyee_deposit">
                                                                                 <label class="custom-control-label" for="emplyee_deposit">Direct deposit</label>
                                                                             </div>
                                                                         </fieldset>
@@ -370,7 +370,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="employee_pick" id="employee_pick">
+                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="Picked up in department" id="employee_pick">
                                                                                 <label class="custom-control-label" for="employee_pick">Picked up in department</label>
                                                                             </div>
                                                                         </fieldset>
@@ -397,7 +397,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="nonemplyee_pick" id="nonemplyee_pick">
+                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="Picked up in department" id="nonemplyee_pick">
                                                                                 <label class="custom-control-label" for="nonemplyee_pick">Picked up in department</label>
                                                                             </div>
                                                                         </fieldset>
@@ -405,7 +405,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="nonemployee_checkMail" id="nonemployee_checkMail">
+                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="Check mail" id="nonemployee_checkMail">
                                                                                 <label class="custom-control-label" for="nonemployee_checkMail">Check mail</label>
                                                                             </div>
                                                                         </fieldset>
@@ -805,7 +805,7 @@
                                                     </div>
                                                     <div class="col-11">
                                                         <div class="form-group row">
-                                                            <table class="table zero-configuration">
+                                                            <table class="table zero-configuration" id="summary_table">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>No.</th>
@@ -815,8 +815,8 @@
                                                                         <th>Receipt</th>
                                                                      </tr>
                                                                 </thead>
-                                                                <tbody>
-                                                                    <tr class="hidden" id="added_line_item_1">
+                                                                <tbody id="tbody">
+                                                                    <!-- <tr class="visible" id="trow">
                                                                         <td>Item 1</td>
                                                                         <td>Some description here</td>
                                                                         <td>Other</td>
@@ -825,7 +825,7 @@
                                                                             <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-file"></i></button>
                                                                             <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-edit"></i></button>
                                                                         </td>
-                                                                     </tr>
+                                                                     </tr> -->
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -1186,9 +1186,10 @@
 
     <!-- BEGIN: Page JS-->
     <script src="../../../app-assets/js/scripts/myScripts/users/reimbursement-new.js"></script>
-    <script src="../../../app-assets/js/scripts/myScripts/users/user-data.js"></script>
+    <!-- <script src="../../../app-assets/js/scripts/myScripts/users/user-data.js"></script> -->
+    <script src="../../../app-assets/js/scripts/myScripts/users/my-wizard-steps.js"></script>
     <script src="../../../app-assets/js/scripts/forms/select/form-select2.js"></script>
-    <script src="../../../app-assets/js/scripts/forms/wizard-steps.js"></script>
+    <!-- <script src="../../../app-assets/js/scripts/forms/wizard-steps.js"></script> -->
     <!-- END: Page JS-->
 
 </body>

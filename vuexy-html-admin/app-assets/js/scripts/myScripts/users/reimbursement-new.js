@@ -107,6 +107,48 @@ $(document).on('click', '#option_project', function() {
 });
 
 /** hardcode for presentation */
+// $(document).on('click', '#confirm_item', function() {
+//     $('#added_line_item_1').attr('class', 'visible');
+// })
+
+
+/**
+ * Click 'confirm' button 
+ * To show brief info of line-item in the summary table
+ */
+var lineItem = [];
+
 $(document).on('click', '#confirm_item', function() {
-    $('#added_line_item_1').attr('class', 'visible');
-})
+    // alert('send data to database');
+    var formData = new FormData();
+
+    lineItem.push({
+        ExpenseDescription: $("input[name='expense']").val(),
+        Category: $("select#category option:checked").val(),
+        Amount: "$" + $("input[name='amount']").val()
+    });
+
+    // var fileSelect = document.getElementById("fileField1");
+    // for(var x = 0; x < fileSelect.files.length; x++) {
+    //     formData.append(fileSelect.files[x].name, fileSelect.files[x]);
+    // }
+    // formData.append("files", fileSelect.files[x]); //"files" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request"
+    
+    // show it in the summary table
+    var tableRef = document.getElementById('summary_table').getElementsByTagName('tbody')[0];
+    var newRow = tableRef.insertRow(-1);
+    var cell1 = newRow.insertCell(0);
+    cell1.innerHTML = "Item " + lineItem.length;
+    var cell2 = newRow.insertCell(1);
+    cell2.innerHTML = lineItem[0].ExpenseDescription;
+    var cell3 = newRow.insertCell(2);
+    cell3.innerHTML = lineItem[0].Category;
+    var cell4 = newRow.insertCell(3);
+    cell4.innerHTML = lineItem[0].Amount;
+    var cell5 = newRow.insertCell(4);
+    cell5.innerHTML = "<button type='button' class='btn btn-icon btn-flat-success'><i class='feather icon-edit'></i></button>";
+
+    //here we just pass in the JSON object we need to pass to the server. "JSON_body" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request
+    // formData.set("JSON_body", JSON.stringify(JSON_toServer));
+    
+});
