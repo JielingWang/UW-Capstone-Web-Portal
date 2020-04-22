@@ -9,7 +9,7 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Dashboard</title>
+    <title>All Budgets</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
@@ -17,6 +17,8 @@
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/datatables.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/toastr.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/pickers/pickadate/pickadate.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -32,8 +34,9 @@
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
-
-
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/forms/validation/form-validation.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/extensions/toastr.css">
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -156,13 +159,13 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-			<li class="active"><a href="dashboard_admin.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
+			<li class="nav-item"><a href="dashboard_admin.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
                 
             
                 <li class=" navigation-header"><span>Manage</span></li>
-                <li class=" nav-item"><a href="manage_myUnits.html"><i class="feather icon-square"></i><span class="menu-title" data-i18n="UserSettings">My Unit</span></a></li>
+                <li class="nav-item"><a href="manage_myUnits.html"><i class="feather icon-square"></i><span class="menu-title" data-i18n="UserSettings">My Unit</span></a></li>
                 <li class=" nav-item"><a href="manage_subunits.html"><i class="feather icon-layers"></i><span class="menu-title" data-i18n="Notifications">Subunits</span></a></li>
-                <li class=" nav-item"><a href="allBudgets.html"><i class="feather icon-clipboard"></i><span class="menu-title" data-i18n="Logout">All Budgets</span></a></li>
+                <li class=" active"><a href="allBudgets.html"><i class="feather icon-clipboard"></i><span class="menu-title" data-i18n="Logout">All Budgets</span></a></li>
 
 				<li class=" navigation-header"><span>User</span></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
@@ -191,79 +194,119 @@
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
             <div class="content-header row">
-            </div>
-            <div class="content-body">
-                <!-- Dashboard Ecommerce Starts -->
-                <section id="dashboard-ecommerce">
-				
-                                <div class="card text-white bg-gradient-primary text-center">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <img src="../../../app-assets/images/elements/UW.png" alt="element 05" width="120" class="mb-1 img-fluid">
-                                            <h1 class="text-white " id="welcome_userName" style="font-size:50px;"><b></b></h1>
-                                            <p class="card-text text-white" id="welcome-unitName"><i class="feather icon-map-pin"></i></p>
-                                        </div>
-                                    </div>
-                                </div>
-								
-								
-					<div class="row">
-                        <div class="col-md-6 col-12" >
-                            <div class="card h-100" >
-                                <div class="card-header">
-                                    <h4 class="mb-0"><b>Administrative Staff</b></h4>
-                                </div>
-                                <div class="card-content">
-                                    <div class="table-responsive mt-1">
-                                        <table id="administrative_staff_table_" class="table table-hover-animation mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Profile</th>
-                                                    <th>Name</th>
-                                                    <th>Access Level</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="adminnistrative_staff_table_body">
-                                             
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    
-                                </div>
-                               
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12">
-                            <div class="card h-100">
-                                <div class="card-header">
-                                    <h4 class="mb-0"><b>Subunits</b></h4>
-                                </div>
-                                <div class="card-content">
-                                    <div class="table-responsive mt-1" id="subunits_table_content">
-                                        <table class="table table-hover-animation mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Type</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="subunits_table_body">
-  
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="col-12">
+                            <h2 class="content-header-title float-left mb-0">Manage All Budgets</h2>
                         </div>
                     </div>
-							
-					
+                </div>
+            </div>
+            <div class="content-body">
+
+                
+                <!-- Dashboard Ecommerce Starts -->
+                <section >	
+                    
+					<div class="row">
+                        <div class="col-md-12 col-12" >
+                            <div class="card h-100" >
+                                <div class="card-header">
+                                    <h4 class="mb-0"><b>Staff Overview</b></h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body card-dashboard">
+                                        
+                                        <div class="table-responsive">
+                                            <table id="allBudgets_table" class="table zero-configuration" style="cursor: pointer;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>_id</th>
+                                                        <th>Budget Number</th>
+                                                        <th>Budget Name</th>
+                                                        <th>Start Date</th>
+                                                        <th>End Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="allBudgets_table_body">
+      
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!--Input part-->
+                                    <div class="row" style="margin-left: 10px; margin-right:10px;">
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="first-name-icon">Budget Number</label>
+                                                <div class="position-relative has-icon-left">
+                                                    <input type="text" id="budgetNumber" class="form-control" name="fname-icon" placeholder="Budget Number" onkeyup="add_btn_hide_unhide();update_btn_hide_unhide();">
+                                                    <div class="form-control-position">
+                                                        <i class="feather icon-hash"></i>
+                                                    </div>
+                                                </div>
+                                                <label id="budgetNumberErrorField" style="color: #e74c3c;"></label>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="first-name-icon">Start Date</label>
+                                                <div class="position-relative has-icon-left">
+                                                    <input id="startDate" type='text' class="form-control pickadate" placeholder="Start Date" onchange="update_btn_hide_unhide();"/>
+                                                    <div class="form-control-position">
+                                                        <i class="feather icon-calendar"></i>
+                                                    </div>
+                                                </div>
+                                                <label id="startDateField">* Leave this field empty if start date is not decided yet </label>
+                                            </div>
+
+                                        </div>
+                    
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="first-name-icon">Budget Name</label>
+                                                <div class="position-relative has-icon-left">
+                                                    <input type="text" id="BudgetName" class="form-control" name="fname-icon" placeholder="Budget Name" onkeyup="update_btn_hide_unhide();">
+                                                    <div class="form-control-position">
+                                                        <i class="feather icon-file-text"></i>
+                                                    </div>
+                                                </div>
+                                                <label id="budgetNameErrorField" style="color: #e74c3c;"></label>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="first-name-icon">End Date</label>
+                                                <div class="position-relative has-icon-left">
+                                                    <input id="endDate" type='text' class="form-control pickadate" placeholder="End Date" onchange="update_btn_hide_unhide();"/>
+                                                    <div class="form-control-position">
+                                                        <i class="feather icon-calendar"></i>
+                                                    </div>
+                                                </div>
+                                                <label id="EndDateField">* Leave this field empty if end date is not decided yet </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End of Input part-->
+
+
+
+                                    
+                                    <div id="buttons_staff_overview" style="margin-right: 10px; padding-top: 30px;">
+                                        <button type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="clearBtn_logic()">Clear</button>
+                                        <button id="removeBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="allBudgetRemove()">Remove</button>
+                                        <button id="updateBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="allBudgetUpdate()">Update</button>
+                                        <button id="addBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="allBudgetAdd()">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                                        
                 </section>
                 <!-- Dashboard Ecommerce ends -->
-              
+
 
             </div>
         </div>
@@ -294,15 +337,13 @@
     <script src="../../../app-assets/js/scripts/components.js"></script>
     <!-- END: Theme JS-->
 
-    <!-- BEGIN: Page JS-->
-    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
-    <!-- END: Page JS-->
+
 
     <!--My Scripts-->
     <script src="../../../app-assets/js/scripts/myScripts/connections/connections.js"></script>
-    <script src="../../../app-assets/js/scripts/myScripts/connections/welcomeGenerator.js"></script>
     <script src="../../../app-assets/js/scripts/myScripts/Admin/navigation_handler.js"></script>
-    <script src="../../../app-assets/js/scripts/myScripts/Admin/Admin_dashboard.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/Admin/allBudgets.js"></script>
+
     <!--End of My Scripts-->
 
     <!-- BEGIN: Page Vendor JS-->
@@ -316,13 +357,29 @@
     <script src="../../../app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
     <!-- END: Page Vendor JS-->
 
-    
     <!-- BEGIN: Page JS-->
     <script src="../../../app-assets/js/scripts/datatables/datatable.js"></script>
     <!-- END: Page JS-->
 
-    <script src="https://kit.fontawesome.com/5f63d837ee.js" crossorigin="anonymous"></script>
-   
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.js"></script>
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>
+    <!-- END: Page JS-->
+
+    
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <script src="../../../app-assets/js/scripts/extensions/toastr.js"></script>
+    <!-- END: Page Vendor JS-->
+
+
+
 </body>
 <!-- END: Body-->
 

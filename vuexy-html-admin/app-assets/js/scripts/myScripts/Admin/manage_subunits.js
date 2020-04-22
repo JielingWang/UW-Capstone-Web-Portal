@@ -114,13 +114,10 @@ function prepare_Subunit_overview_table_rows(SubunitID, SubunitName, SubunitType
     td_id.innerHTML = SubunitID;
     var td_name = document.createElement('td');
     td_name.innerHTML = SubunitName;
-    var td_type = document.createElement('td');
-    td_type.innerHTML = SubunitType;
 
     var tr = document.createElement('tr');
     tr.appendChild(td_id);
     tr.appendChild(td_name);
-    tr.appendChild(td_type);
 
     return tr;
 

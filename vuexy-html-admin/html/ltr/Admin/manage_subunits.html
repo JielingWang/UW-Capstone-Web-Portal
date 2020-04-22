@@ -9,7 +9,7 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>My Unit</title>
+    <title>Subunits</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
@@ -164,7 +164,7 @@
                 <li class=" navigation-header"><span>Manage</span></li>
                 <li class="nav-item"><a href="manage_myUnits.html"><i class="feather icon-square"></i><span class="menu-title" data-i18n="UserSettings">My Unit</span></a></li>
                 <li class=" active"><a href="manage_subunits.html"><i class="feather icon-layers"></i><span class="menu-title" data-i18n="Notifications">Subunits</span></a></li>
-                <li class=" nav-item"><a href=""><i class="feather icon-clipboard"></i><span class="menu-title" data-i18n="Logout">All Budgets</span></a></li>
+                <li class=" nav-item"><a href="allBudgets.html"><i class="feather icon-clipboard"></i><span class="menu-title" data-i18n="Logout">All Budgets</span></a></li>
 
 				<li class=" navigation-header"><span>User</span></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
@@ -224,7 +224,6 @@
                                                         <tr>
                                                             <th>_id</th>
                                                             <th>Name</th>
-                                                            <th>Type</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="subunit_names_table_body">
@@ -237,7 +236,7 @@
                                     </div>
                                     <!--Input part-->
                                     <div class="row" style="margin-left: 10px; margin-right:10px; padding-top: 50px;">
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-12 col-12">
                                             <div class="form-group">
                                                 <label for="first-name-icon">Subunit Name</label>
                                                 <div class="position-relative has-icon-left">
@@ -251,19 +250,6 @@
 
                                             
 
-                                        </div>
-                    
-                                        <div class="col-md-6 col-12">
-                                            <div class="form-group">
-                                                <label for="location1">Type</label>
-                                                <select class="custom-select form-control" id="subunit_type_input" name="accessLevel" onchange="">
-                                                    <option value="empty"></option>
-                                                    <option value="Administrator">Lab/Group</option>
-                                                    <option value="Fiscal_Staff">Fiscal Staff</option>
-                                                </select>   
-                                                <label id="subunit_type_input_error" style="color: #e74c3c;"></label>
-                                            </div>
-                                      
                                         </div>
                                     </div>
                                     <!--End of Input part-->   

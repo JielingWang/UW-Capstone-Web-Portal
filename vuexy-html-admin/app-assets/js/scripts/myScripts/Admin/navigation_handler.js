@@ -23,7 +23,13 @@ function logout()
 {
     //clear all the session storage
     window.sessionStorage.clear();
+}
 
+function month_in_Name(month_number)
+{
+    const array_of_Months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+    return array_of_Months[month_number];
 }
 
 
