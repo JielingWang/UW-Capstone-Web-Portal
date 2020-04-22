@@ -61,6 +61,7 @@ var deliveryMethod = document.getElementById("deliveryMethod");
 
 // Http Request  
 var request = new XMLHttpRequest();
+var request_user_info = new XMLHttpRequest();
 //this function will get the response from the server after we upload the order
 request.onreadystatechange = function() {
     console.log("HERE");
@@ -98,3 +99,38 @@ request.onreadystatechange = function() {
 request.open('GET', baseURL + "getOrders/5e8e45eea148b9004420651f");
 request.send();
 
+// request_user_info.onreadystatechange = function() {
+//     console.log("HERE");
+//     if (request_user_info.readyState == 4) {
+
+//         // show it in the console
+//         const response_obj = JSON.parse(request_user_info.response);
+//         const data_obj = response_obj.data;
+//         //convert order info to JSON
+//         const userInfo_obj = JSON.parse(data_obj[data_obj.length - 1]);
+//         console.log(userInfo_obj);
+
+//         // show it in the summary page
+//         requester.innerHTML = userInfo_obj.Name;
+//         deliveryMethod.innerHTML = requestInfo_obj.Payment;
+//         status.innerHTML = response_obj.OrderStatus;
+
+//         var tableRef = document.getElementById('summary_table').getElementsByTagName('tbody')[0];
+//         var lineItem = requestInfo_obj.LineItem;
+//         for (var i = 0; i < lineItem.length; i++) {
+//             var newRow = tableRef.insertRow(-1);
+//             // var cell1 = newRow.insertCell(0);
+//             // cell1.innerHTML = "Item " + i + 1;
+//             var cell2 = newRow.insertCell();
+//             cell2.innerHTML = lineItem[i].ExpenseDescription;
+//             var cell3 = newRow.insertCell();
+//             cell3.innerHTML = lineItem[i].Category;
+//             var cell4 = newRow.insertCell();
+//             cell4.innerHTML = lineItem[i].Amount;
+//             var cell5 = newRow.insertCell();
+//             cell5.innerHTML = "<button type='button' class='btn btn-icon btn-flat-success'><i class='feather icon-edit'></i></button>";
+//         }
+//     }
+// }
+// request_user_info.open('GET', baseURL + "getUserInfomation/5e8e45eea148b9004420651f");
+// request_user_info.send();
