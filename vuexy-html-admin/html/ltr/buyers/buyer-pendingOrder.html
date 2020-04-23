@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>Buyer-PendingOders</title>
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/pickers/pickadate/pickadate.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/semi-dark-layout.css">
+
+
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
+
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+
+    <!-- BEGIN: Header-->
+    <nav class="header-navbar navbar-expand-lg navbar navbar-with-menu floating-nav navbar-light navbar-shadow" >
+        <div class="navbar-wrapper" >
+            <div class="navbar-container content" ,>
+                <div class="navbar-collapse" id="navbar-mobile">
+                    <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
+                      <ul class="nav navbar-nav">
+                            <li class="nav-item mobile-menu d-xl-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ficon feather icon-menu"></i></a></li>
+                        </ul>
+
+                    </div>
+
+                    <ul class="nav navbar-nav float-right">
+
+                        <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
+                        <li class="nav-item nav-search"><a class="nav-link nav-link-search"><i class="ficon feather icon-search"></i></a>
+                            <div class="search-input">
+                                <div class="search-input-icon"><i class="feather icon-search primary"></i></div>
+                                <input class="input" type="text" placeholder="Search..." tabindex="-1" data-search="template-list">
+                                <div class="search-input-close"><i class="feather icon-x"></i></div>
+                                <ul class="search-list search-list-main"></ul>
+                            </div>
+                        </li>
+
+                        <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon feather icon-bell"></i><span class="badge badge-pill badge-primary badge-up">5</span></a>
+                            <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
+                                <li class="dropdown-menu-header">
+                                    <div class="dropdown-header m-0 p-2">
+                                        <h3 class="white">5 New</h3><span class="notification-title">App Notifications</span>
+                                    </div>
+                                </li>
+                                <li class="scrollable-container media-list"><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                        <div class="media d-flex align-items-start">
+                                            <div class="media-left"><i class="feather icon-plus-square font-medium-5 primary"></i></div>
+                                            <div class="media-body">
+                                                <h6 class="primary media-heading">You have new order!</h6><small class="notification-text"> Amazon Web Services - Standard Order</small>
+                                            </div><small>
+                                                <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">9 hours ago</time></small>
+                                        </div>
+                                    </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                        <div class="media d-flex align-items-start">
+                                            <div class="media-left"><i class="feather icon-download-cloud font-medium-5 success"></i></div>
+                                            <div class="media-body">
+                                                <h6 class="success media-heading red darken-1">Reimbursement accepted!</h6><small class="notification-text">Your reimbursement request has been accepted by the department</small>
+                                            </div><small>
+                                                <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">5 hour ago</time></small>
+                                        </div>
+                                    </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                        <div class="media d-flex align-items-start">
+                                            <div class="media-left"><i class="feather icon-alert-triangle font-medium-5 danger"></i></div>
+                                            <div class="media-body">
+                                                <h6 class="danger media-heading yellow darken-3">Budget Report due today</h6><small class="notification-text">CEE budget report due today at 2pm</small>
+                                            </div><small>
+                                                <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Today</time></small>
+                                        </div>
+                                    </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                        <div class="media d-flex align-items-start">
+                                            <div class="media-left"><i class="feather icon-check-circle font-medium-5 info"></i></div>
+                                            <div class="media-body">
+                                                <h6 class="info media-heading">Task completed</h6><small class="notification-text">2019 budget report exported to you local storage</small>
+                                            </div><small>
+                                                <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Last week</time></small>
+                                        </div>
+                                    </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                        <div class="media d-flex align-items-start">
+                                            <div class="media-left"><i class="feather icon-file font-medium-5 warning"></i></div>
+                                            <div class="media-body">
+                                                <h6 class="warning media-heading">Monthly report generated</h6><small class="notification-text">Your monthly report has been successfuly generated</small>
+                                            </div><small>
+                                                <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Last month</time></small>
+                                        </div>
+                                    </a></li>
+                                <li class="dropdown-menu-footer"><a class="dropdown-item p-1 text-center" href="javascript:void(0)">View all notifications</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
+                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">Ted Hanson</span><span class="user-status">CEE Administrator</span></div><span><img class="round" src="../../../app-assets/images/portrait/small/avatar-s-9.jpg" alt="avatar" height="40" width="40"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i class="feather icon-power"></i> Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- END: Header-->
+
+
+    <!-- BEGIN: Main Menu-->
+    <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav flex-row">
+                <li class="nav-item mr-auto"><a class="navbar-brand" href="../../../html/ltr/vertical-menu-template/index.html">
+                        <div class="brand-logo"></div>
+                        <h2 class="brand-text mb-0">Davinci</h2>
+                    </a></li>
+                <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary" data-ticon="icon-disc"></i></a></li>
+            </ul>
+        </div>
+        <div class="shadow-bottom"></div>
+        <div class="main-menu-content">
+            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+			    <li><a href="user-dashboard.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
+				
+				<li class=" navigation-header"><span>Fiscal Requests </span></li>
+				<li class=" nav-item"><a href="#"><i class="feather icon-file-plus"></i><span class="menu-title" data-i18n="User">Create Order</span></a>
+                    <ul class="menu-content" style="margin-left:10px;">
+                        <li class=""><a href="user-reimbursement.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Reimbursement</span></a>
+                        </li>
+                        <li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="View">Travel Reimbursement</span></a>
+                        </li>
+                        <li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Purchase Request</span></a>
+                        </li>
+						<li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Pay an Invoice</span></a>
+                        </li>
+						<li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Procard Receipt</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class=" nav-item"><a href=""><i class="feather icon-shopping-cart"></i><span class="menu-title" data-i18n="Products">Products</span></a></li>
+                
+				<li class="active nav-item"><a href=""><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">Pending Orders</span></a></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-search"></i><span class="menu-title" data-i18n="SearchOrders">Search Orders</span></a></li>
+				
+				<li class=" navigation-header"><span>User</span></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-bell"></i><span class="menu-title" data-i18n="Notifications">Notifications</span></a></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-power"></i><span class="menu-title" data-i18n="Logout">Logout</span></a></li>
+				
+				
+				<li class=" navigation-header"><span>Help</span></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-file-text"></i><span class="menu-title" data-i18n="Manual">Davinci Manual</span></a></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-mail"></i><span class="menu-title" data-i18n="MailingList">Mailing List</span></a></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-book"></i><span class="menu-title" data-i18n="ReimbursmentInstructions">Reimbursment Instructions</span></a></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-credit-card"></i><span class="menu-title" data-i18n="PurchasingQuestions">Purchasing Questions</span></a></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-tv"></i><span class="menu-title" data-i18n="TechnicalQuestions">Technical Questions</span></a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="col-12">
+                            <h2 class="content-header-title float-left mb-0">Pending Order #12345</h2>
+                            <div class="breadcrumb-wrapper col-12">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">Home</a>
+                                    </li>
+                                    <li class="breadcrumb-item"><a href="#">Pending Orders</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">Order #12345
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+                    <div class="form-group breadcrum-right">
+                        <div class="dropdown">
+                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-settings"></i></button>
+                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">Chat</a><a class="dropdown-item" href="#">Email</a><a class="dropdown-item" href="#">Calendar</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-body">
+                <!-- <div class="alert alert-primary">
+                    <i class="feather icon-info mr-1"></i> Click <a href="https://getbootstrap.com/docs/4.3/components/card/" target="_blank">here</a> for more info
+                    on
+                    cards.
+                </div> -->
+
+                <!-- Decks section start -->
+                <section id="decks">
+                    <!-- <div class="row">
+                        <div class="col-12 mt-3 mb-1">
+                            <h4 class="text-uppercase">deck</h4>
+                        </div>
+                    </div> -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-deck-wrapper">
+                                <div class="card-deck">
+                                    <div class="card">
+                                        <div class="card-content">
+                                            <!-- <img class="card-img-top img-fluid" src="../../../app-assets/images/slider/01.jpg" alt="Card image cap" /> -->
+                                            <div class="card-body">
+                                                <h4 class="card-title">Vendor</h4>
+                                                <p class="card-text">Jelly-o sesame snaps cheesecake topping. Cupcake fruitcake macaroon
+                                                    donut pastry gummies tiramisu chocolate bar muffin. Dessert bonbon caramels brownie
+                                                    chocolate bar chocolate tart dragée</p>
+                                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-content">
+                                            <!-- <img class="card-img-top img-fluid" src="../../../app-assets/images/slider/04.jpg" alt="Card image cap" /> -->
+                                            <div class="card-body">
+                                                <h4 class="card-title">Delivery</h4>
+                                                <p class="card-text">Jelly-o sesame snaps cheesecake topping. Cupcake fruitcake macaroon
+                                                    donut pastry gummies tiramisu chocolate bar muffin. Dessert bonbon caramels brownie
+                                                    chocolate bar chocolate tart dragée</p>
+                                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-content">
+                                            <!-- <img class="card-img-top img-fluid" src="../../../app-assets/images/slider/05.jpg" alt="Card image cap" /> -->
+                                            <div class="card-body">
+                                                <h4 class="card-title">General Info</h4>
+                                                <p class="card-text">Jelly-o sesame snaps cheesecake topping. Cupcake fruitcake macaroon
+                                                    donut pastry gummies tiramisu chocolate bar muffin. Dessert bonbon caramels brownie
+                                                    chocolate bar chocolate tart dragée</p>
+                                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-content">
+                                            <!-- <img class="card-img-top img-fluid" src="../../../app-assets/images/slider/06.jpg" alt="Card image cap" /> -->
+                                            <div class="card-body">
+                                                <h4 class="card-title">Approvals & Notes</h4>
+                                                <p class="card-text">Jelly-o sesame snaps cheesecake topping. Cupcake fruitcake macaroon
+                                                    donut pastry gummies tiramisu chocolate bar muffin. Dessert bonbon caramels brownie
+                                                    chocolate bar chocolate tart dragée</p>
+                                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Decks section end -->
+
+                <!-- Bordered table start -->
+                <div class="row" id="table-bordered">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title my-card-title">Details</h4>
+                            </div>
+                            <div class="card-content">
+                                <!-- <div class="card-body">
+                                    <p class="card-text">Add <code>.table-bordered</code> for borders on all sides of the table and cells. For Inverse Dark Table, add <code>.table-dark</code> along with <code>.table-bordered</code>.</p>
+                                </div> -->
+                                <div class="table-responsive">
+                                    <table class="table table-bordered mb-0">
+                                        <thead class="text-center">
+                                            <tr>
+                                                <th></th>
+                                                <th>Product Number Requester</th>
+                                                <th>Description</th>
+                                                <th>Qty.</th>
+                                                <th>Unit Size</th>
+                                                <th>Unit Price</th>
+                                                <th>Budget(s)</th>
+                                                <th>Total Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>
+                                                    <p>215422-250G</p>
+                                                    <p>Mathieu Landreau</p>
+                                                </td>
+                                                <td>
+                                                    <p>Iron(II) sulfate heptahydrate</p>
+                                                    <p>Chemicals & Chemical Products (05-31)</p>
+                                                    <p>Object Code: 05-31</p>
+                                                </td>
+                                                <td>1.00</td>
+                                                <td>1</td>
+                                                <td>$39.30</td>
+                                                <td>
+                                                    <p>61-2692</p>
+                                                    <p>(SYNTHETIC BIO-TECH (Winkler))</p>
+                                                </td>
+                                                <td>
+                                                    <p>Sub-total: $39.30</p>
+                                                    <p>With Tax: $43.27</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">2</th>
+                                                <td>
+                                                    <p>215422-250G</p>
+                                                    <p>Mathieu Landreau</p>
+                                                </td>
+                                                <td>
+                                                    <p>Iron(II) sulfate heptahydrate</p>
+                                                    <p>Chemicals & Chemical Products (05-31)</p>
+                                                    <p>Object Code: 05-31</p>
+                                                </td>
+                                                <td>1.00</td>
+                                                <td>1</td>
+                                                <td>$39.30</td>
+                                                <td>
+                                                    <p>61-2692</p>
+                                                    <p>(SYNTHETIC BIO-TECH (Winkler))</p>
+                                                </td>
+                                                <td>
+                                                    <p>Sub-total: $39.30</p>
+                                                    <p>With Tax: $43.27</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">3</th>
+                                                <td>
+                                                    <p>215422-250G</p>
+                                                    <p>Mathieu Landreau</p>
+                                                </td>
+                                                <td>
+                                                    <p>Iron(II) sulfate heptahydrate</p>
+                                                    <p>Chemicals & Chemical Products (05-31)</p>
+                                                    <p>Object Code: 05-31</p>
+                                                </td>
+                                                <td>1.00</td>
+                                                <td>1</td>
+                                                <td>$39.30</td>
+                                                <td>
+                                                    <p>61-2692</p>
+                                                    <p>(SYNTHETIC BIO-TECH (Winkler))</p>
+                                                </td>
+                                                <td>
+                                                    <p>Sub-total: $39.30</p>
+                                                    <p>With Tax: $43.27</p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Bordered table end -->
+
+                <!-- Scroll - horizontal and vertical table -->
+                <section id="horizontal-vertical">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title my-card-title">Details</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body card-dashboard">
+                                        <p class="card-text">In this example you can see DataTables doing both horizontal and vertical scrolling at the same time. Note also that pagination is enabled in this example, and the scrolling accounts for this.</p>
+                                        <div class="table-responsive">
+                                            <table class="table nowrap scroll-horizontal-vertical">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Product Number Requester</th>
+                                                        <th>Description</th>
+                                                        <th>Qty.</th>
+                                                        <th>Unit Size</th>
+                                                        <th>Unit Price</th>
+                                                        <th>Budget(s)</th>
+                                                        <th>Total Price</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Yuri</td>
+                                                        <td>Berry</td>
+                                                        <td>Chief Marketing Officer (CMO)</td>
+                                                        <td>New York</td>
+                                                        <td>40</td>
+                                                        <td>2009/06/25</td>
+                                                        <td>$675,000</td>
+                                                        <td>6154</td>
+                                                        <td>y.berry@datatables.net</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Caesar</td>
+                                                        <td>Vance</td>
+                                                        <td>Pre-Sales Support</td>
+                                                        <td>New York</td>
+                                                        <td>21</td>
+                                                        <td>2011/12/12</td>
+                                                        <td>$106,450</td>
+                                                        <td>8330</td>
+                                                        <td>c.vance@datatables.net</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--/ Scroll - horizontal and vertical table -->
+
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <footer class="footer footer-static footer-light">
+
+    </footer>
+    <!-- END: Footer-->
+
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.js"></script>
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>
+    <!-- END: Page JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/polyfill.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/extensions/sweet-alerts.js"></script>
+    <!-- END: Page JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <script src="../../../app-assets/js/scripts/components.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <!-- END: Page JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/myScripts/buyers/pendingOrder.js"></script>
+    <!-- END: Page JS-->
+
+
+</body>
+<!-- END: Body-->
+
+</html>
