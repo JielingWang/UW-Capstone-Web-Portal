@@ -219,9 +219,18 @@
 
     //Custom File Input
     $(".custom-file input").change(function (e) {
-      $(this)
+      if(e.target.files && e.target.files.length == 1)
+      {
+        $(this)
         .next(".custom-file-label")
         .html(e.target.files[0].name);
+      }else
+      {
+        $(this)
+        .next(".custom-file-label")
+        .html("");
+      }
+
     });
 
     /* Text Area Counter Set Start */

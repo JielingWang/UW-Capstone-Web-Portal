@@ -291,11 +291,95 @@
 
 
                                     
-                                    <div id="buttons_staff_overview" style="margin-right: 10px; padding-top: 30px;">
-                                        <button type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="clearBtn_logic()">Clear</button>
-                                        <button id="removeBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="allBudgetRemove()">Remove</button>
-                                        <button id="updateBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="allBudgetUpdate()">Update</button>
-                                        <button id="addBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="allBudgetAdd()">Add</button>
+                                    <div class="row" id="buttons_staff_overview" style="margin-left: 10px; margin-right: 10px; padding-top: 30px;">
+                                        <div class="col-md-6 col-12">
+                                                <div class="modal-size-lg mr-1 mb-1 d-inline-block">
+                                                    <!-- Button trigger modal -->
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#large">
+                                                        Upload Excel Document
+                                                    </button>
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade text-left" id="large" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title" id="myModalLabel17">Upload Excel Document</h4>
+                                                                    <button id="modal_close_btn" type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="modal_close_btn_logic();">
+                                                                        <span id="modal_span" aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            <div id="modal_instructions_part" style="display: block">
+                                                                                <h5><b>Instructions</b></h5>
+                                                                            
+                                                                                <p>* Only Excel documents are supported (.xls and .xlsx)</p>
+                                                                                <p>* Your Excel document should only contain following fields</br>
+                                                                                1. Budget Number </br>
+                                                                                2. Budget Number </br>
+                                                                                3. Start Date</br>
+                                                                                4. End Date</br>
+                                                                                </p>
+    
+                                                                                <p>
+                                                                                    <img src="../../../app-assets/images/examples/excel_example.png" height="100%" width="100%">
+                                                                                </p>
+    
+                                                                                <p style="color:#e74c3c">* Note: If Start/End date is not decided yet, leave it empty</p>
+                                                                            </div>
+
+                                                                            <div id="modal_uploading_part" style="display: none">
+                                                                                <p class="text-center" style="font-size: 20px; padding-top: 50px; padding-bottom: 50px;"><i class="fas fa-cog fa-spin" style="font-size: 30px;"></i> Please wait, Waiting for server to respond... </p>
+                                                                            </div>
+
+                                                                            <div id="modal_results_part" style="display: none">
+                                                                                <table id="uploaded_budgets_table" class="table zero-configuration" style="cursor: pointer;">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th>Budget Number</th>
+                                                                                            <th>Status</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody id="uploaded_budgets_table_body">
+                                          
+                                    
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+
+
+                                                                        </div>
+
+                                                                        <div class="col-12">
+                                                                            <div class="form-group">
+                                                                                <label for="basicInputFile">Click browse to select a file</label>
+                                                                                <div class="custom-file">
+                                                                                    <input  type="file" class="custom-file-input" id="modal_file_choose_btn" accept=".xls,.xlsx" onchange="modal_file_choose_btn_logic();">
+                                                                                    <label class="custom-file-label" for="modal_file_choose_btn">Choose file</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button  type="button" class="btn btn-primary" id="modal_file_upload_btn"  onclick="modal_file_upload_btn_logic();">Upload</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                        <div class="col-md-6 col-12 ">
+                                            <button type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="clearBtn_logic()">Clear</button>
+                                            <button id="removeBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="allBudgetRemove()">Remove</button>
+                                            <button id="updateBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="allBudgetUpdate()">Update</button>
+                                            <button id="addBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="allBudgetAdd()">Add</button>     
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -322,6 +406,7 @@
     </footer>
     <!-- END: Footer-->
 
+    <script src="https://kit.fontawesome.com/5f63d837ee.js" crossorigin="anonymous"></script>
 
     <!-- BEGIN: Vendor JS-->
     <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
@@ -337,15 +422,6 @@
     <script src="../../../app-assets/js/scripts/components.js"></script>
     <!-- END: Theme JS-->
 
-
-
-    <!--My Scripts-->
-    <script src="../../../app-assets/js/scripts/myScripts/connections/connections.js"></script>
-    <script src="../../../app-assets/js/scripts/myScripts/Admin/navigation_handler.js"></script>
-    <script src="../../../app-assets/js/scripts/myScripts/Admin/allBudgets.js"></script>
-
-    <!--End of My Scripts-->
-
     <!-- BEGIN: Page Vendor JS-->
     <script src="../../../app-assets/vendors/js/tables/datatable/pdfmake.min.js"></script>
     <script src="../../../app-assets/vendors/js/tables/datatable/vfs_fonts.js"></script>
@@ -356,6 +432,13 @@
     <script src="../../../app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js"></script>
     <script src="../../../app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
     <!-- END: Page Vendor JS-->
+
+       <!--My Scripts-->
+       <script src="../../../app-assets/js/scripts/myScripts/connections/connections.js"></script>
+       <script src="../../../app-assets/js/scripts/myScripts/Admin/navigation_handler.js"></script>
+       <script src="../../../app-assets/js/scripts/myScripts/Admin/allBudgets.js"></script>
+   
+       <!--End of My Scripts-->
 
     <!-- BEGIN: Page JS-->
     <script src="../../../app-assets/js/scripts/datatables/datatable.js"></script>
@@ -372,11 +455,13 @@
     <script src="../../../app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>
     <!-- END: Page JS-->
 
+
     
     <!-- BEGIN: Page Vendor JS-->
     <script src="../../../app-assets/vendors/js/extensions/toastr.min.js"></script>
     <script src="../../../app-assets/js/scripts/extensions/toastr.js"></script>
     <!-- END: Page Vendor JS-->
+
 
 
 

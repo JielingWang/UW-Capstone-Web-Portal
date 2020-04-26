@@ -1,7 +1,9 @@
 //table variable
 var allBudgets_table = null;
+var uploaded_budgets_table = null;
 //table dody
 var allBudgets_table_body = document.getElementById("allBudgets_table_body");
+var uploaded_budgets_table_body = document.getElementById("uploaded_budgets_table_body");
 //keep track of selected row in allbudgets table
 var selected_row = -1;
 
@@ -14,21 +16,29 @@ var endDate_field = document.getElementById("endDate");
 var addBtn = document.getElementById("addBtn");
 var updateBtn = document.getElementById("updateBtn");
 var removeBtn = document.getElementById("removeBtn");
+var modal_file_choose_btn = document.getElementById("modal_file_choose_btn");
+var modal_file_upload_btn = document.getElementById("modal_file_upload_btn");
 
 //error fields
 var budgetNumberErrorField = document.getElementById("budgetNumberErrorField");
 var budgetNameErrorField = document.getElementById("budgetNameErrorField");
 
+//modal sections 
+var modal_instructions_part = document.getElementById("modal_instructions_part");
+var modal_uploading_part = document.getElementById("modal_uploading_part");
+var modal_results_part = document.getElementById("modal_results_part");
+var modal_close_btn = document.getElementById("modal_close_btn");
 
 window.onload = function()
 {
-
+    
     initialize_table();
     update_allBudgets_table();
-
+    initialize_uploaded_budgets_table();
     add_btn_hide_unhide();
     update_btn_hide_unhide();
     remove_btn_hide_unhide();
+    modal_file_upload_btn.disabled = true;
 }
 
 //onlick event for staff overview table
@@ -74,6 +84,7 @@ function fill_form_information()
 
 function update_allBudgets_table()
 {
+    
     const results = (get_all_budgets_under_Unit()).data;
     if(results)
     {
@@ -182,8 +193,114 @@ function allBudgetUpdate()
     }
 }
 
+function modal_file_upload_btn_logic()
+{
+    //once upload button is pressed hide the instructions and unhide waiting for server response
+    modal_instructions_part.style.display = "none";
+    modal_uploading_part.style.display = "block";
+    modal_results_part.style.display = "none;"
+    //once upload is pressed disable upload and close buttons, but keep upload locked all the time
+    modal_file_upload_btn.disabled = true;
+
+    var formData = new FormData();
+
+    var fileSelect = document.getElementById("modal_file_choose_btn");
+    if(fileSelect.files && fileSelect.files.length == 1){
+     var file = fileSelect.files[0]
+     formData.set("files", file , file.name);
+    }
+
+    var request = new XMLHttpRequest();
+
+    request.onreadystatechange = function() {
+        if (request.readyState == request.DONE) {
+            const JSON_response = JSON.parse(request.responseText)
+            if(JSON_response.status)
+            {
+                //hide all except for results part
+                modal_instructions_part.style.display = "none";
+                modal_uploading_part.style.display = "none";
+                modal_results_part.style.display = "block"
+
+                uploaded_budgets_table.clear().destroy();
+                
+                for(var x=0; x<JSON_response.data.errors.length;x++)
+                    uploaded_budgets_table_body.appendChild(prepare_modal_result_table_rows(JSON_response.data.errors[x].BudgetNumber,JSON_response.data.errors[x].Info,true));
+                
+                for(var x=0; x<JSON_response.data.success.length;x++)
+                    uploaded_budgets_table_body.appendChild(prepare_modal_result_table_rows(JSON_response.data.success[x].BudgetNumber,JSON_response.data.success[x].Info,false));
+
+                initialize_uploaded_budgets_table();
+
+                //and finally update the main table
+                update_allBudgets_table();
+
+
+            }else
+            {
+                toastr.error(JSON_response.data, 'Error', { positionClass: 'toast-top-right', containerId: 'toast-top-right' });
+            }
+            //console.log(request.responseText);
+        }
+
+    }
+    request.open('PUT', baseURL+"allBudgets/uploadExcelFile/"+window.sessionStorage.getItem("unitID"));
+    request.send(formData);
+}
+
+function modal_file_choose_btn_logic()
+{
+    var fileSelect = document.getElementById("modal_file_choose_btn");
+    if(fileSelect.files && fileSelect.files.length == 1)
+    {
+        modal_file_upload_btn.disabled = false;
+    }else
+    {
+        modal_file_upload_btn.disabled = true;
+    }
+}
+
+function modal_close_btn_logic()
+{
+    setTimeout(function(){
+    //and set everything back to normal in the modal
+    modal_instructions_part.style.display = "block";
+    modal_uploading_part.style.display = "none";
+    modal_results_part.style.display = "none"
+    //and clear the error table and reinitialize it
+    uploaded_budgets_table.clear().destroy();
+    initialize_uploaded_budgets_table();    
+    modal_file_upload_btn.disabled = false;
+    },500);
+
+}
+
+
 
 //------------------------------ Helper Functions ---------------------------------------------
+
+function prepare_modal_result_table_rows(BudgetNumber,Info,isError) //isError --> True = Red , else no color
+{
+    var td_budgetNumber = document.createElement('td');
+    td_budgetNumber.innerHTML = BudgetNumber;
+
+    var td_Info = document.createElement('td');
+    if(isError)
+        td_Info.setAttribute('style','color:#e74c3c');
+    else
+        td_Info.setAttribute('style','color:#2ecc71');
+    //creating error rows
+    for(var x=0;x<Info.length;x++)
+        td_Info.innerHTML = Info[x] +"\n";
+    
+    //tr element
+    var tr = document.createElement('tr');
+    tr.appendChild(td_budgetNumber);
+    tr.appendChild(td_Info);
+
+    console.log(tr);
+    return tr;
+}
 
 function validate_input_fields()
 {
@@ -277,6 +394,15 @@ function initialize_table()
                 "searchable": false
             }
         ],
+        "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]]
+    });
+}
+
+
+function initialize_uploaded_budgets_table()
+{
+    uploaded_budgets_table = $('#uploaded_budgets_table').DataTable(  {
+
         "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]]
     });
 }
@@ -393,6 +519,7 @@ function update_budget_given_budgetID(budgetID,JSON_data)
 
     return return_value;
 }
+
 
 
 function prepare_all_budget_table_rows(_id,BudgetNumber,BudgetName,StartDate,EndDate)
