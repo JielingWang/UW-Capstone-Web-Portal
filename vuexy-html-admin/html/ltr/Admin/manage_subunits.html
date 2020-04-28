@@ -240,7 +240,7 @@
                                             <div class="form-group">
                                                 <label for="first-name-icon">Subunit Name</label>
                                                 <div class="position-relative has-icon-left">
-                                                    <input type="text" id="subUnit_name_input" class="form-control" name="fname-icon" placeholder="Subunit Name" onkeyup="">
+                                                    <input type="text" id="subUnit_name_input" class="form-control" name="fname-icon" placeholder="Subunit Name" onkeyup="add_btn_hide_unhide_logic_Subunit_overview(); update_btn_hide_unhide_logic_Subunit_overview();">
                                                     <div class="form-control-position">
                                                         <i class="feather icon-layers"></i>
                                                     </div>
@@ -254,10 +254,10 @@
                                     </div>
                                     <!--End of Input part-->   
                                     <div id="buttons_staff_overview" style="margin-right: 10px; padding-top: 30px;">
-                                        <button type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Clear</button>
-                                        <button id="ManageSubUnit_removeBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Remove</button>
-                                        <button id="ManageSubUnit_updateBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Update</button>
-                                        <button id="ManageSubUnit_addBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Add</button>
+                                        <button type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="clear_Information_Subunit_overview();">Clear</button>
+                                        <button id="ManageSubUnit_removeBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="remove_SubUnit_SubUnit_overview();">Remove</button>
+                                        <button id="ManageSubUnit_updateBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="update_SubUnit_SubUnit_overview();">Update</button>
+                                        <button id="ManageSubUnit_addBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="add_SubUnit_SubUnit_overview();">Add</button>
                                     </div>                                 
                                 </div>
                             </div>
@@ -283,6 +283,7 @@
                                                             <th>UW ID</th>
                                                             <th>Email</th>
                                                             <th>Verified User</th>
+                                                            <th>URL</th>
 
                                                         </tr>
                                                     </thead>
@@ -300,7 +301,7 @@
                                             <div class="form-group">
                                                 <label for="first-name-icon">Name</label>
                                                 <div class="position-relative has-icon-left">
-                                                    <input type="text" id="submitters_name_input" class="form-control" name="fname-icon" placeholder="Name" onkeyup="">
+                                                    <input type="text" id="submitters_name_input" class="form-control" name="fname-icon" placeholder="Name" onkeyup="update_btn_hide_unhide_logic_Submitter_overview();">
                                                     <div class="form-control-position">
                                                         <i class="feather icon-user"></i>
                                                     </div>
@@ -311,7 +312,7 @@
                                             <div class="form-group">
                                                 <label for="first-name-icon">Email</label>
                                                 <div class="position-relative has-icon-left">
-                                                    <input type="text" id="submitter_email_input" class="form-control" name="fname-icon" placeholder="Email" onkeyup="">
+                                                    <input type="text" id="submitter_email_input" class="form-control" name="fname-icon" placeholder="Email" onkeyup="update_btn_hide_unhide_logic_Submitter_overview(); add_btn_hide_unhide_logic_Submitter_overview();">
                                                     <div class="form-control-position">
                                                         <i class="feather icon-mail"></i>
                                                     </div>
@@ -328,7 +329,7 @@
                                             <div class="form-group">
                                                 <label for="first-name-icon">UW ID</label>
                                                 <div class="position-relative has-icon-left">
-                                                    <input type="text" id="submitter_UWID_input" class="form-control" name="fname-icon" placeholder="UW ID" onkeyup="manage_Unit_addBtn_hide_unhide(); manage_Unit_updateBtn_hide_unhide();">
+                                                    <input type="text" id="submitter_UWID_input" class="form-control" name="fname-icon" placeholder="UW ID" onkeyup="update_btn_hide_unhide_logic_Submitter_overview(); add_btn_hide_unhide_logic_Submitter_overview();">
                                                     <div class="form-control-position">
                                                         <i class="feather icon-hash"></i>
                                                     </div>
@@ -340,10 +341,10 @@
                                     </div>
                                     <!--End of Input part-->   
                                     <div id="buttons_staff_overview" style="margin-right: 10px; padding-top: 30px;">
-                                        <button type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Clear</button>
-                                        <button id="submitter_removeBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Remove</button>
-                                        <button id="submitter_updateBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Update</button>
-                                        <button id="submitter_addBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Add</button>
+                                        <button id="submitter_clearBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="clear_Infomraiton_Submitter_overview();">Clear</button>
+                                        <button id="submitter_removeBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="remove_user_Submitter_overview();">Remove</button>
+                                        <button id="submitter_updateBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="update_user_Submitter_overview();">Update</button>
+                                        <button id="submitter_addBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="add_user_Submitter_overview();">Add</button>
                                     </div>       
                                 </div>
                             </div>
@@ -385,6 +386,7 @@
                                         </div>
                                     </div>
                                     <div id="buttons_staff_overview" style="margin-right: 10px; padding-top: 30px;">
+                                        <button id="budget_removeBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Remove budget</button>
                                         <button id="budget_addBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Add new budget</button>
                                     </div>     
                                 </div>
@@ -458,7 +460,7 @@
                                             <div class="form-group">
                                                 <label for="first-name-icon">UW ID</label>
                                                 <div class="position-relative has-icon-left">
-                                                    <input type="text" id="approver_UWID_input" class="form-control" name="fname-icon" placeholder="UW ID" onkeyup="manage_Unit_addBtn_hide_unhide(); manage_Unit_updateBtn_hide_unhide();">
+                                                    <input type="text" id="approver_UWID_input" class="form-control" name="fname-icon" placeholder="UW ID" onkeyup="">
                                                     <div class="form-control-position">
                                                         <i class="feather icon-hash"></i>
                                                     </div>
@@ -469,12 +471,12 @@
                                             <div class="form-group">
                                                 <label for="first-name-icon">Limit ($)</label>
                                                 <div class="position-relative has-icon-left">
-                                                    <input type="text" id="approver_email_input" class="form-control" name="fname-icon" placeholder="Email" onkeyup="">
+                                                    <input type="text" id="approver_limit_input" class="form-control" name="fname-icon" placeholder="Email" onkeyup="">
                                                     <div class="form-control-position">
                                                         <i class="feather icon-credit-card"></i>
                                                     </div>
                                                 </div>
-                                                <label id="approver_email_input_error" style="color: #e74c3c;"></label>
+                                                <label id="approver_limit_input_error" style="color: #e74c3c;"></label>
                                             </div>
                                       
                                       
@@ -483,9 +485,9 @@
                                     <!--End of Input part-->   
                                     <div id="buttons_staff_overview" style="margin-right: 10px; padding-top: 30px;">
                                         <button type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Clear</button>
-                                        <button id="ManageSubUnit_removeBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Remove</button>
-                                        <button id="ManageSubUnit_updateBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Update</button>
-                                        <button id="ManageSubUnit_addBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Add</button>
+                                        <button id="approvers_removeBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Remove</button>
+                                        <button id="approvers_updateBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Update</button>
+                                        <button id="approvers_addBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Add</button>
                                     </div>                
 
                                 </div>
