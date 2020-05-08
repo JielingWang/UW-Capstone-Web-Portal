@@ -92,6 +92,11 @@ $(".icons-tab-steps").steps({
     }
 });
 
+
+/** Build the lineItems data structure */
+
+
+
 // Validate steps wizard
 
 // Show form
@@ -134,10 +139,21 @@ $(".steps-validation").steps({
             ExpenseDescription: $("input[name='expense']").val(),
             BusinessPurpose: $("input[name='business']").val(),
             Category: $("select#category option:checked").val(),
-            Amount: "$" + $("input[name='amount']").val(),
+            Amount: $("input[name='amount']").val(),
             TaxPaid: $("input[name='taxRadio']").val(),
             BudgetNum: $("select#budgetNum option:checked").val()
         });
+
+        var itemsCost = 0;
+        for (var i = 0; i < lineItem.length; i++) {
+            var firstChar = lineItem[i].Amount.charAt(0);
+            if (firstChar === "$") {
+                var amountNum = lineItem[i].Amount.substr(1);
+                itemsCost += parseFloat(amountNum);
+            } else {
+                itemsCost += parseFloat(lineItem[i].Amount);
+            }
+        }
 
         //this is the JSON Object we are sending to the server
         var JSON_toServer = {
@@ -149,11 +165,22 @@ $(".steps-validation").steps({
             "assignedTo": null
         }
 
+        var addrInfo = {
+            FullName: $("input[name='full-name']").val(),
+            AddrLine1: $("input[name='addr-line-1']").val(),
+            AddrLine2: $("input[name='addr-line-2']").val(),
+            AddrCity: $("input[name='addr-city']").val(),
+            AddrState: $("input[name='addr-state']").val(),
+            AddrZip: $("input[name='addr-zip']").val()
+        }
+
         var requestInfo = {
             ReimburseFor: $("input[name='myselfOrBehalfRadio']:checked").val(),
             Individual: $("input[name='individual-reimbursed']:checked").val(),
             Payment: $("input[name='paymentRadio']:checked").val(),
-            LineItem: lineItem
+            Addr: addrInfo,
+            LineItem: lineItem,
+            ItemsCost: itemsCost
         }
 
         //now lets set up the JSON_toServer JSON Object
@@ -188,7 +215,7 @@ $(".steps-validation").steps({
                 const requestInfo_obj = JSON.parse(data_obj.OrderInfo);
                 console.log(requestInfo_obj);
 
-                window.location.href = "../../../html/ltr/users/user-summary.html";
+                // window.location.href = "../../../html/ltr/users/user-summary.html";
 
                 // show it in the summary table
             }

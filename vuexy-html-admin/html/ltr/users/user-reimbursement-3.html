@@ -9,7 +9,7 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>User-reimbursement-2</title>
+    <title>User-reimbursement-3</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
@@ -480,14 +480,14 @@
                                             <fieldset id="init_line_item">
 
                                                 <!-- BEGIN: Initialized Line Item -->
-                                                <div class="row" style="margin-top: 1rem;" id="init_line_item">
-                                                    <div class="col-12" style="margin-bottom: 0.5rem;">
+                                                <div class="row" style="margin-top: 1rem;" id="lineItemBox_1">
+                                                    <!-- <div class="col-12" style="margin-bottom: 0.5rem;">
                                                         <h4>Item <span id="item_num">1</span> </h4>
-                                                    </div>
+                                                    </div> -->
                                                     
                                                     <div class="d-flex justify-content-center">
                                                         
-                                                        <div class="col-11">
+                                                        <div class="col-11" style="padding-top: 1rem; border-top: 1px dashed #d9d9d9;">
                                                             <div class="form form-horizontal">
                                                                 <div class="form-body">
                                                                     <div class="row">
@@ -503,10 +503,12 @@
                                                                                 <div class="col-md-4">
                                                                                     <span>Expense Description</span>
                                                                                 </div>
-                                                                                <div class="col-md-8">
-                                                                                    <input type="text" id="expense_description" class="form-control" name="expense" placeholder="Expense Description">
+                                                                                <div class="col-md-7">
+                                                                                    <input type="text" id="expense_1" class="form-control" name="expense" placeholder="Expense Description">
                                                                                 </div>
-                                                                                
+                                                                                <div class="col-md-1">
+                                                                                    <button type="button" id="delete_1" class="btn btn-icon rounded-circle btn-flat-danger"><i class="feather icon-x-circle"></i></button>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-12">
@@ -514,8 +516,8 @@
                                                                                 <div class="col-md-4">
                                                                                     <span>Business Purpose</span>
                                                                                 </div>
-                                                                                <div class="col-md-8">
-                                                                                    <input type="text" id="business_purpose" class="form-control" name="purpose" placeholder="Business Purpose">
+                                                                                <div class="col-md-7">
+                                                                                    <input type="text" id="purpose_1" class="form-control" name="purpose" placeholder="Business Purpose">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -525,7 +527,7 @@
                                                                                     <span>Category</span>
                                                                                 </div>
                                                                                 <div class="col-md-4">
-                                                                                    <select class="custom-select form-control" id="category" onChange="categorySelected_actions(this.value)">
+                                                                                    <select class="custom-select form-control" id="category_1" onChange="categorySelected_actions(this.value)">
                                                                                         <option value="">Please select</option>
                                                                                         <option value="food">Food and Beverage</option>
                                                                                         <option value="other">Other</option>
@@ -557,7 +559,7 @@
                                                                                             <div class="input-group-prepend">
                                                                                                 <span class="input-group-text">$</span>
                                                                                             </div>
-                                                                                            <input type="text" class="form-control" name="amount" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
+                                                                                            <input type="text" id="amount_1" class="form-control" name="amount" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
                                                                                         </div>
                                                                                     </fieldset>
                                                                                 </div>
@@ -600,14 +602,14 @@
                                                                         </div>
 
                                                                         <!-- BEGIN: first budget -->
-                                                                        <div class="col-12" id="first_budget">
+                                                                        <div class="col-12" id="budget_1_1">
                                                                             <div class="form-group row">
                                                                                 <div class="col-md-4">
                                                                                     <span>Budget Number</span>
                                                                                     <label for="task-icon"><b><i>*If need to split budget please click plus icon.</i></b></label>
                                                                                 </div>
-                                                                                <div class="col-md-3">
-                                                                                    <select class="custom-select form-control" id="budgetNum">
+                                                                                <div class="col-md-2">
+                                                                                    <select class="custom-select form-control" id="budgetNum" name="budget_num_1">
                                                                                         <option value="">Please select</option>
                                                                                         <option value="61-2692">61-2692</option>
                                                                                         <option value="66-1981">66-1981</option>
@@ -617,14 +619,41 @@
                                                                                         <option value="80-2535">80-2535</option>
                                                                                     </select>
                                                                                 </div>
-                                                                                <div class="col-md-2 hidden" id="first_split_amount">
+                                                                                <!-- <div class="col-md-1">Split with:</div> -->
+                                                                                <div class="col-md-2">
+                                                                                    <select class="custom-select form-control" id="split_with_1_1">
+                                                                                        <option value="amount">Amount</option>
+                                                                                        <option value="percentage">Percentage</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="col-md-2" id="split_dollar_input_1_1">
+                                                                                    <fieldset>
+                                                                                        <div class="input-group">
+                                                                                            <div class="input-group-prepend">
+                                                                                                <span class="input-group-text">$</span>
+                                                                                            </div>
+                                                                                            <input type="text" class="form-control" id="split_dollar_input_value_1_1" aria-label="Amount (to the nearest dollar)">
+                                                                                        </div>
+                                                                                    </fieldset>
+                                                                                </div>
+                                                                                <div class="col-md-2 hidden" id="split_percent_input_1_1">
+                                                                                    <fieldset>
+                                                                                        <div class="input-group">
+                                                                                            <input type="text" class="form-control" id="split_percent_input_value_1_1">
+                                                                                            <div class="input-group-append">
+                                                                                                <span class="input-group-text">%</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </fieldset>
+                                                                                </div>
+                                                                                <!-- <div class="col-md-2 hidden" id="first_split_amount">
                                                                                     <input type="text" id="business_purpose" class="form-control" name="split_amount" placeholder="$00.00">
                                                                                 </div>
                                                                                 <div class="col-md-2 hidden" id="first_split_perc">
                                                                                     <input type="text" id="business_purpose" class="form-control" name="split_perc" placeholder="00.00%">
-                                                                                </div>
+                                                                                </div> -->
                                                                                 <div class="col-md-1">
-                                                                                    <button type="button" class="btn btn-icon rounded-circle btn-flat-success" id="add_budget"><i class="feather icon-plus-circle"></i></button>
+                                                                                    <button type="button" class="btn btn-icon rounded-circle btn-flat-success" id="budget_btn_1_1"><i class="feather icon-plus-circle"></i></button>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
@@ -678,7 +707,7 @@
                                                                         <!-- END: first budget -->
 
                                                                         <!-- BEGIN: added budget -->
-                                                                        <div class="col-12 hidden" id="added_budget">
+                                                                        <!-- <div class="col-12 hidden" id="added_budget">
                                                                             <div class="form-group row">
                                                                                 <div class="col-md-4">
                                                                                     <span>Budget Number</span>
@@ -751,7 +780,7 @@
                                                                                     <input type="text" class="form-control" name="project_input" id="project_input">
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
+                                                                        </div> -->
                                                                         <!-- END: added budget -->
 
                                                                         <div class="col-12">
@@ -762,30 +791,18 @@
                                                                                 <div class="col-md-4">
                                                                                     <fieldset>
                                                                                         <div class="custom-file">
-                                                                                            <input id="fileField1" type="file" class="custom-file-input">
-                                                                                            <label class="custom-file-label" for="fileField1">Choose file</label>
+                                                                                            <input id="file_1" type="file" class="custom-file-input">
+                                                                                            <label class="custom-file-label" for="file_1">Choose file</label>
                                                                                         </div>
                                                                                     </fieldset>
                                                                                 </div>
-                                                                            </div>
-                                                                        </div>
-
-
-                                                                        <div class="col-12">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-4">
-                                                                                    <button type="button" class="btn btn-outline-primary" id="add_item">Add</button>
-                                                                                </div>
-                                                                                <div class="col-md-8">
-                                                                                    <button type="button" class="btn btn-outline-primary pull-right" id="confirm_item">Confirm</button>
+                                                                                <div class="col-md-1 offset-md-3">
+                                                                                    <button type="button" id="confirm_1" class="btn btn-icon rounded-circle btn-flat-success"><i class="feather icon-check-circle"></i></button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-
-
                                                                         <!-- END LINE ITEM  -->
 
-                                                                        
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -797,8 +814,20 @@
                                                 <!-- BEGIN: New Line Item -->
                                                 <!-- END: New Line Item -->
 
+                                                <!-- ADD LINE ITEM BUTTON -->
+                                                <div class="row d-flex justify-content-center" id="new_line_item">
+                                                    <div class="col-11 text-center">
+                                                        <div class="form-group row" style="padding-top: 1rem; padding-bottom: 1rem; border-top: 1px dashed #d9d9d9; border-bottom: 1px dashed #d9d9d9;">
+                                                            <div class="col-md-12">
+                                                                <button type="button" class="btn btn-icon rounded-circle btn-flat-primary" id="add_new_line_item"><i class="feather icon-plus-circle"></i></button>
+                                                                <label class="text-primary" for="add_new_line_item">Add New Line Items</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <div class="row d-flex justify-content-center">
-                                                    <div class="col-11" style="margin-top: 1rem; padding-top: 1.5rem; border-top: 1px solid gray;">
+                                                    <div class="col-11" style="margin-top: 1rem; padding-top: 1.5rem;">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
                                                                 <h4>Item Summary</h4>
@@ -811,13 +840,18 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <th>No.</th>
-                                                                        <th>Expense Description</th>
+                                                                        <th>
+                                                                            <p style="margin-bottom: 0;">Expense Description</p>
+                                                                            <p style="margin-bottom: 0;">Business Purpose</p>
+                                                                        </th>
+                                                                        
                                                                         <th>Category</th>
+                                                                        <th>Budget(s)</th>
                                                                         <th>Amount</th>
                                                                         <th>Receipt</th>
                                                                      </tr>
                                                                 </thead>
-                                                                <tbody id="tbody">
+                                                                <tbody id="summary_tbody">
                                                                     <!-- <tr class="visible" id="trow">
                                                                         <td>Item 1</td>
                                                                         <td>Some description here</td>
@@ -832,11 +866,9 @@
                                                             </table>
                                                         </div>
                                                     </div>
-                                                    <!-- <div class="col-12">
-                                                        <a href="user-summary.html" class="btn btn-primary mr-1 mb-1 pull-right" id="confirm-submission">Submit</a>
-                                                        <button type="button" class="btn btn-primary mr-1 mb-1 pull-right" id="confirm-submission">Submit</button>
-                                                    </div> -->
                                                 </div>
+
+                                                <!-- BEGIN: Added line item -->
                                                 <div class="row hidden" id="added_line_item" style="margin-top: 1rem;">
                                                     <!-- <div class="col-12" style="margin-bottom: 0.5rem;">
                                                         <h4>Item <span id="item_num">1</span> </h4>
@@ -1139,6 +1171,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- END: Added line item -->
+
                                             </fieldset>
                                         </form>
                                     </div>
@@ -1189,7 +1223,7 @@
     <!-- BEGIN: Page JS-->
     <script src="../../../app-assets/js/scripts/myScripts/users/reimbursement-new.js"></script>
     <!-- <script src="../../../app-assets/js/scripts/myScripts/users/user-data.js"></script> -->
-    <script src="../../../app-assets/js/scripts/myScripts/users/my-wizard-steps.js"></script>
+    <!-- <script src="../../../app-assets/js/scripts/myScripts/users/my-wizard-steps.js"></script> -->
     <script src="../../../app-assets/js/scripts/forms/select/form-select2.js"></script>
     <!-- <script src="../../../app-assets/js/scripts/forms/wizard-steps.js"></script> -->
     <!-- END: Page JS-->

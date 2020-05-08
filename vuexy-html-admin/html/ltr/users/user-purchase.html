@@ -235,188 +235,17 @@
                                 </div> -->
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <form action="#" method="POST" class="steps-validation wizard-circle">
+                                        <form class="steps-validation wizard-circle">
+
                                             <!-- Step 1 -->
-                                            <h6><i class="step-icon feather icon-home"></i>Requester Information</h6>
+                                            <h6><i class="step-icon feather icon-briefcase"></i>Shipping Address</h6>
                                             <fieldset>
-                                                <div class="row" style="margin-top: 1rem;">
-                                                    <div class="col-12">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-1"></div>
-                                                            <div class="col-md-4">
-                                                                <span>Purchase for</span>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="myselfOrBehalfRadio" value="myself" id="myselfRadio_Yes">
-                                                                                <label class="custom-control-label" for="myselfRadio_Yes">Myself</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="myselfOrBehalfRadio" value="onbehalf" id="onBehalfRadio_Yes" >
-                                                                                <label class="custom-control-label" for="onBehalfRadio_Yes">On someone behalf</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="hidden" id="onBehalf_Yes">
-                                                    <div class="col-12">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-1"></div>
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <label for="onbehalf-name">Name </label>
-                                                                    <input type="text" class="form-control" id="onbehalf-name" placeholder="Name">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <label for="onbehalf-affiliation">Email </label>
-                                                                    <input type="text" class="form-control" id="onbehalf-email" placeholder="Email">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <label for="onbehalf-affiliation">Affiliation </label>
-                                                                    <input type="text" class="form-control" id="onbehalf-affiliation" placeholder="Affiliation">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row" style="margin-bottom: 1rem;">
-                                                    <div class="col-12">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-1"></div>
-                                                            <div class="col-md-4">
-                                                                <span>Individual to request</span>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="individual" value="employee" id="individual_employee">
-                                                                                <label class="custom-control-label" for="individual_employee">Employee</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="individual" value="student" id="individual_student">
-                                                                                <label class="custom-control-label" for="individual_student">Student</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="individual" value="nonuw" id="individual_nonuw">
-                                                                                <label class="custom-control-label" for="individual_nonuw">Non-UW</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </fieldset>
-
-                                            <!-- Step 2 -->
-                                            <h6><i class="step-icon feather icon-briefcase"></i>Delivery Method</h6>
-                                            <fieldset>
-                                                <div class="row d-flex justify-content-center" style="margin-top: 1rem;">
-                                                    <div class="col-11 hidden" id="emplyee_payment">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-4">
-                                                                <span>Preferred Payment Method:</span>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="Direct deposit" id="emplyee_deposit">
-                                                                                <label class="custom-control-label" for="emplyee_deposit">Direct deposit</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="Picked up in department" id="employee_pick">
-                                                                                <label class="custom-control-label" for="employee_pick">Picked up in department</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                    <!-- <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" id="emplyee_checkMail">
-                                                                                <label class="custom-control-label" for="emplyee_checkMail">Check mail</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li> -->
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-11 hidden" id="nonemplyee_payment">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-4">
-                                                                <span>Preferred Payment Method:</span>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="Picked up in department" id="nonemplyee_pick">
-                                                                                <label class="custom-control-label" for="nonemplyee_pick">Picked up in department</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="Check mail" id="nonemployee_checkMail">
-                                                                                <label class="custom-control-label" for="nonemployee_checkMail">Check mail</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="hidden" id="mail-addr">
-                                                    <div class="row">
+                                                <!-- <div class="row d-flex justify-content-center" style="margin-top: 1rem;">
+                                                    
+                                                    
+                                                </div> -->
+                                                <div class="" id="mail-addr">
+                                                    <!-- <div class="row">
                                                         <div class="col-12">
                                                             <div class="form-group row">
                                                                 <div class="col-md-1"></div>
@@ -425,7 +254,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     <div class="form form-vertical">
                                                         <div class="form-body">
                                                             <div class="row d-flex justify-content-center">
@@ -473,401 +302,130 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="col-11 text-center">
+                                                        <fieldset>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" name="save_default_addr" id="save-default-addr">
+                                                                <label class="custom-control-label" for="save-default-addr">Save as Default Address</label>
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                </div>
                                             </fieldset>
 
-                                            <!-- Step 3 -->
-                                            <h6><i class="step-icon feather icon-image"></i> Add Items</h6>
+                                            <!-- Step 2 -->
+                                            <h6><i class="step-icon feather icon-briefcase"></i>Vendor Information</h6>
                                             <fieldset>
-                                                <div class="row" id="first_line_item" style="margin-top: 1rem;">
-                                                    <!-- <div class="col-12" style="margin-bottom: 0.5rem;">
-                                                        <h4>Item <span id="item_num">1</span> </h4>
-                                                    </div> -->
-                                                    <div class="d-flex justify-content-center">
-                                                        <div class="col-11">
-                                                            <div class="form form-horizontal">
-                                                                <div class="form-body">
-                                                                    <div class="row">
-                                                                        <div class="col-12" style="margin-bottom: 0.5rem;">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-4">
-                                                                                    <h4>Item <span id="item_num">1</span> </h4>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <!-- <form action="http://localhost:3000/api/uploadOrder" method="POST">
-                                                                            <div class="col-12">
-                                                                                <div class="form-group row">
-                                                                                    <div class="col-md-4">
-                                                                                        <span>Expense Description</span>
-                                                                                    </div>
-                                                                                    <div class="col-md-8">
-                                                                                        <input type="text" id="expense_description" class="form-control" name="ExpenseDescription" placeholder="Expense Description">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <button type="submit">Submit</button>
-                                                                        </form> -->
-                                                                        <p id="result"></p>
-                                                                        <div class="col-12">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-4">
-                                                                                    <span>Expense Description</span>
-                                                                                </div>
-                                                                                <div class="col-md-8">
-                                                                                    <input type="text" id="expense_description" class="form-control" name="expense" placeholder="Expense Description">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-12">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-4">
-                                                                                    <span>Business Purpose</span>
-                                                                                </div>
-                                                                                <div class="col-md-8">
-                                                                                    <input type="text" id="business_purpose" class="form-control" name="business" placeholder="Business Purpose">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-12">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-4">
-                                                                                    <span>Category</span>
-                                                                                </div>
-                                                                                <div class="col-md-4">
-                                                                                    <select class="custom-select form-control" id="category" onChange="categorySelected_actions(this.value)">
-                                                                                        <option value="">Please select</option>
-                                                                                        <option value="food">Food and Beverage</option>
-                                                                                        <option value="other">Other</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-12 hidden" id="foodAndBeverages">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-1">
-                                                                                    <span></span>
-                                                                                </div>
-                                                                                <div class="col-md-3">
-                                                                                    <span>Attendees</span>
-                                                                                </div>
-                                                                                <div class="col-md-4">
-                                                                                    <input type="text" id="name" class="form-control" name="submitter-name" placeholder="Name">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-12">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-4">
-                                                                                    <span>Item Link</span>
-                                                                                </div>
-                                                                                <div class="col-md-8">
-                                                                                    <input type="text" id="item_link" class="form-control" name="link" placeholder="">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-12">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-4">
-                                                                                    <span>Amount</span>
-                                                                                </div>
-                                                                                <div class="col-md-4 col-12 mb-1">
-                                                                                    <fieldset>
-                                                                                        <div class="input-group">
-                                                                                            <div class="input-group-prepend">
-                                                                                                <span class="input-group-text">$</span>
-                                                                                            </div>
-                                                                                            <input type="text" class="form-control" name="amount" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
-                                                                                        </div>
-                                                                                    </fieldset>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-12">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-4">
-                                                                                    <span>Was Sales Tax Paid?</span>
-                                                                                </div>
-                                                                                <div class="col-md-8">
-                                                                                    <ul class="list-unstyled mb-0">
-                                                                                        <li class="d-inline-block mr-2">
-                                                                                            <fieldset>
-                                                                                                <div class="custom-control custom-radio">
-                                                                                                    <input type="radio" class="custom-control-input" name="taxRadio" value="paid" id="taxRadio1">
-                                                                                                    <label class="custom-control-label" for="taxRadio1">Yes</label>
-                                                                                                </div>
-                                                                                            </fieldset>
-                                                                                        </li>
-                                                                                        <li class="d-inline-block mr-2">
-                                                                                            <fieldset>
-                                                                                                <div class="custom-control custom-radio">
-                                                                                                    <input type="radio" class="custom-control-input" name="taxRadio" value="unpaid" id="taxRadio2">
-                                                                                                    <label class="custom-control-label" for="taxRadio2">No</label>
-                                                                                                </div>
-                                                                                            </fieldset>
-                                                                                        </li>
-                                                                                        <li class="d-inline-block mr-2">
-                                                                                            <fieldset>
-                                                                                                <div class="custom-control custom-radio">
-                                                                                                    <input type="radio" class="custom-control-input" name="taxRadio" value="nontaxable" id="taxRadio3">
-                                                                                                    <label class="custom-control-label" for="taxRadio3">Item Not Taxable</label>
-                                                                                                </div>
-                                                                                            </fieldset>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <!-- BEGIN: first budget -->
-                                                                        <div class="col-12" id="first_budget">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-4">
-                                                                                    <span>Budget Number</span>
-                                                                                    <label for="task-icon"><b><i>*If need to split budget please click plus icon.</i></b></label>
-                                                                                </div>
-                                                                                <div class="col-md-3">
-                                                                                    <select class="custom-select form-control" id="budgetNum">
-                                                                                        <option value="">Please select</option>
-                                                                                        <option value="61-2692">61-2692</option>
-                                                                                        <option value="66-1981">66-1981</option>
-                                                                                        <option value="80-2535">80-2535</option>
-                                                                                        <option value="61-2692">61-2692</option>
-                                                                                        <option value="66-1981">66-1981</option>
-                                                                                        <option value="80-2535">80-2535</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="col-md-2 hidden" id="first_split_amount">
-                                                                                    <input type="text" id="business_purpose" class="form-control" name="split_amount" placeholder="$00.00">
-                                                                                </div>
-                                                                                <div class="col-md-2 hidden" id="first_split_perc">
-                                                                                    <input type="text" id="business_purpose" class="form-control" name="split_perc" placeholder="00.00%">
-                                                                                </div>
-                                                                                <div class="col-md-1">
-                                                                                    <button type="button" class="btn btn-icon btn-icon rounded-circle btn-flat-success" id="add_budget"><i class="feather icon-plus-circle"></i></button>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-1">
-                                                                                    <ul class="list-unstyled mb-0">
-                                                                                        <li class="d-inline-block mr-2">
-                                                                                            <fieldset>
-                                                                                                <div class="custom-control custom-checkbox">
-                                                                                                    <input type="checkbox" class="custom-control-input" name="option_task" id="option_task">
-                                                                                                    <label class="custom-control-label" for="option_task">Task</label>
-                                                                                                </div>
-                                                                                            </fieldset>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                                <div class="col-md-3 hidden" id="task_checked">
-                                                                                    <input type="text" class="form-control" name="task_input" id="task_input">
-                                                                                </div>
-                                                                                <div class="col-md-1">
-                                                                                    <ul class="list-unstyled mb-0">
-                                                                                        <li class="d-inline-block mr-2">
-                                                                                            <fieldset>
-                                                                                                <div class="custom-control custom-checkbox">
-                                                                                                    <input type="checkbox" class="custom-control-input" name="option_option" id="option_option">
-                                                                                                    <label class="custom-control-label" for="option_option">Option</label>
-                                                                                                </div>
-                                                                                            </fieldset>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                                <div class="col-md-3 hidden" id="option_checked">
-                                                                                    <input type="text" class="form-control" name="option_input" id="option_input">
-                                                                                </div>
-                                                                                <div class="col-md-1">
-                                                                                    <ul class="list-unstyled mb-0">
-                                                                                        <li class="d-inline-block mr-2">
-                                                                                            <fieldset>
-                                                                                                <div class="custom-control custom-checkbox">
-                                                                                                    <input type="checkbox" class="custom-control-input" name="option_project" id="option_project">
-                                                                                                    <label class="custom-control-label" for="option_project">Project</label>
-                                                                                                </div>
-                                                                                            </fieldset>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                                <div class="col-md-3 hidden" id="project_checked">
-                                                                                    <input type="text" class="form-control" name="project_input" id="project_input">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <!-- END: first budget -->
-
-                                                                        <!-- BEGIN: added budget -->
-                                                                        <div class="col-12 hidden" id="added_budget">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-4">
-                                                                                    <span>Budget Number</span>
-                                                                                </div>
-                                                                                <div class="col-md-3">
-                                                                                    <select class="custom-select form-control">
-                                                                                        <option value="food">Please select</option>
-                                                                                        <option value="square">61-2692</option>
-                                                                                        <option value="rectangle">66-1981</option>
-                                                                                        <option value="rombo">80-2535</option>
-                                                                                        <option value="romboid">61-2692</option>
-                                                                                        <option value="trapeze">66-1981</option>
-                                                                                        <option value="traible">80-2535</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="col-md-2">
-                                                                                    <input type="text" id="business_purpose" class="form-control" name="split_amount" placeholder="$00.00">
-                                                                                </div>
-                                                                                <div class="col-md-2">
-                                                                                    <input type="text" id="business_purpose" class="form-control" name="split_perc" placeholder="00.00%">
-                                                                                </div>
-                                                                                <div class="col-md-1">
-                                                                                    <button type="button" class="btn btn-icon btn-icon rounded-circle btn-flat-success" id="remove_budget"><i class="feather icon-minus-circle"></i></button>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-1">
-                                                                                    <ul class="list-unstyled mb-0">
-                                                                                        <li class="d-inline-block mr-2">
-                                                                                            <fieldset>
-                                                                                                <div class="custom-control custom-checkbox">
-                                                                                                    <input type="checkbox" class="custom-control-input" name="option_task" id="option_task">
-                                                                                                    <label class="custom-control-label" for="option_task">Task</label>
-                                                                                                </div>
-                                                                                            </fieldset>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                                <div class="col-md-3 hidden" id="task_checked">
-                                                                                    <input type="text" class="form-control" name="task_input" id="task_input">
-                                                                                </div>
-                                                                                <div class="col-md-1">
-                                                                                    <ul class="list-unstyled mb-0">
-                                                                                        <li class="d-inline-block mr-2">
-                                                                                            <fieldset>
-                                                                                                <div class="custom-control custom-checkbox">
-                                                                                                    <input type="checkbox" class="custom-control-input" name="option_option" id="option_option">
-                                                                                                    <label class="custom-control-label" for="option_option">Option</label>
-                                                                                                </div>
-                                                                                            </fieldset>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                                <div class="col-md-3 hidden" id="option_checked">
-                                                                                    <input type="text" class="form-control" name="option_input" id="option_input">
-                                                                                </div>
-                                                                                <div class="col-md-1">
-                                                                                    <ul class="list-unstyled mb-0">
-                                                                                        <li class="d-inline-block mr-2">
-                                                                                            <fieldset>
-                                                                                                <div class="custom-control custom-checkbox">
-                                                                                                    <input type="checkbox" class="custom-control-input" name="option_project" id="option_project">
-                                                                                                    <label class="custom-control-label" for="option_project">Project</label>
-                                                                                                </div>
-                                                                                            </fieldset>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                                <div class="col-md-3 hidden" id="project_checked">
-                                                                                    <input type="text" class="form-control" name="project_input" id="project_input">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <!-- END: added budget -->
-
-                                                                        <div class="col-12">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-4">
-                                                                                    <span>Upload Receipt</span>
-                                                                                </div>
-                                                                                <div class="col-md-4">
-                                                                                    <!-- <input id="fileField1" type="file"> -->
-                                                                                    <fieldset>
-                                                                                        <div class="custom-file">
-                                                                                            <input id="fileField1" type="file" class="custom-file-input" id="inputGroupFile01">
-                                                                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                                                                        </div>
-                                                                                    </fieldset>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-12">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-4">
-                                                                                    <button type="button" class="btn btn-outline-primary" id="add_item">Add</button>
-                                                                                </div>
-                                                                                <div class="col-md-8">
-                                                                                    <button type="button" class="btn btn-outline-primary pull-right" id="confirm_item">Confirm</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                                <div class="form form-vertical">
+                                                    <div class="form-body">
+                                                        <div class="row d-flex justify-content-center">
+                                                            <div class="col-md-6">
+                                                                <div class="col-12">
+                                                                    <div class="form-group">
+                                                                        <label for="vendor-name">Vendor Name</label>
+                                                                        <input type="text" id="vendor-name" class="form-control" name="vendor-name">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <div class="form-group">
+                                                                        <label for="vendor-email">Vendor Email</label>
+                                                                        <input type="text" id="vendor-email" class="form-control" name="vendor-email">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <div class="form-group">
+                                                                        <label for="vendor-phone">Vendor Phone</label>
+                                                                        <input type="text" id="vendor-phone" class="form-control" name="vendor-phone">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <div class="form-group">
+                                                                        <label for="vendor-website">Vendor Website</label>
+                                                                        <input type="text" id="vendor-website" class="form-control" name="vendor-website">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        
                                                     </div>
                                                 </div>
-                                                <div class="row d-flex justify-content-center">
-                                                    <div class="col-11" style="margin-top: 1rem; padding-top: 1.5rem; border-top: solid 0.5px gray;">
+                                                <!-- <div class="row d-flex justify-content-center" style="margin-top: 1rem;">
+                                                    <div class="col-11">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <h4>Item Summary</h4>
+                                                                <span>Vendor Name</span>
+                                                            </div>
+                                                            <div class="col-md-7">
+                                                                <input type="text" id="vendor-name" class="form-control" name="vendor-name">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-11">
                                                         <div class="form-group row">
-                                                            <table class="table zero-configuration" id="summary_table">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>No.</th>
-                                                                        <th>Expense Description</th>
-                                                                        <th>Category</th>
-                                                                        <th>Amount</th>
-                                                                        <th>Receipt</th>
-                                                                     </tr>
-                                                                </thead>
-                                                                <tbody id="tbody">
-                                                                    <!-- <tr class="visible" id="trow">
-                                                                        <td>Item 1</td>
-                                                                        <td>Some description here</td>
-                                                                        <td>Other</td>
-                                                                        <td>$123</td>
-                                                                        <td>
-                                                                            <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-file"></i></button>
-                                                                            <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-edit"></i></button>
-                                                                        </td>
-                                                                     </tr> -->
-                                                                </tbody>
-                                                            </table>
+                                                            <div class="col-md-4">
+                                                                <span>Vendor Email</span>
+                                                            </div>
+                                                            <div class="col-md-7">
+                                                                <input type="text" id="vendor-email" class="form-control" name="vendor-email">
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <!-- <div class="col-12">
-                                                        <a href="user-summary.html" class="btn btn-primary mr-1 mb-1 pull-right" id="confirm-submission">Submit</a>
-                                                        <button type="button" class="btn btn-primary mr-1 mb-1 pull-right" id="confirm-submission">Submit</button>
-                                                    </div> -->
-                                                </div>
-                                                <div class="row hidden" id="added_line_item" style="margin-top: 1rem;">
+                                                    <div class="col-11">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Vendor Phone</span>
+                                                            </div>
+                                                            <div class="col-md-7">
+                                                                <input type="text" id="vendor-phone" class="form-control" name="vendor-phone">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-11">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Vendor Website</span>
+                                                            </div>
+                                                            <div class="col-md-7">
+                                                                <input type="text" id="vendor-website" class="form-control" name="vendor-website">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                            </fieldset>
+
+                                            <!-- Step 3 -->
+                                            <h6><i class="step-icon feather icon-image"></i> Add Items</h6>
+                                            <fieldset>
+                                                <!-- BEGIN: Initialized Line Item -->
+                                                <div class="row" style="margin-top: 1rem;" id="init_line_item">
                                                     <!-- <div class="col-12" style="margin-bottom: 0.5rem;">
                                                         <h4>Item <span id="item_num">1</span> </h4>
                                                     </div> -->
+                                                    
                                                     <div class="d-flex justify-content-center">
-                                                        <div class="col-11">
+                                                        
+                                                        <div class="col-11" style="padding-top: 1rem; border-top: 1px dashed #d9d9d9;">
                                                             <div class="form form-horizontal">
                                                                 <div class="form-body">
                                                                     <div class="row">
                                                                         <div class="col-12" style="margin-bottom: 0.5rem;">
-                                                                            <div class="form-group row">
+                                                                            <!-- <div class="form-group row">
                                                                                 <div class="col-md-4">
                                                                                     <h4>Item <span id="item_num">1</span> </h4>
                                                                                 </div>
-                                                                            </div>
+                                                                            </div> -->
                                                                         </div>
                                                                         <div class="col-12">
                                                                             <div class="form-group row">
                                                                                 <div class="col-md-4">
                                                                                     <span>Expense Description</span>
                                                                                 </div>
-                                                                                <div class="col-md-8">
+                                                                                <div class="col-md-7">
                                                                                     <input type="text" id="expense_description" class="form-control" name="expense" placeholder="Expense Description">
+                                                                                </div>
+                                                                                <div class="col-md-1">
+                                                                                    <button id="delete-line-item" class="btn btn-icon rounded-circle btn-flat-danger"><i class="feather icon-x-circle"></i></button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -876,8 +434,8 @@
                                                                                 <div class="col-md-4">
                                                                                     <span>Business Purpose</span>
                                                                                 </div>
-                                                                                <div class="col-md-8">
-                                                                                    <input type="text" id="business_purpose" class="form-control" name="business" placeholder="Business Purpose">
+                                                                                <div class="col-md-7">
+                                                                                    <input type="text" id="business_purpose" class="form-control" name="purpose" placeholder="Business Purpose">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -911,7 +469,17 @@
                                                                         <div class="col-12">
                                                                             <div class="form-group row">
                                                                                 <div class="col-md-4">
-                                                                                    <span>Amount</span>
+                                                                                    <span>Quantity</span>
+                                                                                </div>
+                                                                                <div class="col-md-4">
+                                                                                    <input type="text" class="form-control" name="amount" placeholder="0.00">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <div class="form-group row">
+                                                                                <div class="col-md-4">
+                                                                                    <span>Unit Price</span>
                                                                                 </div>
                                                                                 <div class="col-md-4 col-12 mb-1">
                                                                                     <fieldset>
@@ -919,47 +487,13 @@
                                                                                             <div class="input-group-prepend">
                                                                                                 <span class="input-group-text">$</span>
                                                                                             </div>
-                                                                                            <input type="text" class="form-control" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
+                                                                                            <input type="text" class="form-control" name="amount" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
                                                                                         </div>
                                                                                     </fieldset>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-12">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-4">
-                                                                                    <span>Was Sales Tax Paid?</span>
-                                                                                </div>
-                                                                                <div class="col-md-8">
-                                                                                    <ul class="list-unstyled mb-0">
-                                                                                        <li class="d-inline-block mr-2">
-                                                                                            <fieldset>
-                                                                                                <div class="custom-control custom-radio">
-                                                                                                    <input type="radio" class="custom-control-input" name="taxRadio" id="taxRadio1">
-                                                                                                    <label class="custom-control-label" for="taxRadio1">Yes</label>
-                                                                                                </div>
-                                                                                            </fieldset>
-                                                                                        </li>
-                                                                                        <li class="d-inline-block mr-2">
-                                                                                            <fieldset>
-                                                                                                <div class="custom-control custom-radio">
-                                                                                                    <input type="radio" class="custom-control-input" name="taxRadio" id="taxRadio2">
-                                                                                                    <label class="custom-control-label" for="taxRadio2">No</label>
-                                                                                                </div>
-                                                                                            </fieldset>
-                                                                                        </li>
-                                                                                        <li class="d-inline-block mr-2">
-                                                                                            <fieldset>
-                                                                                                <div class="custom-control custom-radio">
-                                                                                                    <input type="radio" class="custom-control-input" name="taxRadio" id="taxRadio3">
-                                                                                                    <label class="custom-control-label" for="taxRadio3">Item Not Taxable</label>
-                                                                                                </div>
-                                                                                            </fieldset>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                                                        
 
                                                                         <!-- BEGIN: first budget -->
                                                                         <div class="col-12" id="first_budget">
@@ -969,14 +503,14 @@
                                                                                     <label for="task-icon"><b><i>*If need to split budget please click plus icon.</i></b></label>
                                                                                 </div>
                                                                                 <div class="col-md-3">
-                                                                                    <select class="custom-select form-control">
-                                                                                        <option value="food">Please select</option>
-                                                                                        <option value="square">61-2692</option>
-                                                                                        <option value="rectangle">66-1981</option>
-                                                                                        <option value="rombo">80-2535</option>
-                                                                                        <option value="romboid">61-2692</option>
-                                                                                        <option value="trapeze">66-1981</option>
-                                                                                        <option value="traible">80-2535</option>
+                                                                                    <select class="custom-select form-control" id="budgetNum">
+                                                                                        <option value="">Please select</option>
+                                                                                        <option value="61-2692">61-2692</option>
+                                                                                        <option value="66-1981">66-1981</option>
+                                                                                        <option value="80-2535">80-2535</option>
+                                                                                        <option value="61-2692">61-2692</option>
+                                                                                        <option value="66-1981">66-1981</option>
+                                                                                        <option value="80-2535">80-2535</option>
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="col-md-2 hidden" id="first_split_amount">
@@ -986,7 +520,7 @@
                                                                                     <input type="text" id="business_purpose" class="form-control" name="split_perc" placeholder="00.00%">
                                                                                 </div>
                                                                                 <div class="col-md-1">
-                                                                                    <button type="button" class="btn btn-icon btn-icon rounded-circle btn-flat-success" id="add_budget"><i class="feather icon-plus-circle"></i></button>
+                                                                                    <button type="button" class="btn btn-icon rounded-circle btn-flat-success" id="add_budget"><i class="feather icon-plus-circle"></i></button>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group row">
@@ -1119,19 +653,24 @@
                                                                         <div class="col-12">
                                                                             <div class="form-group row">
                                                                                 <div class="col-md-4">
-                                                                                    <span>Upload Receipt</span>
+                                                                                    <span>Upload Documentations</span>
                                                                                 </div>
-                                                                                <div class="col-md-8">
+                                                                                <div class="col-md-4">
                                                                                     <fieldset>
                                                                                         <div class="custom-file">
-                                                                                            <input type="file" class="custom-file-input" id="inputGroupFile01">
-                                                                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                                                                            <input id="fileField1" type="file" class="custom-file-input">
+                                                                                            <label class="custom-file-label" for="fileField1">Choose file</label>
                                                                                         </div>
                                                                                     </fieldset>
                                                                                 </div>
+                                                                                <div class="col-md-1 offset-md-3">
+                                                                                    <button id="confirm-line-item" class="btn btn-icon rounded-circle btn-flat-success"><i class="feather icon-check-circle"></i></button>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-12">
+
+
+                                                                        <!-- <div class="col-12">
                                                                             <div class="form-group row">
                                                                                 <div class="col-md-4">
                                                                                     <button type="button" class="btn btn-outline-primary" id="add_item">Add</button>
@@ -1140,12 +679,76 @@
                                                                                     <button type="button" class="btn btn-outline-primary pull-right" id="confirm_item">Confirm</button>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
+                                                                        </div> -->
+
+
+                                                                        <!-- END LINE ITEM  -->
+
+                                                                        
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <!-- END: Initialized Line Item -->
+
+                                                <!-- BEGIN: New Line Item -->
+                                                <!-- END: New Line Item -->
+
+                                                <!-- ADD LINE ITEM BUTTON -->
+                                                <div class="row d-flex justify-content-center" id="new_line_item">
+                                                    <div class="col-11 text-center">
+                                                        <div class="form-group row" style="padding-top: 1rem; padding-bottom: 1rem; border-top: 1px dashed #d9d9d9; border-bottom: 1px dashed #d9d9d9;">
+                                                            <div class="col-md-12">
+                                                                <button type="button" class="btn btn-icon rounded-circle btn-flat-primary" id="add_item" onclick="addNewLineItem(1)"><i class="feather icon-plus-circle"></i></button>
+                                                                <label class="text-primary" for="add_item">Add New Line Items</label>
+                                                                <!-- <span>Add New Line Items</span> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="col-11" style="margin-top: 1rem; padding-top: 1.5rem;">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <h4>Item Summary</h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-11">
+                                                        <div class="form-group row">
+                                                            <table class="table zero-configuration" id="summary_table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>No.</th>
+                                                                        <th>Expense Description</th>
+                                                                        <th>Category</th>
+                                                                        <th>Quantity</th>
+                                                                        <th>Unit Price</th>
+                                                                        <th>Documentations</th>
+                                                                     </tr>
+                                                                </thead>
+                                                                <tbody id="tbody">
+                                                                    <!-- <tr class="visible" id="trow">
+                                                                        <td>Item 1</td>
+                                                                        <td>Some description here</td>
+                                                                        <td>Other</td>
+                                                                        <td>$123</td>
+                                                                        <td>
+                                                                            <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-file"></i></button>
+                                                                            <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-edit"></i></button>
+                                                                        </td>
+                                                                     </tr> -->
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="col-12">
+                                                        <a href="user-summary.html" class="btn btn-primary mr-1 mb-1 pull-right" id="confirm-submission">Submit</a>
+                                                        <button type="button" class="btn btn-primary mr-1 mb-1 pull-right" id="confirm-submission">Submit</button>
+                                                    </div> -->
                                                 </div>
                                             </fieldset>
                                         </form>
