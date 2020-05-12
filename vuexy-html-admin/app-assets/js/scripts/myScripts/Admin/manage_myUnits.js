@@ -19,6 +19,8 @@ var ManageUnitNameUpdate_btn = document.getElementById("ManageUnitNameUpdate");
 
 var staff_table_body = document.getElementById("staff_overview_table_body");
 
+var formVisiblity_table_body = document.getElementById("formVisiblity_table_body");
+
 window.onload = function()
 {
     update_staff_overview_table();
@@ -30,7 +32,7 @@ window.onload = function()
     fill_Manage_Unit_name_field();
     Manage_unit_name_button_hide_unhide_logic();
 
-    
+    update_FormVisibility_table();
 }
 
 
@@ -96,9 +98,10 @@ function update_staff_overview_table()
         toastr.error('Backend error occured while updating the table', 'Error', { positionClass: 'toast-top-right', containerId: 'toast-top-right' });
     }
     
-
     makeGetRequest("units/getUserInfomation/"+window.sessionStorage.getItem("unitID"),onSuccess,onFaliure);
 }
+
+
 
 //clear button logic
 function ManageUnit_clearBtn_logic()
@@ -157,12 +160,12 @@ function ManageUnitRemove()
         
         if(remove_user_from_Unit(userID))
         {
-            if(remove_user_from_users_table(userID))
-            {
+            //if(remove_user_from_users_table(userID))
+            //{
                 toastr.success(`${userName} successfully removed from ${window.sessionStorage.getItem("unitName")} unit`, 'Success', { positionClass: 'toast-top-right', containerId: 'toast-top-right' });
                 update_and_redraw_staff_overview_table();
                 clearInformation();
-            }
+            //}
             
 
         }
@@ -203,7 +206,92 @@ function ManageUnitNameUpdate()
     Manage_unit_name_button_hide_unhide_logic();
 }
 
+function update_FormVisibility_table()
+{
+    var onSuccess = function(data)
+    {
+        for(var x=0;x<data.data.length;x++)
+        {
+            
+            formVisiblity_table_body.appendChild(build_form_visibility_table_row(data.data[x]._id,data.data[x].formName,data.data[x].visible));
+        }
+    }
+
+    //this function will be called when data exchange with backend occured an error
+    var onFaliure = function()
+    {
+        toastr.error('Backend error occured while updating the table', 'Error', { positionClass: 'toast-top-right', containerId: 'toast-top-right' });
+    }
+    
+
+    makeGetRequest("formVisibility/"+window.sessionStorage.getItem("unitID"),onSuccess,onFaliure);
+}
+
+
+function checkbox_click_event(DOM_object)
+{
+   
+    var onSuccess = function(data)
+    {
+        if(data.status == false)
+        {
+            toastr.error(data.data, 'Error', { positionClass: 'toast-top-right', containerId: 'toast-top-right' });
+        }
+
+    }
+
+    //this function will be called when data exchange with backend occured an error
+    var onFaliure = function()
+    {
+        toastr.error('Internal server error has occured. Please try again', 'Error', { positionClass: 'toast-top-right', containerId: 'toast-top-right' });
+    }
+
+    makePutRequest_NoBody("formVisibility/"+window.sessionStorage.getItem("unitID")+"/"+DOM_object.id+"/"+DOM_object.checked.toString(),onSuccess,onFaliure);
+
+}
+
+
+
 //------------------------------ Helper Functions ---------------------------------------------
+
+function build_form_visibility_table_row(_id, formName, visibility)
+{
+
+    var td_formName = document.createElement('td');
+    td_formName.innerHTML = formName;
+
+    var td_checkbox_parent = document.createElement('td');
+
+    var checkbox_div = document.createElement('div');
+    checkbox_div.setAttribute('class', 'custom-control custom-checkbox ml-50');
+
+    var checkbox_input = document.createElement('input');
+    checkbox_input.setAttribute('type','checkbox');
+    checkbox_input.setAttribute('id',_id);
+    checkbox_input.setAttribute('class','custom-control-input');
+    checkbox_input.setAttribute('onclick','checkbox_click_event(this)');
+
+    if(visibility)
+        checkbox_input.checked = true;
+    else
+        checkbox_input.checked = false;
+
+    var label = document.createElement('label');
+    label.setAttribute('class','custom-control-label');
+    label.setAttribute('for',_id);
+
+    checkbox_div.appendChild(checkbox_input);
+    checkbox_div.appendChild(label);
+    td_checkbox_parent.appendChild(checkbox_div);
+
+    var tr = document.createElement('tr');
+    tr.appendChild(td_formName);
+    tr.appendChild(td_checkbox_parent);
+
+    return tr;
+    
+}
+
 
 function Manage_unit_name_button_hide_unhide_logic()
 {
@@ -371,6 +459,7 @@ function remove_user_from_Unit(UserID)
     var return_value = false;
     var onSuccess = function(data)
     {
+
         if(data.status == false)
         {
             toastr.error(data.data, 'Error', { positionClass: 'toast-top-right', containerId: 'toast-top-right' });
@@ -622,7 +711,14 @@ function addUserto_userTable(User_JSON_info)
     {
         if(data.status == false)
         {
-            return_value =  null;
+            if(data.data.Name == User_JSON_info.Name)
+                return_value =  data.data._id;
+            else
+            {
+                toastr.error('User with same UWID or Email already exists', 'Error', { positionClass: 'toast-top-right', containerId: 'toast-top-right' });
+                return_value =  null;
+            }
+                
         }else
         {
             return_value =  data.data._id;
@@ -638,7 +734,7 @@ function addUserto_userTable(User_JSON_info)
     }
 
     makePostRequest("users",User_JSON_info,onSuccess,onFaliure);
-
+    console.log(return_value);
     return return_value;
 }
 
@@ -693,5 +789,8 @@ function clearInformation()
     manage_Unit_updateBtn_hide_unhide();
 
 }
+
+
+
 
 //------------------------------ End Helper Functions -----------------------------------------

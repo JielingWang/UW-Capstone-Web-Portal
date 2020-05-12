@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/datatables.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/toastr.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/select/select2.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -167,7 +168,7 @@
                 <li class=" nav-item"><a href="allBudgets.html"><i class="feather icon-clipboard"></i><span class="menu-title" data-i18n="Logout">All Budgets</span></a></li>
 
 				<li class=" navigation-header"><span>User</span></li>
-				<li class=" nav-item"><a href=""><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
+				<li class=" nav-item"><a href="userSettings.html"><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-bell"></i><span class="menu-title" data-i18n="Notifications">Notifications</span></a></li>
                 <li class=" nav-item" onclick="logout();"><a href="../login/auth-login.html"><i class="feather icon-power"></i><span class="menu-title" data-i18n="Logout" >Logout</span></a></li>
                 		
@@ -219,7 +220,7 @@
                                     <div class="row" style="margin-left: 10px; margin-right:10px;">
                                         <div class="col-md-12 col-12">
                                             <div class="table-responsive">
-                                                <table id="subunit_names_table" class="table zero-configuration" style="cursor: pointer;">
+                                                <table id="subunit_names_table" class="table" style="cursor: pointer;">
                                                     <thead>
                                                         <tr>
                                                             <th>_id</th>
@@ -274,7 +275,7 @@
                                     <div class="row" style="margin-left: 10px; margin-right:10px;">
                                         <div class="col-md-12 col-12">
                                             <div class="table-responsive">
-                                                <table id="submitters_overview_table" class="table zero-configuration" style="cursor: pointer;">
+                                                <table id="submitters_overview_table" class="table" style="cursor: pointer;">
                                                     <thead>
                                                         <tr>
                                                             <th>_id</th>
@@ -366,7 +367,7 @@
                                     <div class="row" style="margin-left: 10px; margin-right:10px;">
                                         <div class="col-md-12 col-12">
                                             <div class="table-responsive">
-                                                <table id="budget_overview_table" class="table zero-configuration" style="cursor: pointer;">
+                                                <table id="budget_overview_table" class="table" style="cursor: pointer;">
                                                     <thead>
                                                         <tr>
                                                             <th>Budget Number</th>
@@ -374,6 +375,7 @@
                                                             <th>Start Date</th>
                                                             <th>End Date</th>
                                                             <th>Approval Logic</th>
+                                                            <th>Approval Logic Status</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="budget_overview_table_body">
@@ -386,8 +388,8 @@
                                         </div>
                                     </div>
                                     <div id="buttons_staff_overview" style="margin-right: 10px; padding-top: 30px;">
-                                        <button id="budget_removeBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Remove budget</button>
-                                        <button id="budget_addBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Add new budget</button>
+                                        <button id="budget_removeBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="RemoveBudget_button();">Remove budget</button>
+                                        <button id="budget_addBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" data-toggle="modal" data-target="#large" onclick="addNewBudgets_button();">Add new budget</button>
                                     </div>     
                                 </div>
                             </div>
@@ -404,7 +406,7 @@
                                     <div class="row" style="margin-left: 10px; margin-right:10px;">
                                         <div class="col-md-12 col-12">
                                             <div class="table-responsive">
-                                                <table id="approvers_overview_table" class="table zero-configuration" style="cursor: pointer;">
+                                                <table id="approvers_overview_table" class="table" style="cursor: pointer;">
                                                     <thead>
                                                         <tr>
                                                             <th>_id</th>
@@ -415,6 +417,8 @@
                                                             <th>Verified User</th>
                                                             <th>Limit ($)</th>
                                                             <th>Allowed Requests</th>
+                                                            <th>PI</th>
+                                                            <th></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="approvers_overview_table_body">
@@ -433,7 +437,7 @@
                                             <div class="form-group">
                                                 <label for="first-name-icon">Name</label>
                                                 <div class="position-relative has-icon-left">
-                                                    <input type="text" id="approver_name_input" class="form-control" name="fname-icon" placeholder="Subunit Name" onkeyup="">
+                                                    <input type="text" id="approver_name_input" class="form-control" name="fname-icon" placeholder="Subunit Name" onkeyup="update_btn_hide_unhide_logic_Approver_overview();">
                                                     <div class="form-control-position">
                                                         <i class="feather icon-user"></i>
                                                     </div>
@@ -444,12 +448,22 @@
                                             <div class="form-group">
                                                 <label for="first-name-icon">Email</label>
                                                 <div class="position-relative has-icon-left">
-                                                    <input type="text" id="approver_email_input" class="form-control" name="fname-icon" placeholder="Email" onkeyup="">
+                                                    <input type="text" id="approver_email_input" class="form-control" name="fname-icon" placeholder="Email" onkeyup="add_btn_hide_unhide_logic_Approvers_overview();update_btn_hide_unhide_logic_Approver_overview();">
                                                     <div class="form-control-position">
                                                         <i class="feather icon-mail"></i>
                                                     </div>
                                                 </div>
                                                 <label id="approver_email_input_error" style="color: #e74c3c;"></label>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="location1">PI</label>
+                                                <select class="custom-select form-control" id="approver_PI_input" name="accessLevel" onchange="update_btn_hide_unhide_logic_Approver_overview();">
+                                                    <option value="empty"></option>
+                                                    <option value="yes">Yes</option>
+                                                    <option value="no">No</option>
+                                                </select>   
+                                                <label id="approver_PI_input_error" style="color: #e74c3c;"></label>
                                             </div>
 
                                             
@@ -460,7 +474,7 @@
                                             <div class="form-group">
                                                 <label for="first-name-icon">UW ID</label>
                                                 <div class="position-relative has-icon-left">
-                                                    <input type="text" id="approver_UWID_input" class="form-control" name="fname-icon" placeholder="UW ID" onkeyup="">
+                                                    <input type="text" id="approver_UWID_input" class="form-control" name="fname-icon" placeholder="UW ID" onkeyup="add_btn_hide_unhide_logic_Approvers_overview();update_btn_hide_unhide_logic_Approver_overview();">
                                                     <div class="form-control-position">
                                                         <i class="feather icon-hash"></i>
                                                     </div>
@@ -471,12 +485,20 @@
                                             <div class="form-group">
                                                 <label for="first-name-icon">Limit ($)</label>
                                                 <div class="position-relative has-icon-left">
-                                                    <input type="text" id="approver_limit_input" class="form-control" name="fname-icon" placeholder="Email" onkeyup="">
+                                                    <input type="text" id="approver_limit_input" class="form-control" name="fname-icon" placeholder="Limit (Leave empty for no limit)" onkeyup="update_btn_hide_unhide_logic_Approver_overview();">
                                                     <div class="form-control-position">
                                                         <i class="feather icon-credit-card"></i>
                                                     </div>
                                                 </div>
                                                 <label id="approver_limit_input_error" style="color: #e74c3c;"></label>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="first-name-icon">Allowed Requests</label>
+                                                <select class="select2 form-control" multiple="multiple" id="formAllowed_selectBox" onchange="update_btn_hide_unhide_logic_Approver_overview();">
+
+                                                </select>
+                                                <label id="approver_allowedRequests_input_error" style="color: #e74c3c;"></label>
                                             </div>
                                       
                                       
@@ -484,10 +506,10 @@
                                     </div>
                                     <!--End of Input part-->   
                                     <div id="buttons_staff_overview" style="margin-right: 10px; padding-top: 30px;">
-                                        <button type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Clear</button>
-                                        <button id="approvers_removeBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Remove</button>
-                                        <button id="approvers_updateBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Update</button>
-                                        <button id="approvers_addBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="">Add</button>
+                                        <button id="approvers_clearBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="clear_Infomraiton_Approver_overview();">Clear</button>
+                                        <button id="approvers_removeBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="remove_user_Approver_overview();">Remove</button>
+                                        <button id="approvers_updateBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="update_user_Approver_overview();">Update</button>
+                                        <button id="approvers_addBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="add_user_Approver_overview();">Add</button>
                                     </div>                
 
                                 </div>
@@ -510,13 +532,166 @@
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>
 
+    
+                                                    <!-- Modal -->
+                                                    <div class="modal fade text-left" id="large" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title" id="myModalLabel17">Add new Budgets</h4>
+                                                                    <button id="modal_close_btn" type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="modal_close_btn_logic();">
+                                                                        <span id="modal_span" aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-12" id="modal_table_part">
+                                                                            <div class="table-responsive" style="display: block">
+                                                                                <table id="modal_budgets_table" class="table " style="cursor: pointer;"> 
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th></th>
+                                                                                            <th></th>
+                                                                                            <th>Budget Number</th>
+                                                                                            <th>Budget Name</th>
+                                                                                            <th>Start Date</th>
+                                                                                            <th>End Date</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody id="modal_budgets_table_body">
+                                          
+                                    
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button  type="button" class="btn btn-primary" id="updateSubUnit_with_budgets_btn_"  onclick="updateSubUnit_with_budgets();">Update Subunit with Budgets</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal fade text-left" id="approval_logic_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title" id="myModalLabel17">Set-up Approval Logic</h4>
+                                                                    <button id="modal_close_btn" type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
+                                                                        <span id="modal_span" aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row" style="padding-left: 5%; padding-bottom: 2%;">
+                                                                        <div class="col-12">
+                                                                            <label id="currentApproverLogic" style=""></label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row" style="padding-left: 5%;">
+                                                                        <div class="col-12" id="modal_table_part">
+
+                                                                            <div class="form-group">
+                                                                                <div class="checkbox">
+                                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                                        <input id="AllCheckBox" type="checkbox" onchange=" Approval_Logic_Modal_check_box_logic(1);">
+                                                                                        <span class="vs-checkbox">
+                                                                                            <span class="vs-checkbox--check">
+                                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                        <span class="">All</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group">
+                                                                                <div class="checkbox">
+                                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                                        <input id="AnyoneCheckBox" type="checkbox" onchange=" Approval_Logic_Modal_check_box_logic(2);">
+                                                                                        <span class="vs-checkbox">
+                                                                                            <span class="vs-checkbox--check">
+                                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                        <span class="">Anyone</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row" style="padding-left: 5%;">
+                                                                        <div class="col-12">
+                                                                            <div class="form-group">
+                                                                                <div class="checkbox">
+                                                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                                        <input id="AdvancedCheckBox" type="checkbox" onchange=" Approval_Logic_Modal_check_box_logic(3);">
+                                                                                        <span class="vs-checkbox">
+                                                                                            <span class="vs-checkbox--check">
+                                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                        <span class="">Advanced</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                    
+                                                                    <div class="row" style="padding-left: 8%;" disabled>
+
+
+                                                                        <div class="col-md-6 col-12">
+                                                                            <div class="form-group">
+                                                                                <label for="first-name-icon">Allowed Requests</label>
+                                                                                <select id="ApproversSelectBox" class="select2 form-control" multiple="multiple"  onchange="update_btn_hide_unhide_logic_Approver_overview();">
+                                                                                    <option value="yes">Radha Poovendran</option>
+                                                                                    <option value="no">Linda Bushnell</option>
+                                                                                </select>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                        <div class="col-md-6 col-12">
+                                                                            <div class="form-group">
+                                                                                <label for="location1">Logic</label>
+                                                                                <select id="ApproversLogicSelectBox" class="custom-select form-control" name="accessLevel" onchange="">
+                                                                                    <option value="yes">All</option>
+                                                                                    <option value="no">Anyone</option>
+                                                                                </select>   
+                                                                            </div>                                                                            
+                                                                        </div>
+
+                                                                    </div>  
+                                                                    
+                                                                    <div class="row" style="padding-left: 5%;">
+                                                                        <div class="col-12">
+                                                                            <label id="ApproversSelectBox_input_error" style="color: #e74c3c;"></label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button  type="button" class="btn btn-primary" id="updateApprovalChainLogic_btn"  onclick="prepare_approval_logic();">Update Approval Logic</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
     <!-- BEGIN: Footer-->
     <footer class="footer footer-static footer-light">
 
     </footer>
     <!-- END: Footer-->
 
-
+    <script src="https://kit.fontawesome.com/5f63d837ee.js" crossorigin="anonymous"></script>
     <!-- BEGIN: Vendor JS-->
     <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
@@ -560,9 +735,14 @@
     <script src="../../../app-assets/js/scripts/extensions/toastr.js"></script>
     <!-- END: Page Vendor JS-->
 
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="../../../app-assets/js/scripts/forms/select/form-select2.js"></script>
+    <!-- END: Page Vendor JS-->
 
 
 </body>
 <!-- END: Body-->
+
 
 </html>

@@ -54,7 +54,7 @@ function update_subunit_table()
         for(var x=0;x<data.data.length;x++)
         {
             
-            subunit_table_body.appendChild(subunit_table_row_generator(data.data[x].subUnitName,data.data[x].type));
+            subunit_table_body.appendChild(subunit_table_row_generator(data.data[x].subUnitName));
         }
         
 
@@ -139,18 +139,14 @@ function build_administrative_table_rows(profile_img_url,name,admin)
 }
 
 
-function subunit_table_row_generator(name,type)
+function subunit_table_row_generator(name)
 {
     var td_subunitName = document.createElement('td');
     td_subunitName.innerHTML = name;
 
-    var td_type = document.createElement('td');
-    td_type.innerHTML = type;
-
     var tr = document.createElement('tr');
     tr.appendChild(td_subunitName);
-    tr.appendChild(td_type);
-    console.log(tr);
+
     return tr;
 
 }

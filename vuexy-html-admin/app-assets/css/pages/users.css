@@ -9,9 +9,11 @@
 }
 #user-profile .profile-img-container img {
   border : 0.3rem solid #FFFFFF;
-  height : 85px;
-  width : 85px;
+  height : 180px;
+  width : 180px;
 }
+
+
 
 #user-profile #profile-info .card-header i {
   position : relative;
