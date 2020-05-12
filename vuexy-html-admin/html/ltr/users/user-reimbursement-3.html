@@ -163,9 +163,9 @@
                         </li>
                         <li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="View">Travel Reimbursement</span></a>
                         </li>
-                        <li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Purchase Request</span></a>
+                        <li><a href="user-purchase.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Purchase Request</span></a>
                         </li>
-						<li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Pay an Invoice</span></a>
+						<li><a href="user-invoice.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Pay an Invoice</span></a>
                         </li>
 						<li><a href="procardReceipt.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Procard Receipt</span></a>
                         </li>
@@ -251,7 +251,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="myselfOrBehalfRadio" value="myself" id="myselfRadio_Yes">
+                                                                                <input type="radio" class="custom-control-input" name="myself-onbehalf" value="myself" id="myselfRadio_Yes">
                                                                                 <label class="custom-control-label" for="myselfRadio_Yes">Myself</label>
                                                                             </div>
                                                                         </fieldset>
@@ -263,7 +263,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="myselfOrBehalfRadio" value="onbehalf" id="onBehalfRadio_Yes" >
+                                                                                <input type="radio" class="custom-control-input" name="myself-onbehalf" value="onbehalf" id="onBehalfRadio_Yes" >
                                                                                 <label class="custom-control-label" for="onBehalfRadio_Yes">On someone behalf</label>
                                                                             </div>
                                                                         </fieldset>
@@ -611,12 +611,9 @@
                                                                                 <div class="col-md-2">
                                                                                     <select class="custom-select form-control" id="budgetNum" name="budget_num_1">
                                                                                         <option value="">Please select</option>
-                                                                                        <option value="61-2692">61-2692</option>
-                                                                                        <option value="66-1981">66-1981</option>
-                                                                                        <option value="80-2535">80-2535</option>
-                                                                                        <option value="61-2692">61-2692</option>
-                                                                                        <option value="66-1981">66-1981</option>
-                                                                                        <option value="80-2535">80-2535</option>
+                                                                                        <option value="910-11">910-11</option>
+                                                                                        <option value="910-22">910-22</option>
+                                                                                        <option value="922-266">922-266</option>
                                                                                     </select>
                                                                                 </div>
                                                                                 <!-- <div class="col-md-1">Split with:</div> -->
@@ -646,12 +643,6 @@
                                                                                         </div>
                                                                                     </fieldset>
                                                                                 </div>
-                                                                                <!-- <div class="col-md-2 hidden" id="first_split_amount">
-                                                                                    <input type="text" id="business_purpose" class="form-control" name="split_amount" placeholder="$00.00">
-                                                                                </div>
-                                                                                <div class="col-md-2 hidden" id="first_split_perc">
-                                                                                    <input type="text" id="business_purpose" class="form-control" name="split_perc" placeholder="00.00%">
-                                                                                </div> -->
                                                                                 <div class="col-md-1">
                                                                                     <button type="button" class="btn btn-icon rounded-circle btn-flat-success" id="budget_btn_1_1"><i class="feather icon-plus-circle"></i></button>
                                                                                 </div>
@@ -706,98 +697,26 @@
                                                                         </div>
                                                                         <!-- END: first budget -->
 
-                                                                        <!-- BEGIN: added budget -->
-                                                                        <!-- <div class="col-12 hidden" id="added_budget">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-4">
-                                                                                    <span>Budget Number</span>
-                                                                                </div>
-                                                                                <div class="col-md-3">
-                                                                                    <select class="custom-select form-control">
-                                                                                        <option value="food">Please select</option>
-                                                                                        <option value="square">61-2692</option>
-                                                                                        <option value="rectangle">66-1981</option>
-                                                                                        <option value="rombo">80-2535</option>
-                                                                                        <option value="romboid">61-2692</option>
-                                                                                        <option value="trapeze">66-1981</option>
-                                                                                        <option value="traible">80-2535</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="col-md-2">
-                                                                                    <input type="text" id="business_purpose" class="form-control" name="split_amount" placeholder="$00.00">
-                                                                                </div>
-                                                                                <div class="col-md-2">
-                                                                                    <input type="text" id="business_purpose" class="form-control" name="split_perc" placeholder="00.00%">
-                                                                                </div>
-                                                                                <div class="col-md-1">
-                                                                                    <button type="button" class="btn btn-icon btn-icon rounded-circle btn-flat-success" id="remove_budget"><i class="feather icon-minus-circle"></i></button>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-1">
-                                                                                    <ul class="list-unstyled mb-0">
-                                                                                        <li class="d-inline-block mr-2">
-                                                                                            <fieldset>
-                                                                                                <div class="custom-control custom-checkbox">
-                                                                                                    <input type="checkbox" class="custom-control-input" name="option_task" id="option_task">
-                                                                                                    <label class="custom-control-label" for="option_task">Task</label>
-                                                                                                </div>
-                                                                                            </fieldset>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                                <div class="col-md-3 hidden" id="task_checked">
-                                                                                    <input type="text" class="form-control" name="task_input" id="task_input">
-                                                                                </div>
-                                                                                <div class="col-md-1">
-                                                                                    <ul class="list-unstyled mb-0">
-                                                                                        <li class="d-inline-block mr-2">
-                                                                                            <fieldset>
-                                                                                                <div class="custom-control custom-checkbox">
-                                                                                                    <input type="checkbox" class="custom-control-input" name="option_option" id="option_option">
-                                                                                                    <label class="custom-control-label" for="option_option">Option</label>
-                                                                                                </div>
-                                                                                            </fieldset>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                                <div class="col-md-3 hidden" id="option_checked">
-                                                                                    <input type="text" class="form-control" name="option_input" id="option_input">
-                                                                                </div>
-                                                                                <div class="col-md-1">
-                                                                                    <ul class="list-unstyled mb-0">
-                                                                                        <li class="d-inline-block mr-2">
-                                                                                            <fieldset>
-                                                                                                <div class="custom-control custom-checkbox">
-                                                                                                    <input type="checkbox" class="custom-control-input" name="option_project" id="option_project">
-                                                                                                    <label class="custom-control-label" for="option_project">Project</label>
-                                                                                                </div>
-                                                                                            </fieldset>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                                <div class="col-md-3 hidden" id="project_checked">
-                                                                                    <input type="text" class="form-control" name="project_input" id="project_input">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div> -->
-                                                                        <!-- END: added budget -->
-
-                                                                        <div class="col-12">
+                                                                        <div class="col-12" id="file_box_1_1">
                                                                             <div class="form-group row">
                                                                                 <div class="col-md-4">
                                                                                     <span>Upload Receipt</span>
                                                                                 </div>
                                                                                 <div class="col-md-4">
-                                                                                    <fieldset>
+                                                                                    <input type="file" name="file_1" id="file_1_1">
+                                                                                    <!-- <label for="file_1">Choose file</label> -->
+                                                                                    <!-- <fieldset>
                                                                                         <div class="custom-file">
                                                                                             <input id="file_1" type="file" class="custom-file-input">
                                                                                             <label class="custom-file-label" for="file_1">Choose file</label>
                                                                                         </div>
-                                                                                    </fieldset>
+                                                                                    </fieldset> -->
+                                                                                </div>
+                                                                                <div class="col-md-1 hidden">
+                                                                                    <button type="button" class="btn btn-icon rounded-circle btn-flat-success" id="file_btn_1_1"><i class="feather icon-plus-circle"></i></button>
                                                                                 </div>
                                                                                 <div class="col-md-1 offset-md-3">
-                                                                                    <button type="button" id="confirm_1" class="btn btn-icon rounded-circle btn-flat-success"><i class="feather icon-check-circle"></i></button>
+                                                                                    <button type="button" id="confirm_1" class="btn btn-icon rounded-circle btn-flat-success"><i class="fa fa-check"></i></button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1063,82 +982,7 @@
                                                                         </div>
                                                                         <!-- END: first budget -->
 
-                                                                        <!-- BEGIN: added budget -->
-                                                                        <div class="col-12 hidden" id="added_budget">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-4">
-                                                                                    <span>Budget Number</span>
-                                                                                </div>
-                                                                                <div class="col-md-3">
-                                                                                    <select class="custom-select form-control">
-                                                                                        <option value="food">Please select</option>
-                                                                                        <option value="square">61-2692</option>
-                                                                                        <option value="rectangle">66-1981</option>
-                                                                                        <option value="rombo">80-2535</option>
-                                                                                        <option value="romboid">61-2692</option>
-                                                                                        <option value="trapeze">66-1981</option>
-                                                                                        <option value="traible">80-2535</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="col-md-2">
-                                                                                    <input type="text" id="business_purpose" class="form-control" name="split_amount" placeholder="$00.00">
-                                                                                </div>
-                                                                                <div class="col-md-2">
-                                                                                    <input type="text" id="business_purpose" class="form-control" name="split_perc" placeholder="00.00%">
-                                                                                </div>
-                                                                                <div class="col-md-1">
-                                                                                    <button type="button" class="btn btn-icon btn-icon rounded-circle btn-flat-success" id="remove_budget"><i class="feather icon-minus-circle"></i></button>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group row">
-                                                                                <div class="col-md-1">
-                                                                                    <ul class="list-unstyled mb-0">
-                                                                                        <li class="d-inline-block mr-2">
-                                                                                            <fieldset>
-                                                                                                <div class="custom-control custom-checkbox">
-                                                                                                    <input type="checkbox" class="custom-control-input" name="option_task" id="option_task">
-                                                                                                    <label class="custom-control-label" for="option_task">Task</label>
-                                                                                                </div>
-                                                                                            </fieldset>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                                <div class="col-md-3 hidden" id="task_checked">
-                                                                                    <input type="text" class="form-control" name="task_input" id="task_input">
-                                                                                </div>
-                                                                                <div class="col-md-1">
-                                                                                    <ul class="list-unstyled mb-0">
-                                                                                        <li class="d-inline-block mr-2">
-                                                                                            <fieldset>
-                                                                                                <div class="custom-control custom-checkbox">
-                                                                                                    <input type="checkbox" class="custom-control-input" name="option_option" id="option_option">
-                                                                                                    <label class="custom-control-label" for="option_option">Option</label>
-                                                                                                </div>
-                                                                                            </fieldset>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                                <div class="col-md-3 hidden" id="option_checked">
-                                                                                    <input type="text" class="form-control" name="option_input" id="option_input">
-                                                                                </div>
-                                                                                <div class="col-md-1">
-                                                                                    <ul class="list-unstyled mb-0">
-                                                                                        <li class="d-inline-block mr-2">
-                                                                                            <fieldset>
-                                                                                                <div class="custom-control custom-checkbox">
-                                                                                                    <input type="checkbox" class="custom-control-input" name="option_project" id="option_project">
-                                                                                                    <label class="custom-control-label" for="option_project">Project</label>
-                                                                                                </div>
-                                                                                            </fieldset>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                                <div class="col-md-3 hidden" id="project_checked">
-                                                                                    <input type="text" class="form-control" name="project_input" id="project_input">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <!-- END: added budget -->
+                                                                        
 
                                                                         <div class="col-12">
                                                                             <div class="form-group row">

@@ -1,9 +1,12 @@
 var itemNum = 1;
 var lineItems = [];
+var formData = new FormData();
+var type = "";
+var unitID = "";
 const baseURL = "https://coe-api.azurewebsites.net/api/";
 var user_id = "5e8e45eea148b9004420651f";
 
-/** BEGIN: Wizard step control */
+/******************************************************* BEGIN: Wizard step control ************************************************/
 
 /*=========================================================================================
     File Name: my-wizard-steps.js
@@ -133,6 +136,7 @@ $(".steps-validation").steps({
     onFinished: function (event, currentIndex) {
         alert("Submitted!");
         alert('send data to database');
+        getUserInfo();
         var formData = new FormData();
 
         // var itemsCost = 0;
@@ -183,12 +187,6 @@ $(".steps-validation").steps({
         JSON_toServer.ChatInfo = "TEST CHAT INFO"; //leaving this empty since there's no chat when user upload a order first
         JSON_toServer.assignedTo = null; //leaving this as null since there's no one assigned when a user upload/submit a order.
 
-
-        var fileSelect = document.getElementById("file_1");
-        for(var x = 0; x < fileSelect.files.length; x++) {
-            formData.append(fileSelect.files[x].name, fileSelect.files[x]);
-        }
-        formData.append("files", fileSelect.files[x]); //"files" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request"
         
         //here we just pass in the JSON object we need to pass to the server. "JSON_body" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request
         formData.set("JSON_body", JSON.stringify(JSON_toServer));
@@ -196,9 +194,9 @@ $(".steps-validation").steps({
         var request = new XMLHttpRequest();
         //this function will get the response from the server after we upload the order
         request.onreadystatechange = function() {
-            console.log("HERE");
+            console.log("Request info is here:");
             if (request.readyState == 4) {
-
+                console.log(request.response);
                 // show it in the console
                 const response_obj = JSON.parse(request.response);
                 const data_obj = response_obj.data;
@@ -208,10 +206,10 @@ $(".steps-validation").steps({
 
                 // window.location.href = "../../../html/ltr/users/user-summary.html";
 
-                // show it in the summary table
+                
             }
         }
-        request.open('POST', baseURL + "uploadOrder");
+        request.open('POST', baseURL + "uploadOrder/" + type + "/" + unitID);
         request.send(formData);
         // window.location.href = "../../../html/ltr/users/user-summary.html";
         // window.location.replace("../../../html/ltr/users/user-summary.html");
@@ -240,24 +238,51 @@ $(".steps-validation").validate({
 });
 
 
-/** END: Wizard step control */
+function getUserInfo() {
+    var onSuccess = function(data) {
+        if (data.status == true) {
+            console.log("user information is here");
+            console.log(data.data);
+            var level = data.data.AccessLevel;
+            if (level == "Submitter" || level == "Approver") {
+                type = "subunit";
+                unitID = data.data.SubUnitID;
+            } else if (level == "Fiscal Staff" || level == "Fiscal Administrator") {
+                type = "unit";
+                unitID = data.data.UnitID;
+            }
+            
+        } else {
+            //error message
+        }
+    }
+
+    var onFailure = function() {
+        // failure message
+    }
+
+    makeGetRequest("getuserInformation/" + user_id, onSuccess, onFailure);
+}
+
+
+/************************************************ END: Wizard step control *******************************************************/
 
 
 
 
+/**************************************************** BEGIN: Form Control ********************************************************/
 
+/************ Step1 & Step2 *****************/
 
-/** control myself or onbehalf radio */
-$(document).on('click', '#onBehalfRadio_Yes', function(){
-    $('#onBehalf_Yes').attr('class', 'visible');
-});
-
-$(document).on('click', '#myselfRadio_Yes', function(){
-    $('#onBehalf_Yes').attr('class', 'hidden');
-});
-
-/** control radio selected */
 $(document).on('click', 'input', function(){
+    /** myself or onbehalf radio */
+    var mySelf = $("input[name='myself-onbehalf']:checked").val();
+    if (mySelf == "myself") {
+        $('#onBehalf_Yes').attr('class', 'hidden');
+    } else if (mySelf == "onbehalf") {
+        $('#onBehalf_Yes').attr('class', 'visible');
+    }
+
     /** payment method part */
     var individual = $("input[name='individual-reimbursed']:checked").val();
     if (individual == "employee") {
@@ -278,24 +303,23 @@ $(document).on('click', 'input', function(){
 });
 
 
+/***************** BEGIN: Step3 *******************/
 
-// var item_count = 1;
-// $(document).on('click', '#add_item', function(){
-    
+/**
+ * BEGIN: Budgets Controller
+ * @param _id id for line item, start from 1
+ * @param _budget_id id for budget number in this line item, start from 1 
+ * For each line item, we may have multiple budget number,
+ * so for every budget number and budget button, 
+ * they have their unique id
+ * button: budget_btn_{line-item-id}_{budget-id}
+ * budget number: budget_{line-item-id}_{budget-id}
+ */
 
-//     // item_count++;
-//     var $new_line_item = $('#added_line_item').clone().attr('class', 'row visible');
-//     // var $new_line_item = $('#line_item').clone().prop('id', 'line_item' + item_count);
-//     $('#first_line_item').after($new_line_item);
-//     // $('#line_item').attr('item_num', item_count++);
-//     // var num = parseInt($('#item_num').html());
-//     // $('#line_item_ #item_num').html(++item_count);
-//     // $('#added_line_item_1').attr('class', 'visible');
-// });
-
-
-/** split budget */
-
+/**
+ * This function just to tie the original button in page
+ * Functionality: add more budget numbers
+ */
 $(document).on('click', '#budget_btn_1_1', function() {
     var _id = 1;
     var _budget_id = 1;
@@ -303,57 +327,15 @@ $(document).on('click', '#budget_btn_1_1', function() {
 });
 
 
-// var budgetNum = 1;
-// $(document).on('click', '#add_budget', function(){
-//     $('#first_split_amount').attr('class', 'col-md-2 visible');
-//     $('#first_split_perc').attr('class', 'col-md-2 visible');
-//     var $new_budget_num = $('#added_budget').clone().attr('class', 'col-12 visible');
-//     $('#first_budget').after($new_budget_num);
-//     budgetNum ++;
-// });
-
-// $(document).on('click', '#remove_budget', function(){
-//     $('#added_budget').remove();
-//     budgetNum --;
-//     if (budgetNum == 1) {
-//         $('#first_split_amount').attr('class', 'col-md-2 hidden');
-//         $('#first_split_perc').attr('class', 'col-md-2 hidden');
-//     }
-// });
-
-/** budget options */
-
-// $(document).on('click', '.custom-control-input', function() {
-//     console.log('clicked');
-    
-// });
-
-
-$(document).on('click', '#option_task', function() {
-    if ($("#option_task").is(":checked")) {
-        $('#task_checked').attr('class', 'col-md-3 visible');
-    } else {
-        $('#task_checked').attr('class', 'col-md-3 hidden');
-    }
-});
-
-$(document).on('click', '#option_option', function() {
-    if ($("#option_option").is(":checked")) {
-        $('#option_checked').attr('class', 'col-md-3 visible');
-    } else {
-        $('#option_checked').attr('class', 'col-md-3 hidden');
-    }
-});
-
-$(document).on('click', '#option_project', function() {
-    if ($("#option_project").is(":checked")) {
-        $('#project_checked').attr('class', 'col-md-3 visible');
-    } else {
-        $('#project_checked').attr('class', 'col-md-3 hidden');
-    }
-});
-
-/** Add additional budget number */
+/** 
+ * Core function of budgets controller 
+ * @param _id id for line item
+ * @param _budget_id id for budget number in this line item
+ * @param {boolean} init signal for if this is the original budget number in this line item
+ * This function will use to add new budget block in form
+ * If this is the initialized budget block for this line item (init == true),
+ * the button will be plus button, otherwise the button will be delete button
+ */
 function addBudget(_id, _budget_id, init) {
     var box = document.createElement('div');
     box.setAttribute('class', 'col-12');
@@ -373,9 +355,9 @@ function addBudget(_id, _budget_id, init) {
     sel.setAttribute('class', 'custom-select form-control');
     sel.setAttribute('name', 'budget_num_' + _id);
     sel.appendChild(addTestBudgetData('Please select'));
-    sel.appendChild(addTestBudgetData('61-2692'));
-    sel.appendChild(addTestBudgetData('66-1981'));
-    sel.appendChild(addTestBudgetData('80-2535'));
+    sel.appendChild(addTestBudgetData('910-11'));
+    sel.appendChild(addTestBudgetData('910-22'));
+    sel.appendChild(addTestBudgetData('922-266'));
     second.appendChild(sel);
 
     var third = document.createElement('div');
@@ -400,12 +382,12 @@ function addBudget(_id, _budget_id, init) {
     var forth = document.createElement('div');
     forth.setAttribute('class', 'col-md-2');
     forth.setAttribute('id', 'split_dollar_input_' + _id + '_' + _budget_id);
-    forth.appendChild(inputGroup(true, "$", "dollar", _id, _budget_id));
+    forth.appendChild(inputGroup(_id, _budget_id, true, "$", "dollar"));
 
     var hiddenForth = document.createElement('div');
     hiddenForth.setAttribute('class', 'col-md-2 hidden');
     hiddenForth.setAttribute('id', 'split_percent_input_' + _id + '_' + _budget_id);
-    hiddenForth.appendChild(inputGroup(false, "%", "percent", _id, _budget_id));
+    hiddenForth.appendChild(inputGroup(_id, _budget_id, false, "%", "percent"));
 
     var fifth = document.createElement('div');
     fifth.setAttribute('class', 'col-md-1');
@@ -449,16 +431,17 @@ function addBudget(_id, _budget_id, init) {
     return box;
 }
 
-/** For test */
-function addTestBudgetData(num) {
-    var op = document.createElement('option');
-    op.setAttribute('value', num);
-    op.innerHTML = num;
-    return op;
-}
-
-/** Use to generate the input group with prepend or append label */
-function inputGroup(isPre, label, name, _id, _budget_id) {
+/** 
+ * Generate input group with prepend or append label
+ * @param _id id for line item
+ * @param _budget_id id for budget number in this line item
+ * @param {boolean} isPre a mark to indicate need prepend label or append label
+ * @param {string} label what's the label is (e.g. "$" or "%")
+ * @param {string} name use to set the input id
+ * The input group is unique for every budget number, 
+ * so we use format split_{dollar-or-percent}_input_value_{line-item-id}_{budget-id} to set input id
+ */
+function inputGroup(_id, _budget_id, isPre, label, name) {
     var f = document.createElement('fieldset');
     var d = document.createElement('div');
     d.setAttribute('class', 'input-group');
@@ -492,22 +475,24 @@ function inputGroup(isPre, label, name, _id, _budget_id) {
 
 }
 
-/** Add task/option/project options behind each budget number */
+/** 
+ * Generate task/option/project options behind each budget number 
+ */
 function addBudgetOptions(_id, _budget_id) {
     var row = document.createElement('div');
     row.setAttribute('class', 'form-group row');
 
     var first = document.createElement('div');
     first.setAttribute('class', 'col-md-1');
-    first.appendChild(genOption("Task", "option_task", _id, _budget_id));
+    first.appendChild(genOption(_id, _budget_id, "Task", "option_task"));
 
     var second = document.createElement('div');
     second.setAttribute('class', 'col-md-1');
-    second.appendChild(genOption("Option", "option_option", _id, _budget_id));
+    second.appendChild(genOption(_id, _budget_id, "Option", "option_option"));
 
     var third = document.createElement('div');
     third.setAttribute('class', 'col-md-1');
-    third.appendChild(genOption("Project", "option_project", _id, _budget_id));
+    third.appendChild(genOption(_id, _budget_id, "Project", "option_project"));
     
     row.appendChild(first);
     row.appendChild(genOptionInput("task_input", _id, _budget_id));
@@ -519,8 +504,15 @@ function addBudgetOptions(_id, _budget_id) {
     return row;
 }
 
-/** Generate options of task/option/project */
-function genOption(label, name, _id, _budget_id) {
+/** 
+ * Generate option of task/option/project 
+ * @param _id id for line item
+ * @param _budget_id id for budget number in this line item
+ * @param {string} label the label for this options (Task/Option/Project)
+ * @param {string} name use to set the name of this option
+ * Each option group is bound to a single budget number
+ */
+function genOption(_id, _budget_id, label, name) {
     var list = document.createElement('ul');
     list.setAttribute('class', 'list-unstyled mb-0');
     var bullet = document.createElement('li');
@@ -549,7 +541,10 @@ function genOption(label, name, _id, _budget_id) {
     return list;
 }
 
-/** Generate the input box behind each task/option/project */
+/** 
+ * Generate the input box behind each task/option/project 
+ * @param {string} name use to set the name of this input
+ */
 function genOptionInput(name, _id, _budget_id) {
     var div = document.createElement('div');
     div.setAttribute('class', 'col-md-3 hidden');
@@ -561,13 +556,13 @@ function genOptionInput(name, _id, _budget_id) {
     return div;
 }
 
-
-/** Split with dollar or percent */
-$(document).on('click', '#split_with_1_1', function(){
-    splitWithChanged(1, 1);
-});
-
-/** When split with dollar/percentage changed */
+/** 
+ * Split with amount or percentage controller
+ * Use to transfer between split with amount or percentage
+ * Each split select box and input value is bound to a single budget number,
+ * so we use split_with_{line-item-id}_{budget-id} to set select box id
+ * use split_input_with_{line-item-id}_{budget-id} to set user input id
+ */
 function splitWithChanged(_id, _budget_id) {
     var sel = document.getElementById('split_with_' + _id + '_' + _budget_id);
     var pick = sel.options[sel.selectedIndex].value;
@@ -582,14 +577,71 @@ function splitWithChanged(_id, _budget_id) {
     }
 }
 
-
-/** Add new line item */
-
-$(document).on('click', '#add_new_line_item', function(){
-    itemNum ++;
-    addNewLineItem(itemNum);
+/** 
+ * Bind to the initialized select box 
+ */
+$(document).on('click', '#split_with_1_1', function(){
+    splitWithChanged(1, 1);
 });
 
+/**
+ * Add budget numbers to selected box from database
+ * For now this is just test
+ */
+function addTestBudgetData(num) {
+    var op = document.createElement('option');
+    op.setAttribute('value', num);
+    op.innerHTML = num;
+    return op;
+}
+
+/**
+ * Deprecated
+ * Previous options controller
+ */
+$(document).on('click', '#option_task', function() {
+    if ($("#option_task").is(":checked")) {
+        $('#task_checked').attr('class', 'col-md-3 visible');
+    } else {
+        $('#task_checked').attr('class', 'col-md-3 hidden');
+    }
+});
+
+$(document).on('click', '#option_option', function() {
+    if ($("#option_option").is(":checked")) {
+        $('#option_checked').attr('class', 'col-md-3 visible');
+    } else {
+        $('#option_checked').attr('class', 'col-md-3 hidden');
+    }
+});
+
+$(document).on('click', '#option_project', function() {
+    if ($("#option_project").is(":checked")) {
+        $('#project_checked').attr('class', 'col-md-3 visible');
+    } else {
+        $('#project_checked').attr('class', 'col-md-3 hidden');
+    }
+});
+
+/** END: Budgets Controller */
+
+
+
+/** 
+ * BEGIN: New Line Item Controller 
+ * @param _id line item id
+ * @param itemNum this is a global variable, starts from 1,
+ *                each time when uses add a new line item it will increase by 1 
+ *                to generate a unique id for all components inside this line item
+ *                but it will not decrease when users delete a line item
+ *                so itemNum cannot reflect the real number of line items, it just use to set id
+ * Users can add one more line item by clicking add-new-line-item button
+ * This funtion will generate all needed components of each line item,
+ * exactly the same as original box,
+ * and each component and input value have unique id
+ */
+
+/** Core function */
 function addNewLineItem(_id) {
     console.log('item id: ' + _id);
 
@@ -617,7 +669,7 @@ function addNewLineItem(_id) {
     row.appendChild(addNewAmount(_id));
     row.appendChild(addNewTax(_id));
     row.appendChild(addBudget(_id, 1, true));
-    row.appendChild(addNewUpload(_id));
+    row.appendChild(addOneMoreFile(_id, 1, true));
 
     formBody.appendChild(row);
     form.appendChild(formBody);
@@ -628,54 +680,334 @@ function addNewLineItem(_id) {
 
 }
 
-/** Init confirm button */
-
-$(document).on('click', '#confirm_1', function() {
-    confirmItem(1);
+/** Bind to the initialized button */
+$(document).on('click', '#add_new_line_item', function(){
+    itemNum ++;
+    addNewLineItem(itemNum);
 });
 
-/** Click 'confirm' button, To show brief info of line-item in the summary table */
 
-function updateSummaryTable() {
-    var len = lineItems.length;
-    var itemTable = document.getElementById('summary_tbody');
-    itemTable.innerHTML = '';
-    for (var i = 0; i < len; i++) {
-        var exp = lineItems[i].Expense;
-        var pur = lineItems[i].Purpose;
-        var cate = lineItems[i].Category;
-        var budgetsArr = lineItems[i].Budgets;
-        var amo = lineItems[i].Amount;
-        itemTable.appendChild(genNewLineItemRow(i + 1, exp, pur, cate, budgetsArr, amo));
-    }
+
+/** Helper Functions */
+/** 
+ * Add expense block
+ * @param {int} _id line item id
+ */
+function addNewExpense(_id) {
+    var box = document.createElement('div');
+    box.setAttribute('class', 'col-12');
+
+    var row = document.createElement('div');
+    row.setAttribute('class', 'form-group row');
+
+    var first = document.createElement('div');
+    first.setAttribute('class', 'col-md-4');
+    first.innerHTML = "<span>Expense Description</span>";
+
+    var second = document.createElement('div');
+    second.setAttribute('class', 'col-md-7');
+    var input = document.createElement('input');
+    input.setAttribute('type', 'text');
+    input.setAttribute('id', 'expense_' + _id);
+    input.setAttribute('class', 'form-control');
+    input.setAttribute('name', 'expense');
+    input.setAttribute('placeholder', 'Expense Description');
+    second.appendChild(input);
+
+    var third = document.createElement('div');
+    third.setAttribute('class', 'col-md-1');
+    var button = document.createElement('button');
+    button.setAttribute('class', 'btn btn-icon rounded-circle btn-flat-danger');
+    button.setAttribute('id', 'delete_' + _id);
+    button.setAttribute('type', 'button');
+    button.onclick = function() {
+        removeLineItem(_id);
+    };
+    var icon = document.createElement('i');
+    icon.setAttribute('class', 'feather icon-x-circle');
+    button.appendChild(icon);
+    third.appendChild(button);
+    
+    row.appendChild(first);
+    row.appendChild(second);
+    row.appendChild(third);
+    box.appendChild(row);
+
+    return box; 
 }
 
-/** Init delete button */
+/**
+ * Add business purpose block
+ * @param {int} _id 
+ */
+function addNewPurpose(_id) {
+    var box = document.createElement('div');
+    box.setAttribute('class', 'col-12');
 
-$(document).on('click', '#delete_1', function() {
-    removeLineItem(1);
-});
+    var row = document.createElement('div');
+    row.setAttribute('class', 'form-group row');
 
-/** When click the red x button of a certain box */
-function removeLineItem(_id) {
-    var box = document.getElementById('lineItemBox_' + _id);
-    box.remove();
-    itemNum --;
-    // var summary = document.getElementById('summary_row_' + _id);
-    // summary.remove();
-    var n = lineItems.length;
-    for (var i = 0; i < n; i++) {
-        if (lineItems[i].id == _id) {
-            lineItems.splice(i, 1);
+    var first = document.createElement('div');
+    first.setAttribute('class', 'col-md-4');
+    first.innerHTML = "<span>Business Purpose</span>";
+
+    var second = document.createElement('div');
+    second.setAttribute('class', 'col-md-7');
+    var input = document.createElement('input');
+    input.setAttribute('type', 'text');
+    input.setAttribute('id', 'purpose_' + _id);
+    input.setAttribute('class', 'form-control');
+    input.setAttribute('name', 'purpose');
+    input.setAttribute('placeholder', 'Business Purpose');
+    second.appendChild(input);
+    
+    row.appendChild(first);
+    row.appendChild(second);
+    box.appendChild(row);
+
+    return box; 
+}
+
+/**
+ * Add category block
+ * @param {int} _id line item id
+ */
+function addNewCategory(_id) {
+    var box = document.createElement('div');
+    box.setAttribute('class', 'col-12');
+
+    var row = document.createElement('div');
+    row.setAttribute('class', 'form-group row');
+
+    var first = document.createElement('div');
+    first.setAttribute('class', 'col-md-4');
+    first.innerHTML = "<span>Category</span>";
+
+    var second = document.createElement('div');
+    second.setAttribute('class', 'col-md-4');
+    var select = document.createElement('select');
+    select.setAttribute('class', 'custom-select form-control');
+    select.setAttribute('id', 'category_' + _id);
+    var option1 = document.createElement('option');
+    option1.setAttribute('value', '');
+    option1.innerHTML = "Please select";
+    select.appendChild(option1);
+    second.appendChild(select);
+    
+    row.appendChild(first);
+    row.appendChild(second);
+    box.appendChild(row);
+
+    return box; 
+}
+
+/**
+ * Add amount block
+ * @param {int} _id line item id
+ */
+function addNewAmount(_id) {
+    var box = document.createElement('div');
+    box.setAttribute('class', 'col-12');
+
+    var row = document.createElement('div');
+    row.setAttribute('class', 'form-group row');
+
+    var first = document.createElement('div');
+    first.setAttribute('class', 'col-md-4');
+    first.innerHTML = "<span>Amount</span>";
+
+    var second = document.createElement('div');
+    second.setAttribute('class', 'col-md-4 col-12 mb-1');
+    var fieldset = document.createElement('fieldset');
+    var group = document.createElement('div');
+    group.setAttribute('class', 'input-group');
+    var prepend = document.createElement('div');
+    prepend.setAttribute('class', 'input-group-prepend');
+    prepend.innerHTML = "<span class='input-group-text'>$</span>";
+    var input = document.createElement('input');
+    input.setAttribute('type', 'text');
+    input.setAttribute('class', 'form-control');
+    input.setAttribute('name', 'amount');
+    input.setAttribute('placeholder', '0.00');
+    input.setAttribute('aria-label', 'Amount (to the nearest dollar)');
+    input.setAttribute('id', 'amount_' + _id);
+    group.appendChild(prepend);
+    group.appendChild(input);
+    fieldset.appendChild(group);
+    second.appendChild(fieldset);
+    
+    row.appendChild(first);
+    row.appendChild(second);
+    box.appendChild(row);
+
+    return box; 
+}
+
+/**
+ * Add tax block
+ * @param {int} _id 
+ */
+function addNewTax(_id) {
+    var box = document.createElement('div');
+    box.setAttribute('class', 'col-12');
+    var row = document.createElement('div');
+    row.setAttribute('class', 'form-group row');
+
+    var first = document.createElement('div');
+    first.setAttribute('class', 'col-md-4');
+    first.innerHTML = "<span>Was Sales Tax Paid?</span>";
+
+    var second = document.createElement('div');
+    second.setAttribute('class', 'col-md-8');
+    var list = document.createElement('ul');
+    list.setAttribute('class', 'list-unstyled mb-0');
+    list.appendChild(addNewRadio(_id, 1, "Yes"));
+    list.appendChild(addNewRadio(_id, 2, "No"));
+    list.appendChild(addNewRadio(_id, 3, "Item Not Taxable"));
+    second.appendChild(list);
+    
+    row.appendChild(first);
+    row.appendChild(second);
+    box.appendChild(row);
+
+    return box; 
+}
+
+/**
+ * Helper function to add new radio for tax block
+ * @param {int} _id line item id
+ * @param {int} seq the sequence of this radio, use to set unique id
+ * @param {string} label the label of this radio
+ */
+function addNewRadio(_id, seq, label) {
+    var bullet = document.createElement('li');
+    bullet.setAttribute('class', 'd-inline-block mr-2');
+    var f = document.createElement('fieldset');
+    var d = document.createElement('div');
+    d.setAttribute('class', 'custom-control custom-radio');
+    var i = document.createElement('input');
+    i.setAttribute('type', 'radio');
+    i.setAttribute('class', 'custom-control-input');
+    i.setAttribute('name', 'taxRadio');
+    i.setAttribute('value', 'paid');
+    i.setAttribute('id', 'taxRadio' + seq + _id);
+    var l = document.createElement('label');
+    l.setAttribute('class', 'custom-control-label');
+    l.setAttribute('for', 'taxRadio' + seq + _id);
+    l.innerHTML = label;
+    d.appendChild(i);
+    d.appendChild(l);
+    f.appendChild(d);
+    bullet.appendChild(f);
+
+    return bullet;
+}
+
+/**
+ * Deprecated partly
+ * @param {int} _id line item id
+ * @param {int} file_id file id in this line item
+ * @param {boolean} init indicate if this is the original file input in this line item
+ * For now, there is no plus button behind the first file upload input (set it to hidden)
+ * Which means users can only upload one file for one line item
+ * So when calling this function, file_id will always be 1, init will always be true
+ */
+function addOneMoreFile(_id, file_id, init) {
+    var box = document.createElement('div');
+    box.setAttribute('class', 'col-12');
+    box.setAttribute('id', 'file_box_' + _id + '_' + file_id);
+    var row = document.createElement('div');
+    row.setAttribute('class', 'form-group row');
+
+    var first = document.createElement('div');
+    first.setAttribute('class', 'col-md-4');
+    if (init) {
+        first.innerHTML = "<span>Upload Receipt</span>"
+    }
+
+    var second = document.createElement('div');
+    second.setAttribute('class', 'col-md-4');
+    var file = document.createElement('input');
+    file.setAttribute('type', 'file');
+    file.setAttribute('name', 'file_' + _id);
+    file.setAttribute('id', 'file_' + _id + '_' + file_id);
+    second.appendChild(file);
+
+    var third = document.createElement('div');
+    third.setAttribute('class', 'col-md-1 hidden');
+    var btn = document.createElement('button');
+    btn.setAttribute('type', 'button');
+    if (init) {
+        btn.setAttribute('class', 'btn btn-icon rounded-circle btn-flat-success');
+    } else {
+        btn.setAttribute('class', 'btn btn-icon rounded-circle btn-flat-danger');
+    }
+    btn.setAttribute('id', 'file_btn_' + _id + '_' + file_id);
+
+    var icon = document.createElement('i');
+    if (init) {
+        icon.setAttribute('class', 'feather icon-plus-circle');
+    } else {
+        icon.setAttribute('class', 'feather icon-x-circle');
+    }
+    btn.appendChild(icon);
+    if (init) {
+        btn.onclick = function() {
+            document.getElementById('file_box_' + _id + '_' + file_id).after(addOneMoreFile(_id, file_id + 1, false));
         }
+    } else {
+        btn.onclick = function() {
+            document.getElementById('file_box_' + _id + '_' + file_id).remove();
+        };
     }
-    updateSummaryTable();
+    third.appendChild(btn);
+
+    var forth = document.createElement('div');
+    forth.setAttribute('class', 'col-md-1 offset-md-3');
+    var confirm_btn = document.createElement('button');
+    confirm_btn.setAttribute('type', 'button');
+    confirm_btn.setAttribute('class', 'btn btn-icon rounded-circle btn-flat-success');
+    confirm_btn.setAttribute('id', 'confirm_' + _id);
+    var i = document.createElement('i');
+    i.setAttribute('class', 'fa fa-check');
+    confirm_btn.appendChild(i);
+    confirm_btn.onclick = function() {
+        confirmItem(_id);
+    }
+    forth.appendChild(confirm_btn);
+
+    row.appendChild(first);
+    row.appendChild(second);
+    row.appendChild(third);
+    row.appendChild(forth);
+    box.appendChild(row);
+    return box;
 }
 
-/** Confirm line item info and add them to the summary table */
+/** 
+ * Deprecated
+ * Bind initialized add-more-file button 
+ */
+$(document).on('click', '#file_btn_1_1', function() {
+    document.getElementById('file_box_1_1').after(addOneMoreFile(1, 2, false));
+});
+
+/** END: New Line Item Controller  */
+
+
+
+
+/** 
+ * BEGIN: Confirm & Delete Line Item Controller
+ * @param _id line item id
+ * @param {array} lineItems global variable, an array to store all line items of this form
+ * Add all confirmed items to global variables lineItems array
+ * Remove the delete item from global variables lineItems array
+ */
+
+/** Confirm function */
 function confirmItem(_id) {
     console.log('confirm item: ' + _id);
-    var formData = new FormData();
 
     /** Get budgets info */
     var budgetsNumArr = document.getElementsByName('budget_num_' + _id);
@@ -695,7 +1027,10 @@ function confirmItem(_id) {
     /** Build budgets array data structure */
     var budgetsArr = [];
     if (budgetsLen == 1) {
-        budgetsArr.push(budgetsNumArr[0].value);
+        budgetsArr.push({
+            Number: budgetsNumArr[0].value,
+            Split: null
+        });
     } else {
         for (var i = 1; i <= budgetsLen; i++) {
             var num = budgetsNumArr[i - 1].value;
@@ -714,7 +1049,14 @@ function confirmItem(_id) {
             });
         }
     }
+    
+    var fileSelect = document.getElementById('file_' + _id + '_1');
+    for(var x = 0; x < fileSelect.files.length; x++) {
+        formData.append(fileSelect.files[x].name, fileSelect.files[x]);
+    }
+    formData.append("files", fileSelect.files[x]); //"files" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request"
 
+    
     lineItems.push({
         id: _id,
         Expense: document.getElementById('expense_' + _id).value,
@@ -726,42 +1068,69 @@ function confirmItem(_id) {
 
     updateSummaryTable();
 
-    // var itemTable = document.getElementById('summary_tbody');
-    // var exp = document.getElementById('expense_' + _id).value;
-    // var pur = document.getElementById('purpose_' + _id).value;
-    // var cate = document.getElementById('category_' + _id).value;
-    // var amo = document.getElementById('amount_' + _id).value;
-    // itemTable.appendChild(genNewLineItemRow(_id, exp, pur, cate, budgetsArr, amo));
-
-    // var fileSelect = document.getElementById("fileField1");
-    // for(var x = 0; x < fileSelect.files.length; x++) {
-    //     formData.append(fileSelect.files[x].name, fileSelect.files[x]);
-    // }
-    // formData.append("files", fileSelect.files[x]); //"files" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request"
-    
-    // show it in the summary table
-    // var tableRef = document.getElementById('summary_table').getElementsByTagName('tbody')[0];
-    // var newRow = tableRef.insertRow(-1);
-    // var cell1 = newRow.insertCell(0);
-    // cell1.innerHTML = "Item " + lineItem.length;
-    // var cell2 = newRow.insertCell(1);
-    // cell2.innerHTML = lineItem[0].ExpenseDescription;
-    // var cell3 = newRow.insertCell(2);
-    // cell3.innerHTML = lineItem[0].Category;
-    // var cell4 = newRow.insertCell(3);
-    // cell4.innerHTML = lineItem[0].Amount;
-    // var cell5 = newRow.insertCell(4);
-    // cell5.innerHTML = "<button type='button' class='btn btn-icon btn-flat-success'><i class='feather icon-edit'></i></button>";
-
 }
 
+/** Delete function */
+function removeLineItem(_id) {
+    var box = document.getElementById('lineItemBox_' + _id);
+    box.remove();
+    itemNum --;
+    // var summary = document.getElementById('summary_row_' + _id);
+    // summary.remove();
+    var n = lineItems.length;
+    for (var i = 0; i < n; i++) {
+        if (lineItems[i].id == _id) {
+            lineItems.splice(i, 1);
+        }
+    }
+    updateSummaryTable();
+}
 
-/** Generate a cell to display split budget */
+/** Init confirm button */
+$(document).on('click', '#confirm_1', function() {
+    confirmItem(1);
+});
+
+/** Init delete button */
+$(document).on('click', '#delete_1', function() {
+    removeLineItem(1);
+});
+
+/** END: Confirm & Delete Line Item Controller */
+
+
+
+/** 
+ * BEGIN: Summary Table Display Controller
+ * Every time when there is any change in lineItems,
+ * this function will be called
+ * Specifically, when users click confirm button and delete button
+ * The update process are only related to the global variable lineItems
+ */
+
+function updateSummaryTable() {
+    var len = lineItems.length;
+    var itemTable = document.getElementById('summary_tbody');
+    itemTable.innerHTML = '';
+    for (var i = 0; i < len; i++) {
+        var exp = lineItems[i].Expense;
+        var pur = lineItems[i].Purpose;
+        var cate = lineItems[i].Category;
+        var budgetsArr = lineItems[i].Budgets;
+        var amo = lineItems[i].Amount;
+        itemTable.appendChild(genNewLineItemRow(i + 1, exp, pur, cate, budgetsArr, amo));
+    }
+}
+
+/** 
+ * Helper function: generate a table cell to display split budget 
+ * @param {array} arr the budget number array
+ */
 function genBudgetsCell(arr) {
     var td = document.createElement('td');
     var n = arr.length;
     if (n == 1) {
-        td.innerHTML = arr[0];
+        td.innerHTML = arr[0].Number;
         return td;
     }
 
@@ -775,7 +1144,15 @@ function genBudgetsCell(arr) {
     return td;
 }
 
-/** Use to generate a new item summary row */
+/**
+ * Helper function: generate a new item summary row with given parameters
+ * @param {int} _id line item id
+ * @param {string} Expense content to fill in the expense cell
+ * @param {string} Purpose content to fill in the purpose cell
+ * @param {string} Category content to fill in the category cell
+ * @param {table cell} Budgets a generated table cell which can be added to the table directly
+ * @param {string} Amount content to fill in the amount cell
+ */
 function genNewLineItemRow(_id, Expense, Purpose, Category, Budgets, Amount) {
 
     var _id_td = document.createElement('td');
@@ -832,314 +1209,27 @@ function genNewLineItemRow(_id, Expense, Purpose, Category, Budgets, Amount) {
     return tr;
 }
 
+/** END: Summary Table Display Controller */
 
 
+/** 
+ * Deprecated 
+ * File upload template wrote by Kalana
+ */
 $(document).on('click', '#confirm_item', function() {
     var formData = new FormData();
 
-    lineItem.push({
-        ExpenseDescription: $("input[name='expense']").val(),
-        Category: $("select#category option:checked").val(),
-        Amount: $("input[name='amount']").val()
-    });
-
-    // var fileSelect = document.getElementById("fileField1");
-    // for(var x = 0; x < fileSelect.files.length; x++) {
-    //     formData.append(fileSelect.files[x].name, fileSelect.files[x]);
-    // }
-    // formData.append("files", fileSelect.files[x]); //"files" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request"
+    var fileSelect = document.getElementById("fileField1");
+    for(var x = 0; x < fileSelect.files.length; x++) {
+        formData.append(fileSelect.files[x].name, fileSelect.files[x]);
+    }
+    formData.append("files", fileSelect.files[x]); //"files" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request"
     
-    // show it in the summary table
-    var tableRef = document.getElementById('summary_table').getElementsByTagName('tbody')[0];
-    var newRow = tableRef.insertRow(-1);
-    var cell1 = newRow.insertCell(0);
-    cell1.innerHTML = "Item " + lineItem.length;
-    var cell2 = newRow.insertCell(1);
-    cell2.innerHTML = lineItem[0].ExpenseDescription;
-    var cell3 = newRow.insertCell(2);
-    cell3.innerHTML = lineItem[0].Category;
-    var cell4 = newRow.insertCell(3);
-    cell4.innerHTML = lineItem[0].Amount;
-    var cell5 = newRow.insertCell(4);
-    cell5.innerHTML = "<button type='button' class='btn btn-icon btn-flat-success'><i class='feather icon-edit'></i></button>";
-
     //here we just pass in the JSON object we need to pass to the server. "JSON_body" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request
-    // formData.set("JSON_body", JSON.stringify(JSON_toServer));
+    formData.set("JSON_body", JSON.stringify(JSON_toServer));
     
 });
 
 
-//--------------------------- Helper Functions ------------------------------
 
-function addNewExpense(_id) {
-    var box = document.createElement('div');
-    box.setAttribute('class', 'col-12');
-
-    var row = document.createElement('div');
-    row.setAttribute('class', 'form-group row');
-
-    var first = document.createElement('div');
-    first.setAttribute('class', 'col-md-4');
-    first.innerHTML = "<span>Expense Description</span>";
-
-    var second = document.createElement('div');
-    second.setAttribute('class', 'col-md-7');
-    var input = document.createElement('input');
-    input.setAttribute('type', 'text');
-    input.setAttribute('id', 'expense_' + _id);
-    input.setAttribute('class', 'form-control');
-    input.setAttribute('name', 'expense');
-    input.setAttribute('placeholder', 'Expense Description');
-    second.appendChild(input);
-
-    var third = document.createElement('div');
-    third.setAttribute('class', 'col-md-1');
-    var button = document.createElement('button');
-    button.setAttribute('class', 'btn btn-icon rounded-circle btn-flat-danger');
-    button.setAttribute('id', 'delete_' + _id);
-    button.setAttribute('type', 'button');
-    button.onclick = function() {
-        removeLineItem(_id);
-    };
-    var icon = document.createElement('i');
-    icon.setAttribute('class', 'feather icon-x-circle');
-    button.appendChild(icon);
-    third.appendChild(button);
-    
-    row.appendChild(first);
-    row.appendChild(second);
-    row.appendChild(third);
-    box.appendChild(row);
-
-    return box; 
-}
-
-
-function addNewPurpose(_id) {
-    var box = document.createElement('div');
-    box.setAttribute('class', 'col-12');
-
-    var row = document.createElement('div');
-    row.setAttribute('class', 'form-group row');
-
-    var first = document.createElement('div');
-    first.setAttribute('class', 'col-md-4');
-    first.innerHTML = "<span>Business Purpose</span>";
-
-    var second = document.createElement('div');
-    second.setAttribute('class', 'col-md-7');
-    var input = document.createElement('input');
-    input.setAttribute('type', 'text');
-    input.setAttribute('id', 'purpose_' + _id);
-    input.setAttribute('class', 'form-control');
-    input.setAttribute('name', 'purpose');
-    input.setAttribute('placeholder', 'Business Purpose');
-    second.appendChild(input);
-    
-    row.appendChild(first);
-    row.appendChild(second);
-    box.appendChild(row);
-
-    return box; 
-}
-
-
-function addNewCategory(_id) {
-    var box = document.createElement('div');
-    box.setAttribute('class', 'col-12');
-
-    var row = document.createElement('div');
-    row.setAttribute('class', 'form-group row');
-
-    var first = document.createElement('div');
-    first.setAttribute('class', 'col-md-4');
-    first.innerHTML = "<span>Category</span>";
-
-    var second = document.createElement('div');
-    second.setAttribute('class', 'col-md-4');
-    var select = document.createElement('select');
-    select.setAttribute('class', 'custom-select form-control');
-    select.setAttribute('id', 'category_' + _id);
-    var option1 = document.createElement('option');
-    option1.setAttribute('value', '');
-    option1.innerHTML = "Please select";
-    select.appendChild(option1);
-    second.appendChild(select);
-    
-    row.appendChild(first);
-    row.appendChild(second);
-    box.appendChild(row);
-
-    return box; 
-}
-
-function addNewAmount(_id) {
-    var box = document.createElement('div');
-    box.setAttribute('class', 'col-12');
-
-    var row = document.createElement('div');
-    row.setAttribute('class', 'form-group row');
-
-    var first = document.createElement('div');
-    first.setAttribute('class', 'col-md-4');
-    first.innerHTML = "<span>Amount</span>";
-
-    var second = document.createElement('div');
-    second.setAttribute('class', 'col-md-4 col-12 mb-1');
-    var fieldset = document.createElement('fieldset');
-    var group = document.createElement('div');
-    group.setAttribute('class', 'input-group');
-    var prepend = document.createElement('div');
-    prepend.setAttribute('class', 'input-group-prepend');
-    prepend.innerHTML = "<span class='input-group-text'>$</span>";
-    var input = document.createElement('input');
-    input.setAttribute('type', 'text');
-    input.setAttribute('class', 'form-control');
-    input.setAttribute('name', 'amount');
-    input.setAttribute('placeholder', '0.00');
-    input.setAttribute('aria-label', 'Amount (to the nearest dollar)');
-    input.setAttribute('id', 'amount_' + _id);
-    group.appendChild(prepend);
-    group.appendChild(input);
-    fieldset.appendChild(group);
-    second.appendChild(fieldset);
-    
-    row.appendChild(first);
-    row.appendChild(second);
-    box.appendChild(row);
-
-    return box; 
-}
-
-
-function addNewTax(_id) {
-    var box = document.createElement('div');
-    box.setAttribute('class', 'col-12');
-    var row = document.createElement('div');
-    row.setAttribute('class', 'form-group row');
-
-    var first = document.createElement('div');
-    first.setAttribute('class', 'col-md-4');
-    first.innerHTML = "<span>Was Sales Tax Paid?</span>";
-
-    var second = document.createElement('div');
-    second.setAttribute('class', 'col-md-8');
-    var list = document.createElement('ul');
-    list.setAttribute('class', 'list-unstyled mb-0');
-    list.appendChild(addNewRadio(_id, 1, "Yes"));
-    list.appendChild(addNewRadio(_id, 2, "No"));
-    list.appendChild(addNewRadio(_id, 3, "Item Not Taxable"));
-    second.appendChild(list);
-    
-    row.appendChild(first);
-    row.appendChild(second);
-    box.appendChild(row);
-
-    return box; 
-}
-
-function addNewRadio(_id, seq, label) {
-    var bullet = document.createElement('li');
-    bullet.setAttribute('class', 'd-inline-block mr-2');
-    var f = document.createElement('fieldset');
-    var d = document.createElement('div');
-    d.setAttribute('class', 'custom-control custom-radio');
-    var i = document.createElement('input');
-    i.setAttribute('type', 'radio');
-    i.setAttribute('class', 'custom-control-input');
-    i.setAttribute('name', 'taxRadio');
-    i.setAttribute('value', 'paid');
-    i.setAttribute('id', 'taxRadio' + seq + _id);
-    var l = document.createElement('label');
-    l.setAttribute('class', 'custom-control-label');
-    l.setAttribute('for', 'taxRadio' + seq + _id);
-    l.innerHTML = label;
-    d.appendChild(i);
-    d.appendChild(l);
-    f.appendChild(d);
-    bullet.appendChild(f);
-
-    return bullet;
-}
-
-// function addNewBudget(_id) {
-//     var box = document.createElement('div');
-//     box.setAttribute('class', 'col-12');
-//     var row = document.createElement('div');
-//     row.setAttribute('class', 'form-group row');
-
-//     var first = document.createElement('div');
-//     first.setAttribute('class', 'col-md-4');
-//     first.innerHTML = "<span>Budget Number</span>";
-
-//     var second = document.createElement('div');
-//     second.setAttribute('class', 'col-md-7');
-//     var input = document.createElement('input');
-//     input.setAttribute('type', 'text');
-//     input.setAttribute('id', 'business_purpose_' + _id);
-//     input.setAttribute('class', 'form-control');
-//     input.setAttribute('name', 'purpose');
-//     input.setAttribute('placeholder', 'Business Purpose');
-//     second.appendChild(input);
-    
-//     row.appendChild(first);
-//     row.appendChild(second);
-//     box.appendChild(row);
-
-//     return box; 
-// }
-
-function addNewUpload(_id) {
-    var box = document.createElement('div');
-    box.setAttribute('class', 'col-12');
-    var row = document.createElement('div');
-    row.setAttribute('class', 'form-group row');
-
-    var first = document.createElement('div');
-    first.setAttribute('class', 'col-md-4');
-    first.innerHTML = "<span>Upload Receipt</span>";
-
-    var second = document.createElement('div');
-    second.setAttribute('class', 'col-md-4');
-    var f = document.createElement('fieldset');
-    var d = document.createElement('div');
-    d.setAttribute('class', 'custom-file');
-    var i = document.createElement('input');
-    i.setAttribute('type', 'file');
-    i.setAttribute('id', 'file_' + _id);
-    i.setAttribute('class', 'custom-file-input');
-    var l = document.createElement('label');
-    l.setAttribute('class', 'custom-file-label');
-    l.setAttribute('for', 'file_' + _id);
-    l.innerHTML = "Choose File";
-    d.appendChild(i);
-    d.appendChild(l);
-    f.appendChild(d);
-    second.appendChild(f);
-
-    var third = document.createElement('div');
-    third.setAttribute('class', 'col-md-1 offset-md-3');
-
-    var btn = document.createElement('button');
-    btn.setAttribute('type', 'button');
-    btn.setAttribute('class', 'btn btn-icon rounded-circle btn-flat-success');    
-    btn.setAttribute('id', 'confirm_' + _id);
-    var icon = document.createElement('i');
-    icon.setAttribute('class', 'feather icon-check-circle');
-    btn.appendChild(icon);
-    btn.onclick = function() {
-        console.log('confirm button clicked: ' + _id);
-        confirmItem(_id);
-    };
-
-    third.appendChild(btn);
-    
-    row.appendChild(first);
-    row.appendChild(second);
-    row.appendChild(third);
-    box.appendChild(row);
-
-    return box; 
-}
-
-//-------------------------- End Helper Functions ---------------------------
+/***************************************************** END: Form Control **********************************************************/
