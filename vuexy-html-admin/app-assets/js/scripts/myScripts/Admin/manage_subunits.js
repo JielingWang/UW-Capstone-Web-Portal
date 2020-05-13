@@ -1311,10 +1311,12 @@ function add_btn_hide_unhide_logic_Approvers_overview()
 
 function update_btn_hide_unhide_logic_Approver_overview()
 {
+    
     if(selected_row_approvers_over_view > -1)
     {
         const row_info = approvers_over_view_table.row( selected_row_approvers_over_view ).data();
-
+        var row_is_PI = 1; //1 means yes, 2 means no
+        var is_PI_status = false;
         var cardInfo = row_info[7].split("<br>").filter(e=>e!="");
         var selected_options = $('#formAllowed_selectBox').val();
         var isSimilar = true;
@@ -1324,7 +1326,17 @@ function update_btn_hide_unhide_logic_Approver_overview()
         else
             isSimilar = false;
 
-        if(row_info[2] == approver_name_input.value && row_info[3] == approver_UWID_input.value && row_info[4] == approver_email_input.value && row_info[6] == approver_limit_input.value && isSimilar)
+        if(row_info[8] == "Yes")
+            row_is_PI = 2;
+        else
+            row_is_PI = 1;
+
+        if(approver_PI_input.selectedIndex == row_is_PI)
+            is_PI_status = false;
+        else
+            is_PI_status = true;
+
+        if(row_info[2] == approver_name_input.value && row_info[3] == approver_UWID_input.value && row_info[4] == approver_email_input.value && row_info[6] == approver_limit_input.value && isSimilar && is_PI_status)
             approvers_updateBtn.disabled = true;
         else
             approvers_updateBtn.disabled = false;
