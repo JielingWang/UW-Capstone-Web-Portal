@@ -9,7 +9,7 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>User-reimbursement-2</title>
+    <title>User-procard-receipt</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
@@ -159,15 +159,15 @@
 				<li class=" navigation-header"><span>General User</span></li>
 				<li class=" nav-item"><a href="#"><i class="feather icon-file-plus"></i><span class="menu-title" data-i18n="User">Create Request</span></a>
                     <ul class="menu-content" style="margin-left:10px;">
-                        <li class="active"><a href="user-reimbursement.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Reimbursement</span></a>
+                        <li><a href="user-reimbursement-2.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Reimbursement</span></a>
                         </li>
                         <li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="View">Travel Reimbursement</span></a>
                         </li>
-                        <li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Purchase Request</span></a>
+                        <li><a href="user-purchase.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Purchase Request</span></a>
                         </li>
-						<li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Pay an Invoice</span></a>
+						<li><a href="user-invoice.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Pay an Invoice</span></a>
                         </li>
-						<li><a href="procardReceipt.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Procard Receipt</span></a>
+						<li class="active"><a href="user-procard.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Procard Receipt</span></a>
                         </li>
                     </ul>
                 </li>
@@ -200,14 +200,14 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-left mb-0">Reimbursement</h2>
+                            <h2 class="content-header-title float-left mb-0">Procard Receipt</h2>
                             <div class="breadcrumb-wrapper col-12">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="#">Home</a>
                                     </li>
                                     <li class="breadcrumb-item"><a href="#">Create Request</a>
                                     </li>
-                                    <li class="breadcrumb-item active">Reimbursement
+                                    <li class="breadcrumb-item active">Procard Receipt
                                     </li>
                                 </ol>
                             </div>
@@ -230,12 +230,12 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Reimbursement Request</h4>
-                                </div>
+                                <!-- <div class="card-header">
+                                    <h4 class="card-title">Purchase Request</h4>
+                                </div> -->
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <form action="#" class="steps-validation wizard-circle">
+                                        <form action="#" method="POST" class="steps-validation wizard-circle">
                                             <!-- Step 1 -->
                                             <h6><i class="step-icon feather icon-home"></i>Requester Information</h6>
                                             <fieldset>
@@ -244,7 +244,7 @@
                                                         <div class="form-group row">
                                                             <div class="col-md-1"></div>
                                                             <div class="col-md-4">
-                                                                <span>Reimbursement for</span>
+                                                                <span>Card Holder</span>
                                                             </div>
                                                             <div class="col-md-2">
                                                                 <ul class="list-unstyled mb-0">
@@ -264,7 +264,7 @@
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
                                                                                 <input type="radio" class="custom-control-input" name="myselfOrBehalfRadio" value="onbehalf" id="onBehalfRadio_Yes" >
-                                                                                <label class="custom-control-label" for="onBehalfRadio_Yes">On someone behalf</label>
+                                                                                <label class="custom-control-label" for="onBehalfRadio_Yes">Someone else</label>
                                                                             </div>
                                                                         </fieldset>
                                                                     </li>
@@ -300,19 +300,47 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="row" >
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-4">
+                                                                <span>Name on card</span>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <input type="text" id="name-on-card" class="form-control" name="name-on-card" placeholder="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" >
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-4">
+                                                                <span>Card Number</span>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <input type="text" id="cardNum" class="form-control" name="card-num" placeholder="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <div class="row" style="margin-bottom: 1rem;">
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-1"></div>
                                                             <div class="col-md-4">
-                                                                <span>Individual to be reimbursed</span>
+                                                                <span>Individual to request</span>
                                                             </div>
                                                             <div class="col-md-2">
                                                                 <ul class="list-unstyled mb-0">
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="individual-reimbursed" value="employee" id="individual_employee">
+                                                                                <input type="radio" class="custom-control-input" name="individual" value="employee" id="individual_employee">
                                                                                 <label class="custom-control-label" for="individual_employee">Employee</label>
                                                                             </div>
                                                                         </fieldset>
@@ -324,7 +352,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="individual-reimbursed" value="student" id="individual_student">
+                                                                                <input type="radio" class="custom-control-input" name="individual" value="student" id="individual_student">
                                                                                 <label class="custom-control-label" for="individual_student">Student</label>
                                                                             </div>
                                                                         </fieldset>
@@ -336,7 +364,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="individual-reimbursed" value="nonuw" id="individual_nonuw">
+                                                                                <input type="radio" class="custom-control-input" name="individual" value="nonuw" id="individual_nonuw">
                                                                                 <label class="custom-control-label" for="individual_nonuw">Non-UW</label>
                                                                             </div>
                                                                         </fieldset>
@@ -362,7 +390,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="emplyee_deposit" id="emplyee_deposit">
+                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="Direct deposit" id="emplyee_deposit">
                                                                                 <label class="custom-control-label" for="emplyee_deposit">Direct deposit</label>
                                                                             </div>
                                                                         </fieldset>
@@ -370,7 +398,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="employee_pick" id="employee_pick">
+                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="Picked up in department" id="employee_pick">
                                                                                 <label class="custom-control-label" for="employee_pick">Picked up in department</label>
                                                                             </div>
                                                                         </fieldset>
@@ -397,7 +425,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="nonemplyee_pick" id="nonemplyee_pick">
+                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="Picked up in department" id="nonemplyee_pick">
                                                                                 <label class="custom-control-label" for="nonemplyee_pick">Picked up in department</label>
                                                                             </div>
                                                                         </fieldset>
@@ -405,7 +433,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="nonemployee_checkMail" id="nonemployee_checkMail">
+                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="Check mail" id="nonemployee_checkMail">
                                                                                 <label class="custom-control-label" for="nonemployee_checkMail">Check mail</label>
                                                                             </div>
                                                                         </fieldset>
@@ -421,7 +449,7 @@
                                                             <div class="form-group row">
                                                                 <div class="col-md-1"></div>
                                                                 <div class="col-md-4">
-                                                                    <span>Billing Information:</span>
+                                                                    <span>Shipping Address:</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -548,13 +576,23 @@
                                                                                     <span></span>
                                                                                 </div>
                                                                                 <div class="col-md-3">
-                                                                                    <span>Attendees:</span>
+                                                                                    <span>Attendees</span>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <input type="text" id="name" class="form-control" name="submitter-name" placeholder="Name">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+                                                                        <!-- <div class="col-12">
+                                                                            <div class="form-group row">
+                                                                                <div class="col-md-4">
+                                                                                    <span>Item Link</span>
+                                                                                </div>
+                                                                                <div class="col-md-8">
+                                                                                    <input type="text" id="item_link" class="form-control" name="link" placeholder="">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div> -->
                                                                         <div class="col-12">
                                                                             <div class="form-group row">
                                                                                 <div class="col-md-4">
@@ -805,7 +843,7 @@
                                                     </div>
                                                     <div class="col-11">
                                                         <div class="form-group row">
-                                                            <table class="table zero-configuration">
+                                                            <table class="table zero-configuration" id="summary_table">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>No.</th>
@@ -815,8 +853,8 @@
                                                                         <th>Receipt</th>
                                                                      </tr>
                                                                 </thead>
-                                                                <tbody>
-                                                                    <tr class="hidden" id="added_line_item_1">
+                                                                <tbody id="tbody">
+                                                                    <!-- <tr class="visible" id="trow">
                                                                         <td>Item 1</td>
                                                                         <td>Some description here</td>
                                                                         <td>Other</td>
@@ -825,7 +863,7 @@
                                                                             <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-file"></i></button>
                                                                             <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-edit"></i></button>
                                                                         </td>
-                                                                     </tr>
+                                                                     </tr> -->
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -1185,10 +1223,11 @@
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
-    <script src="../../../app-assets/js/scripts/myScripts/users/reimbursement-new.js"></script>
-    <script src="../../../app-assets/js/scripts/myScripts/users/user-data.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/users/procard.js"></script>
+    <!-- <script src="../../../app-assets/js/scripts/myScripts/users/user-data.js"></script> -->
+    <script src="../../../app-assets/js/scripts/myScripts/users/my-wizard-steps.js"></script>
     <script src="../../../app-assets/js/scripts/forms/select/form-select2.js"></script>
-    <script src="../../../app-assets/js/scripts/forms/wizard-steps.js"></script>
+    <!-- <script src="../../../app-assets/js/scripts/forms/wizard-steps.js"></script> -->
     <!-- END: Page JS-->
 
 </body>

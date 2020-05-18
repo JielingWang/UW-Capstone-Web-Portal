@@ -9,7 +9,7 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Request Summary</title>
+    <title>Request Detail</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
@@ -154,7 +154,7 @@
 				<li class=" navigation-header"><span>General User</span></li>
 				<li class=" nav-item"><a href="#"><i class="feather icon-file-plus"></i><span class="menu-title" data-i18n="User">Create Request</span></a>
                     <ul class="menu-content" style="margin-left:10px;">
-                        <li class=""><a href="user-reimbursement.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Reimbursement</span></a>
+                        <li><a href="user-reimbursement.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Reimbursement</span></a>
                         </li>
                         <li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="View">Travel Reimbursement</span></a>
                         </li>
@@ -167,11 +167,8 @@
                     </ul>
                 </li>
                 
-				<li class="nav-item"><a href=""><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">My Requests</span></a></li>
+				<li class="active nav-item"><a href=""><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">My Requests</span></a></li>
                 
-                <li class=" navigation-header"><span>Financial Staff</span></li>
-				<li class="active nav-item"><a href=""><i class="feather icon-aperture"></i><span class="menu-title" data-i18n="UserSettings">Pending Requests</span></a></li>
-				
 				<li class=" navigation-header"><span>Settings</span></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-bell"></i><span class="menu-title" data-i18n="Notifications">Notifications</span></a></li>
@@ -275,7 +272,7 @@
                                     <h6 class="mt-2">STATUS</h6>
                                     <p><i class="fa fa-circle font-small-3 text-warning mr-50"></i>Pending</p>
                                     <h6 class="mt-2">ASSIGNED TO</h6>
-                                    <p>Ted</p>
+                                    <p>Not assigned yet</p>
                                 </div>
                             </div>
                         </div>
@@ -325,11 +322,8 @@
                         <!-- Invoice Items Details -->
                         <div class="col-12" style="margin-top: 1rem;">
                             <div class="form-group row">
-                                <table class="table zero-configuration">
+                                <table class="table table-hover-animation zero-configuration">
                                     <thead>
-                                        <!-- <tr>
-                                            <th colspan="2">Description</th>
-                                        </tr> -->
                                         <tr>
                                             <th>Expense Description</th>
                                             <th>Category</th>
@@ -352,15 +346,74 @@
                                             <td>Food and Beverage</td>
                                             <td>$123</td>
                                             <td>
-                                                <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-file-plus"></i></button>
-                                                <!-- <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-edit"></i></button> -->
+                                                <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-file"></i></button>
+                                                <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-edit"></i></button>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        
+                        <!-- <div id="invoice-items-details" class="pt-1 invoice-items-table">
+                            <div class="row">
+                                <div class="table-responsive col-12">
+                                    <table class="table table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th>DESCRIPTION</th>
+                                                <th>BUSINESS PURPOSE</th>
+                                                <th>CATEGORY</th>
+                                                <th>BUDGET NUMBER</th>
+                                                <th>AMOUNT</th>
+                                                <th>TAX</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Website Redesign</td>
+                                                <td>Website Redesign</td>
+                                                <td>Food and Beverage</td>
+                                                <td>#68-123</td>
+                                                <td>$1234</td>
+                                                <td>$123.4</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Newsletter Design</td>
+                                                <td>Template Redesign</td>
+                                                <td>Other</td>
+                                                <td>#68-123</td>
+                                                <td>$1234</td>
+                                                <td>$123.4</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <div id="invoice-total-details" class="invoice-total-table">
+                            <div class="row">
+                                <div class="col-5 offset-7">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <th>SUBTOTAL</th>
+                                                    <td>$1357.4</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>SHIPPING</th>
+                                                    <td>$0</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>TOTAL</th>
+                                                    <td>$1357.4</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
 
                         <!-- Invoice Footer -->
                         <div id="invoice-footer" class="text-right pt-3">
@@ -390,7 +443,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="card-content collapse">
+                                <div class="card-content">
                                     <div class="card-body">
                                         <ul class="activity-timeline timeline-left list-unstyled">
                                             <li>
@@ -398,8 +451,8 @@
                                                     <i class="feather icon-plus font-medium-2"></i>
                                                 </div>
                                                 <div class="timeline-info">
-                                                    <p class="font-weight-bold">Task Added</p>
-                                                    <span>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</span>
+                                                    <p class="font-weight-bold">Request Submitted</p>
+                                                    <!-- <span>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</span> -->
                                                 </div>
                                                 <small class="">25 days ago</small>
                                             </li>
@@ -408,8 +461,8 @@
                                                     <i class="feather icon-alert-circle font-medium-2"></i>
                                                 </div>
                                                 <div class="timeline-info">
-                                                    <p class="font-weight-bold">Task Updated</p>
-                                                    <span>Cupcake gummi bears soufflé caramels candy</span>
+                                                    <p class="font-weight-bold">Request Approved</p>
+                                                    <span>Notes from approver: </span>
                                                 </div>
                                                 <small class="">15 days ago</small>
                                             </li>
@@ -433,43 +486,6 @@
                     </div>
                 </section>
                 <!-- Timeline Ends -->
-
-                <!-- <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <h4 class="card-title">Notes From Approver</h4>
-                                    <p>Some notes wrote by approvers</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <h4 class="card-title">Feedback</h4>
-                                    <form class="form">
-                                        <div class="form-body">
-                                            <div class="form-group">
-                                                <label for="feedback3" class="sr-only">Notes</label>
-                                                <textarea id="feedback3" rows="3" class="form-control" name="message" placeholder="Notes"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-actions">
-                                            <button type="submit" class="btn btn-primary mr-1">Approve</button>
-                                            <button type="reset" class="btn btn-outline-warning">Reject</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
             </div>
         </div>

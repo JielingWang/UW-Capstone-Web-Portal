@@ -9,27 +9,30 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Request Summary</title>
+    <title>Buyer-dashboard</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/datatables.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/dark-layout.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/semi-dark-layout.css">
+
+
 
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/invoice.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/dashboard-ecommerce.css">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -198,17 +201,15 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-left mb-0">Summary</h2>
-                            <!-- <div class="breadcrumb-wrapper col-12">
+                            <h2 class="content-header-title float-left mb-0">My Pending Requests</h2>
+                            <div class="breadcrumb-wrapper col-12">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.html">Home</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#">Pages</a>
-                                    </li>
-                                    <li class="breadcrumb-item active">Invoice
+                                    <li class="breadcrumb-item active">Pending Requests
                                     </li>
                                 </ol>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -222,255 +223,192 @@
                 </div>
             </div>
             <div class="content-body">
-                <!-- invoice functionality start -->
-                <section class="invoice-print mb-1">
-                    <div class="row">
-
-                        <fieldset class="col-12 col-md-5 mb-1 mb-md-0">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Email" aria-describedby="button-addon2">
-                                <div class="input-group-append" id="button-addon2">
-                                    <button class="btn btn-outline-primary" type="button">Send Summary</button>
+                <!-- Basic example and Profile cards section start -->
+                <section id="basic-examples">
+                    <div class="row match-height">
+                        <div class="col-xl-4 col-md-6 col-sm-12">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <!-- <img class="card-img img-fluid mb-1" src="../../../app-assets/images/pages/content-img-2.jpg" alt="Card image cap"> -->
+                                        <h5 class="mt-1"># 12345</h5>
+                                        <p class="card-text">By Pixinvent Creative Studio</p>
+                                        <hr class="my-1">
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <div class="float-left">
+                                                <p class="font-medium-2 mb-0">$ 4785.78</p>
+                                                <p class="">Budget</p>
+                                            </div>
+                                            <div class="float-right">
+                                                <p class="font-medium-2 mb-0">12 June 2019</p>
+                                                <p class="">Delivery Date</p>
+                                            </div>
+                                        </div>
+                                        <button class="btn gradient-light-primary btn-block mt-2"><a style="color: white;" href="buyer-pendingOrder.html">Edit</a></button>
+                                    </div>
                                 </div>
                             </div>
-                        </fieldset>
-                        <div class="col-12 col-md-7 d-flex flex-column flex-md-row justify-content-end">
-                            <button class="btn btn-primary btn-print mb-1 mb-md-0"> <i class="feather icon-file-text"></i> Print</button>
-                            <button class="btn btn-outline-primary  ml-0 ml-md-1"> <i class="feather icon-download"></i> Download</button>
+                        </div>
+                        <div class="col-xl-4 col-md-6 col-sm-12">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <!-- <img class="card-img img-fluid mb-1" src="../../../app-assets/images/pages/content-img-2.jpg" alt="Card image cap"> -->
+                                        <h5 class="mt-1"># 12345</h5>
+                                        <p class="card-text">By Pixinvent Creative Studio</p>
+                                        <hr class="my-1">
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <div class="float-left">
+                                                <p class="font-medium-2 mb-0">$ 4785.78</p>
+                                                <p class="">Budget</p>
+                                            </div>
+                                            <div class="float-right">
+                                                <p class="font-medium-2 mb-0">12 June 2019</p>
+                                                <p class="">Delivery Date</p>
+                                            </div>
+                                        </div>
+                                        <button class="btn gradient-light-primary btn-block mt-2">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 col-sm-12">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <!-- <img class="card-img img-fluid mb-1" src="../../../app-assets/images/pages/content-img-2.jpg" alt="Card image cap"> -->
+                                        <h5 class="mt-1"># 1964537</h5>
+                                        <p class="card-text">By Pixinvent Creative Studio</p>
+                                        <hr class="my-1">
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <div class="float-left">
+                                                <p class="font-medium-2 mb-0">$ 4785.78</p>
+                                                <p class="">Budget</p>
+                                            </div>
+                                            <div class="float-right">
+                                                <p class="font-medium-2 mb-0">12 June 2019</p>
+                                                <p class="">Delivery Date</p>
+                                            </div>
+                                        </div>
+                                        <button class="btn gradient-light-primary btn-block mt-2">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
-                <!-- invoice functionality end -->
-                <!-- invoice page -->
-                <section class="card invoice-page">
-                    <div id="invoice-template" class="card-body">
-                        <!-- Invoice Company Details -->
-                        <div id="invoice-company-details" class="row">
-                            <div class="col-sm-6 col-12 text-left">
-                                <h1>Reimbursement</h1>
-                            </div>
-                            <div class="col-sm-6 col-12 text-right">
-                                <h1>Request ID: 0012020</h1>
-                            </div>
-                        </div>
-                        <div id="invoice-company-details" class="row">
-                            <div class="col-sm-3 col-6 text-left">
-                                <div class="invoice-details mt-2">
-                                    <h6 class="mt-2">REQUESTER</h6>
-                                    <p>Jieling Wang</p>
-                                    <h6 class="mt-2">SUB-UNIT</h6>
-                                    <p>Qwertt Lab</p>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-6 text-left">
-                                <div class="invoice-details mt-2">
-                                    <h6 class="mt-2">REQUEST DATE</h6>
-                                    <p>21 Feb 2020</p>
-                                    <h6 class="mt-2">PAYEE</h6>
-                                    <p>Jieling Wang</p>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-12 text-right">
-                                <div class="invoice-details mt-2">
-                                    <h6 class="mt-2">STATUS</h6>
-                                    <p><i class="fa fa-circle font-small-3 text-warning mr-50"></i>Pending</p>
-                                    <h6 class="mt-2">ASSIGNED TO</h6>
-                                    <p>Ted</p>
-                                </div>
+                <!-- // Basic example and Profile cards section end -->
+            </div>
+            <div class="content-header row">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="col-12">
+                            <h2 class="content-header-title float-left mb-0">General Requests</h2>
+                            <div class="breadcrumb-wrapper col-12">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">Home</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">Pending Requests
+                                    </li>
+                                </ol>
                             </div>
                         </div>
-                        <!--/ Invoice Company Details -->
-
-                        <div id="invoice-items-details" class="pt-1 invoice-items-table">
-                            <div class="row">
-                                <div class="table-responsive col-12">
-                                    <table class="table table-borderless">
+                    </div>
+                </div>
+                <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+                    <div class="form-group breadcrum-right">
+                        <div class="dropdown">
+                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-settings"></i></button>
+                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">Chat</a><a class="dropdown-item" href="#">Email</a><a class="dropdown-item" href="#">Calendar</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="mb-0">All Requests</h4> 
+                                
+                                <p>    Sort by
+                                    <select  id="basicSelect">
+                                        <option></option>
+                                        <option>Name</option>
+                                        <option>Department</option>
+                                        <option>Date</option>
+                                    </select>
+                                </p>
+                                
+                                
+                            </div>
+                            <div class="card-content">
+                                <div class="table-responsive mt-1">
+                                    <table class="table table-hover-animation mb-0">
                                         <thead>
                                             <tr>
-                                                <th>SHIPPING ADDRESS</th>
-                                                <th>DELIVERY METHODS</th>
-                                                <th colspan="2">REQUEST SUMMARY</th>
+                                                <th>Request ID</th>
+                                                <th>Requester</th>
+                                                <th>Type of Request</th>
+                                                <th>Sub-unit</th>
+                                                <th>Amount</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                                <th>Assigned To</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="recipient-info my2">
+                                        <tbody>
                                             <tr>
-                                                <td style="vertical-align: top;">
-                                                    <p>Jieling Wang</p>
-                                                    <p>3927 Adams Lane NE</p>
-                                                    <p>Seattle, WA</p>
-                                                    <p>98105</p>
-                                                </td>
-                                                <td style="vertical-align: top;">Mail Check</td>
-                                                <td style="vertical-align: top;">
-                                                    <p>Subtotal:</p>
-                                                    <p>Shipping & Handling:</p>
-                                                    <p>Total before tax:</p>
-                                                    <p>Estimated tax to be:</p>
-                                                    <p><strong>Grand total:</strong></p>
-                                                </td>
-                                                <td style="vertical-align: top;">
-                                                    <p>$1234.4</p>
-                                                    <p>$3.89</p>
-                                                    <p>$26.87</p>
-                                                    <p>$2.71</p>
-                                                    <p>$29.58</p>
-                                                </td>
+                                                <td>1969737</td>
+                                                <td>John Doe</td>
+                                                <td>Reimbursement</td>
+                                                <td>PI-Ben Hall EnvE Lab</td>
+                                                <td>$53.83</td>
+                                                <td>1-23-2020</td>
+                                                <td><i class="fa fa-circle font-small-3 text-success mr-50"></i>Accepted</td>
+                                                <td>Ted</td>
                                             </tr>
+                                            
+                                            <tr>
+                                                <td>1964537</td>
+                                                <td>Paul Brennan</td>
+                                                <td>Purchase Request</td>
+                                                <td>PI-Ben Hall EnvE Lab</td>
+                                                <td>$102.88</td>
+                                                <td>1-23-2020</td>
+                                                <td><i class="fa fa-circle font-small-3 text-warning mr-50"></i>Pending</td>
+                                                <td style="color: red;"><i class="feather icon-check"></i>Take</td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>1346635</td>
+                                                <td>Kenndy Brown</td>
+                                                <td>Travel Request</td>
+                                                <td>PI-Ben Hall EnvE Lab</td>
+                                                <td>$929.01</td>
+                                                <td>1-30-2020</td>
+                                                <td><i class="fa fa-circle font-small-3 text-danger mr-50"></i>Rejected</td>
+                                                <td>Bridget</td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>1568075</td>
+                                                <td>Ash Mahain</td>
+                                                <td>Procard Receipt</td>
+                                                <td>PI-Ben Hall EnvE Lab</td>
+                                                <td>$388.20</td>
+                                                <td>2-1-2020</td>
+                                                <td><i class="fa fa-circle font-small-3 text-danger mr-50"></i>Rejected</td>
+                                                <td>Ted</td>
+                                            </tr>												
+                                            
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Invoice Items Details -->
-                        <div class="col-12" style="margin-top: 1rem;">
-                            <div class="form-group row">
-                                <table class="table zero-configuration">
-                                    <thead>
-                                        <!-- <tr>
-                                            <th colspan="2">Description</th>
-                                        </tr> -->
-                                        <tr>
-                                            <th>Expense Description</th>
-                                            <th>Category</th>
-                                            <th>Amount</th>
-                                            <th>Receipt</th>
-                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Template Design</td>
-                                            <td>Food and Beverage</td>
-                                            <td>$123</td>
-                                            <td>
-                                                <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-file"></i></button>
-                                                <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-edit"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Template Design</td>
-                                            <td>Food and Beverage</td>
-                                            <td>$123</td>
-                                            <td>
-                                                <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-file-plus"></i></button>
-                                                <!-- <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-edit"></i></button> -->
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        
-
-                        <!-- Invoice Footer -->
-                        <div id="invoice-footer" class="text-right pt-3">
-                            <!-- <p>Transfer the amounts to the business amount below. Please include invoice number on your check. -->
-                                <p class="bank-details mb-0">
-                                    <span class="mr-4">Apartment: <strong>ECE</strong></span>
-                                    <span>Phone: <strong>G882-1111-2222-3333</strong></span>
-                                </p>
-                        </div>
-                        <!--/ Invoice Footer -->
-
-                    </div>
-                </section>
-                <!-- invoice page end -->
-
-                <!-- Timeline Starts -->
-                <section id="timeline-card">
-                    <div class="row">
-                        <div class="col-lg-12 col-sm-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Request History</h4>
-                                    <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
-                                    <div class="heading-elements">
-                                        <ul class="list-inline mb-0">
-                                            <li><a data-action="collapse"><i class="feather icon-chevron-down"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-content collapse">
-                                    <div class="card-body">
-                                        <ul class="activity-timeline timeline-left list-unstyled">
-                                            <li>
-                                                <div class="timeline-icon bg-primary">
-                                                    <i class="feather icon-plus font-medium-2"></i>
-                                                </div>
-                                                <div class="timeline-info">
-                                                    <p class="font-weight-bold">Task Added</p>
-                                                    <span>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</span>
-                                                </div>
-                                                <small class="">25 days ago</small>
-                                            </li>
-                                            <li>
-                                                <div class="timeline-icon bg-warning">
-                                                    <i class="feather icon-alert-circle font-medium-2"></i>
-                                                </div>
-                                                <div class="timeline-info">
-                                                    <p class="font-weight-bold">Task Updated</p>
-                                                    <span>Cupcake gummi bears soufflé caramels candy</span>
-                                                </div>
-                                                <small class="">15 days ago</small>
-                                            </li>
-                                            <li>
-                                                <div class="timeline-icon bg-success">
-                                                    <i class="feather icon-check font-medium-2"></i>
-                                                </div>
-                                                <div class="timeline-info">
-                                                    <p class="font-weight-bold">Task Completed</p>
-                                                    <span>Candy ice cream cake. Halvah gummi bears
-                                                    </span>
-                                                </div>
-                                                <small class="">20 minutes ago</small>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </section>
-                <!-- Timeline Ends -->
-
-                <!-- <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <h4 class="card-title">Notes From Approver</h4>
-                                    <p>Some notes wrote by approvers</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <h4 class="card-title">Feedback</h4>
-                                    <form class="form">
-                                        <div class="form-body">
-                                            <div class="form-group">
-                                                <label for="feedback3" class="sr-only">Notes</label>
-                                                <textarea id="feedback3" rows="3" class="form-control" name="message" placeholder="Notes"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-actions">
-                                            <button type="submit" class="btn btn-primary mr-1">Approve</button>
-                                            <button type="reset" class="btn btn-outline-warning">Reject</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -480,11 +418,9 @@
     <div class="drag-target"></div>
 
     <!-- BEGIN: Footer-->
-    <!-- <footer class="footer footer-static footer-light">
-        <p class="clearfix blue-grey lighten-2 mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2020<a class="text-bold-800 grey darken-2" href="https://1.envato.market/pixinvent_portfolio" target="_blank">Pixinvent,</a>All rights Reserved</span><span class="float-md-right d-none d-md-block">Hand-crafted & Made with<i class="feather icon-heart pink"></i></span>
-            <button class="btn btn-primary btn-icon scroll-top" type="button"><i class="feather icon-arrow-up"></i></button>
-        </p>
-    </footer> -->
+    <footer class="footer footer-static footer-light">
+
+    </footer>
     <!-- END: Footer-->
 
 
@@ -493,6 +429,14 @@
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/tables/datatable/pdfmake.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/vfs_fonts.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/buttons.html5.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/buttons.print.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -502,8 +446,14 @@
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
-    <script src="../../../app-assets/js/scripts/pages/invoice.js"></script>
+    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
     <!-- END: Page JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/datatables/datatable.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/buyers/pendingOrder.js"></script>
+    <!-- END: Page JS-->
+
 
 </body>
 <!-- END: Body-->

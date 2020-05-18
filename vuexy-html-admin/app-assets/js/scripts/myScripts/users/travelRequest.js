@@ -89,17 +89,49 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
             "assignedTo": null
         }
         var budgetsArr = [];
-        budgetsArr.push({
-            Number: "910-11",
-            Split: "$100"
-        });
+
+        //---------------First Budget---------------------------------------------------
+        var amount_percent=document.getElementById("split_with_1_1").value;
+        if(amount_percent=="amount"){
+            budgetsArr.push({
+                Number: document.getElementById("budget_num_1").value,
+                Split: "$"+document.getElementById("split_dollar_input_value_1_1").value
+            });
+        }else if(amount_percent=="percentage"){
+            budgetsArr.push({
+                Number: document.getElementById("budget_num_1").value,
+                Split: document.getElementById("split_percent_input_value_1_1").value+"%"
+            });
+        } 
+        //--------------- Second Budget -------------------------------------------------
+        //alert(split_with_1_1("budget_num_2").value);
+        if(document.getElementById("budget_num_2").value!="select"){
+            var amount_percent2=document.getElementById("split_with_2_2").value;
+            if(amount_percent2=="amount"){
+                budgetsArr.push({
+                    Number: document.getElementById("budget_num_2").value,
+                    Split: "$"+document.getElementById("split_dollar_input_value_2_2").value
+                });
+            }else if(amount_percent2=="percentage"){
+                budgetsArr.push({
+                    Number: document.getElementById("budget_num_2").value,
+                    Split: document.getElementById("split_percent_input_value_2_2").value+"%"
+                });
+            } 
+        }
+        //---------------------------------------------------------------------------------
+        
+        
         lineItems.push({
             id: 1,
             Budgets: budgetsArr,
             Amount: "0"
         });
+        
         //alert($("input[name='task_input']").val());
-        alert(document.getElementById("budget_num_1").value);
+        //alert(document.getElementById("split_with_1_1").value);
+        //alert(document.getElementById("split_dollar_input_1_1").value);
+        
         var requestInfo = {
             FirstName: $("input[name='firstName']").val(),
             LastName: $("input[name='lastName']").val(),
@@ -187,7 +219,9 @@ $(document).on('click', '#delete', function deleteOrder()
         //on faliure this is where you update front end (example: inform user unexpected error occured)
         document.getElementById("result").innerHTML = "Backend faliure occured";
     }
-    makeDeleteRequest("removeOrder/5ec1e25aaa49140044f5a3e7",onSuccess,onFaliure);
+    makeDeleteRequest("removeOrder/5ec2d936160ca60045d3822d",onSuccess,onFaliure);
+    makeDeleteRequest("removeOrder/5ec2dde8160ca60045d3822f",onSuccess,onFaliure);
+    makeDeleteRequest("removeOrder/5ec2de06160ca60045d38230",onSuccess,onFaliure);
 });
 
 function getUserInfo() {
@@ -378,6 +412,10 @@ function splitWithChanged(_id, _budget_id) {
 $(document).on('click', '#split_with_1_1', function(){
     splitWithChanged(1, 1);
 });
+$(document).on('click', '#split_with_2_2', function(){
+    splitWithChanged(2, 2);
+});
+
 
 /**
  * Add budget numbers to selected box from database
