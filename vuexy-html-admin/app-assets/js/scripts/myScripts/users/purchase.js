@@ -2,7 +2,8 @@ var itemNum = 1;
 var lineItems = [];
 var formData = new FormData();
 var type = "";
-var unitID = "";
+var unit_id = "";
+var budgets_database = [];
 const baseURL = "https://coe-api.azurewebsites.net/api/";
 var user_id = "5e8e45eea148b9004420651f";
 
@@ -136,7 +137,7 @@ $(".steps-validation").steps({
     onFinished: function (event, currentIndex) {
         alert("Submitted!");
         alert('send data to database');
-        getUserInfo();
+        // getUserInfo();
         var formData = new FormData();
 
         // var itemsCost = 0;
@@ -158,7 +159,7 @@ $(".steps-validation").steps({
             "OrderStatus": null, 
             "ChatInfo": null,
             "assignedTo": null
-        }
+        };
 
         var addrInfo = {
             FullName: $("input[name='full-name']").val(),
@@ -167,20 +168,25 @@ $(".steps-validation").steps({
             AddrCity: $("input[name='addr-city']").val(),
             AddrState: $("input[name='addr-state']").val(),
             AddrZip: $("input[name='addr-zip']").val()
-        }
+        };
+
+        var vendor_info = {
+            Name: $("input[name='vendor-name']").val(),
+            Email: $("input[name='vendor-email']").val(),
+            Phone: $("input[name='vendor-phone']").val(),
+            Website: $("input[name='vendor-website']").val()
+        };
 
         var requestInfo = {
-            ReimburseFor: $("input[name='myselfOrBehalfRadio']:checked").val(),
-            Individual: $("input[name='individual-reimbursed']:checked").val(),
-            Payment: $("input[name='paymentRadio']:checked").val(),
+            VendorInfo: vendor_info,
             Addr: addrInfo,
             LineItems: lineItems
             // ItemsCost: itemsCost
-        }
+        };
 
         //now lets set up the JSON_toServer JSON Object
         JSON_toServer.userID_ref = user_id;  // 5e63127145f8e019d1f26ddc
-        JSON_toServer.OrderType = "Test Orderzz_TEST";
+        JSON_toServer.OrderType = "Purchase Request";
         JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
         // console.log(typeof(requestInfo));
         JSON_toServer.OrderStatus = "Submitted"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
@@ -196,7 +202,6 @@ $(".steps-validation").steps({
         request.onreadystatechange = function() {
             console.log("Request info is here:");
             if (request.readyState == 4) {
-                console.log(request.response);
                 // show it in the console
                 const response_obj = JSON.parse(request.response);
                 const data_obj = response_obj.data;
@@ -208,11 +213,9 @@ $(".steps-validation").steps({
 
                 
             }
-        }
-        request.open('POST', baseURL + "uploadOrder/" + type + "/" + unitID);
+        };
+        request.open('POST', baseURL + "uploadOrder/" + type + "/" + unit_id);
         request.send(formData);
-        // window.location.href = "../../../html/ltr/users/user-summary.html";
-        // window.location.replace("../../../html/ltr/users/user-summary.html");
     }
 });
 
@@ -238,6 +241,34 @@ $(".steps-validation").validate({
 });
 
 
+/************************************************ END: Wizard step control *******************************************************/
+
+
+
+
+/**************************************************** BEGIN: Form Control ********************************************************/
+
+
+/**
+ * Get user information and budget information when the page loading
+ * Set global variables
+ */
+window.onload = function() {
+    this.getUserInfo();
+    this.getBudgetsInfo();
+    // Initialize the budget select box
+    var budget_select = this.document.getElementById('init_budget_select_box');
+    for (var i = 0; i < this.budgets_database.length; i++) {
+        var num = budgets_database[i];
+        budget_select.appendChild(addBudgetData(num));
+    }
+};
+
+/**
+ * Get the user information from database
+ * @param {string} type global variable, track the type (unit or subunit) which will be used in upload route
+ * @param {string} unitID global variable, track the unit or subunit id, also need in upload route
+ */
 function getUserInfo() {
     var onSuccess = function(data) {
         if (data.status == true) {
@@ -246,10 +277,10 @@ function getUserInfo() {
             var level = data.data.AccessLevel;
             if (level == "Submitter" || level == "Approver") {
                 type = "subunit";
-                unitID = data.data.SubUnitID;
+                unit_id = data.data.SubUnitID;
             } else if (level == "Fiscal Staff" || level == "Fiscal Administrator") {
                 type = "unit";
-                unitID = data.data.UnitID;
+                unit_id = data.data.UnitID;
             }
             
         } else {
@@ -264,19 +295,34 @@ function getUserInfo() {
     makeGetRequest("getuserInformation/" + user_id, onSuccess, onFailure);
 }
 
+/**
+ * Get the budgets information from database
+ * @param {array} budgets_database global variable, store all the budget number of this unit or subunit
+ */
+function getBudgetsInfo() {
+    var onSuccess = function(data) {
+        if (data.status == true) {
+            for (var i = 0; i < data.data.length; i++) {
+                budgets_database.push(data.data[i].budgetNumber);
+            }
+        } else {
+            //error message
+        }
+    }
 
-/************************************************ END: Wizard step control *******************************************************/
+    var onFailure = function() {
+        // failure message
+    }
+
+    makeGetRequest("getBudgetsUnderSubUnit/" + unit_id, onSuccess, onFailure);
+}
+
+
+/************ BEGIIN:  Step1 & Step2 *****************/
 
 
 
-
-/**************************************************** BEGIN: Form Control ********************************************************/
-
-/************ Step1 & Step2 *****************/
-
-$(document).on('click', 'input', function(){
-    
-});
+/************ END:  Step1 & Step2 *****************/
 
 
 /***************** BEGIN: Step3 *******************/
@@ -327,14 +373,7 @@ function addBudget(_id, _budget_id, init) {
 
     var second = document.createElement('div');
     second.setAttribute('class', 'col-md-2');
-    var sel = document.createElement('select');
-    sel.setAttribute('class', 'custom-select form-control');
-    sel.setAttribute('name', 'budget_num_' + _id);
-    sel.appendChild(addTestBudgetData('Please select'));
-    sel.appendChild(addTestBudgetData('61-2692'));
-    sel.appendChild(addTestBudgetData('66-1981'));
-    sel.appendChild(addTestBudgetData('80-2535'));
-    second.appendChild(sel);
+    second.appendChild(genBudgetsSelectBox(_id));
 
     var third = document.createElement('div');
     third.setAttribute('class', 'col-md-2');
@@ -342,7 +381,6 @@ function addBudget(_id, _budget_id, init) {
     sel2.setAttribute('class', 'custom-select form-control');
     sel2.setAttribute('id', 'split_with_' + _id + '_' + _budget_id);
     sel2.onclick = function() {
-        console.log('click new select');
         splitWithChanged(_id, _budget_id);
     };
     var op1 = document.createElement('option');
@@ -553,6 +591,21 @@ function splitWithChanged(_id, _budget_id) {
     }
 }
 
+function genBudgetsSelectBox(_id) {
+    var sel = document.createElement('select');
+    sel.setAttribute('class', 'custom-select form-control');
+    sel.setAttribute('name', 'budget_num_' + _id);
+    sel.appendChild(addBudgetData('Please select'));
+    
+    for (var i = 0; i < budgets_database.length; i++) {
+        var num = budgets_database[i];
+        sel.appendChild(addBudgetData(num));
+    }
+
+    return sel;
+}
+
+
 /** 
  * Bind to the initialized select box 
  */
@@ -564,7 +617,7 @@ $(document).on('click', '#split_with_1_1', function(){
  * Add budget numbers to selected box from database
  * For now this is just test
  */
-function addTestBudgetData(num) {
+function addBudgetData(num) {
     var op = document.createElement('option');
     op.setAttribute('value', num);
     op.innerHTML = num;
@@ -619,7 +672,6 @@ $(document).on('click', '#option_project', function() {
 
 /** Core function */
 function addNewLineItem(_id) {
-    console.log('item id: ' + _id);
 
     var newBox = document.createElement('div');
     newBox.setAttribute('class', 'row d-flex justify-content-center');
@@ -642,8 +694,8 @@ function addNewLineItem(_id) {
     row.appendChild(addNewExpense(_id));
     row.appendChild(addNewPurpose(_id));
     row.appendChild(addNewCategory(_id));
-    row.appendChild(addNewAmount(_id));
-    row.appendChild(addNewTax(_id));
+    row.appendChild(addNewQuantity(_id));
+    row.appendChild(addNewUnitPrice(_id));
     row.appendChild(addBudget(_id, 1, true));
     row.appendChild(addOneMoreFile(_id, 1, true));
 
@@ -778,10 +830,10 @@ function addNewCategory(_id) {
 }
 
 /**
- * Add amount block
+ * Add quantity block
  * @param {int} _id line item id
  */
-function addNewAmount(_id) {
+function addNewQuantity(_id) {
     var box = document.createElement('div');
     box.setAttribute('class', 'col-12');
 
@@ -790,7 +842,65 @@ function addNewAmount(_id) {
 
     var first = document.createElement('div');
     first.setAttribute('class', 'col-md-4');
-    first.innerHTML = "<span>Amount</span>";
+    first.innerHTML = "<span>Quantity</span>";
+    
+    row.appendChild(first);
+    row.appendChild(genNumberInputGroup(_id));
+    box.appendChild(row);
+
+    return box; 
+}
+
+function genNumberInputGroup(_id) {
+    var box = document.createElement('div');
+    box.setAttribute('class', 'input-group bootstrap-touchspin');
+
+    var preSpan = document.createElement('span');
+    preSpan.setAttribute('class', 'input-group-btn input-group-prepend bootstrap-touchspin-injected');
+    var preBtn = document.createElement('button');
+    preBtn.setAttribute('type', 'button');
+    preBtn.setAttribute('class', 'btn btn-primary bootstrap-touchspin-down');
+    var preIcon = document.createElement('i');
+    preIcon.setAttribute('class', 'feather icon-chevron-down');
+    preBtn.appendChild(preIcon);
+    preSpan.appendChild(preBtn);
+
+    var input = document.createElement('input');
+    input.setAttribute('type', 'number');
+    input.setAttribute('class', 'touchspin-icon form-control');
+    input.setAttribute('value', '1');
+    input.setAttribute('id', 'quantity_' + _id);
+
+    var postSpan = document.createElement('span');
+    postSpan.setAttribute('class', 'input-group-btn input-group-append bootstrap-touchspin-injected');
+    var postBtn = document.createElement('button');
+    postBtn.setAttribute('type', 'button');
+    postBtn.setAttribute('class', 'btn btn-primary bootstrap-touchspin-up');
+    var postIcon = document.createElement('i');
+    postIcon.setAttribute('class', 'feather icon-chevron-up');
+    postBtn.appendChild(postIcon);
+    postSpan.appendChild(postBtn);
+
+    box.appendChild(preSpan);
+    box.appendChild(input);
+    box.appendChild(postSpan);
+    return box;
+}
+
+/**
+ * Add unit price block
+ * @param {int} _id line item id
+ */
+function addNewUnitPrice(_id) {
+    var box = document.createElement('div');
+    box.setAttribute('class', 'col-12');
+
+    var row = document.createElement('div');
+    row.setAttribute('class', 'form-group row');
+
+    var first = document.createElement('div');
+    first.setAttribute('class', 'col-md-4');
+    first.innerHTML = "<span>Unit Price</span>";
 
     var second = document.createElement('div');
     second.setAttribute('class', 'col-md-4 col-12 mb-1');
@@ -803,10 +913,9 @@ function addNewAmount(_id) {
     var input = document.createElement('input');
     input.setAttribute('type', 'text');
     input.setAttribute('class', 'form-control');
-    input.setAttribute('name', 'amount');
     input.setAttribute('placeholder', '0.00');
     input.setAttribute('aria-label', 'Amount (to the nearest dollar)');
-    input.setAttribute('id', 'amount_' + _id);
+    input.setAttribute('id', 'unit_price_' + _id);
     group.appendChild(prepend);
     group.appendChild(input);
     fieldset.appendChild(group);
@@ -819,65 +928,6 @@ function addNewAmount(_id) {
     return box; 
 }
 
-/**
- * Add tax block
- * @param {int} _id 
- */
-function addNewTax(_id) {
-    var box = document.createElement('div');
-    box.setAttribute('class', 'col-12');
-    var row = document.createElement('div');
-    row.setAttribute('class', 'form-group row');
-
-    var first = document.createElement('div');
-    first.setAttribute('class', 'col-md-4');
-    first.innerHTML = "<span>Was Sales Tax Paid?</span>";
-
-    var second = document.createElement('div');
-    second.setAttribute('class', 'col-md-8');
-    var list = document.createElement('ul');
-    list.setAttribute('class', 'list-unstyled mb-0');
-    list.appendChild(addNewRadio(_id, 1, "Yes"));
-    list.appendChild(addNewRadio(_id, 2, "No"));
-    list.appendChild(addNewRadio(_id, 3, "Item Not Taxable"));
-    second.appendChild(list);
-    
-    row.appendChild(first);
-    row.appendChild(second);
-    box.appendChild(row);
-
-    return box; 
-}
-
-/**
- * Helper function to add new radio for tax block
- * @param {int} _id line item id
- * @param {int} seq the sequence of this radio, use to set unique id
- * @param {string} label the label of this radio
- */
-function addNewRadio(_id, seq, label) {
-    var bullet = document.createElement('li');
-    bullet.setAttribute('class', 'd-inline-block mr-2');
-    var f = document.createElement('fieldset');
-    var d = document.createElement('div');
-    d.setAttribute('class', 'custom-control custom-radio');
-    var i = document.createElement('input');
-    i.setAttribute('type', 'radio');
-    i.setAttribute('class', 'custom-control-input');
-    i.setAttribute('name', 'taxRadio');
-    i.setAttribute('value', 'paid');
-    i.setAttribute('id', 'taxRadio' + seq + _id);
-    var l = document.createElement('label');
-    l.setAttribute('class', 'custom-control-label');
-    l.setAttribute('for', 'taxRadio' + seq + _id);
-    l.innerHTML = label;
-    d.appendChild(i);
-    d.appendChild(l);
-    f.appendChild(d);
-    bullet.appendChild(f);
-
-    return bullet;
-}
 
 /**
  * Deprecated partly
@@ -983,7 +1033,6 @@ $(document).on('click', '#file_btn_1_1', function() {
 
 /** Confirm function */
 function confirmItem(_id) {
-    console.log('confirm item: ' + _id);
 
     /** Get budgets info */
     var budgetsNumArr = document.getElementsByName('budget_num_' + _id);
@@ -993,7 +1042,6 @@ function confirmItem(_id) {
     for (var i = 0; i < budgetsLen; i++) {
         var budgetId = i + 1;
         var btn = document.getElementById('budget_btn_' + _id + '_' + budgetId);
-        console.log('budget_btn_' + _id + '_' + budgetId);
         btn.remove();
     }
     var checkBtn = document.getElementById('confirm_' + _id);
@@ -1005,7 +1053,7 @@ function confirmItem(_id) {
     if (budgetsLen == 1) {
         budgetsArr.push({
             Number: budgetsNumArr[0].value,
-            Split: null
+            Split: "100%"
         });
     } else {
         for (var i = 1; i <= budgetsLen; i++) {
@@ -1018,7 +1066,6 @@ function confirmItem(_id) {
             } else if (perOrDolVal == "percentage") {
                 splitVal = document.getElementById('split_percent_input_value_' + _id + '_' + i).value + "%";
             }
-            console.log('_id: ' + _id + ' i: ' + i +  ' splitVal: ' + splitVal);
             budgetsArr.push({
                 Number: num,
                 Split: splitVal
@@ -1033,13 +1080,19 @@ function confirmItem(_id) {
     formData.append("files", fileSelect.files[x]); //"files" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request"
 
     
+    var q = document.getElementById('quantity_' + _id).value;
+    var u = document.getElementById('unit_price_' + _id).value;
+    var amount = q * u;
+    
     lineItems.push({
         id: _id,
         Expense: document.getElementById('expense_' + _id).value,
         Purpose: document.getElementById('purpose_' + _id).value,
         Category: document.getElementById('category_' + _id).value,
+        Quantity: document.getElementById('quantity_' + _id).value,
+        UnitPrice: document.getElementById('unit_price_' + _id).value,
         Budgets: budgetsArr,
-        Amount: document.getElementById('amount_' + _id).value
+        Amount: amount
     });
 
     updateSummaryTable();
@@ -1093,8 +1146,9 @@ function updateSummaryTable() {
         var pur = lineItems[i].Purpose;
         var cate = lineItems[i].Category;
         var budgetsArr = lineItems[i].Budgets;
-        var amo = lineItems[i].Amount;
-        itemTable.appendChild(genNewLineItemRow(i + 1, exp, pur, cate, budgetsArr, amo));
+        var quan = lineItems[i].Quantity;
+        var unitPri = lineItems[i].UnitPrice;
+        itemTable.appendChild(genNewLineItemRow(i + 1, exp, pur, cate, quan, unitPri, budgetsArr));
     }
 }
 
@@ -1129,7 +1183,7 @@ function genBudgetsCell(arr) {
  * @param {table cell} Budgets a generated table cell which can be added to the table directly
  * @param {string} Amount content to fill in the amount cell
  */
-function genNewLineItemRow(_id, Expense, Purpose, Category, Budgets, Amount) {
+function genNewLineItemRow(_id, Expense, Purpose, Category, Quantity, UnitPrice, Budgets) {
 
     var _id_td = document.createElement('td');
     _id_td.innerHTML = _id;
@@ -1147,10 +1201,13 @@ function genNewLineItemRow(_id, Expense, Purpose, Category, Budgets, Amount) {
     var category_td = document.createElement('td');
     category_td.innerHTML = Category;
 
+    var quantity_td = document.createElement('td');
+    quantity_td.innerHTML = Quantity;
+
+    var price_td = document.createElement('td');
+    price_td.innerHTML = UnitPrice;
+
     var budgets_td = genBudgetsCell(Budgets);
-    
-    var amount_td = document.createElement('td');
-    amount_td.innerHTML = Amount;
 
     var receipt_td = document.createElement('td');
     var viewBtn = document.createElement('button');
@@ -1178,8 +1235,9 @@ function genNewLineItemRow(_id, Expense, Purpose, Category, Budgets, Amount) {
     tr.appendChild(_id_td);
     tr.appendChild(expense_purpose_td);
     tr.appendChild(category_td);
+    tr.appendChild(quantity_td);
+    tr.appendChild(price_td);
     tr.appendChild(budgets_td);
-    tr.appendChild(amount_td);
     tr.appendChild(receipt_td);
 
     return tr;

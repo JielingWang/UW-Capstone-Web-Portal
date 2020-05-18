@@ -2,7 +2,8 @@ var itemNum = 1;
 var lineItems = [];
 var formData = new FormData();
 var type = "";
-var unitID = "";
+var unit_id = "";
+var budgets_database = [];
 const baseURL = "https://coe-api.azurewebsites.net/api/";
 var user_id = "5e8e45eea148b9004420651f";
 
@@ -136,7 +137,7 @@ $(".steps-validation").steps({
     onFinished: function (event, currentIndex) {
         alert("Submitted!");
         alert('send data to database');
-        getUserInfo();
+        // getUserInfo();
         var formData = new FormData();
 
         // var itemsCost = 0;
@@ -180,7 +181,7 @@ $(".steps-validation").steps({
 
         //now lets set up the JSON_toServer JSON Object
         JSON_toServer.userID_ref = user_id;  // 5e63127145f8e019d1f26ddc
-        JSON_toServer.OrderType = "Test Orderzz_TEST";
+        JSON_toServer.OrderType = "Reimbursement";
         JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
         // console.log(typeof(requestInfo));
         JSON_toServer.OrderStatus = "Submitted"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
@@ -209,7 +210,7 @@ $(".steps-validation").steps({
                 
             }
         }
-        request.open('POST', baseURL + "uploadOrder/" + type + "/" + unitID);
+        request.open('POST', baseURL + "uploadOrder/" + type + "/" + unit_id);
         request.send(formData);
         // window.location.href = "../../../html/ltr/users/user-summary.html";
         // window.location.replace("../../../html/ltr/users/user-summary.html");
@@ -238,6 +239,35 @@ $(".steps-validation").validate({
 });
 
 
+/************************************************ END: Wizard step control *******************************************************/
+
+
+
+
+/**************************************************** BEGIN: Form Control ********************************************************/
+
+
+/**
+ * Get user information and budget information when the page loading
+ * Set global variables
+ */
+window.onload = function() {
+    this.getUserInfo();
+    this.getBudgetsInfo();
+    this.console.log(this.budgets_database);
+    // Initialize the budget select box
+    var budget_select = this.document.getElementById('init_budget_select_box');
+    for (var i = 0; i < this.budgets_database.length; i++) {
+        var num = budgets_database[i];
+        budget_select.appendChild(addBudgetData(num));
+    }
+};
+
+/**
+ * Get the user information from database
+ * @param {string} type global variable, track the type (unit or subunit) which will be used in upload route
+ * @param {string} unitID global variable, track the unit or subunit id, also need in upload route
+ */
 function getUserInfo() {
     var onSuccess = function(data) {
         if (data.status == true) {
@@ -246,10 +276,10 @@ function getUserInfo() {
             var level = data.data.AccessLevel;
             if (level == "Submitter" || level == "Approver") {
                 type = "subunit";
-                unitID = data.data.SubUnitID;
+                unit_id = data.data.SubUnitID;
             } else if (level == "Fiscal Staff" || level == "Fiscal Administrator") {
                 type = "unit";
-                unitID = data.data.UnitID;
+                unit_id = data.data.UnitID;
             }
             
         } else {
@@ -264,13 +294,30 @@ function getUserInfo() {
     makeGetRequest("getuserInformation/" + user_id, onSuccess, onFailure);
 }
 
+/**
+ * Get the budgets information from database
+ * @param {array} budgets_database global variable, store all the budget number of this unit or subunit
+ */
+function getBudgetsInfo() {
+    var onSuccess = function(data) {
+        if (data.status == true) {
+            console.log("budgets information is here");
+            console.log(data.data);
+            for (var i = 0; i < data.data.length; i++) {
+                budgets_database.push(data.data[i].budgetNumber);
+            }
+        } else {
+            //error message
+        }
+    }
 
-/************************************************ END: Wizard step control *******************************************************/
+    var onFailure = function() {
+        // failure message
+    }
 
+    makeGetRequest("getBudgetsUnderSubUnit/" + unit_id, onSuccess, onFailure);
+}
 
-
-
-/**************************************************** BEGIN: Form Control ********************************************************/
 
 /************ Step1 & Step2 *****************/
 
@@ -351,14 +398,7 @@ function addBudget(_id, _budget_id, init) {
 
     var second = document.createElement('div');
     second.setAttribute('class', 'col-md-2');
-    var sel = document.createElement('select');
-    sel.setAttribute('class', 'custom-select form-control');
-    sel.setAttribute('name', 'budget_num_' + _id);
-    sel.appendChild(addTestBudgetData('Please select'));
-    sel.appendChild(addTestBudgetData('910-11'));
-    sel.appendChild(addTestBudgetData('910-22'));
-    sel.appendChild(addTestBudgetData('922-266'));
-    second.appendChild(sel);
+    second.appendChild(genBudgetsSelectBox(_id));
 
     var third = document.createElement('div');
     third.setAttribute('class', 'col-md-2');
@@ -366,7 +406,6 @@ function addBudget(_id, _budget_id, init) {
     sel2.setAttribute('class', 'custom-select form-control');
     sel2.setAttribute('id', 'split_with_' + _id + '_' + _budget_id);
     sel2.onclick = function() {
-        console.log('click new select');
         splitWithChanged(_id, _budget_id);
     };
     var op1 = document.createElement('option');
@@ -577,6 +616,21 @@ function splitWithChanged(_id, _budget_id) {
     }
 }
 
+function genBudgetsSelectBox(_id) {
+    var sel = document.createElement('select');
+    sel.setAttribute('class', 'custom-select form-control');
+    sel.setAttribute('name', 'budget_num_' + _id);
+    sel.appendChild(addBudgetData('Please select'));
+    
+    for (var i = 0; i < budgets_database.length; i++) {
+        var num = budgets_database[i];
+        sel.appendChild(addBudgetData(num));
+    }
+
+    return sel;
+}
+
+
 /** 
  * Bind to the initialized select box 
  */
@@ -588,7 +642,7 @@ $(document).on('click', '#split_with_1_1', function(){
  * Add budget numbers to selected box from database
  * For now this is just test
  */
-function addTestBudgetData(num) {
+function addBudgetData(num) {
     var op = document.createElement('option');
     op.setAttribute('value', num);
     op.innerHTML = num;
@@ -643,7 +697,6 @@ $(document).on('click', '#option_project', function() {
 
 /** Core function */
 function addNewLineItem(_id) {
-    console.log('item id: ' + _id);
 
     var newBox = document.createElement('div');
     newBox.setAttribute('class', 'row d-flex justify-content-center');
@@ -1007,7 +1060,6 @@ $(document).on('click', '#file_btn_1_1', function() {
 
 /** Confirm function */
 function confirmItem(_id) {
-    console.log('confirm item: ' + _id);
 
     /** Get budgets info */
     var budgetsNumArr = document.getElementsByName('budget_num_' + _id);
@@ -1017,7 +1069,6 @@ function confirmItem(_id) {
     for (var i = 0; i < budgetsLen; i++) {
         var budgetId = i + 1;
         var btn = document.getElementById('budget_btn_' + _id + '_' + budgetId);
-        console.log('budget_btn_' + _id + '_' + budgetId);
         btn.remove();
     }
     var checkBtn = document.getElementById('confirm_' + _id);
@@ -1029,7 +1080,7 @@ function confirmItem(_id) {
     if (budgetsLen == 1) {
         budgetsArr.push({
             Number: budgetsNumArr[0].value,
-            Split: null
+            Split: "100%"
         });
     } else {
         for (var i = 1; i <= budgetsLen; i++) {
@@ -1042,13 +1093,14 @@ function confirmItem(_id) {
             } else if (perOrDolVal == "percentage") {
                 splitVal = document.getElementById('split_percent_input_value_' + _id + '_' + i).value + "%";
             }
-            console.log('_id: ' + _id + ' i: ' + i +  ' splitVal: ' + splitVal);
             budgetsArr.push({
                 Number: num,
                 Split: splitVal
             });
         }
     }
+    console.log('budgets array:');
+    console.log(budgetsArr);
     
     var fileSelect = document.getElementById('file_' + _id + '_1');
     for(var x = 0; x < fileSelect.files.length; x++) {
