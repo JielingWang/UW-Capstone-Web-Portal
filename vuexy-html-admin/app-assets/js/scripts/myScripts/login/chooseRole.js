@@ -104,7 +104,8 @@ function card_click(elementID, cardType)
     window.sessionStorage.setItem("email",data.userInfo.email);
     window.sessionStorage.setItem("verified_user",data.userInfo.verified_user);
     window.sessionStorage.setItem("profile_pic_url",data.userInfo.profileImage_URL);
-
+    console.log(elementID);
+    console.log(cardType);
     if(cardType == "admin")
     {
         var unitName = document.getElementById("unitSubunitname"+elementID).innerHTML;
@@ -121,13 +122,17 @@ function card_click(elementID, cardType)
         window.sessionStorage.setItem("unitID",unitID);
         window.sessionStorage.setItem("unitName",unitName);
 
+        window.location.replace("../buyers/buyer-dashboard.html");
 
     }else if (cardType == "submitter")
     {
+        console.log("submitetr clk");
         var SubunitName = document.getElementById("unitSubunitname"+elementID).innerHTML;
         var subunitID = document.getElementById("unitSubunitID"+elementID).innerHTML;
         window.sessionStorage.setItem("subunitID",subunitID);
         window.sessionStorage.setItem("subunitName",SubunitName);
+
+        window.location.replace("../users/user-dashboard.html");
 
     }else if (cardType == "approver")
     {
@@ -135,8 +140,11 @@ function card_click(elementID, cardType)
         var subunitID = document.getElementById("unitSubunitID"+elementID).innerHTML;
         window.sessionStorage.setItem("subunitID",subunitID);
         window.sessionStorage.setItem("subunitName",SubunitName);
+
+        window.location.replace("../approvers/dashboard.html");
     }
 }
+
 
 /*
 <div class="col-lg-4 col-md-6 col-sm-12">
