@@ -219,44 +219,49 @@
                                                 <div class="row">
                                                     <div class="col-12">
 
+                                                        <!--Hve you been reimbursed before this trip?-->
                                                         <div class="form-group row">
-                                                            <div class="col-md-4">
-                                                                <span>Do you know the reference number?</span>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="reference" id="reference_yes" onclick="know_reference(1)">
-                                                                                <label class="custom-control-label" for="reference_yes">YES</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="reference" id="reference_no" onclick="know_reference(0)">
-                                                                                <label class="custom-control-label" for="reference_no">NO</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
+                                                            <div class="col-12">
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-4">
+                                                                        <span>Have you been reimbursed before this trip?</span>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <ul class="list-unstyled mb-0">
+                                                                            <li class="d-inline-block mr-2">
+                                                                                <fieldset>
+                                                                                    <div class="custom-control custom-radio">
+                                                                                        <input type="radio" class="custom-control-input" name="beforeRadio" id="Haveyoubeenreimbursed1" onclick="know_reference(1)">
+                                                                                        <label class="custom-control-label" for="Haveyoubeenreimbursed1">Yes</label>
+                                                                                    </div>
+                                                                                </fieldset>
+                                                                            </li>
+                                                                            <li class="d-inline-block mr-2">
+                                                                                <fieldset>
+                                                                                    <div class="custom-control custom-radio">
+                                                                                        <input type="radio" class="custom-control-input" name="beforeRadio" id="Haveyoubeenreimbursed2" onclick="know_reference(0)">
+                                                                                        <label class="custom-control-label" for="Haveyoubeenreimbursed2">No</label>
+                                                                                    </div>
+                                                                                </fieldset>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
 
 
-                                                    <div class="col-12 hidden" id="know_reference">
+                                                    <div class="col-12 hidden" id="reference_number">
                                                         <div class="form-group row">
                                                             <div class="col-md-1">
                                                                 <span></span>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <span>Reference:</span>
+                                                                <span>Reference Number:</span>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <input type="text" id="name" class="form-control" name="submitter-name">
+                                                                <input type="text" id="name" class="form-control" name="submitter-name" placeholder="Leave it blank if you do not know">
                                                             </div>
                                                             <button>Enter</button>
                                                         </div>
@@ -296,34 +301,6 @@
                                                                 <span></span>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <span>Are you a UW student/employee?</span>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="uw_aff" id="uw_aff_yes" >
-                                                                                <label class="custom-control-label" for="uw_aff_yes">YES</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="uw_aff" id="uw_aff_no" >
-                                                                                <label class="custom-control-label" for="uw_aff_no">NO</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-12">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-4">
                                                                 <span>I am requesting on someone behalf</span>
                                                             </div>
                                                             <div class="col-md-8">
@@ -347,7 +324,7 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div>                             
 
                                                     <div class="col-12 hidden" id="for_someone1">
                                                         <div class="form-group row">
@@ -622,34 +599,6 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Have you been reimbursed before this trip?</span>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="travelRadio" id="Haveyoubeenreimbursed1">
-                                                                                <label class="custom-control-label" for="Haveyoubeenreimbursed1">Yes</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="travelRadio" id="Haveyoubeenreimbursed2">
-                                                                                <label class="custom-control-label" for="Haveyoubeenreimbursed2">No</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-12">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-4">
                                                                 <span>Registration</span>
                                                             </div>
                                                             <div class="col-md-8">
@@ -747,7 +696,12 @@
                                                                 <span>Airfare (upgrades, change fee require additional decumentation and prior approval)</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="title" class="form-control" name="fname" value="$">
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">$</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -769,7 +723,12 @@
                                                                 <span>Car Service (Lyft, UBER, Taxi)</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="name" class="form-control" name="submitter-name" value="$">
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">$</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>           
@@ -780,7 +739,12 @@
                                                                 <span>Train / Rail</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="name" class="form-control" name="submitter-name" value="$">
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">$</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>       
@@ -802,7 +766,12 @@
                                                                 <span>Car Rental</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" id="name" class="form-control" name="submitter-name" value="$">
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">$</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>       
@@ -818,7 +787,83 @@
                                                         </div>
                                                     </div>     
 
-                                                    <div id="meal_lodging" class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Hotel</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">$</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control" placeholder="calculate for me" aria-label="Amount (to the nearest dollar)">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>       
+                                                    
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Hotel Receipt</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input type="file" id="name" class="form-control" name="submitter-name" placeholder="Name">
+                                                            </div>
+                                                        </div>
+                                                    </div>     
+
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Are you claiming meal per diem?<br> (UW policy -<a href="http://finance.uw.edu/travel/meals"> http://finance.uw.edu/travel/meals) </a></span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <ul class="list-unstyled mb-0">
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="meal_Radio" id="meal_1" onclick="meal(0)">
+                                                                                <label class="custom-control-label" for="meal_1">Yes, maximum allowable perdiem</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li><br>
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="meal_Radio" id="meal_2" onclick="meal(1)">
+                                                                                <label class="custom-control-label" for="meal_2">Yes, specifc days and meals</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li><br>
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="meal_Radio" id="meal_3" onclick="meal(2)">
+                                                                                <label class="custom-control-label" for="meal_3">Yes, specific amount</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li><br>
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="meal_Radio" id="meal_4" onclick="meal(3)">
+                                                                                <label class="custom-control-label" for="meal_4">No</label>
+                                                                               
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li><br>
+                                                                    
+                                                                    
+
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div id="meal_table" class="row hidden">
                                                         <div class="col-12">
                                                             <div class="card">
                                                                 <div class="card-header">
@@ -831,23 +876,23 @@
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>DATE</th>
+                                                                                    <th></th>
                                                                                     <th>Breakfast</th>
+                                                                                    <th></th>
                                                                                     <th>Lunch</th>
+                                                                                    <th></th>
                                                                                     <th>Dinner</th>
-                                                                                    <th>Lodging</th>
-                                                                                    <th>Lodging Cost Include Tax</th>
-                                                                                    <th>Shared With</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr>
-                                                                                    <td><input type="text" class="form-control pickadate" name="fname" placeholder=""></td>
+                                                                                    <td><input type="text"  name="fname" placeholder="MM/DD/YEAR"></td>
+                                                                                    <td></td>
                                                                                     <td><input type="checkbox"></td>
+                                                                                    <td></td>
                                                                                     <td><input type="checkbox"> </td>
+                                                                                    <td></td>
                                                                                     <td><input type="checkbox"></td>
-                                                                                    <td><input type="text" class="form-control" name="submitter-name" placeholder="Name"></td>
-                                                                                    <td><input type="text" class="form-control" name="submitter-name" value="$"></td>
-                                                                                    <td><input type="text" class="form-control" name="submitter-name" ></td>
                                                                                 </tr>
                                                                                 
                                                                             </tbody>
@@ -857,6 +902,98 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    <div class="col-12 hidden" id="meal2_hidden">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-1">
+                                                                <span></span>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <span>Amount:</span>
+                                                            </div>
+
+                                                            <div class="col-md-8">
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">$</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Were meals provided to you?<br> (Per diem allowance not allowed for provided meals.)</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <ul class="list-unstyled mb-0">
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="meal2_Radio" id="meal2_1" onclick="meal2(0)">
+                                                                                <label class="custom-control-label" for="meal2_1">Yes</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li><br>
+                                                                    <li class="d-inline-block mr-2">
+                                                                        <fieldset>
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" class="custom-control-input" name="meal2_Radio" id="meal2_2" onclick="meal2(1)">
+                                                                                <label class="custom-control-label" for="meal2_2">No</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </li><br>
+                                                                   
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="meal2_table" class="row hidden">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-header">
+                                                                    <h4 class="mb-0">MEAL PER DIEM & LODGING</h4> 
+                                                                    <button onclick="addCol1()"> Add Additional dates </button>
+                                                                </div>
+                                                                <div class="card-content">
+                                                                    <div class="table-responsive mt-1">
+                                                                        <table class="table table-hover-animation mb-0">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>DATE</th>
+                                                                                    <th></th>
+                                                                                    <th>Breakfast</th>
+                                                                                    <th></th>
+                                                                                    <th>Lunch</th>
+                                                                                    <th></th>
+                                                                                    <th>Dinner</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td><input type="text"  name="fname" placeholder="MM/DD/YEAR"></td>
+                                                                                    <td></td>
+                                                                                    <td><input type="checkbox"></td>
+                                                                                    <td></td>
+                                                                                    <td><input type="checkbox"> </td>
+                                                                                    <td></td>
+                                                                                    <td><input type="checkbox"></td>
+                                                                                </tr>
+                                                                                
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
 
                                                     
                                                 
@@ -868,7 +1005,7 @@
                                 </div>
                                 <div class="row" style="padding-top: 20px; padding-bottom: 20px;">
                                     <div class="col-sm-12 text-center">
-                                        <button type="button" onclick="submit()" class="btn btn-outline-primary mr-1 mb-1 waves-effect waves-light" id="submit">Submit</button>
+                                        <button type="button" onclick="submit()" class="btn btn-outline-primary mr-1 mb-1 waves-effect waves-light" id="confirm_item">Submit</button>
                                     </div>
                 
                                 </div> 
@@ -934,7 +1071,7 @@
     
     <!-- END: Page JS-->
     <script src="../../../app-assets/js/scripts/myScripts/users/reimbursement-new.js"></script>
-
+    <script src="travelReimbursement.js"></script>
     <!--auto generate date-->
     <script>
         var date=document.getElementById("submit_date");
@@ -975,6 +1112,9 @@
         }
         else if(CheckboxLogic==1){
             document.getElementById("for_myself").className = "col-12 hidden";
+            document.getElementById("for_someone1").className = "col-12 hidden";
+            document.getElementById("for_someone2").className = "col-12 hidden";
+            document.getElementById("for_someone3").className = "col-12 hidden";
         }
     }
 
@@ -1004,11 +1144,43 @@
 
     function know_reference(CheckboxLogic){
         if(CheckboxLogic==1){
-            document.getElementById("know_reference").className = "col-12 visible";
+            document.getElementById("reference_number").className = "col-12 visible";
         }
         else if(CheckboxLogic==0){
-            document.getElementById("know_reference").className = "col-12 hidden";
+            document.getElementById("reference_number").className = "col-12 hidden";
         }
+    }
+
+    function meal(Checkboxlogic){
+        if(Checkboxlogic==0){
+            document.getElementById("meal_table").className = "col-12 hidden";
+            document.getElementById("meal2_hidden").className = "col-12 hidden";
+        }
+        
+        if(Checkboxlogic==1){
+            document.getElementById("meal_table").className = "col-12 visible";
+            document.getElementById("meal2_hidden").className = "col-12 hidden";
+        }
+        if(Checkboxlogic==2){
+            document.getElementById("meal_table").className = "col-12 hidden";
+            document.getElementById("meal2_hidden").className = "col-12 visible";
+        }
+        if(Checkboxlogic==3){
+            document.getElementById("meal_table").className = "col-12 hidden";
+            document.getElementById("meal2_hidden").className = "col-12 hidden";
+        }
+        
+    }
+
+    function meal2(Checkboxlogic){
+        if(Checkboxlogic==0){
+            document.getElementById("meal2_table").className = "col-12 visible";
+        }
+        
+        if(Checkboxlogic==1){
+            document.getElementById("meal2_table").className = "col-12 hidden";
+        }
+       
     }
 
     var col=1;
@@ -1016,22 +1188,42 @@
     function addCol(){
         col=col+1;
         var str="";
-        str="<div id=\"meal_lodging\" class=\"row\"><div class=\"col-12\"><div class=\"card\"><div class=\"card-header\"> <h4 class=\"mb-0\">MEAL PER DIEM & LODGING</h4> <button onclick=\"addCol()\"> Add one Column </button></div><div class=\"card-content\"><div class=\"table-responsive mt-1\"><table class=\"table table-hover-animation mb-0\"><thead><tr><th>DATE</th><th>Breakfast</th><th>Lunch</th><th>Dinner</th> <th>Lodging</th><th>Lodging Cost Include Tax</th><th>Shared With</th></tr></thead><tbody>";                                            
+        str="<div id=\"meal_table\" class=\"row\"><div class=\"col-12\"><div class=\"card\"><div class=\"card-header\"> <h4 class=\"mb-0\">MEAL PER DIEM & LODGING</h4> <button onclick=\"addCol()\"> Add one Column </button></div><div class=\"card-content\"><div class=\"table-responsive mt-1\"><table class=\"table table-hover-animation mb-0\"><thead><tr><th>DATE</th><th></th><th>Breakfast</th><th></th><th>Lunch</th><th></th><th>Dinner</th></tr></thead><tbody>";                                            
         for(var i=0;i<col;i=i+1){
             str += "<tr>";
-            str += "<td><input type=\"text\" class=\"form-control pickadate\"></td>";
+            str += "<td><input type=\"text\" placeholder=\"MM/DD/YEAR\"></td>";
+            str += "<td></td>";
             str += "<td><input type=\"checkbox\"></td>";
+            str += "<td></td>";
             str += "<td><input type=\"checkbox\"></td>";
+            str += "<td></td>";
             str += "<td><input type=\"checkbox\"></td>";                                                   
-            str += "<td><input type=\"text\" class=\"form-control\" placeholder=\"Name\"></td>";                                                    
-            str += "<td><input type=\"text\" class=\"form-control\" value=\"$\"></td>";
-            str += "<td><input type=\"text\" class=\"form-control\"></td>";
             str += "</tr>";
         }
 
         str+="</tbody></table></div></div></div></div></div>";
-        document.getElementById("meal_lodging").innerHTML= str;
-       
+        document.getElementById("meal_table").innerHTML= str;
+    }
+
+    var col1=1;
+    function addCol1(){
+        col1=col1+1;
+        var str="";
+        str="<div id=\"meal2_table\" class=\"row\"><div class=\"col-12\"><div class=\"card\"><div class=\"card-header\"> <h4 class=\"mb-0\">MEAL PER DIEM & LODGING</h4> <button onclick=\"addCol1()\"> Add one Column </button></div><div class=\"card-content\"><div class=\"table-responsive mt-1\"><table class=\"table table-hover-animation mb-0\"><thead><tr><th>DATE</th><th></th><th>Breakfast</th><th></th><th>Lunch</th><th></th><th>Dinner</th></tr></thead><tbody>";                                            
+        for(var i=0;i<col1;i=i+1){
+            str += "<tr>";
+            str += "<td><input type=\"text\" placeholder=\"MM/DD/YEAR\"></td>";
+            str += "<td></td>";
+            str += "<td><input type=\"checkbox\"></td>";
+            str += "<td></td>";
+            str += "<td><input type=\"checkbox\"></td>";
+            str += "<td></td>";
+            str += "<td><input type=\"checkbox\"></td>";                                                   
+            str += "</tr>";
+        }
+
+        str+="</tbody></table></div></div></div></div></div>";
+        document.getElementById("meal2_table").innerHTML= str;
     }
 
    

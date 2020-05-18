@@ -9,40 +9,32 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Approve</title>
+    <title>Request History</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
-	<link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/apexcharts.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/datatables.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
-	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/dark-layout.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/semi-dark-layout.css"> 
-	    
-	
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/semi-dark-layout.css">
 
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
-	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/card-analytics.css">
-
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
     <!-- END: Custom CSS-->
-
-    <!--pop up window-->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 </head>
 <!-- END: Head-->
@@ -72,40 +64,7 @@
                                 <input class="input" type="text" placeholder="Search..." tabindex="-1" data-search="template-list">
                                 <div class="search-input-close"><i class="feather icon-x"></i></div>
                                 <ul class="search-list search-list-main"> 
-                                    <!--search sample-->
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="card">
-                                                <div class="card-content">
-                                                    <div class="table-responsive mt-1">
-                                                        <table class="table table-hover-animation mb-0">
-                                                            <thead>
-                                                                <tr onclick="document.location='orderDetails.html'" style="cursor:pointer">
-                                                                    <th>Request ID</th>
-                                                                    <th>Name</th>
-                                                                    <th>Type</th>
-                                                                    <th>Amount</th>
-                                                                    <th>Date</th>
-                                                                    <th>Last Order Status</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>1969737</td>
-                                                                    <td>John Doe</td>
-                                                                    <td>Reimbursement</td>
-                                                                    <td>53.83$</td>
-                                                                    <td>1-23-2020</td>
-                                                                    <td><i class="fa fa-circle font-small-3 text-success mr-50"></i>Accepted</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                    
                                 </ul>
                             </div>
                         </li>
@@ -173,8 +132,6 @@
             </div>
         </div>
     </nav>
-
-
     <!-- END: Header-->
 
 
@@ -184,7 +141,7 @@
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item mr-auto"><a class="navbar-brand" href="../../../html/ltr/vertical-menu-template/index.html">
                         <div class="brand-logo"></div>
-                        <h2 class="brand-text mb-0">UW Capstone</h2>
+                        <h2 class="brand-text mb-0">AWFT</h2>
                     </a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary" data-ticon="icon-disc"></i></a></li>
             </ul>
@@ -192,7 +149,29 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-			<li class="active"><a href="dashboard.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
+			    <li><a href="user-dashboard.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
+				
+				<li class=" navigation-header"><span>Fiscal Requests </span></li>
+				<li class=" nav-item"><a href="#"><i class="feather icon-file-plus"></i><span class="menu-title" data-i18n="User">Create Order</span></a>
+                    <ul class="menu-content" style="margin-left:10px;">
+                        <li><a href="user-reimbursement.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Reimbursement</span></a>
+                        </li>
+                        <li><a href="travelReimbursement.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="View">Travel Reimbursement</span></a>
+                        </li>
+                        <li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Purchase Request</span></a>
+                        </li>
+						<li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Pay an Invoice</span></a>
+                        </li>
+						<li><a href="procardReceipt.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Procard Receipt</span></a>
+                        </li>
+                        <li><a href="travelRequest.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Travel Request</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class=" nav-item"><a href=""><i class="feather icon-shopping-cart"></i><span class="menu-title" data-i18n="Products">Products</span></a></li>
+                
+				<li class=" nav-item"><a href="orderHistory.html"><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">Order History</span></a></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-search"></i><span class="menu-title" data-i18n="SearchOrders">Search Orders</span></a></li>
 				
 				<li class=" navigation-header"><span>User</span></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
@@ -206,12 +185,6 @@
 				<li class=" nav-item"><a href=""><i class="feather icon-book"></i><span class="menu-title" data-i18n="ReimbursmentInstructions">Reimbursment Instructions</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-credit-card"></i><span class="menu-title" data-i18n="PurchasingQuestions">Purchasing Questions</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-tv"></i><span class="menu-title" data-i18n="TechnicalQuestions">Technical Questions</span></a></li>
-				
-				
-
-
-
-
             </ul>
         </div>
     </div>
@@ -222,137 +195,62 @@
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
-            <div class="content-header row">
-            </div>
+           
             <div class="content-body">
-                <!-- Dashboard Ecommerce Starts -->
-                <section id="dashboard-ecommerce">
-				
-                                <div class="card text-white bg-gradient-primary text-center">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <img src="../../../app-assets/images/elements/UW.png" alt="element 05" width="120" class="mb-1 img-fluid">
-                                            <h1 class="text-white " style="font-size:50px;"><b>Good Morning Ted !</b></h1>
-                                            <p class="card-text text-white"><i class="feather icon-map-pin"></i> Civil & Environmental Engineering</p>
-                                        </div>
-                                    </div>
-                                </div>
-								
-								
-					<div class="row">
+               
+                <!-- Zero configuration table -->
+                <section id="basic-datatable">
+                    <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="mb-0">Orders</h4> 
-                                    
-                                    <p>    Sort by
-                                        <select  id="basicSelect">
-                                            <option></option>
-                                            <option>Name</option>
-                                            <option>Department</option>
-                                            <option>Date</option>
-                                        </select>
-                                    </p>
-                                    
-                                    
+                                    <h4 class="card-title">Request History</h4>
                                 </div>
                                 <div class="card-content">
-                                    <div class="table-responsive mt-1">
-                                        <table class="table table-hover-animation mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Request ID</th>
-                                                    <th>Name</th>
-													<th>Profile</th>
-                                                    <th>Type</th>
-                                                    <th>Amount</th>
-													<th>Date</th>
-                                                    <th>Last Order Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr onclick="document.location='orderDetails.html'" style="cursor:pointer">
-                                                    <td>1969737</td>
-                                                    <td>John Doe</td>
-                                                    <td class="p-1">
-                                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
-                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Vinnie Mostowy" class="avatar pull-up">
-                                                                <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-5.jpg" alt="Avatar" height="30" width="30">
-                                                            </li>
-
-                                                        </ul>
-                                                    </td>
-                                                    <td>Procard</td>
-                                                    <td>53.83$</td>
-													<td>1-23-2020</td>
-                                                    <td><i class="fa fa-circle font-small-3 text-success mr-50"></i>Accepted</td>
+                                    <div class="card-body card-dashboard">
+                                        <div class="table-responsive">
+                                            <table id="table" class="table zero-configuration">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Request ID</th>
+                                                        <th>Name</th>
+                                                        <th>Type</th>
+                                                        <th>Amount</th>
+                                                        <th>Date</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
                                                     
-                                                </tr>
-												
-												<tr onclick="document.location='orderDetails.html'" style="cursor:pointer">
-                                                    <td>1964537</td>
-                                                    <td>Paul Brennan</td>
-                                                    <td class="p-1">
-                                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
-                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Alberto Glotzbach" class="avatar pull-up">
-                                                                <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-3.jpg" alt="Avatar" height="30" width="30">
-                                                            </li>
-
-                                                        </ul>
-                                                    </td>
-                                                    <td>Reimbursement</td>
-                                                    <td>102.88$</td>
-													<td>1-23-2020</td>
-                                                    <td><i class="fa fa-circle font-small-3 text-warning mr-50"></i>Pending</td>
-                                                </tr>
-												
-												<tr onclick="document.location='orderDetails.html'" style="cursor:pointer">
-                                                    <td>1346635</td>
-                                                    <td>Kenndy Brown</td>
-                                                    <td class="p-1">
-                                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
-                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Julee Rossignol" class="avatar pull-up">
-                                                                <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-10.jpg" alt="Avatar" height="30" width="30">
-                                                            </li>
-
-                                                        </ul>
-                                                    </td>
-                                                    <td>Purchase</td>
-                                                    <td>929.01$</td>
-													<td>1-30-2020</td>
-                                                    <td><i class="fa fa-circle font-small-3 text-danger mr-50"></i>Rejected</td>
-                                                </tr>
-												
-												<tr onclick="document.location='orderDetails.html'" style="cursor:pointer">
-                                                    <td>1568075</td>
-                                                    <td>Ash Mahain</td>
-                                                    <td class="p-1">
-                                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
-                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Jeffrey Gerondale" class="avatar pull-up">
-                                                                <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-9.jpg" alt="Avatar" height="30" width="30">
-                                                            </li>
-
-                                                        </ul>
-                                                    </td>
-                                                    <td>Purchase</td>
-                                                    <td>388.20$</td>
-													<td>2-1-2020</td>
-                                                    <td><i class="fa fa-circle font-small-3 text-danger mr-50"></i>Rejected</td>
-                                                </tr>												
-                                                
-
-                                            </tbody>
-                                        </table>
+                                                   
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Request ID</th>
+                                                        <th>Name</th>
+                                                        <th>Type</th>
+                                                        <th>Amount</th>
+                                                        <th>Date</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-							
-					
                 </section>
-                <!-- Dashboard Ecommerce ends -->
-              
+                <!--/ Zero configuration table -->
 
             </div>
         </div>
@@ -361,20 +259,186 @@
 
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>
+    <script>
+        const baseURL = "https://coe-api.azurewebsites.net/api/";
+        var user_id = "5e8e4bcaa148b90044206526";
 
-    <!-- BEGIN: Footer-->
-    <footer class="footer footer-static footer-light">
 
-    </footer>
-    <!-- END: Footer-->
+        // Template POst request Ajax call
+        var makePostRequest = function(url, data, onSuccess, onFailure) {
+            $.ajax({
+                async:false,
+                type: 'POST',
+                url: baseURL + url,
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                dataType: "json",
+                success: onSuccess,
+                error: onFailure
+            });
+        };
+
+        // Template PUT request Ajax call
+        var makePutRequest = function(url, data, onSuccess, onFailure) {
+            $.ajax({
+                async:false,
+                type: 'PUT',
+                url: baseURL + url,
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                dataType: "json",
+                success: onSuccess,
+                error: onFailure
+            });
+        };
+
+
+        // Template Delete request Ajax call
+        var makeDeleteRequest = function(url, onSuccess, onFailure) {
+            $.ajax({
+                async:false,
+                type: 'DELETE',
+                url: baseURL + url,
+                dataType: "json",
+                success: onSuccess,
+                error: onFailure
+            });
+        };	
+
+        // Template GET request Ajax call
+        var makeGetRequest = function(url, onSuccess, onFailure) {
+            $.ajax({
+                async:false,
+                type: 'GET',
+                url: baseURL + url,
+                dataType: "json",
+                success: onSuccess,
+                error: onFailure
+            });
+        };
+
+        window.onload = function(){
+            //alert("hello");
+            var onSuccess = function(data)
+            {
+                alert("success");
+                var index=0;
+                var rowindex = 1;
+
+                var createClickHandler = function(arg,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23,arg24,arg25,arg26,arg27,arg28,arg29) {
+                            return function() {
+                                //var id = cell1.innerHTML;
+                                window.location.href = "test.php?id="+arg.innerHTML
+                                                    +"&type="+arg1.innerHTML
+                                                    +"&date="+arg2.innerHTML
+                                                    +"&status="+arg3.innerHTML
+                                                    +"&amount="+arg4.innerHTML
+                                                    +"&firstname="+arg5
+                                                    +"&lastname="+arg6
+                                                    +"&departure="+arg7
+                                                    +"&destination="+arg8
+                                                    +"&date="+arg9
+                                                    +"&returndate="+arg10
+                                                    +"&reason="+arg11
+                                                    +"&flight="+arg12
+                                                    +"&flight_company="+arg13
+                                                    +"&flight_number="+arg14
+                                                    +"&flight_from="+arg15
+                                                    +"&flight_to="+arg16
+                                                    +"&flight_departdate="+arg17
+                                                    +"&flight_returndate="+arg18
+                                                    +"&flight_amount="+arg19
+                                                    +"&hotel="+arg20
+                                                    +"&hotel_name="+arg21
+                                                    +"&hotel_address="+arg22
+                                                    +"&hotel_num="+arg23
+                                                    +"&hotel_zip="+arg24
+                                                    +"&hotel_amount="+arg25
+                                                    +"&hotel_link="+arg26
+                                                    +"&flight_reference="+arg27
+                                                    +"&hotel_note="+arg28
+                                                    +"&birthday="+arg29;
+                            };
+                }
+
+                var table = document.getElementById("table");               
+                while(data.data[index]){
+                   
+                    var temp = JSON.parse(data.data[index].OrderInfo);
+
+                    var row=table.insertRow(rowindex);
+                    var cell1=row.insertCell(0);
+                    var cell2=row.insertCell(1);
+                    var cell3=row.insertCell(2);
+                    var cell4=row.insertCell(3);
+                    var cell5=row.insertCell(4);
+                    var cell6=row.insertCell(5);
+                    cell1.innerHTML=data.data[index]._id;
+                    cell2.innerHTML=temp.FirstName;
+                    cell3.innerHTML=data.data[index].OrderType;
+                    cell4.innerHTML="N/A";
+                    cell5.innerHTML=data.data[index].submittedOn.substring(0,10);
+                    cell6.innerHTML=data.data[index].OrderStatus;
+
+                    row.onclick = createClickHandler(cell1,cell3,cell5,cell6,cell4
+                                                    ,temp.FirstName
+                                                    ,temp.LastName
+                                                    ,temp.Departure
+                                                    ,temp.Destination
+                                                    ,temp.Date
+                                                    ,temp.ReturnDate
+                                                    ,temp.Reason
+                                                    ,temp.Flight
+                                                    ,temp.FlightCompany
+                                                    ,temp.FlightNumber
+                                                    ,temp.FlightFrom
+                                                    ,temp.FlightTo
+                                                    ,temp.FlightDepartingDate
+                                                    ,temp.FlightReturningDate
+                                                    ,temp.FlightAmount
+                                                    ,temp.Hotel
+                                                    ,temp.HotelName
+                                                    ,temp.HotelAddress
+                                                    ,temp.HotelNum
+                                                    ,temp.HotelZip
+                                                    ,temp.HotelAmount
+                                                    ,temp.HotelLink
+                                                    ,temp.FlightReference
+                                                    ,temp.HotelNote
+                                                    ,temp.Birthday
+                                                    
+                                                    );
+                    console.error(temp.Date);
+                    row.style="cursor:pointer";
+                    rowindex++;
+                    index++
+                }
+                //table.className='table zero-configuration'
+            }
+            var onFaliure = function(){
+                alert("fail");
+                document.getElementById("test").innerHTML = "Backend faliure occured";
+            }
+            makeGetRequest("getOrders/5e8e4bcaa148b90044206526",onSuccess,onFaliure);
+        }
+
+    </script>
 
 
     <!-- BEGIN: Vendor JS-->
     <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
-	<script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
     <!-- BEGIN Vendor JS-->
 
-
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/tables/datatable/pdfmake.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/vfs_fonts.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/buttons.html5.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/buttons.print.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
+    <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
     <script src="../../../app-assets/js/core/app-menu.js"></script>
@@ -383,12 +447,9 @@
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
-	<script src="../../../app-assets/js/scripts/cards/card-analytics.js"></script>
-    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <script src="../../../app-assets/js/scripts/datatables/datatable.js"></script>
     <!-- END: Page JS-->
 
-
-   
 </body>
 <!-- END: Body-->
 

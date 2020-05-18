@@ -56,7 +56,7 @@ var makeGetRequest = function(url, onSuccess, onFailure) {
 };
 
 $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS() {
-    alert('Travel Request Sent!');
+    alert('Travel Reimbursement Sent!');
     //window.location.replace("user-dashboard.html");
     var formData = new FormData();
     //this is the JSON Object we are sending to the server
@@ -70,39 +70,14 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
     }
 
     var requestInfo = {
-        FirstName: $("input[name='firstName']").val(),
-        LastName: $("input[name='lastName']").val(),
-        Departure: $("input[name='departure']").val(),
-        Destination: $("input[name='destination']").val(),
-        Date: $("input[name='date']").val(),
-        ReturnDate: $("input[name='returnDate']").val(),
-        Reason: $("input[name='reason']").val(),
-        //Flight:
-        Flight: $("input[name='flight']:checked").val(),
-        FlightCompany: $("input[name='flight_company']").val(),
-        FlightNumber: $("input[name='flight_number']").val(),
-        FlightFrom: $("input[name='flight_from']").val(),
-        FlightTo: $("input[name='flight_to']").val(),
-        FlightDepartingDate: $("input[name='flight_departingDate']").val(),
-        FlightReturningDate: $("input[name='flight_returningDate']").val(),
-        FlightAmount: $("input[name='flight_amount']").val(),
-        //hotel:
-        Hotel: $("input[name='hotel']:checked").val(),
-        HotelName: $("input[name='hotel_name']").val(),
-        HotelAddress: $("input[name='hotel_address']").val(),
-        HotelNum: $("input[name='hotel_num']").val(),
-        HotelAddress: $("input[name='hotel_address']").val(),
-        HotelZip: $("input[name='hotel_zip']").val(),
-        HotelMovein: $("input[name='hotel_movein']").val(),
-        HotelMoveout: $("input[name='hotel_moveout']").val(),
-        HotelAmount: $("input[name='hotel_amount']").val(),
-        HotelLink: $("input[name='hotel_link']").val(),
+        FirstName: "Haotian",
+        LastName: "Yuan",   
     }
 
 
     //now lets set up the JSON_toServer JSON Object
     JSON_toServer.userID_ref = user_id;  // 5e63127145f8e019d1f26ddc
-    JSON_toServer.OrderType = "Travel Request";
+    JSON_toServer.OrderType = "Travel ReimburseMent";
     // JSON_toServer.OrderInfo = JSON.stringify(JSON_OrderInfo_inForm);
     // JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
     JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
@@ -116,7 +91,7 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
     var request = new XMLHttpRequest();
     //this function will get the response from the server after we upload the order
     request.onreadystatechange = function() {
-        console.log("HERE");
+        //console.log("HERE");
         if (request.readyState == 4) {
 
             // show it in the console
@@ -129,28 +104,7 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
             // show it in the summary table
         }
     }
-    request.open('POST', baseURL + "uploadOrder");
+    request.open('POST', baseURL + "uploadOrder/subunit/5e966440b6c02e0044724660");
     request.send(formData); 
 });
 
-$(document).on('click', '#delete', function deleteOrder()
-{
-    //
-    var onSuccess = function(data)
-    {
-        alert("success");
-        //On success execution this is where you update your frontend
-        document.getElementById("result").innerHTML = JSON.stringify(data);
-    }
-
-    //this function will be called when data exchange with backend occured an error
-    var onFaliure = function()
-    {
-        alert("fail");
-        //on faliure this is where you update front end (example: inform user unexpected error occured)
-        document.getElementById("result").innerHTML = "Backend faliure occured";
-    }
-    makeDeleteRequest("removeOrder/5e9e4abc7d38270044304da8",onSuccess,onFaliure);
-
-   
-});

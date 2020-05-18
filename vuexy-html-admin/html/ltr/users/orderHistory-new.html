@@ -325,13 +325,46 @@
                 var index=0;
                 var rowindex = 1;
 
-                var table = document.getElementById("table");
-                while(data.data[index]){
-                    index++;
+                var createClickHandler = function(arg,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23,arg24,arg25,arg26,arg27,arg28,arg29,arg30) {
+                            return function() {
+                                //var id = cell1.innerHTML;
+                                window.location.href = "orderDetails.php?id="+arg.innerHTML
+                                                    +"&type="+arg1.innerHTML
+                                                    +"&date="+arg2.innerHTML
+                                                    +"&status="+arg3.innerHTML
+                                                    +"&amount="+arg4.innerHTML
+                                                    +"&firstname="+arg5
+                                                    +"&lastname="+arg6
+                                                    +"&departure="+arg7
+                                                    +"&destination="+arg8
+                                                    +"&date="+arg9
+                                                    +"&returndate="+arg10
+                                                    +"&reason="+arg11
+                                                    +"&flight="+arg12
+                                                    +"&flight_company="+arg13
+                                                    +"&flight_number="+arg14
+                                                    +"&flight_from="+arg15
+                                                    +"&flight_to="+arg16
+                                                    +"&flight_departdate="+arg17
+                                                    +"&flight_returndate="+arg18
+                                                    +"&flight_amount="+arg19
+                                                    +"&hotel="+arg20
+                                                    +"&hotel_name="+arg21
+                                                    +"&hotel_address="+arg22
+                                                    +"&hotel_num="+arg23
+                                                    +"&hotel_zip="+arg24
+                                                    +"&hotel_amount="+arg25
+                                                    +"&hotel_link="+arg26
+                                                    +"&flight_reference="+arg27
+                                                    +"&hotel_note="+arg28
+                                                    +"&birthday="+arg29
+                                                    +"&note="+arg30;
+                            };
                 }
-                index--;
 
-                while(index>=0){
+                var table = document.getElementById("table");               
+                while(data.data[index]){
+                   
                     var temp = JSON.parse(data.data[index].OrderInfo);
 
                     var row=table.insertRow(rowindex);
@@ -348,18 +381,40 @@
                     cell5.innerHTML=data.data[index].submittedOn.substring(0,10);
                     cell6.innerHTML=data.data[index].OrderStatus;
 
-                    var createClickHandler = function() {
-                            return function() {
-                                var id = cell1.innerHTML;
-                                window.location.href = "orderDetails.html";
-                            };
-                    };
-                    row.onclick = createClickHandler();
-
+                    row.onclick = createClickHandler(cell1,cell3,cell5,cell6,cell4
+                                                    ,temp.FirstName
+                                                    ,temp.LastName
+                                                    ,temp.Departure
+                                                    ,temp.Destination
+                                                    ,temp.Date
+                                                    ,temp.ReturnDate
+                                                    ,temp.Reason
+                                                    ,temp.Flight
+                                                    ,temp.FlightCompany
+                                                    ,temp.FlightNumber
+                                                    ,temp.FlightFrom
+                                                    ,temp.FlightTo
+                                                    ,temp.FlightDepartingDate
+                                                    ,temp.FlightReturningDate
+                                                    ,temp.FlightAmount
+                                                    ,temp.Hotel
+                                                    ,temp.HotelName
+                                                    ,temp.HotelAddress
+                                                    ,temp.HotelNum
+                                                    ,temp.HotelZip
+                                                    ,temp.HotelAmount
+                                                    ,temp.HotelLink
+                                                    ,temp.FlightReference
+                                                    ,temp.HotelNote
+                                                    ,temp.Birthday
+                                                    ,temp.NoteFromApprover
+                                                    );
+                    console.error(temp.Date);
                     row.style="cursor:pointer";
                     rowindex++;
-                    index--;
+                    index++
                 }
+                //table.className='table zero-configuration'
             }
             var onFaliure = function(){
                 alert("fail");
