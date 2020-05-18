@@ -149,20 +149,28 @@ function getAllRequestsInfo() {
  * @param {int} user_id extract from users global array
  */
 function getUserInfo(user_id) {
+
+    var return_value = null;
+
     var onSuccess = function(data) {
         if (data.status == true) {
             requesters.push(data.data.userInfo.Name);
             subUnits.push(data.data.SubUnitName);
+
+            return_value = data.data;
         } else {
             //error message
+            return_value = null;
         }
     }
 
     var onFailure = function() {
         // failure message
+        return_value = null;
     }
 
     makeGetRequest("getuserInformation/" + user_id, onSuccess, onFailure);
+    return return_value;
 }
 
 /**
