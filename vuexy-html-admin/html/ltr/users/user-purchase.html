@@ -124,10 +124,10 @@
                             </ul>
                         </li>
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">Ted Hanson</span><span class="user-status">CEE Administrator</span></div><span><img class="round" src="../../../app-assets/images/portrait/small/avatar-s-9.jpg" alt="avatar" height="40" width="40"></span>
+                            <div class="user-nav d-sm-flex d-none"><span id="navigationBarName" class="user-name text-bold-600">Name</span><span class="user-status">General User</span></div><span><img id="navigationBarImage" class="round" src="" alt="avatar" height="40" width="40"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a>
-                                <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i class="feather icon-power"></i> Logout</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item" href="../login/auth-login.html" onclick="logout()"><i class="feather icon-power"></i> Logout</a>
                             </div>
                         </li>
                     </ul>
@@ -146,7 +146,7 @@
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item mr-auto"><a class="navbar-brand" href="../../../html/ltr/vertical-menu-template/index.html">
                         <div class="brand-logo"></div>
-                        <h2 class="brand-text mb-0">Davinci</h2>
+                        <h2 class="brand-text mb-0">AFWP</h2>
                     </a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary" data-ticon="icon-disc"></i></a></li>
             </ul>
@@ -591,25 +591,18 @@
                                                                         </div>
                                                                         <!-- END: first budget -->
 
-                                                                        <div class="col-12" id="file_box_1_1">
+                                                                        <div class="col-12">
                                                                             <div class="form-group row">
-                                                                                <div class="col-md-4">
+                                                                                <!-- <div class="col-md-4">
                                                                                     <span>Upload Receipt</span>
                                                                                 </div>
-                                                                                <div class="col-md-4">
+                                                                                <div class="col-md-3">
                                                                                     <input type="file" name="file_1" id="file_1_1">
-                                                                                    <!-- <label for="file_1">Choose file</label> -->
-                                                                                    <!-- <fieldset>
-                                                                                        <div class="custom-file">
-                                                                                            <input id="file_1" type="file" class="custom-file-input">
-                                                                                            <label class="custom-file-label" for="file_1">Choose file</label>
-                                                                                        </div>
-                                                                                    </fieldset> -->
                                                                                 </div>
-                                                                                <div class="col-md-1 hidden">
+                                                                                <div class="col-md-1">
                                                                                     <button type="button" class="btn btn-icon rounded-circle btn-flat-success" id="file_btn_1_1"><i class="feather icon-plus-circle"></i></button>
-                                                                                </div>
-                                                                                <div class="col-md-1 offset-md-3">
+                                                                                </div> -->
+                                                                                <div class="col-md-1 offset-md-11">
                                                                                     <button type="button" id="confirm_1" class="btn btn-icon rounded-circle btn-flat-success"><i class="fa fa-check"></i></button>
                                                                                 </div>
                                                                             </div>
@@ -636,6 +629,23 @@
                                                                 <button type="button" class="btn btn-icon rounded-circle btn-flat-primary" id="add_new_line_item"><i class="feather icon-plus-circle"></i></button>
                                                                 <label class="text-primary" for="add_new_line_item">Add New Line Items</label>
                                                                 <!-- <span>Add New Line Items</span> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- ADD FILES -->
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="col-11" id="file_block" style="padding-top: 1.25rem; border-bottom: 1px dashed #d9d9d9;">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Upload Receipt</span>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <input type="file" name="file_input" id="file_1">
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <button type="button" class="btn btn-icon rounded-circle btn-flat-success" id="file_btn_1_1"><i class="feather icon-plus-circle"></i></button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -740,6 +750,7 @@
     <!-- <script src="../../../app-assets/js/scripts/myScripts/users/my-wizard-steps.js"></script> -->
     <script src="../../../app-assets/js/scripts/forms/select/form-select2.js"></script>
     <script src="../../../app-assets/js/scripts/forms/number-input.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/Admin/navigation_handler.js"></script>
     <!-- <script src="../../../app-assets/js/scripts/forms/wizard-steps.js"></script> -->
     <!-- END: Page JS-->
 

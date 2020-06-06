@@ -17,14 +17,56 @@ var requestHistory = document.getElementById("request-history");
 var reqApproverArr = [];
 var reqBuyer = {};
 
+var noteBlock = document.getElementById("notes");
+var feedbackBlock = document.getElementById("feedback-block");
+
+var request_id = null;
+
 window.onload = function() {
     var request_id = window.sessionStorage.getItem('RequestID');
-    // var request_id = "5ec453d00598f40045c315b5";
-    getRequestInfo(request_id);
-    this.console.log(reqApproverArr);
+    this.console.log(request_id);
+    // request_id = "5ec453d00598f40045c315b5";
+    requestInfo = getRequestInfo(request_id);
+    updateRequestInfo(requestInfo);
+    collectHistoryInfo(requestInfo);
+    updateNotes(requestInfo);
+    // this.console.log(reqApproverArr);
     updateRequestHistory();
+    // changeOrderStatus();
+    if (requestInfo.OrderStatus == "Accepted") {
+        this.feedbackBlock.setAttribute('class', 'row hidden');
+    }
+    if (window.sessionStorage.getItem("subunitID")) {
+        this.feedbackBlock.setAttribute('class', 'row hidden');
+    }
     // this.updateChatInfo(request_id);
     // getRequestHistory();
+}
+
+
+// just for debug
+function changeOrderStatus() {
+    var data = {
+        OrderStatus: "Awaiting Approval"
+    };
+    var onSuccess = function(data) {
+        if (data.status == true) {
+            console.log("update success");
+        } else {
+            //error message
+            info = null;
+        }
+    }
+
+    var onFailure = function() {
+        // failure message
+        info = null;
+    }
+    makePostRequest("updateOrderStatus/" + request_id, data, onSuccess, onFailure);
+}
+
+function updateNotes(data) {
+    noteBlock.innerHTML = data.ChatInfo;
 }
 
 /**
@@ -56,22 +98,26 @@ function getUserInfo(user_id) {
  * @param {int} request_id 
  */
 function getRequestInfo(request_id) {
+    var info = null;
     var onSuccess = function(data) {
         if (data.status == true) {
             console.log("request information is here");
             console.log(data.data);
-            updateRequestInfo(data.data);
-            collectHistoryInfo(data.data);
+            info = data.data;
+            
         } else {
             //error message
+            info = null;
         }
     }
 
     var onFailure = function() {
         // failure message
+        info = null;
     }
 
     makeGetRequest("getOrderInformation/" + request_id, onSuccess, onFailure);
+    return info;
 }
 
 
@@ -462,7 +508,12 @@ function genApprovalStamp(approver, responses) {
 
     var p = document.createElement('p');
     p.setAttribute('class', 'font-weight-bold');
-    p.innerHTML = "Request Approved";
+    if (done) {
+        p.innerHTML = "Request Budget Approved";
+    } else {
+        p.innerHTML = "Awaiting Budget Approval";
+    }
+    
     info.appendChild(p);
     var span = document.createElement('span');
     span.innerHTML = "By approver " + approver;
@@ -505,7 +556,11 @@ function genFiscalStaffStamp(request_status, assignedTo) {
 
     var p = document.createElement('p');
     p.setAttribute('class', 'font-weight-bold');
-    p.innerHTML = "Request Accepted";
+    if (done) {
+        p.innerHTML = "Request Accepted";
+    } else {
+        p.innerHTML = "Awaiting Request Acception";
+    }
     info.appendChild(p);
     var span = document.createElement('span');
     if (assignedTo) {
@@ -698,4 +753,50 @@ function updateChatInfo(request_id) {
         info = null;
     }
     makePostRequest("updateChatInfo/" + request_id, data, onSuccess, onFailure);
+}
+
+
+
+var feedback = document.getElementById("feedback_input");
+
+function sendBackClicked() {
+    var notes = feedback.value;
+    var data = {
+        ChatInfo: window.sessionStorage.getItem("name") + ": " + notes
+    };
+    var onSuccess = function(data) {
+        if (data.status == true) {
+            console.log("update success");
+        } else {
+            //error message
+            info = null;
+        }
+    }
+
+    var onFailure = function() {
+        // failure message
+        info = null;
+    }
+    makePostRequest("updateChatInfo/" + request_id, data, onSuccess, onFailure);
+}
+
+function approveClicked() {
+    console.log('clicked');
+    var data = {
+        OrderStatus: "Accepted"
+    };
+    var onSuccess = function(data) {
+        if (data.status == true) {
+            console.log("update success");
+        } else {
+            //error message
+            info = null;
+        }
+    }
+
+    var onFailure = function() {
+        // failure message
+        info = null;
+    }
+    makePostRequest("updateOrderStatus/" + request_id, data, onSuccess, onFailure);
 }
