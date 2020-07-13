@@ -1,6 +1,16 @@
 var itemNum = 1;
 var fileNum = 1;
+// Store all line items in an array
 var lineItems = [];
+// Track if this id is deleted
+var idFlags = [];
+// _id = 0, no such id
+idFlags.push(false);
+// _id = 1, the initial one
+idFlags.push(true);
+
+var defaultMode = false;
+
 var formData = new FormData();
 var type = "";
 var unit_id = "";
@@ -138,6 +148,14 @@ $(".steps-validation").steps({
     onFinished: function (event, currentIndex) {
         alert("Submitted!");
         alert('send data to database');
+
+        /** Confirm each line item */
+        for (var x = 1; x <= idFlags.length; x++) {
+            if (idFlags[x]) {
+                confirmItem(x);
+            }
+        }
+
         // getUserInfo();
         var formData = new FormData();
 
@@ -162,14 +180,44 @@ $(".steps-validation").steps({
             "assignedTo": null
         };
 
-        var addrInfo = {
-            FullName: $("input[name='full-name']").val(),
-            AddrLine1: $("input[name='addr-line-1']").val(),
-            AddrLine2: $("input[name='addr-line-2']").val(),
-            AddrCity: $("input[name='addr-city']").val(),
-            AddrState: $("input[name='addr-state']").val(),
-            AddrZip: $("input[name='addr-zip']").val()
-        };
+        var addrInfo = null;
+        
+        if (defaultMode) {
+            var useNewAddr = document.getElementById('use-new-addr');
+            if (useNewAddr.checked) {
+                addrInfo = {
+                    FullName: document.getElementById('full_name').value,
+                    AddrLine1: document.getElementById('street_addr_1').value,
+                    AddrLine2: document.getElementById('street_addr_2').value,
+                    AddrCity: document.getElementById('addr_city').value,
+                    AddrState: document.getElementById('addr_state').value,
+                    AddrZip: document.getElementById('addr_zip').value,
+                    AddrCountry: document.getElementById('addr_country').value
+                };
+                var saveAddr = document.getElementById('save-default-addr');
+                if (saveAddr.checked) {
+                    window.localStorage.setItem('defaultAddr', JSON.stringify(addrInfo));
+                }
+            } else {
+                addrInfo = JSON.parse(window.localStorage.getItem('defaultAddr'));
+            }
+        } else {
+            addrInfo = {
+                FullName: document.getElementById('full_name').value,
+                AddrLine1: document.getElementById('street_addr_1').value,
+                AddrLine2: document.getElementById('street_addr_2').value,
+                AddrCity: document.getElementById('addr_city').value,
+                AddrState: document.getElementById('addr_state').value,
+                AddrZip: document.getElementById('addr_zip').value,
+                AddrCountry: document.getElementById('addr_country').value
+            };
+            var saveAddr = document.getElementById('save-default-addr');
+            if (saveAddr.checked) {
+                window.localStorage.setItem('defaultAddr', JSON.stringify(addrInfo));
+            }
+        }
+
+        
 
         var vendor_info = {
             Name: $("input[name='vendor-name']").val(),
@@ -218,15 +266,12 @@ $(".steps-validation").steps({
                 // show it in the console
                 const response_obj = JSON.parse(request.response);
                 const data_obj = response_obj.data;
+                console.log(data_obj);
                 //convert order info to JSON
                 const requestInfo_obj = JSON.parse(data_obj.OrderInfo);
                 console.log(requestInfo_obj);
                 window.sessionStorage.setItem('RequestID', data_obj._id);
-                window.location.href = "../../../html/ltr/buyers/buyer-request-detail.html";
-
-                // window.location.href = "../../../html/ltr/users/user-summary.html";
-
-                
+                // window.location.href = "../../../html/ltr/buyers/buyer-request-detail.html";
             }
         };
         request.open('POST', baseURL + "uploadOrder/" + type + "/" + unit_id);
@@ -269,6 +314,24 @@ $(".steps-validation").validate({
  * Set global variables
  */
 window.onload = function() {
+    if (window.localStorage.getItem('defaultAddr')) {
+        defaultMode = true;
+    }
+    if (defaultMode) {
+        var addrObj = JSON.parse(window.localStorage.getItem('defaultAddr'));
+        var addrContent = document.getElementById('addr-content');
+        addrContent.appendChild(genAddrLine(addrObj.FullName));
+        addrContent.appendChild(genAddrLine(addrObj.AddrLine1));
+        addrContent.appendChild(genAddrLine(addrObj.AddrLine2));
+        var city = addrObj.AddrCity + ', ' + addrObj.AddrState + ' ' + addrObj.AddrZip;
+        addrContent.appendChild(genAddrLine(city));
+        addrContent.appendChild(genAddrCountry(addrObj.AddrCountry));
+    } else {
+        var default_block = document.getElementById('default-block');
+        default_block.setAttribute('class', 'hidden');
+        var addrInput = document.getElementById('mail-addr');
+        addrInput.setAttribute('class', 'visible');
+    }
     this.getUserInfo();
     this.getBudgetsInfo();
     // Initialize the budget select box
@@ -278,6 +341,19 @@ window.onload = function() {
         budget_select.appendChild(addBudgetData(num));
     }
 };
+
+function genAddrLine(content) {
+    var p = document.createElement('p');
+    p.setAttribute('style', 'margin: 0');
+    p.innerHTML = content.toUpperCase();
+    return p;
+}
+
+function genAddrCountry(content) {
+    var p = document.createElement('p');
+    p.innerHTML = content;
+    return p;
+}
 
 /**
  * Get the user information from database
@@ -335,6 +411,15 @@ function getBudgetsInfo() {
 
 /************ BEGIIN:  Step1 & Step2 *****************/
 
+$(document).on('click', '#use-new-addr', function() {
+    var newAddr = document.getElementById('use-new-addr');
+    var addrInput = document.getElementById('mail-addr');
+    if (newAddr.checked) {
+        addrInput.setAttribute('class', 'visible');
+    } else {
+        addrInput.setAttribute('class', 'hidden');
+    }
+});
 
 
 /************ END:  Step1 & Step2 *****************/
@@ -395,6 +480,7 @@ function addBudget(_id, _budget_id, init) {
     var sel2 = document.createElement('select');
     sel2.setAttribute('class', 'custom-select form-control');
     sel2.setAttribute('id', 'split_with_' + _id + '_' + _budget_id);
+    sel2.setAttribute('name', 'split_with_' + _id);
     sel2.onclick = function() {
         splitWithChanged(_id, _budget_id);
     };
@@ -490,6 +576,7 @@ function inputGroup(_id, _budget_id, isPre, label, name) {
     i.setAttribute('class', 'form-control');
     i.setAttribute('type', 'text');
     i.setAttribute('id', 'split_' + name + '_input_value_' + _id + '_' + _budget_id);
+    i.setAttribute('name', 'split_' + name + '_input_value_' + _id);
 
     if (isPre) {
         d.appendChild(sig);
@@ -513,35 +600,33 @@ function addBudgetOptions(_id, _budget_id) {
 
     var first = document.createElement('div');
     first.setAttribute('class', 'col-md-1');
-    first.appendChild(genOption(_id, _budget_id, "Task", "option_task"));
+    first.appendChild(addNewBudgetInfoCheckbox(_id, _budget_id, 1));
 
     var second = document.createElement('div');
     second.setAttribute('class', 'col-md-1');
-    second.appendChild(genOption(_id, _budget_id, "Option", "option_option"));
+    second.appendChild(addNewBudgetInfoCheckbox(_id, _budget_id, 2));
 
     var third = document.createElement('div');
     third.setAttribute('class', 'col-md-1');
-    third.appendChild(genOption(_id, _budget_id, "Project", "option_project"));
+    third.appendChild(addNewBudgetInfoCheckbox(_id, _budget_id, 3));
     
     row.appendChild(first);
-    row.appendChild(genOptionInput("task_input", _id, _budget_id));
+    row.appendChild(addNewBudgetInfoInput(_id, _budget_id, 1));
     row.appendChild(second);
-    row.appendChild(genOptionInput("option_input", _id, _budget_id));
+    row.appendChild(addNewBudgetInfoInput(_id, _budget_id, 2));
     row.appendChild(third);
-    row.appendChild(genOptionInput("project_input", _id, _budget_id));
+    row.appendChild(addNewBudgetInfoInput(_id, _budget_id, 3));
 
     return row;
 }
 
-/** 
- * Generate option of task/option/project 
- * @param _id id for line item
- * @param _budget_id id for budget number in this line item
- * @param {string} label the label for this options (Task/Option/Project)
- * @param {string} name use to set the name of this option
- * Each option group is bound to a single budget number
+/**
+ * Add additional information checkboxes for a certain budget number
+ * @param {int} _id the line item id
+ * @param {int} _budget_id the budget id of this line item
+ * @param {int} seq the info sequence of this budget number (1-task, 2-option, 3-project)
  */
-function genOption(_id, _budget_id, label, name) {
+function addNewBudgetInfoCheckbox(_id, _budget_id, seq) {
     var list = document.createElement('ul');
     list.setAttribute('class', 'list-unstyled mb-0');
     var bullet = document.createElement('li');
@@ -552,16 +637,20 @@ function genOption(_id, _budget_id, label, name) {
     var i = document.createElement('input');
     i.setAttribute('type', 'checkbox');
     i.setAttribute('class', 'custom-control-input');
-    i.setAttribute('name', name);
-    i.setAttribute('id', name + _id + '_' + _budget_id);
-    // i.onclick = function() {
-    //     var text = document.getElementById(name + _id + '_' + _budget_id);
-    //     text.setAttribute('class', 'col-md-3 hidden');
-    // };
+    i.setAttribute('id', 'budget-info-' + _id + '-' + _budget_id + '-' + seq);
+    i.onclick = function() {
+        toggleInputBox(_id, _budget_id, seq);
+    }
     var l = document.createElement('label');
     l.setAttribute('class', 'custom-control-label');
-    l.setAttribute('for', name + _id + '_' + _budget_id);
-    l.innerHTML = label;
+    l.setAttribute('for', 'budget-info-' + _id + '-' + _budget_id + '-' + seq);
+    if (seq == 1) {
+        l.innerHTML = "Task";
+    } else if (seq == 2) {
+        l.innerHTML = "Option";
+    } else if (seq == 3) {
+        l.innerHTML = "Project";
+    }
     d.appendChild(i);
     d.appendChild(l);
     f.appendChild(d);
@@ -570,20 +659,60 @@ function genOption(_id, _budget_id, label, name) {
     return list;
 }
 
-/** 
- * Generate the input box behind each task/option/project 
- * @param {string} name use to set the name of this input
+/**
+ * Add the budget information input row
+ * @param {int} _id 
+ * @param {int} _budget_id 
+ * @param {int} seq the info sequence of this budget number (1-task, 2-option, 3-project)
  */
-function genOptionInput(name, _id, _budget_id) {
+function addNewBudgetInfoInput(_id, _budget_id, seq) {
     var div = document.createElement('div');
     div.setAttribute('class', 'col-md-3 hidden');
-    div.setAttribute('id', name + _id + '_' + _budget_id);
+    div.setAttribute('id', 'budget-info-input-' + _id + '-' + _budget_id + '-' + seq);
     var i = document.createElement('input');
     i.setAttribute('type', 'text');
     i.setAttribute('class', 'form-control');
-    i.setAttribute('name', name);
+    i.setAttribute('id', 'budget-info-value-' + _id + '-' + _budget_id + '-' + seq);
+    if (seq == 1) {
+        i.setAttribute('name', 'budget-task-' + _id);
+    } else if (seq == 2) {
+        i.setAttribute('name', 'budget-option-' + _id);
+    } else if (seq == 3) {
+        i.setAttribute('name', 'budget-project-' + _id);
+    }
+    
+    div.appendChild(i);
     return div;
 }
+
+/**
+ * Determine if the additional budget info input box triggered
+ * @param {int} _id 
+ * @param {int} _budget_id 
+ * @param {int} seq 
+ */
+function toggleInputBox(_id, _budget_id, seq) {
+    var checkbox = document.getElementById('budget-info-' + _id + '-' + _budget_id + '-' + seq);
+    var infoInput = document.getElementById('budget-info-input-' + _id + '-' + _budget_id + '-' + seq);
+    if (checkbox.checked) {
+        infoInput.setAttribute('class', 'col-md-3');
+    } else {
+        infoInput.setAttribute('class', 'col-md-3 hidden');
+    }
+}
+
+/** 
+ * Bind to the initialized check box 
+ */
+$(document).on('click', '#budget-info-1-1-1', function() {
+    toggleInputBox(1, 1, 1);
+});
+$(document).on('click', '#budget-info-1-1-2', function() {
+    toggleInputBox(1, 1, 2);
+});
+$(document).on('click', '#budget-info-1-1-3', function() {
+    toggleInputBox(1, 1, 3);
+});
 
 /** 
  * Split with amount or percentage controller
@@ -674,11 +803,10 @@ $(document).on('click', '#option_project', function() {
 /** 
  * BEGIN: New Line Item Controller 
  * @param _id line item id
- * @param itemNum this is a global variable, starts from 1,
- *                each time when uses add a new line item it will increase by 1 
- *                to generate a unique id for all components inside this line item
- *                but it will not decrease when users delete a line item
- *                so itemNum cannot reflect the real number of line items, it just use to set id
+ * @param _id line item id, assigned by idFlags.length, starts from 1
+ *            each time when user add a new line item this _id will increase by 1 
+ *            which serves as a unique id for all components inside this line item
+ *            when this item (block) is deleted, the corresponding idFlag will turn to false
  * Users can add one more line item by clicking add-new-line-item button
  * This funtion will generate all needed components of each line item,
  * exactly the same as original box,
@@ -687,6 +815,7 @@ $(document).on('click', '#option_project', function() {
 
 /** Core function */
 function addNewLineItem(_id) {
+    idFlags.push(true);
 
     var newBox = document.createElement('div');
     newBox.setAttribute('class', 'row d-flex justify-content-center');
@@ -712,7 +841,7 @@ function addNewLineItem(_id) {
     row.appendChild(addNewQuantity(_id));
     row.appendChild(addNewUnitPrice(_id));
     row.appendChild(addBudget(_id, 1, true));
-    row.appendChild(addNewConfirmButton(_id));
+    // row.appendChild(addNewConfirmButton(_id));
 
     formBody.appendChild(row);
     form.appendChild(formBody);
@@ -725,8 +854,8 @@ function addNewLineItem(_id) {
 
 /** Bind to the initialized button */
 $(document).on('click', '#add_new_line_item', function(){
-    itemNum ++;
-    addNewLineItem(itemNum);
+    // itemNum ++;
+    addNewLineItem(idFlags.length);
 });
 
 
@@ -943,7 +1072,10 @@ function addNewUnitPrice(_id) {
     return box; 
 }
 
-
+/**
+ * Add a new confirm button at the end of each item block
+ * @param {int} _id the line item id
+ */
 function addNewConfirmButton(_id) {
     var box = document.createElement('div');
     box.setAttribute('class', 'col-12');
@@ -960,11 +1092,10 @@ function addNewConfirmButton(_id) {
     i.setAttribute('class', 'fa fa-check');
     btn.appendChild(i);
     btn.onclick = function() {
-        confirmItem(_id);
+        // confirmItem(_id);
     }
     first.appendChild(btn);
 
-    
     row.appendChild(first);
     box.appendChild(row);
 
@@ -1078,84 +1209,98 @@ $(document).on('click', '#file_btn_1_1', function() {
 /** Confirm function */
 function confirmItem(_id) {
 
-    /** Get budgets info */
-    var budgetsNumArr = document.getElementsByName('budget_num_' + _id);
-    var budgetsLen = budgetsNumArr.length;
+    // If this id exists (the item is not deleted)
+    if (idFlags[_id]) {
 
-    /** Front-end control */
-    for (var i = 0; i < budgetsLen; i++) {
-        var budgetId = i + 1;
-        var btn = document.getElementById('budget_btn_' + _id + '_' + budgetId);
-        btn.remove();
-    }
-    var checkBtn = document.getElementById('confirm_' + _id);
-    checkBtn.remove();
+        /** Get budgets info */
+        var budgetsNumArr = document.getElementsByName('budget_num_' + _id);
+        var tasksArr = document.getElementsByName('budget-task-' + _id);
+        var optionsArr = document.getElementsByName('budget-option-' + _id);
+        var projectsArr = document.getElementsByName('budget-project-' + _id);
+        var budgetsLen = budgetsNumArr.length;
 
-    
-    /** Build budgets array data structure */
-    var budgetsArr = [];
-    if (budgetsLen == 1) {
-        budgetsArr.push({
-            Number: budgetsNumArr[0].value,
-            Split: "100%"
-        });
-    } else {
-        for (var i = 1; i <= budgetsLen; i++) {
-            var num = budgetsNumArr[i - 1].value;
-            var perOrDolSel = document.getElementById('split_with_' + _id + '_' + i);
-            var perOrDolVal = perOrDolSel.options[perOrDolSel.selectedIndex].value;
-            var splitVal = "";
-            if (perOrDolVal == "amount") {
-                splitVal = "$" + document.getElementById('split_dollar_input_value_' + _id + '_' + i).value;
-            } else if (perOrDolVal == "percentage") {
-                splitVal = document.getElementById('split_percent_input_value_' + _id + '_' + i).value + "%";
-            }
+        /** Front-end control */
+        // for (var i = 0; i < budgetsLen; i++) {
+        //     var budgetId = i + 1;
+        //     var btn = document.getElementById('budget_btn_' + _id + '_' + budgetId);
+        //     btn.remove();
+        // }
+        // var checkBtn = document.getElementById('confirm_' + _id);
+        // checkBtn.remove();
+
+        
+        /** Build budgets array data structure */
+        var budgetsArr = [];
+        if (budgetsLen == 1) {
             budgetsArr.push({
-                Number: num,
-                Split: splitVal
+                Number: budgetsNumArr[0].value,
+                Split: "100%",
+                Task: tasksArr[0].value,
+                Option: optionsArr[0].value,
+                Project: projectsArr[0].value
             });
+        } else {
+            for (var i = 0; i < budgetsLen; i++) {
+                var num = budgetsNumArr[i].value;
+                var perOrDolSel = document.getElementsByName('split_with_' + _id)[i];
+                var perOrDolVal = perOrDolSel.options[perOrDolSel.selectedIndex].value;
+                var splitVal = "";
+                if (perOrDolVal == "amount") {
+                    splitVal = "$" + document.getElementsByName('split_dollar_input_value_' + _id)[i].value;
+                } else if (perOrDolVal == "percentage") {
+                    splitVal = document.getElementsByName('split_percent_input_value_' + _id)[i].value + "%";
+                }
+                budgetsArr.push({
+                    Number: num,
+                    Split: splitVal,
+                    Task: tasksArr[i].value,
+                    Option: optionsArr[i].value,
+                    Project: projectsArr[i].value
+                });
+            }
         }
+        // console.log('budgets array:');
+        // console.log(budgetsArr);
+        
+        var q = document.getElementById('quantity_' + _id).value;
+        var u = document.getElementById('unit_price_' + _id).value;
+        var amount = q * u;
+        
+        lineItems.push({
+            id: _id,
+            Expense: document.getElementById('expense_' + _id).value,
+            Purpose: document.getElementById('purpose_' + _id).value,
+            Category: document.getElementById('category_' + _id).value,
+            Quantity: document.getElementById('quantity_' + _id).value,
+            UnitPrice: document.getElementById('unit_price_' + _id).value,
+            Budgets: budgetsArr,
+            Amount: amount
+        });
+
+        // updateSummaryTable();
     }
-    
-    var q = document.getElementById('quantity_' + _id).value;
-    var u = document.getElementById('unit_price_' + _id).value;
-    var amount = q * u;
-    
-    lineItems.push({
-        id: _id,
-        Expense: document.getElementById('expense_' + _id).value,
-        Purpose: document.getElementById('purpose_' + _id).value,
-        Category: document.getElementById('category_' + _id).value,
-        Quantity: document.getElementById('quantity_' + _id).value,
-        UnitPrice: document.getElementById('unit_price_' + _id).value,
-        Budgets: budgetsArr,
-        Amount: amount
-    });
-
-    updateSummaryTable();
-
 }
 
 /** Delete function */
 function removeLineItem(_id) {
     var box = document.getElementById('lineItemBox_' + _id);
     box.remove();
-    itemNum --;
+    idFlags[_id] = false;
     // var summary = document.getElementById('summary_row_' + _id);
     // summary.remove();
-    var n = lineItems.length;
-    for (var i = 0; i < n; i++) {
-        if (lineItems[i].id == _id) {
-            lineItems.splice(i, 1);
-        }
-    }
-    updateSummaryTable();
+    // var n = lineItems.length;
+    // for (var i = 0; i < n; i++) {
+    //     if (lineItems[i].id == _id) {
+    //         lineItems.splice(i, 1);
+    //     }
+    // }
+    // updateSummaryTable();
 }
 
 /** Init confirm button */
-$(document).on('click', '#confirm_1', function() {
-    confirmItem(1);
-});
+// $(document).on('click', '#confirm_1', function() {
+//     confirmItem(1);
+// });
 
 /** Init delete button */
 $(document).on('click', '#delete_1', function() {
