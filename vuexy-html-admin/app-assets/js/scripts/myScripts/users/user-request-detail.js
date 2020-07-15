@@ -30,7 +30,7 @@ var itemAmount = 0;
 var additionalTax = 0;
 
 window.onload = function() {
-    // var request_id = window.sessionStorage.getItem('RequestID');
+    var request_id = window.sessionStorage.getItem('RequestID');
     this.console.log(request_id);
 
     // Request Example: Reimbursement
@@ -40,7 +40,7 @@ window.onload = function() {
     // Request Example: Procard Receipt
     // request_id = "5f0e484a7f2ae5004492a15e";
     // Request Example: Pay an Invoice
-    request_id = "5f0e530b7f2ae5004492a161";
+    // request_id = "5f0e530b7f2ae5004492a161";
 
     requestInfo = getRequestInfo(request_id);
     updateRequestInfo(requestInfo);

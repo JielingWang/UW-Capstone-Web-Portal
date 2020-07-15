@@ -9,6 +9,9 @@ idFlags.push(false);
 // _id = 1, the initial one
 idFlags.push(true);
 
+var budgetIds = [];
+budgetIds.push(2);
+
 var defaultMode = false;
 
 var formData = new FormData();
@@ -149,133 +152,7 @@ $(".steps-validation").steps({
         alert("Submitted!");
         alert('send data to database');
 
-        /** Confirm each line item */
-        for (var x = 1; x <= idFlags.length; x++) {
-            if (idFlags[x]) {
-                confirmItem(x);
-            }
-        }
-
-        // getUserInfo();
-        var formData = new FormData();
-
-        // var itemsCost = 0;
-        // for (var i = 0; i < lineItems.length; i++) {
-        //     var firstChar = lineItems[i].Amount.charAt(0);
-        //     if (firstChar === "$") {
-        //         var amountNum = lineItems[i].Amount.substr(1);
-        //         itemsCost += parseFloat(amountNum);
-        //     } else {
-        //         itemsCost += parseFloat(lineItems[i].Amount);
-        //     }
-        // }
-
-        //this is the JSON Object we are sending to the server
-        var JSON_toServer = {
-            "userID_ref": null, 
-            "OrderType": null, 
-            "OrderInfo": null,  //this is where we are going to put JSON_OrderInfo_inForm JSON object, but we will convert JSON_OrderInfo_inForm JSON object to string to send to server
-            "OrderStatus": null, 
-            "ChatInfo": null,
-            "assignedTo": null
-        };
-
-        var addrInfo = null;
-        
-        if (defaultMode) {
-            var useNewAddr = document.getElementById('use-new-addr');
-            if (useNewAddr.checked) {
-                addrInfo = {
-                    FullName: document.getElementById('full_name').value,
-                    AddrLine1: document.getElementById('street_addr_1').value,
-                    AddrLine2: document.getElementById('street_addr_2').value,
-                    AddrCity: document.getElementById('addr_city').value,
-                    AddrState: document.getElementById('addr_state').value,
-                    AddrZip: document.getElementById('addr_zip').value,
-                    AddrCountry: document.getElementById('addr_country').value
-                };
-                var saveAddr = document.getElementById('save-default-addr');
-                if (saveAddr.checked) {
-                    window.localStorage.setItem('defaultAddr', JSON.stringify(addrInfo));
-                }
-            } else {
-                addrInfo = JSON.parse(window.localStorage.getItem('defaultAddr'));
-            }
-        } else {
-            addrInfo = {
-                FullName: document.getElementById('full_name').value,
-                AddrLine1: document.getElementById('street_addr_1').value,
-                AddrLine2: document.getElementById('street_addr_2').value,
-                AddrCity: document.getElementById('addr_city').value,
-                AddrState: document.getElementById('addr_state').value,
-                AddrZip: document.getElementById('addr_zip').value,
-                AddrCountry: document.getElementById('addr_country').value
-            };
-            var saveAddr = document.getElementById('save-default-addr');
-            if (saveAddr.checked) {
-                window.localStorage.setItem('defaultAddr', JSON.stringify(addrInfo));
-            }
-        }
-
-        
-
-        var vendor_info = {
-            Name: $("input[name='vendor-name']").val(),
-            Email: $("input[name='vendor-email']").val(),
-            Phone: $("input[name='vendor-phone']").val(),
-            Website: $("input[name='vendor-website']").val()
-        };
-
-        var requestInfo = {
-            VendorInfo: vendor_info,
-            Addr: addrInfo,
-            LineItems: lineItems
-            // ItemsCost: itemsCost
-        };
-
-        //now lets set up the JSON_toServer JSON Object
-        JSON_toServer.userID_ref = user_id;  // 5e63127145f8e019d1f26ddc
-        JSON_toServer.OrderType = "Pay an Invoice";
-        JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
-        // console.log(typeof(requestInfo));
-        JSON_toServer.OrderStatus = "Submitted"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
-        JSON_toServer.ChatInfo = "TEST CHAT INFO"; //leaving this empty since there's no chat when user upload a order first
-        JSON_toServer.assignedTo = null; //leaving this as null since there's no one assigned when a user upload/submit a order.
-
-        for (var i = 1; i <= fileNum; i++) {
-            var fileSelect = document.getElementById("file_" + i);
-            if (fileSelect) {
-                for(var x = 0; x < fileSelect.files.length; x++) {
-                    formData.append(fileSelect.files[x].name, fileSelect.files[x]);
-                }
-                // "files" should stay as it is, 
-                // becuase this is how server can identify files from the JSON information, 
-                // when it get this HTTP request
-                formData.append("files", fileSelect.files[x]);
-            }
-        }
-
-        //here we just pass in the JSON object we need to pass to the server. "JSON_body" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request
-        formData.set("JSON_body", JSON.stringify(JSON_toServer));
-        // Http Request  
-        var request = new XMLHttpRequest();
-        //this function will get the response from the server after we upload the order
-        request.onreadystatechange = function() {
-            console.log("Request info is here:");
-            if (request.readyState == 4) {
-                // show it in the console
-                const response_obj = JSON.parse(request.response);
-                const data_obj = response_obj.data;
-                console.log(data_obj);
-                //convert order info to JSON
-                const requestInfo_obj = JSON.parse(data_obj.OrderInfo);
-                console.log(requestInfo_obj);
-                window.sessionStorage.setItem('RequestID', data_obj._id);
-                // window.location.href = "../../../html/ltr/buyers/buyer-request-detail.html";
-            }
-        };
-        request.open('POST', baseURL + "uploadOrder/" + type + "/" + unit_id);
-        request.send(formData);
+        submitClicked();
     }
 });
 
@@ -427,6 +304,136 @@ $(document).on('click', '#use-new-addr', function() {
 
 /***************** BEGIN: Step3 *******************/
 
+function submitClicked() {
+    /** Confirm each line item */
+    for (var x = 1; x <= idFlags.length; x++) {
+        if (idFlags[x]) {
+            confirmItem(x);
+        }
+    }
+
+    // getUserInfo();
+    var formData = new FormData();
+
+    // var itemsCost = 0;
+    // for (var i = 0; i < lineItems.length; i++) {
+    //     var firstChar = lineItems[i].Amount.charAt(0);
+    //     if (firstChar === "$") {
+    //         var amountNum = lineItems[i].Amount.substr(1);
+    //         itemsCost += parseFloat(amountNum);
+    //     } else {
+    //         itemsCost += parseFloat(lineItems[i].Amount);
+    //     }
+    // }
+
+    //this is the JSON Object we are sending to the server
+    var JSON_toServer = {
+        "userID_ref": null, 
+        "OrderType": null, 
+        "OrderInfo": null,  //this is where we are going to put JSON_OrderInfo_inForm JSON object, but we will convert JSON_OrderInfo_inForm JSON object to string to send to server
+        "OrderStatus": null, 
+        "ChatInfo": null,
+        "assignedTo": null
+    };
+
+    var addrInfo = null;
+    
+    if (defaultMode) {
+        var useNewAddr = document.getElementById('use-new-addr');
+        if (useNewAddr.checked) {
+            addrInfo = {
+                FullName: document.getElementById('full_name').value,
+                AddrLine1: document.getElementById('street_addr_1').value,
+                AddrLine2: document.getElementById('street_addr_2').value,
+                AddrCity: document.getElementById('addr_city').value,
+                AddrState: document.getElementById('addr_state').value,
+                AddrZip: document.getElementById('addr_zip').value,
+                AddrCountry: document.getElementById('addr_country').value
+            };
+            var saveAddr = document.getElementById('save-default-addr');
+            if (saveAddr.checked) {
+                window.localStorage.setItem('defaultAddr', JSON.stringify(addrInfo));
+            }
+        } else {
+            addrInfo = JSON.parse(window.localStorage.getItem('defaultAddr'));
+        }
+    } else {
+        addrInfo = {
+            FullName: document.getElementById('full_name').value,
+            AddrLine1: document.getElementById('street_addr_1').value,
+            AddrLine2: document.getElementById('street_addr_2').value,
+            AddrCity: document.getElementById('addr_city').value,
+            AddrState: document.getElementById('addr_state').value,
+            AddrZip: document.getElementById('addr_zip').value,
+            AddrCountry: document.getElementById('addr_country').value
+        };
+        var saveAddr = document.getElementById('save-default-addr');
+        if (saveAddr.checked) {
+            window.localStorage.setItem('defaultAddr', JSON.stringify(addrInfo));
+        }
+    }
+
+    
+
+    var vendor_info = {
+        Name: $("input[name='vendor-name']").val(),
+        Email: $("input[name='vendor-email']").val(),
+        Phone: $("input[name='vendor-phone']").val(),
+        Website: $("input[name='vendor-website']").val()
+    };
+
+    var requestInfo = {
+        VendorInfo: vendor_info,
+        Addr: addrInfo,
+        LineItems: lineItems
+        // ItemsCost: itemsCost
+    };
+
+    //now lets set up the JSON_toServer JSON Object
+    JSON_toServer.userID_ref = user_id;  // 5e63127145f8e019d1f26ddc
+    JSON_toServer.OrderType = "Pay an Invoice";
+    JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
+    // console.log(typeof(requestInfo));
+    JSON_toServer.OrderStatus = "Submitted"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
+    JSON_toServer.ChatInfo = "TEST CHAT INFO"; //leaving this empty since there's no chat when user upload a order first
+    JSON_toServer.assignedTo = null; //leaving this as null since there's no one assigned when a user upload/submit a order.
+
+    for (var i = 1; i <= fileNum; i++) {
+        var fileSelect = document.getElementById("file_" + i);
+        if (fileSelect) {
+            for(var x = 0; x < fileSelect.files.length; x++) {
+                formData.append(fileSelect.files[x].name, fileSelect.files[x]);
+            }
+            // "files" should stay as it is, 
+            // becuase this is how server can identify files from the JSON information, 
+            // when it get this HTTP request
+            formData.append("files", fileSelect.files[x]);
+        }
+    }
+
+    //here we just pass in the JSON object we need to pass to the server. "JSON_body" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request
+    formData.set("JSON_body", JSON.stringify(JSON_toServer));
+    // Http Request  
+    var request = new XMLHttpRequest();
+    //this function will get the response from the server after we upload the order
+    request.onreadystatechange = function() {
+        console.log("Request info is here:");
+        if (request.readyState == 4) {
+            // show it in the console
+            const response_obj = JSON.parse(request.response);
+            const data_obj = response_obj.data;
+            console.log(data_obj);
+            //convert order info to JSON
+            const requestInfo_obj = JSON.parse(data_obj.OrderInfo);
+            console.log(requestInfo_obj);
+            window.sessionStorage.setItem('RequestID', data_obj._id);
+            window.location.href = "../../../html/ltr/users/user-request-detailpage.html";
+        }
+    };
+    request.open('POST', baseURL + "uploadOrder/" + type + "/" + unit_id);
+    request.send(formData);
+}
+
 /**
  * BEGIN: Budgets Controller
  * @param _id id for line item, start from 1
@@ -443,9 +450,7 @@ $(document).on('click', '#use-new-addr', function() {
  * Functionality: add more budget numbers
  */
 $(document).on('click', '#budget_btn_1_1', function() {
-    var _id = 1;
-    var _budget_id = 1;
-    document.getElementById('budget_' + _id + '_' + _budget_id).after(addBudget(_id, _budget_id + 1, false));
+    document.getElementById('budget_1_1').after(addBudget(1, budgetIds[0] ++, false));
 });
 
 
@@ -459,6 +464,10 @@ $(document).on('click', '#budget_btn_1_1', function() {
  * the button will be plus button, otherwise the button will be delete button
  */
 function addBudget(_id, _budget_id, init) {
+    if (init) {
+        budgetIds.push(2);
+    }
+
     var box = document.createElement('div');
     box.setAttribute('class', 'col-12');
     box.setAttribute('id', 'budget_' + _id + '_' + _budget_id);
@@ -473,7 +482,7 @@ function addBudget(_id, _budget_id, init) {
 
     var second = document.createElement('div');
     second.setAttribute('class', 'col-md-2');
-    second.appendChild(genBudgetsSelectBox(_id));
+    second.appendChild(genBudgetsSelectBox(_id, _budget_id));
 
     var third = document.createElement('div');
     third.setAttribute('class', 'col-md-2');
@@ -525,7 +534,7 @@ function addBudget(_id, _budget_id, init) {
     btn.appendChild(icon);
     if (init) {
         btn.onclick = function() {
-            document.getElementById('budget_' + _id + '_' + _budget_id).after(addBudget(_id, _budget_id + 1, false));
+            document.getElementById('budget_' + _id + '_' + _budget_id).after(addBudget(_id, budgetIds[_id - 1]++, false));
         }
     } else {
         btn.onclick = function() {
@@ -598,6 +607,9 @@ function addBudgetOptions(_id, _budget_id) {
     var row = document.createElement('div');
     row.setAttribute('class', 'form-group row');
 
+    var zero = document.createElement('div');
+    zero.setAttribute('class', 'col-md-4');
+
     var first = document.createElement('div');
     first.setAttribute('class', 'col-md-1');
     first.appendChild(addNewBudgetInfoCheckbox(_id, _budget_id, 1));
@@ -610,6 +622,7 @@ function addBudgetOptions(_id, _budget_id) {
     third.setAttribute('class', 'col-md-1');
     third.appendChild(addNewBudgetInfoCheckbox(_id, _budget_id, 3));
     
+    row.appendChild(zero);
     row.appendChild(first);
     row.appendChild(addNewBudgetInfoInput(_id, _budget_id, 1));
     row.appendChild(second);
@@ -667,7 +680,12 @@ function addNewBudgetInfoCheckbox(_id, _budget_id, seq) {
  */
 function addNewBudgetInfoInput(_id, _budget_id, seq) {
     var div = document.createElement('div');
-    div.setAttribute('class', 'col-md-3 hidden');
+    if (seq == 1 || seq == 2) {
+        div.setAttribute('class', 'col-md-2 hidden');
+    } else if (seq == 3) {
+        div.setAttribute('class', 'col-md-3 hidden');
+    }
+
     div.setAttribute('id', 'budget-info-input-' + _id + '-' + _budget_id + '-' + seq);
     var i = document.createElement('input');
     i.setAttribute('type', 'text');
@@ -695,9 +713,17 @@ function toggleInputBox(_id, _budget_id, seq) {
     var checkbox = document.getElementById('budget-info-' + _id + '-' + _budget_id + '-' + seq);
     var infoInput = document.getElementById('budget-info-input-' + _id + '-' + _budget_id + '-' + seq);
     if (checkbox.checked) {
-        infoInput.setAttribute('class', 'col-md-3');
+        if (seq == 1 || seq == 2) {
+            infoInput.setAttribute('class', 'col-md-1');
+        } else if (seq == 3) {
+            infoInput.setAttribute('class', 'col-md-2');
+        }
     } else {
-        infoInput.setAttribute('class', 'col-md-3 hidden');
+        if (seq == 1 || seq == 2) {
+            infoInput.setAttribute('class', 'col-md-1 hidden');
+        } else if (seq == 3) {
+            infoInput.setAttribute('class', 'col-md-2 hidden');
+        }
     }
 }
 
@@ -735,11 +761,13 @@ function splitWithChanged(_id, _budget_id) {
     }
 }
 
-function genBudgetsSelectBox(_id) {
+function genBudgetsSelectBox(_id, _budget_id) {
     var sel = document.createElement('select');
     sel.setAttribute('class', 'custom-select form-control');
     sel.setAttribute('name', 'budget_num_' + _id);
-    sel.appendChild(addBudgetData('Please select'));
+    sel.setAttribute('id', 'budget_num_' + _id + '_' + _budget_id);
+    sel.setAttribute('required', '');
+    sel.appendChild(addBudgetData('0'));
     
     for (var i = 0; i < budgets_database.length; i++) {
         var num = budgets_database[i];
@@ -763,8 +791,13 @@ $(document).on('click', '#split_with_1_1', function(){
  */
 function addBudgetData(num) {
     var op = document.createElement('option');
-    op.setAttribute('value', num);
-    op.innerHTML = num;
+    if (num == "0") {
+        op.setAttribute('value', '');
+        op.innerHTML = "Please select"
+    } else {
+        op.setAttribute('value', num);
+        op.innerHTML = num;
+    }
     return op;
 }
 
