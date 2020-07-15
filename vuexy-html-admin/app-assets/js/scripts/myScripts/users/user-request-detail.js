@@ -1,6 +1,7 @@
 var requestType = document.getElementById("request-type");
 var requester = document.getElementById("requester");
 var payee = document.getElementById("payee");
+var payeeLabel = document.getElementById("payee-label");
 var subunit = document.getElementById("subunit");
 
 var requestStatus = document.getElementById("status");
@@ -26,12 +27,21 @@ var feedbackBlock = document.getElementById("feedback-block");
 var request_id = null;
 
 var itemAmount = 0;
-var addTax = 0;
+var additionalTax = 0;
 
 window.onload = function() {
     // var request_id = window.sessionStorage.getItem('RequestID');
     this.console.log(request_id);
-    request_id = "5efb77159a0b5e00457acff8";
+
+    // Request Example: Reimbursement
+    // request_id = "5efb77159a0b5e00457acff8";
+    // Request Example: Purchase Request
+    // request_id = "5f0e13f67f2ae5004492a15c";
+    // Request Example: Procard Receipt
+    // request_id = "5f0e484a7f2ae5004492a15e";
+    // Request Example: Pay an Invoice
+    request_id = "5f0e530b7f2ae5004492a161";
+
     requestInfo = getRequestInfo(request_id);
     updateRequestInfo(requestInfo);
     collectHistoryInfo(requestInfo);
@@ -151,14 +161,19 @@ function updateRequestInfo(request_data) {
 
     const requestContent = JSON.parse(basicInfo.OrderInfo);
     // console.log(requestContent);
-    var reimburseFor = requestContent.ReimburseFor;
-    if (reimburseFor == "onbehalf") {
-        var payee_input = requestContent.OnbehalfName + 
-                            " (" + requestContent.OnbehalfEmail + ", " + 
-                            requestContent.OnbehalfAffiliation + ")";
-        payee.innerHTML = payee_input;
-    } else {
-        payee.innerHTML = requester_info.userInfo.Name;
+    if (request_type == "Reimbursement") {
+        payee.setAttribute('class', 'visible');
+        payeeLabel.setAttribute('class', 'mt-2');
+
+        var reimburseFor = requestContent.ReimburseFor;
+        if (reimburseFor == "onbehalf") {
+            var payee_input = requestContent.OnbehalfName + 
+                                " (" + requestContent.OnbehalfEmail + ", " + 
+                                requestContent.OnbehalfAffiliation + ")";
+            payee.innerHTML = payee_input;
+        } else {
+            payee.innerHTML = requester_info.userInfo.Name;
+        }
     }
 
     // Part 3: Line item table
@@ -189,8 +204,13 @@ function genRequestInfoHead(request_type) {
         th_2.innerHTML = "DELIVERY METHODS";
         th_3.setAttribute('colspan', '2');
         th_3.innerHTML = "REQUEST SUMMARY";
-    } else if (request_type == "Purchase Request") {
+    } else if (request_type == "Purchase Request" || request_type == "Pay an Invoice") {
         th_1.innerHTML = "SHIPPING ADDRESS";
+        th_2.innerHTML = "VENDOR CONTACTS";
+        th_3.setAttribute('colspan', '2');
+        th_3.innerHTML = "REQUEST SUMMARY";
+    } else if (request_type == "Procard Receipt") {
+        th_1.innerHTML = "CARDHOLDER";
         th_2.innerHTML = "VENDOR CONTACTS";
         th_3.setAttribute('colspan', '2');
         th_3.innerHTML = "REQUEST SUMMARY";
@@ -218,32 +238,55 @@ function genRequestInfoBody(request_type, request_info) {
     td_3.setAttribute('style', 'vertical-align: top;');
     td_4.setAttribute('style', 'vertical-align: top;');
 
-    // Part 1: Addr
-    var p1 = document.createElement('p');
-    var p2 = document.createElement('p');
-    var p3 = document.createElement('p');
-    var p4 = document.createElement('p');
-    if (request_info.Payment == "Check mail") {
+    // Part 1: Addr / Cardholder
+    if (request_type == "Reimbursement") {
+        var p1 = document.createElement('p');
+        var p2 = document.createElement('p');
+        var p3 = document.createElement('p');
+        var p4 = document.createElement('p');
+        if (request_info.Payment == "Check mail") {
+            var addr = request_info.Addr;
+            p1.innerHTML = addr.FullName;
+            p2.innerHTML = addr.AddrLine1;
+            p3.innerHTML = addr.AddrLine2;
+            p4.innerHTML = addr.AddrCity + ", " + addr.AddrState + " " + addr.AddrZip;
+        } else {
+            p1.innerHTML = "Department of Electrical & Computer Engineering";
+            p2.innerHTML = "185 Stevens Way";
+            p3.innerHTML = "Paul Allen Center – Room AE100R";
+            p4.innerHTML = "Seattle, WA 98195-2500";
+        }
+        td_1.appendChild(p1);
+        td_1.appendChild(p2);
+        td_1.appendChild(p3);
+        td_1.appendChild(p4);
+    } else if (request_type == "Purchase Request" || request_type == "Pay an Invoice") {
+        var p1 = document.createElement('p');
+        var p2 = document.createElement('p');
+        var p3 = document.createElement('p');
+        var p4 = document.createElement('p');
         var addr = request_info.Addr;
         p1.innerHTML = addr.FullName;
         p2.innerHTML = addr.AddrLine1;
         p3.innerHTML = addr.AddrLine2;
         p4.innerHTML = addr.AddrCity + ", " + addr.AddrState + " " + addr.AddrZip;
-    } else {
-        p1.innerHTML = "Department of Electrical & Computer Engineering";
-        p2.innerHTML = "185 Stevens Way";
-        p3.innerHTML = "Paul Allen Center – Room AE100R";
-        p4.innerHTML = "Seattle, WA 98195-2500";
+        td_1.appendChild(p1);
+        td_1.appendChild(p2);
+        td_1.appendChild(p3);
+        td_1.appendChild(p4);
+    } else if (request_type == "Procard Receipt") {
+        var p = document.createElement('p');
+        p.innerHTML = request_info.Cardholder;
+        td_1.appendChild(p);
     }
-    td_1.appendChild(p1);
-    td_1.appendChild(p2);
-    td_1.appendChild(p3);
-    td_1.appendChild(p4);
+    
 
     // Part 2: delivery method / vendor contacts
     if (request_type == "Reimbursement") {
         td_2.innerHTML = request_info.Payment;
-    } else if (request_type == "Purchase Request") {
+    } else if (request_type == "Purchase Request" || 
+                    request_type == "Procard Receipt" || 
+                    request_type == "Pay an Invoice") {
         var name = document.createElement('p');
         var email = document.createElement('p');
         var phone = document.createElement('p');
@@ -260,26 +303,50 @@ function genRequestInfoBody(request_type, request_info) {
     }
 
     // Part 3: Cost summary
-    var summary_p1 = document.createElement('p');
-    var summary_p2 = document.createElement('p');
-    var summary_p3 = document.createElement('p');
-    summary_p1.innerHTML = "Items:";
-    summary_p2.innerHTML = "Additional tax:";
-    summary_p3.innerHTML = "<strong>Grand total:</strong>";
-    td_3.appendChild(summary_p1);
-    td_3.appendChild(summary_p2);
-    td_3.appendChild(summary_p3);
-    var item_cost = document.createElement('p');
-    item_cost.innerHTML = "$ " + itemAmount;
-    var estimated_tax = document.createElement('p');
-    estimated_tax.innerHTML = "$ " + addTax;
-    var grand_total = document.createElement('p');
-    var grand = itemAmount + addTax;
-    var grand_input = "$ " + grand;
-    grand_total.innerHTML = grand_input;
-    td_4.appendChild(item_cost);
-    td_4.appendChild(estimated_tax);
-    td_4.appendChild(grand_total);
+    if (request_type == "Reimbursement" || request_type == "Procard Receipt") {
+        var summary_p1 = document.createElement('p');
+        var summary_p2 = document.createElement('p');
+        var summary_p3 = document.createElement('p');
+        summary_p1.innerHTML = "Items:";
+        summary_p2.innerHTML = "Additional tax:";
+        summary_p3.innerHTML = "<strong>Grand total:</strong>";
+        td_3.appendChild(summary_p1);
+        td_3.appendChild(summary_p2);
+        td_3.appendChild(summary_p3);
+        var item_cost = document.createElement('p');
+        item_cost.innerHTML = "$ " + itemAmount;
+        var estimated_tax = document.createElement('p');
+        estimated_tax.innerHTML = "$ " + additionalTax;
+        var grand_total = document.createElement('p');
+        var grand = itemAmount + additionalTax;
+        var grand_input = "$ " + grand;
+        grand_total.innerHTML = grand_input;
+        td_4.appendChild(item_cost);
+        td_4.appendChild(estimated_tax);
+        td_4.appendChild(grand_total);
+    } else if (request_type == "Purchase Request" || request_type == "Pay an Invoice") {
+        var summary_p1 = document.createElement('p');
+        var summary_p2 = document.createElement('p');
+        var summary_p3 = document.createElement('p');
+        summary_p1.innerHTML = "Items:";
+        summary_p2.innerHTML = "Approximate tax:";
+        summary_p3.innerHTML = "<strong>Grand total:</strong>";
+        td_3.appendChild(summary_p1);
+        td_3.appendChild(summary_p2);
+        td_3.appendChild(summary_p3);
+        var item_cost = document.createElement('p');
+        item_cost.innerHTML = "$ " + itemAmount;
+        var estimated_tax = document.createElement('p');
+        additionalTax = itemAmount * 0.101;
+        estimated_tax.innerHTML = "$ " + Math.round(additionalTax * 1000) / 1000;
+        var grand_total = document.createElement('p');
+        var grand = itemAmount + additionalTax;
+        var grand_input = "$ " + grand;
+        grand_total.innerHTML = grand_input;
+        td_4.appendChild(item_cost);
+        td_4.appendChild(estimated_tax);
+        td_4.appendChild(grand_total);
+    }
     
     body.appendChild(td_1);
     body.appendChild(td_2);
@@ -321,7 +388,7 @@ function genLineItemTableHead(request_type) {
     head.appendChild(th_3);
     head.appendChild(th_4);
 
-    if (request_type == "Reimbursement") {
+    if (request_type == "Reimbursement" || request_type == "Procard Receipt") {
         th_5.innerHTML = "Amount";
         th_6.innerHTML = "Tax";
         th_7.innerHTML = "Documentation";
@@ -335,6 +402,11 @@ function genLineItemTableHead(request_type) {
         head.appendChild(th_5);
         head.appendChild(th_6);
         head.appendChild(th_7);
+    } else if (request_type == "Pay an Invoice") {
+        th_5.innerHTML = "Amount";
+        th_5.innerHTML = "Documentation";
+        head.appendChild(th_5);
+        head.appendChild(th_6);
     }
     
     
@@ -376,37 +448,43 @@ function genLineItemTableRow(item_seq, request_type, line_item_info, line_item_l
     tr.appendChild(category_td);
     tr.appendChild(budgets_td);
 
-    if (request_type == "Reimbursement") {
+    if (request_type == "Reimbursement" || request_type == "Procard Receipt") {
         var amount_td = document.createElement('td');
         amount_td.innerHTML = line_item_info.Amount;
         itemAmount += parseFloat(line_item_info.Amount);
         tr.appendChild(amount_td);
+
+        // Append tax td
+        var tax_td = document.createElement('td');
+        var taxInfo = line_item_info.TaxPaid;
+        if (taxInfo == "yes") {
+            tax_td.innerHTML = "Included";
+        } else if (taxInfo == "no") {
+            var item_amount = line_item_info.Amount;
+            var tax_estimate = item_amount * 0.101;
+            var tax_estimate_input = Math.round(tax_estimate * 1000) / 1000;
+            tax_td.innerHTML = tax_estimate_input;
+            additionalTax += parseFloat(tax_estimate_input);
+        } else if (taxInfo == "nontaxable") {
+            tax_td.innerHTML = "Not Taxable";
+        }
+        tr.appendChild(tax_td);
     } else if (request_type == "Purchase Request") {
         var quantity_td = document.createElement('td');
         var unit_id = document.createElement('td');
         quantity_td.innerHTML = line_item_info.Quantity;
         unit_id.innerHTML = line_item_info.UnitPrice;
+        quantityNum = parseFloat(line_item_info.Quantity);
+        unitPriceNum = parseFloat(line_item_info.UnitPrice);
+        itemAmount += quantityNum * unitPriceNum;
         tr.appendChild(quantity_td);
         tr.appendChild(unit_id);
+    } else if (request_type == "Pay an Invoice") {
+        var amount_td = document.createElement('td');
+        amount_td.innerHTML = line_item_info.Amount;
+        itemAmount += parseFloat(line_item_info.Amount);
+        tr.appendChild(amount_td);
     }
-    
-    // Append tax td
-    var tax_td = document.createElement('td');
-    
-    var taxInfo = line_item_info.TaxPaid;
-    if (taxInfo == "yes") {
-        tax_td.innerHTML = "Included";
-    } else if (taxInfo == "no") {
-        var item_amount = line_item_info.Amount;
-        var tax_estimate = item_amount * 0.101;
-        var tax_estimate_input = Math.round(tax_estimate * 1000) / 1000;
-        tax_td.innerHTML = tax_estimate_input;
-        addTax += parseFloat(tax_estimate_input);
-    } else if (taxInfo == "nontaxable") {
-        tax_td.innerHTML = "Not Taxable";
-    }
-    tr.appendChild(tax_td);
-
 
     // var viewBtn = document.createElement('button');
     // var editBtn = document.createElement('button');

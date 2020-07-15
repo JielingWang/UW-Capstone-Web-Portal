@@ -9,6 +9,8 @@ idFlags.push(false);
 // _id = 1, the initial one
 idFlags.push(true);
 
+var defaultMode = false;
+
 var formData = new FormData();
 var type = "";
 var unit_id = "";
@@ -146,7 +148,7 @@ $(".steps-validation").steps({
     onFinished: function (event, currentIndex) {
         alert("Submitted!");
         alert('send data to database');
-        
+
         /** Confirm each line item */
         for (var x = 1; x <= idFlags.length; x++) {
             if (idFlags[x]) {
@@ -176,39 +178,70 @@ $(".steps-validation").steps({
             "OrderStatus": null, 
             "ChatInfo": null,
             "assignedTo": null
+        };
+
+        var addrInfo = null;
+        
+        if (defaultMode) {
+            var useNewAddr = document.getElementById('use-new-addr');
+            if (useNewAddr.checked) {
+                addrInfo = {
+                    FullName: document.getElementById('full_name').value,
+                    AddrLine1: document.getElementById('street_addr_1').value,
+                    AddrLine2: document.getElementById('street_addr_2').value,
+                    AddrCity: document.getElementById('addr_city').value,
+                    AddrState: document.getElementById('addr_state').value,
+                    AddrZip: document.getElementById('addr_zip').value,
+                    AddrCountry: document.getElementById('addr_country').value
+                };
+                var saveAddr = document.getElementById('save-default-addr');
+                if (saveAddr.checked) {
+                    window.localStorage.setItem('defaultAddr', JSON.stringify(addrInfo));
+                }
+            } else {
+                addrInfo = JSON.parse(window.localStorage.getItem('defaultAddr'));
+            }
+        } else {
+            addrInfo = {
+                FullName: document.getElementById('full_name').value,
+                AddrLine1: document.getElementById('street_addr_1').value,
+                AddrLine2: document.getElementById('street_addr_2').value,
+                AddrCity: document.getElementById('addr_city').value,
+                AddrState: document.getElementById('addr_state').value,
+                AddrZip: document.getElementById('addr_zip').value,
+                AddrCountry: document.getElementById('addr_country').value
+            };
+            var saveAddr = document.getElementById('save-default-addr');
+            if (saveAddr.checked) {
+                window.localStorage.setItem('defaultAddr', JSON.stringify(addrInfo));
+            }
         }
 
-        var addrInfo = {
-            FullName: $("input[name='full-name']").val(),
-            AddrLine1: $("input[name='addr-line-1']").val(),
-            AddrLine2: $("input[name='addr-line-2']").val(),
-            AddrCity: $("input[name='addr-city']").val(),
-            AddrState: $("input[name='addr-state']").val(),
-            AddrZip: $("input[name='addr-zip']").val()
-        }
+        
+
+        var vendor_info = {
+            Name: $("input[name='vendor-name']").val(),
+            Email: $("input[name='vendor-email']").val(),
+            Phone: $("input[name='vendor-phone']").val(),
+            Website: $("input[name='vendor-website']").val()
+        };
 
         var requestInfo = {
-            ReimburseFor: $("input[name='myself-onbehalf']:checked").val(),
-            OnbehalfName: $("input[name='onbehalf-name']").val(),
-            OnbehalfEmail: $("input[name='onbehalf-email']").val(),
-            OnbehalfAffiliation: $("input[name='onbehalf-affiliation']").val(),
-            Individual: $("input[name='individual-reimbursed']").val(),
-            Payment: $("input[name='paymentRadio']:checked").val(),
+            VendorInfo: vendor_info,
             Addr: addrInfo,
             LineItems: lineItems
             // ItemsCost: itemsCost
-        }
+        };
 
         //now lets set up the JSON_toServer JSON Object
         JSON_toServer.userID_ref = user_id;  // 5e63127145f8e019d1f26ddc
-        JSON_toServer.OrderType = "Reimbursement";
+        JSON_toServer.OrderType = "Pay an Invoice";
         JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
         // console.log(typeof(requestInfo));
         JSON_toServer.OrderStatus = "Submitted"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
         JSON_toServer.ChatInfo = "TEST CHAT INFO"; //leaving this empty since there's no chat when user upload a order first
         JSON_toServer.assignedTo = null; //leaving this as null since there's no one assigned when a user upload/submit a order.
 
-        
         for (var i = 1; i <= fileNum; i++) {
             var fileSelect = document.getElementById("file_" + i);
             if (fileSelect) {
@@ -221,7 +254,6 @@ $(".steps-validation").steps({
                 formData.append("files", fileSelect.files[x]);
             }
         }
-            
 
         //here we just pass in the JSON object we need to pass to the server. "JSON_body" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request
         formData.set("JSON_body", JSON.stringify(JSON_toServer));
@@ -240,13 +272,10 @@ $(".steps-validation").steps({
                 console.log(requestInfo_obj);
                 window.sessionStorage.setItem('RequestID', data_obj._id);
                 // window.location.href = "../../../html/ltr/buyers/buyer-request-detail.html";
-                
             }
-        }
+        };
         request.open('POST', baseURL + "uploadOrder/" + type + "/" + unit_id);
         request.send(formData);
-        // window.location.href = "../../../html/ltr/users/user-summary.html";
-        // window.location.replace("../../../html/ltr/users/user-summary.html");
     }
 });
 
@@ -285,9 +314,26 @@ $(".steps-validation").validate({
  * Set global variables
  */
 window.onload = function() {
+    if (window.localStorage.getItem('defaultAddr')) {
+        defaultMode = true;
+    }
+    if (defaultMode) {
+        var addrObj = JSON.parse(window.localStorage.getItem('defaultAddr'));
+        var addrContent = document.getElementById('addr-content');
+        addrContent.appendChild(genAddrLine(addrObj.FullName));
+        addrContent.appendChild(genAddrLine(addrObj.AddrLine1));
+        addrContent.appendChild(genAddrLine(addrObj.AddrLine2));
+        var city = addrObj.AddrCity + ', ' + addrObj.AddrState + ' ' + addrObj.AddrZip;
+        addrContent.appendChild(genAddrLine(city));
+        addrContent.appendChild(genAddrCountry(addrObj.AddrCountry));
+    } else {
+        var default_block = document.getElementById('default-block');
+        default_block.setAttribute('class', 'hidden');
+        var addrInput = document.getElementById('mail-addr');
+        addrInput.setAttribute('class', 'visible');
+    }
     this.getUserInfo();
     this.getBudgetsInfo();
-    // this.console.log(this.budgets_database);
     // Initialize the budget select box
     var budget_select = this.document.getElementById('init_budget_select_box');
     for (var i = 0; i < this.budgets_database.length; i++) {
@@ -295,6 +341,19 @@ window.onload = function() {
         budget_select.appendChild(addBudgetData(num));
     }
 };
+
+function genAddrLine(content) {
+    var p = document.createElement('p');
+    p.setAttribute('style', 'margin: 0');
+    p.innerHTML = content.toUpperCase();
+    return p;
+}
+
+function genAddrCountry(content) {
+    var p = document.createElement('p');
+    p.innerHTML = content;
+    return p;
+}
 
 /**
  * Get the user information from database
@@ -334,8 +393,6 @@ function getUserInfo() {
 function getBudgetsInfo() {
     var onSuccess = function(data) {
         if (data.status == true) {
-            // console.log("budgets information is here");
-            // console.log(data.data);
             for (var i = 0; i < data.data.length; i++) {
                 budgets_database.push(data.data[i].budgetNumber);
             }
@@ -352,35 +409,20 @@ function getBudgetsInfo() {
 }
 
 
-/************ Step1 & Step2 *****************/
+/************ BEGIIN:  Step1 & Step2 *****************/
 
-$(document).on('click', 'input', function(){
-    /** myself or onbehalf radio */
-    var mySelf = $("input[name='myself-onbehalf']:checked").val();
-    if (mySelf == "myself") {
-        $('#onBehalf_Yes').attr('class', 'hidden');
-    } else if (mySelf == "onbehalf") {
-        $('#onBehalf_Yes').attr('class', 'visible');
-    }
-
-    /** payment method part */
-    var individual = $("input[name='individual-reimbursed']:checked").val();
-    if (individual == "employee") {
-        $('#emplyee_payment').attr('class', 'col-11 visible');
-        $('#nonemplyee_payment').attr('class', 'col-11 hidden');
+$(document).on('click', '#use-new-addr', function() {
+    var newAddr = document.getElementById('use-new-addr');
+    var addrInput = document.getElementById('mail-addr');
+    if (newAddr.checked) {
+        addrInput.setAttribute('class', 'visible');
     } else {
-        $('#emplyee_payment').attr('class', 'col-11 hidden');
-        $('#nonemplyee_payment').attr('class', 'col-11 visible');
-    }
-
-    /** control mail-addr */
-    var needsAddr = $("input[name='paymentRadio']:checked").val();
-    if (needsAddr == "Check mail") {
-        $('#mail-addr').attr('class', 'visible');
-    } else {
-        $('#mail-addr').attr('class', 'hidden');
+        addrInput.setAttribute('class', 'hidden');
     }
 });
+
+
+/************ END:  Step1 & Step2 *****************/
 
 
 /***************** BEGIN: Step3 *******************/
@@ -549,7 +591,6 @@ function inputGroup(_id, _budget_id, isPre, label, name) {
 
 }
 
-
 /** 
  * Generate task/option/project options behind each budget number 
  */
@@ -673,7 +714,6 @@ $(document).on('click', '#budget-info-1-1-3', function() {
     toggleInputBox(1, 1, 3);
 });
 
-
 /** 
  * Split with amount or percentage controller
  * Use to transfer between split with amount or percentage
@@ -762,6 +802,7 @@ $(document).on('click', '#option_project', function() {
 
 /** 
  * BEGIN: New Line Item Controller 
+ * @param _id line item id
  * @param _id line item id, assigned by idFlags.length, starts from 1
  *            each time when user add a new line item this _id will increase by 1 
  *            which serves as a unique id for all components inside this line item
@@ -798,7 +839,6 @@ function addNewLineItem(_id) {
     row.appendChild(addNewPurpose(_id));
     row.appendChild(addNewCategory(_id));
     row.appendChild(addNewAmount(_id));
-    row.appendChild(addNewTax(_id));
     row.appendChild(addBudget(_id, 1, true));
     // row.appendChild(addNewConfirmButton(_id));
 
@@ -975,75 +1015,6 @@ function addNewAmount(_id) {
 }
 
 /**
- * Add tax block
- * @param {int} _id 
- */
-function addNewTax(_id) {
-    var box = document.createElement('div');
-    box.setAttribute('class', 'col-12');
-    var row = document.createElement('div');
-    row.setAttribute('class', 'form-group row');
-
-    var first = document.createElement('div');
-    first.setAttribute('class', 'col-md-4');
-    first.innerHTML = "<span>Was Sales Tax Paid?</span>";
-
-    var second = document.createElement('div');
-    second.setAttribute('class', 'col-md-8');
-    var list = document.createElement('ul');
-    list.setAttribute('class', 'list-unstyled mb-0');
-    for (var x = 1; x <= 3; x++) {
-        list.appendChild(addNewTaxRadio(_id, x));
-    }
-    second.appendChild(list);
-    
-    row.appendChild(first);
-    row.appendChild(second);
-    box.appendChild(row);
-
-    return box; 
-}
-
-/**
- * Helper function to add new radio for tax block
- * @param {int} _id line item id
- * @param {int} seq the sequence of this radio, use to set unique id
- * @param {string} label the label of this radio
- */
-function addNewTaxRadio(_id, seq) {
-    var bullet = document.createElement('li');
-    bullet.setAttribute('class', 'd-inline-block mr-2');
-    var f = document.createElement('fieldset');
-    var d = document.createElement('div');
-    d.setAttribute('class', 'custom-control custom-radio');
-    var i = document.createElement('input');
-    i.setAttribute('type', 'radio');
-    i.setAttribute('class', 'custom-control-input');
-    i.setAttribute('name', 'taxRadio' + _id);    
-    i.setAttribute('id', 'taxRadio-' + _id + '-' + seq);
-    var l = document.createElement('label');
-    l.setAttribute('class', 'custom-control-label');
-    l.setAttribute('for', 'taxRadio-' + _id + '-' + seq);
-    if (seq == 1) {
-        i.setAttribute('value', 'yes');
-        l.innerHTML = "Yes";
-    } else if (seq == 2) {
-        i.setAttribute('value', 'no');
-        l.innerHTML = "No";
-    } else if (seq == 3) {
-        i.setAttribute('value', 'nontaxable');
-        l.innerHTML = "Item Not Taxable";
-    }
-    
-    d.appendChild(i);
-    d.appendChild(l);
-    f.appendChild(d);
-    bullet.appendChild(f);
-
-    return bullet;
-}
-
-/**
  * Add a new confirm button at the end of each item block
  * @param {int} _id the line item id
  */
@@ -1066,7 +1037,7 @@ function addNewConfirmButton(_id) {
         // confirmItem(_id);
     }
     first.appendChild(btn);
-    
+
     row.appendChild(first);
     box.appendChild(row);
 
@@ -1239,12 +1210,10 @@ function confirmItem(_id) {
             Category: document.getElementById('category_' + _id).value,
             Budgets: budgetsArr,
             Amount: document.getElementById('amount_' + _id).value,
-            TaxPaid: document.querySelector(`input[name="taxRadio${_id}"]:checked`).value
         });
 
         // updateSummaryTable();
     }
-
 }
 
 /** Delete function */
@@ -1294,8 +1263,9 @@ function updateSummaryTable() {
         var pur = lineItems[i].Purpose;
         var cate = lineItems[i].Category;
         var budgetsArr = lineItems[i].Budgets;
-        var amo = lineItems[i].Amount;
-        itemTable.appendChild(genNewLineItemRow(i + 1, exp, pur, cate, budgetsArr, amo));
+        var quan = lineItems[i].Quantity;
+        var unitPri = lineItems[i].UnitPrice;
+        itemTable.appendChild(genNewLineItemRow(i + 1, exp, pur, cate, quan, unitPri, budgetsArr));
     }
 }
 
@@ -1330,7 +1300,7 @@ function genBudgetsCell(arr) {
  * @param {table cell} Budgets a generated table cell which can be added to the table directly
  * @param {string} Amount content to fill in the amount cell
  */
-function genNewLineItemRow(_id, Expense, Purpose, Category, Budgets, Amount) {
+function genNewLineItemRow(_id, Expense, Purpose, Category, Quantity, UnitPrice, Budgets) {
 
     var _id_td = document.createElement('td');
     _id_td.innerHTML = _id;
@@ -1348,10 +1318,13 @@ function genNewLineItemRow(_id, Expense, Purpose, Category, Budgets, Amount) {
     var category_td = document.createElement('td');
     category_td.innerHTML = Category;
 
+    var quantity_td = document.createElement('td');
+    quantity_td.innerHTML = Quantity;
+
+    var price_td = document.createElement('td');
+    price_td.innerHTML = UnitPrice;
+
     var budgets_td = genBudgetsCell(Budgets);
-    
-    var amount_td = document.createElement('td');
-    amount_td.innerHTML = Amount;
 
     var receipt_td = document.createElement('td');
     var viewBtn = document.createElement('button');
@@ -1379,8 +1352,9 @@ function genNewLineItemRow(_id, Expense, Purpose, Category, Budgets, Amount) {
     tr.appendChild(_id_td);
     tr.appendChild(expense_purpose_td);
     tr.appendChild(category_td);
+    tr.appendChild(quantity_td);
+    tr.appendChild(price_td);
     tr.appendChild(budgets_td);
-    tr.appendChild(amount_td);
     tr.appendChild(receipt_td);
 
     return tr;
