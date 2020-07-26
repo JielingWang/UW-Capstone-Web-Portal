@@ -24,6 +24,7 @@
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/tether-theme-arrows.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/tether.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/shepherd-theme-default.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/datatables.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -160,7 +161,7 @@
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 			    <li><a href="user-dashboard.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
 				
-				<li class=" navigation-header"><span>General User</span></li>
+				<!-- <li class=" navigation-header"><span>General User</span></li>
 				<li class=" nav-item"><a href="#"><i class="feather icon-file-plus"></i><span class="menu-title" data-i18n="User">Create Request</span></a>
                     <ul class="menu-content" style="margin-left:10px;">
                         <li><a href="../users/user-reimbursement-3.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Reimbursement</span></a>
@@ -179,7 +180,7 @@
                     </ul>
                 </li>
                 
-				<li class="nav-item"><a href="../users/orderHistory-new.html"><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">My Requests</span></a></li>
+				<li class="nav-item"><a href="../users/orderHistory-new.html"><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">My Requests</span></a></li> -->
                 
                 <li class=" navigation-header"><span>Financial Staff</span></li>
 				<li class="active nav-item"><a href=""><i class="feather icon-aperture"></i><span class="menu-title" data-i18n="UserSettings">Pending Requests</span></a></li>
@@ -222,14 +223,18 @@
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
                             <h2 class="content-header-title float-left mb-0">My Pending Requests</h2>
-                            <div class="breadcrumb-wrapper col-12">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                            </div>
+                            <!-- <div class="breadcrumb-wrapper col-12">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.html">Home</a>
                                     </li>
                                     <li class="breadcrumb-item active">Pending Requests
                                     </li>
                                 </ol>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -301,7 +306,55 @@
                     </div>
                 </div>
             </div>
+
             <div class="content-body">
+                <section id="basic-databable">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <!-- <div class="card-header">
+                                    <h4 class="card-title">All Requests</h4>
+                                </div> -->
+                                <div class="card-content">
+                                    <div class="card-body card-dashboard">
+                                        <div class="table-responsive">
+                                            <table class="table zero-configuration table-hover" id="DataTables_Table_1">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Request ID</th>
+                                                        <th>Requester</th>
+                                                        <th>Type of Request</th>
+                                                        <th>Sub-unit</th>
+                                                        <th>Date</th>
+                                                        <th>Status</th>
+                                                        <th>Assigned To</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="request_table_body">
+                                                    
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Request ID</th>
+                                                        <th>Requester</th>
+                                                        <th>Type of Request</th>
+                                                        <th>Sub-unit</th>
+                                                        <th>Date</th>
+                                                        <th>Status</th>
+                                                        <th>Assigned To</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- <div class="content-body">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -343,10 +396,40 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <!-- END: Content-->
+
+    <!-- BEGIN: Modal -->
+    <div class="modal fade" id="reassignModal" tabindex="-1" role="dialog" aria-labelledby="reassignModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reassignModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- <span>Please select a fiscal staff to reassign:</span> -->
+                    <form>
+                        <div class="form-group">
+                            <label for="reassignSelect">Please select a fiscal staff to reassign</label>
+                            <select class="form-control" id="reassignSelect">
+                                <option value="">Not reassign to others</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" name="reassign">Reassign</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END: Modal -->
 
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>
@@ -387,7 +470,6 @@
 
     <!-- BEGIN: Page JS-->
     <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
-    <script src="../../../app-assets/js/scripts/datatables/datatable.js"></script>
     <!-- END: Page JS-->
 
     <!-- BEGIN: My JS-->

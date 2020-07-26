@@ -141,7 +141,7 @@
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item mr-auto"><a class="navbar-brand" href="../../../html/ltr/vertical-menu-template/index.html">
                         <div class="brand-logo"></div>
-                        <h2 class="brand-text mb-0">Davinci</h2>
+                        <h2 class="brand-text mb-0">AFWP</h2>
                     </a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary" data-ticon="icon-disc"></i></a></li>
             </ul>
@@ -151,7 +151,7 @@
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 			    <li><a href="user-dashboard.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
 				
-				<li class=" navigation-header"><span>General User</span></li>
+				<!-- <li class=" navigation-header"><span>General User</span></li>
 				<li class=" nav-item"><a href="#"><i class="feather icon-file-plus"></i><span class="menu-title" data-i18n="User">Create Request</span></a>
                     <ul class="menu-content" style="margin-left:10px;">
                         <li><a href="../users/user-reimbursement-3.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Reimbursement</span></a>
@@ -170,10 +170,10 @@
                     </ul>
                 </li>
                 
-				<li class="nav-item"><a href="../users/orderHistory-new.html"><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">My Requests</span></a></li>
+				<li class="nav-item"><a href="../users/orderHistory-new.html"><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">My Requests</span></a></li> -->
                 
                 <li class=" navigation-header"><span>Financial Staff</span></li>
-				<li class="active nav-item"><a href=""><i class="feather icon-aperture"></i><span class="menu-title" data-i18n="UserSettings">Pending Requests</span></a></li>
+				<li class="active nav-item"><a href="../buyers/buyer-dashboard.html"><i class="feather icon-aperture"></i><span class="menu-title" data-i18n="UserSettings">Pending Requests</span></a></li>
 				
 				<li class=" navigation-header"><span>Settings</span></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
@@ -269,8 +269,8 @@
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">REQUEST DATE</h6>
                                     <p id="request-date"></p>
-                                    <h6 class="mt-2">PAYEE</h6>
-                                    <p id="payee">Jieling Wang</p>
+                                    <h6 class="mt-2 hidden" id="payee-label">PAYEE</h6>
+                                    <p class="hidden" id="payee"></p>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-12 text-right">
@@ -329,7 +329,7 @@
                         <!-- Invoice Items Details -->
                         <div class="col-12" style="margin-top: 1rem;">
                             <div class="form-group row">
-                                <table class="table table-hover-animation zero-configuration" id="summary_table">
+                                <table class="table table-bordered zero-configuration" id="summary_table">
                                     <thead id="line-item-table-head">
                                         
                                     </thead>
@@ -341,13 +341,13 @@
                         </div>
 
                         <!-- Invoice Footer -->
-                        <div id="invoice-footer" class="text-right pt-3">
-                            <!-- <p>Transfer the amounts to the business amount below. Please include invoice number on your check. -->
+                        <!-- <div id="invoice-footer" class="text-right pt-3">
+                            <p>Transfer the amounts to the business amount below. Please include invoice number on your check.
                                 <p class="bank-details mb-0">
                                     <span class="mr-4">Apartment: <strong>ECE</strong></span>
                                     <span>Phone: <strong>G882-1111-2222-3333</strong></span>
                                 </p>
-                        </div>
+                        </div> -->
                         <!--/ Invoice Footer -->
 
                     </div>
@@ -358,15 +358,15 @@
                 <section>
                     <div class="row">
                         <div class="col-6">
-                            <div class="card">
+                            <div class="card" id="history_card">
                                 <div class="card-header">
                                     <h4 class="card-title">Request History</h4>
-                                    <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                                    <!-- <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
                                             <li><a data-action="collapse"><i class="feather icon-chevron-down"></i></a></li>
                                         </ul>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
@@ -409,14 +409,17 @@
                         </div>
 
                         <div class="col-6">
-                            <div class="card chat-application">
+                            <div class="card overflow-auto" id="note_card">
                                 <div class="card-header">
                                     <h4 class="card-title">Notes</h4>
                                 </div>
-                                <div class="chat-app-window">
+                                <div class="card-content" id="notes" style="padding: 1.5rem;">
+
+                                </div>
+                                <!-- <div class="chat-app-window">
                                     <div class="user-chats">
                                         <div class="chats" id="notes">
-                                            <!-- <div class="chat chat-left">
+                                            <div class="chat chat-left">
                                                 <div class="chat-avatar mt-50">
                                                     <p>Jieling Wang: </p>
                                                     <a class="avatar m-0" data-toggle="tooltip" href="#" data-placement="left" title="" data-original-title="">
@@ -488,16 +491,16 @@
                                                         <p>Pudding candy</p>
                                                     </div>
                                                 </div>
-                                            </div> -->
+                                            </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="chat-footer">
+                                    <div class="chat-footer">
                                         <div class="card-body d-flex justify-content-around pt-0">
                                             <input type="text" class="form-control mr-50" placeholder="Type your Message">
                                             <button type="button" class="btn btn-icon btn-primary"><i class="feather icon-navigation"></i></button>
                                         </div>
-                                    </div> -->
-                                </div>
+                                    </div>
+                                </div> -->
                             </div>
                         </div>
 
@@ -512,7 +515,7 @@
                         <div class="card">
                             <div class="card-content">
                                 <div class="card-body">
-                                    <h4 class="card-title">Feedback</h4>
+                                    <h4 class="card-title">Add new notes</h4>
                                     <form class="form">
                                         <div class="form-body">
                                             <div class="form-group">
@@ -521,8 +524,10 @@
                                             </div>
                                         </div>
                                         <div class="form-actions">
-                                            <button type="button" class="btn btn-primary mr-1" onclick="approveClicked()">Approve</button>
-                                            <button type="button" class="btn btn-outline-warning" onclick="sendBackClicked()">Send Back</button>
+                                            <button type="button" class="btn btn-outline-primary mr-1" onclick="takeNoteClicked()"><i class="mr-1 fa fa-pencil"></i>Take Note</button>
+                                            <button type="button" class="btn btn-outline-success mr-1" onclick="approveClicked()"><i class="mr-1 fa fa-check"></i>Accept</button>
+                                            <button type="button" class="btn btn-outline-danger mr-1" onclick="sendBackClicked()"><i class="mr-1 fa fa-times"></i>Send Back</button>
+                                            <button type="button" class="btn btn-success mr-1" onclick="finishClicked()"><i class="mr-1 fa fa-check-square-o"></i>Complete</button>
                                         </div>
                                     </form>
                                 </div>
@@ -553,6 +558,7 @@
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->

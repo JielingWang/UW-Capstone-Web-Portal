@@ -1,5 +1,7 @@
 var requestType = document.getElementById("request-type");
 var requester = document.getElementById("requester");
+var payee = document.getElementById("payee");
+var payeeLabel = document.getElementById("payee-label");
 var subunit = document.getElementById("subunit");
 
 var requestStatus = document.getElementById("status");
@@ -13,41 +15,49 @@ var requestInfoBody = document.getElementById('request-info-body');
 var lineItemTableHead = document.getElementById('line-item-table-head');
 var lineItemTableBody = document.getElementById('line-item-table-body');
 
+var historyCard = document.getElementById("history_card");
 var requestHistory = document.getElementById("request-history");
 var reqApproverArr = [];
 var reqBuyer = {};
+let approverResponseMap = new Map(); // key: approverid, value: {name, response}
 
-var noteBlock = document.getElementById("notes");
+var noteCard = document.getElementById("note_card");
+var noteContent = document.getElementById("notes");
 var feedbackBlock = document.getElementById("feedback-block");
+
+var notesArr = [];
+
+var itemAmount = 0;
+var additionalTax = 0;
 
 var request_id = null;
 
 window.onload = function() {
-    var request_id = window.sessionStorage.getItem('RequestID');
-    this.console.log(request_id);
-    // request_id = "5ec453d00598f40045c315b5";
+    // request_id = window.sessionStorage.getItem('RequestID');
+    // this.console.log(request_id);
+
+    // Request Example: Reimbursement
+    // request_id = "5f1b2a648813560044fa2c52";
+    // Request Example: Purchase Request
+    request_id = "5f1c92448813560044fa2c53";
+    // Request Example: Procard Receipt
+    // request_id = "5f1b14228cc64b1bd881ba65";
+    // Request Example: Pay an Invoice
+    // request_id = "5f0e530b7f2ae5004492a161";
+
     requestInfo = getRequestInfo(request_id);
     updateRequestInfo(requestInfo);
     collectHistoryInfo(requestInfo);
-    updateNotes(requestInfo);
-    // this.console.log(reqApproverArr);
-    updateRequestHistory();
+    prepareNotesArr(requestInfo);
+    updateNotes();
     // changeOrderStatus();
-    if (requestInfo.OrderStatus == "Accepted") {
-        this.feedbackBlock.setAttribute('class', 'row hidden');
-    }
-    if (window.sessionStorage.getItem("subunitID")) {
-        this.feedbackBlock.setAttribute('class', 'row hidden');
-    }
-    // this.updateChatInfo(request_id);
-    // getRequestHistory();
 }
 
 
 // just for debug
 function changeOrderStatus() {
     var data = {
-        OrderStatus: "Awaiting Approval"
+        OrderStatus: "Approved"
     };
     var onSuccess = function(data) {
         if (data.status == true) {
@@ -65,8 +75,43 @@ function changeOrderStatus() {
     makePostRequest("updateOrderStatus/" + request_id, data, onSuccess, onFailure);
 }
 
-function updateNotes(data) {
-    noteBlock.innerHTML = data.ChatInfo;
+/**
+ * Collect note information into global variable notesArr from database
+ * @param {JSON Object} data Request data got from database
+ */
+function prepareNotesArr(data) {
+    var info = data.ChatInfo;
+    for (var x = 0; x < info.length; x++) {
+        notesArr.push({
+            Name: info[x].userName,
+            Time: info[x].timeStamp,
+            Comment: info[x].comment
+        });
+    }
+}
+
+/**
+ * Update the content of note block based on global variable notesArr
+ */
+function updateNotes() {
+    noteContent.innerHTML = "";
+    noteCard.style.height = `${historyCard.clientHeight}px`;
+    for (var x = 0; x < notesArr.length; x++) {
+        var p = document.createElement('p');
+        var n = document.createElement('span');
+        n.setAttribute('class', 'mr-1');
+        n.innerHTML = notesArr[x].Name;
+        var t = document.createElement('span');
+        t.setAttribute('class', 'mr-1');
+        t.innerHTML = moment(notesArr[x].Time).format('MMMM Do YYYY h:mm:ss a');
+        var c = document.createElement('span');
+        c.setAttribute('class', 'mr-1');
+        c.innerHTML = notesArr[x].Comment;
+        p.appendChild(n);
+        p.appendChild(t);
+        p.appendChild(c);
+        noteContent.appendChild(p);
+    }
 }
 
 /**
@@ -132,7 +177,13 @@ function updateRequestInfo(request_data) {
     var request_type = basicInfo.OrderType;
     requestType.innerHTML = request_type;
     requestDate.innerHTML = basicInfo.submittedOn.substr(0, 10);
-    requestStatus.innerHTML = basicInfo.OrderStatus;
+    var idx = basicInfo.OrderStatus.indexOf(',');
+    if (idx > 0) {
+        requestStatus.innerHTML = basicInfo.OrderStatus.substring(0, idx);
+    } else {
+        requestStatus.innerHTML = basicInfo.OrderStatus;
+    }
+    
     requestID.innerHTML = basicInfo._id;
     requester_id = basicInfo.userID_ref;
     var requester_info = getUserInfo(requester_id);
@@ -145,20 +196,35 @@ function updateRequestInfo(request_data) {
         var assignedTo_info = getUserInfo(originalAssigndeTo);
         assignedTo.innerHTML = assignedTo_info.userInfo.Name;
     }
-    
-    // Part 2: Brief summary
+
     const requestContent = JSON.parse(basicInfo.OrderInfo);
     // console.log(requestContent);
-    requestInfoHead.appendChild(genRequestInfoHead(request_type));
-    requestInfoBody.appendChild(genRequestInfoBody(request_type, requestContent));
+    if (request_type == "Reimbursement") {
+        payee.setAttribute('class', 'visible');
+        payeeLabel.setAttribute('class', 'mt-2');
 
+        var reimburseFor = requestContent.ReimburseFor;
+        if (reimburseFor == "onbehalf") {
+            var payee_input = requestContent.OnbehalfName + 
+                                " (" + requestContent.OnbehalfEmail + ", " + 
+                                requestContent.OnbehalfAffiliation + ")";
+            payee.innerHTML = payee_input;
+        } else {
+            payee.innerHTML = requester_info.userInfo.Name;
+        }
+    }
+    
     // Part 3: Line item table
     lineItemTableHead.appendChild(genLineItemTableHead(request_type));
     const lineItems = requestContent.LineItems;
     var n = lineItems.length;
     for (var i = 0; i < n; i++) {
-        lineItemTableBody.appendChild(genLineItemTableRow(i + 1, request_type, lineItems[i]));
+        lineItemTableBody.appendChild(genLineItemTableRow(i + 1, request_type, lineItems[i], n));
     }
+
+    // Part 2: Brief summary
+    requestInfoHead.appendChild(genRequestInfoHead(request_type));
+    requestInfoBody.appendChild(genRequestInfoBody(request_type, requestContent));
 }
 
 
@@ -176,8 +242,13 @@ function genRequestInfoHead(request_type) {
         th_2.innerHTML = "DELIVERY METHODS";
         th_3.setAttribute('colspan', '2');
         th_3.innerHTML = "REQUEST SUMMARY";
-    } else if (request_type == "Purchase Request") {
+    } else if (request_type == "Purchase Request" || request_type == "Pay an Invoice") {
         th_1.innerHTML = "SHIPPING ADDRESS";
+        th_2.innerHTML = "VENDOR CONTACTS";
+        th_3.setAttribute('colspan', '2');
+        th_3.innerHTML = "REQUEST SUMMARY";
+    } else if (request_type == "Procard Receipt") {
+        th_1.innerHTML = "CARDHOLDER";
         th_2.innerHTML = "VENDOR CONTACTS";
         th_3.setAttribute('colspan', '2');
         th_3.innerHTML = "REQUEST SUMMARY";
@@ -205,28 +276,55 @@ function genRequestInfoBody(request_type, request_info) {
     td_3.setAttribute('style', 'vertical-align: top;');
     td_4.setAttribute('style', 'vertical-align: top;');
 
-    // Part 1: Addr
-    var p1 = document.createElement('p');
-    var p2 = document.createElement('p');
-    var p3 = document.createElement('p');
-    var p4 = document.createElement('p');
-    var p5 = document.createElement('p');
-    var addr = request_info.Addr;
-    p1.innerHTML = addr.FullName;
-    p2.innerHTML = addr.AddrLine1;
-    p3.innerHTML = addr.AddrLine2;
-    p4.innerHTML = addr.AddrCity + ", " + addr.AddrState;
-    p5.innerHTML = addr.AddrZip;
-    td_1.appendChild(p1);
-    td_1.appendChild(p2);
-    td_1.appendChild(p3);
-    td_1.appendChild(p4);
-    td_1.appendChild(p5);
+    // Part 1: Addr / Cardholder
+    if (request_type == "Reimbursement") {
+        var p1 = document.createElement('p');
+        var p2 = document.createElement('p');
+        var p3 = document.createElement('p');
+        var p4 = document.createElement('p');
+        if (request_info.Payment == "Check mail") {
+            var addr = request_info.Addr;
+            p1.innerHTML = addr.FullName;
+            p2.innerHTML = addr.AddrLine1;
+            p3.innerHTML = addr.AddrLine2;
+            p4.innerHTML = addr.AddrCity + ", " + addr.AddrState + " " + addr.AddrZip;
+        } else {
+            p1.innerHTML = "Department of Electrical & Computer Engineering";
+            p2.innerHTML = "185 Stevens Way";
+            p3.innerHTML = "Paul Allen Center – Room AE100R";
+            p4.innerHTML = "Seattle, WA 98195-2500";
+        }
+        td_1.appendChild(p1);
+        td_1.appendChild(p2);
+        td_1.appendChild(p3);
+        td_1.appendChild(p4);
+    } else if (request_type == "Purchase Request" || request_type == "Pay an Invoice") {
+        var p1 = document.createElement('p');
+        var p2 = document.createElement('p');
+        var p3 = document.createElement('p');
+        var p4 = document.createElement('p');
+        var addr = request_info.Addr;
+        p1.innerHTML = addr.FullName;
+        p2.innerHTML = addr.AddrLine1;
+        p3.innerHTML = addr.AddrLine2;
+        p4.innerHTML = addr.AddrCity + ", " + addr.AddrState + " " + addr.AddrZip;
+        td_1.appendChild(p1);
+        td_1.appendChild(p2);
+        td_1.appendChild(p3);
+        td_1.appendChild(p4);
+    } else if (request_type == "Procard Receipt") {
+        var p = document.createElement('p');
+        p.innerHTML = request_info.Cardholder;
+        td_1.appendChild(p);
+    }
+
 
     // Part 2: delivery method / vendor contacts
     if (request_type == "Reimbursement") {
         td_2.innerHTML = request_info.Payment;
-    } else if (request_type == "Purchase Request") {
+    } else if (request_type == "Purchase Request" || 
+                    request_type == "Procard Receipt" || 
+                    request_type == "Pay an Invoice") {
         var name = document.createElement('p');
         var email = document.createElement('p');
         var phone = document.createElement('p');
@@ -243,21 +341,50 @@ function genRequestInfoBody(request_type, request_info) {
     }
 
     // Part 3: Cost summary
-    var summary_p1 = document.createElement('p');
-    var summary_p2 = document.createElement('p');
-    var summary_p3 = document.createElement('p');
-    summary_p1.innerHTML = "Items:";
-    summary_p2.innerHTML = "Estimated tax:";
-    summary_p3.innerHTML = "<strong>Grand total:</strong>";
-    td_3.appendChild(summary_p1);
-    td_3.appendChild(summary_p2);
-    td_3.appendChild(summary_p3);
-    var item_cost = document.createElement('p');
-    var estimated_tax = document.createElement('p');
-    var grand_total = document.createElement('p');
-    td_4.appendChild(item_cost);
-    td_4.appendChild(estimated_tax);
-    td_4.appendChild(grand_total);
+    if (request_type == "Reimbursement" || request_type == "Procard Receipt") {
+        var summary_p1 = document.createElement('p');
+        var summary_p2 = document.createElement('p');
+        var summary_p3 = document.createElement('p');
+        summary_p1.innerHTML = "Items:";
+        summary_p2.innerHTML = "Additional tax:";
+        summary_p3.innerHTML = "<strong>Grand total:</strong>";
+        td_3.appendChild(summary_p1);
+        td_3.appendChild(summary_p2);
+        td_3.appendChild(summary_p3);
+        var item_cost = document.createElement('p');
+        item_cost.innerHTML = "$ " + itemAmount;
+        var estimated_tax = document.createElement('p');
+        estimated_tax.innerHTML = "$ " + additionalTax;
+        var grand_total = document.createElement('p');
+        var grand = itemAmount + additionalTax;
+        var grand_input = "$ " + grand;
+        grand_total.innerHTML = grand_input;
+        td_4.appendChild(item_cost);
+        td_4.appendChild(estimated_tax);
+        td_4.appendChild(grand_total);
+    } else if (request_type == "Purchase Request" || request_type == "Pay an Invoice") {
+        var summary_p1 = document.createElement('p');
+        var summary_p2 = document.createElement('p');
+        var summary_p3 = document.createElement('p');
+        summary_p1.innerHTML = "Items:";
+        summary_p2.innerHTML = "Approximate tax:";
+        summary_p3.innerHTML = "<strong>Grand total:</strong>";
+        td_3.appendChild(summary_p1);
+        td_3.appendChild(summary_p2);
+        td_3.appendChild(summary_p3);
+        var item_cost = document.createElement('p');
+        item_cost.innerHTML = "$ " + itemAmount;
+        var estimated_tax = document.createElement('p');
+        additionalTax = itemAmount * 0.101;
+        estimated_tax.innerHTML = "$ " + Math.round(additionalTax * 1000) / 1000;
+        var grand_total = document.createElement('p');
+        var grand = itemAmount + additionalTax;
+        var grand_input = "$ " + grand;
+        grand_total.innerHTML = grand_input;
+        td_4.appendChild(item_cost);
+        td_4.appendChild(estimated_tax);
+        td_4.appendChild(grand_total);
+    }
     
     body.appendChild(td_1);
     body.appendChild(td_2);
@@ -299,11 +426,13 @@ function genLineItemTableHead(request_type) {
     head.appendChild(th_3);
     head.appendChild(th_4);
 
-    if (request_type == "Reimbursement") {
+    if (request_type == "Reimbursement" || request_type == "Procard Receipt") {
         th_5.innerHTML = "Amount";
-        th_6.innerHTML = "Documentation";
+        th_6.innerHTML = "Tax";
+        th_7.innerHTML = "Documentation";
         head.appendChild(th_5);
         head.appendChild(th_6);
+        head.appendChild(th_7);
     } else if (request_type == "Purchase Request") {
         th_5.innerHTML = "Quantity";
         th_6.innerHTML = "Unit Price";
@@ -311,6 +440,11 @@ function genLineItemTableHead(request_type) {
         head.appendChild(th_5);
         head.appendChild(th_6);
         head.appendChild(th_7);
+    } else if (request_type == "Pay an Invoice") {
+        th_5.innerHTML = "Amount";
+        th_5.innerHTML = "Documentation";
+        head.appendChild(th_5);
+        head.appendChild(th_6);
     }
     
     
@@ -323,8 +457,9 @@ function genLineItemTableHead(request_type) {
  * @param {int} seq the sequence of this line item (since the id not always continuous)
  * @param {string} request_type 
  * @param {JSON Object} line_item_info 
+ * @param {int} line_item_len use to determine the row-span of docs column
  */
-function genLineItemTableRow(item_seq, request_type, line_item_info) {
+function genLineItemTableRow(item_seq, request_type, line_item_info, line_item_len) {
 
     var tr = document.createElement('tr');
     var _id_td = document.createElement('td');
@@ -351,66 +486,157 @@ function genLineItemTableRow(item_seq, request_type, line_item_info) {
     tr.appendChild(category_td);
     tr.appendChild(budgets_td);
 
-    if (request_type == "Reimbursement") {
+    if (request_type == "Reimbursement" || request_type == "Procard Receipt") {
         var amount_td = document.createElement('td');
         amount_td.innerHTML = line_item_info.Amount;
+        itemAmount += parseFloat(line_item_info.Amount);
         tr.appendChild(amount_td);
+
+        // Append tax td
+        var tax_td = document.createElement('td');
+        var taxInfo = line_item_info.TaxPaid;
+        if (taxInfo == "yes") {
+            tax_td.innerHTML = "Included";
+        } else if (taxInfo == "no") {
+            var item_amount = line_item_info.Amount;
+            var tax_estimate = item_amount * 0.101;
+            var tax_estimate_input = Math.round(tax_estimate * 1000) / 1000;
+            tax_td.innerHTML = tax_estimate_input;
+            additionalTax += parseFloat(tax_estimate_input);
+        } else if (taxInfo == "nontaxable") {
+            tax_td.innerHTML = "Not Taxable";
+        }
+        tr.appendChild(tax_td);
     } else if (request_type == "Purchase Request") {
         var quantity_td = document.createElement('td');
         var unit_id = document.createElement('td');
         quantity_td.innerHTML = line_item_info.Quantity;
         unit_id.innerHTML = line_item_info.UnitPrice;
+        quantityNum = parseFloat(line_item_info.Quantity);
+        unitPriceNum = parseFloat(line_item_info.UnitPrice);
+        itemAmount += quantityNum * unitPriceNum;
         tr.appendChild(quantity_td);
         tr.appendChild(unit_id);
+    } else if (request_type == "Pay an Invoice") {
+        var amount_td = document.createElement('td');
+        amount_td.innerHTML = line_item_info.Amount;
+        itemAmount += parseFloat(line_item_info.Amount);
+        tr.appendChild(amount_td);
     }
-    
-    var receipt_td = document.createElement('td');
-    var viewBtn = document.createElement('button');
-    var editBtn = document.createElement('button');
-    viewBtn.setAttribute('class', 'btn btn-icon btn-flat-success');
-    editBtn.setAttribute('class', 'btn btn-icon btn-flat-success');
-    var viewIcon = document.createElement('i');
-    var editIcon = document.createElement('i');
-    viewIcon.className = 'feather icon-file';
-    editIcon.className = 'feather icon-edit';
-    viewBtn.appendChild(viewIcon);
-    editBtn.appendChild(editIcon);
-    receipt_td.appendChild(viewBtn);
-    receipt_td.appendChild(editBtn);
-    // if (Receipt == null) {
-    //     receipt_td.appendChild(editBtn);
-    // } else {
-    //     receipt_td.appendChild(viewBtn);
-    //     receipt_td.appendChild(editBtn);
-    // }
 
-    // create tr element
-    
-    tr.appendChild(receipt_td);
+    // Append docs td
+    if (item_seq == 1) {
+        var doc_td = document.createElement('td');
+        doc_td.setAttribute('rowspan', `${line_item_len}`);
+        tr.appendChild(doc_td);
+        docsName = getDocsName(request_id);
+        // console.log(docsName);
+        if (docsName) {
+            for (var x = 0; x < docsName.length; x++) {
+                var a = document.createElement('a');
+                var name = docsName[x];
+                a.setAttribute('href', 
+                `https://coe-api.azurewebsites.net/api/downloadAttachment/${request_id}/${name}`);
+                a.setAttribute('style', 'margin-right: 1rem;');
+                a.innerHTML = name;
+                doc_td.appendChild(a);
+            }
+        }
+        
+    }
 
     return tr;
 }
 
 /**
+ * Get names of all attached files
+ * Return the JSON Object
+ * @param {string} request_id 
+ */
+function getDocsName(request_id) {
+    var info = null;
+    var onSuccess = function(data) {
+        if (data.status == true) {
+            info = data.data;
+        } else {
+            //error message
+            info = null;
+        }
+    }
+
+    var onFailure = function() {
+        // failure message
+        info = null;
+    }
+
+    makeGetRequest("getfilesAttached/" + request_id, onSuccess, onFailure);
+    return info;
+}
+
+/**
  * Generate a cell to display split budget 
- * @param {array} arr budgets array from the line item information
+ * @param {array (JSON Object)} arr budgets array from the line item information
  */
 function genBudgetsCell(arr) {
     var td = document.createElement('td');
     var n = arr.length;
-    if (n == 1) {
-        td.innerHTML = arr[0].Number;
-        return td;
-    }
 
     for (var i = 0; i < n; i++) {
+        var border = false;
         var p = document.createElement('p');
-        p.setAttribute('style', 'border-bottom: 1px dashed #d9d9d9;');
-        p.innerHTML = arr[i].Split + ' on ' + arr[i].Number;
+        if (n == 1) {
+            p.innerHTML = arr[i].Number;
+        } else {
+            p.innerHTML = arr[i].Split + ' on ' + arr[i].Number;
+        }
         td.appendChild(p);
+
+        // Append optional info
+        if (arr[i].Task) {
+            if (border == false) {
+                td.appendChild(genBudgetInfo(arr[i].Task, true));
+                border = true;
+            } else {
+                td.appendChild(genBudgetInfo(arr[i].Task, false));
+            }
+        }
+        if (arr[i].Option) {
+            if (border == false) {
+                td.appendChild(genBudgetInfo(arr[i].Option, true));
+                border = true;
+            } else {
+                td.appendChild(genBudgetInfo(arr[i].Option, false));
+            }
+        }
+        if (arr[i].Project) {
+            if (border == false) {
+                td.appendChild(genBudgetInfo(arr[i].Project, true));
+                border = true;
+            } else {
+                td.appendChild(genBudgetInfo(arr[i].Project, false));
+            }
+        }
+        if (border == false) {
+            p.setAttribute('style', 'border-bottom: 1px dashed #d9d9d9;');
+        }
     }
 
     return td;
+}
+
+/**
+ * Generate the additional info for the budget number
+ * @param {int} text contents of the info
+ * @param {boolean} border true or false, determine whether append border
+ */
+function genBudgetInfo(text, border) {
+    var info = document.createElement('p');
+    if (border) {
+        info.setAttribute('style', 'border-bottom: 1px dashed #d9d9d9;');
+    }
+    var info_input = "(" + text.toUpperCase() + ")";
+    info.innerHTML = info_input;
+    return info;
 }
 
 /**
@@ -425,25 +651,36 @@ function genBudgetsCell(arr) {
 function collectHistoryInfo(data) {
     var responses = data.ApprovalResponses;
     for (var i = 0; i < responses.length; i++) {
-        var r = responses[i].approverResponses;
-        for (var j = 0; j < r.length; j++) {
-            var approverName = getUserInfo(r[j].approverID_ref).userInfo.Name;
-            var idx = findApprover(approverName);
-            if (idx > -1) {
-                if (r[j].response) {
-                    reqApproverArr[idx].Responses.push(r[j].response);
-                }
-            } else {
-                var res = [];
-                if (r[j].response) {
-                    res.push(r[j].response);
-                }
-                reqApproverArr.push({
-                    Approver: approverName,
-                    Responses: res
+        var responseData = responses[i].approverResponses;
+        for (var x = 0; x < responseData.length; x++) {
+            var approver_id = responseData[x].approverID_ref;
+            if (!approverResponseMap.has(approver_id)) {
+                approverResponseMap.set(approver_id, {
+                    name: getUserInfo(approver_id).userInfo.Name,
+                    response: responseData[x].response
                 });
             }
         }
+        
+
+        // for (var j = 0; j < r.length; j++) {
+        //     var approverName = getUserInfo(r[j].approverID_ref).userInfo.Name;
+        //     var idx = findApprover(approverName);
+        //     if (idx > -1) {
+        //         if (r[j].response) {
+        //             reqApproverArr[idx].Responses.push(r[j].response);
+        //         }
+        //     } else {
+        //         var res = [];
+        //         if (r[j].response) {
+        //             res.push(r[j].response);
+        //         }
+        //         reqApproverArr.push({
+        //             Approver: approverName,
+        //             Responses: res
+        //         });
+        //     }
+        // }
     }
 
     var buyerName = null;
@@ -454,48 +691,71 @@ function collectHistoryInfo(data) {
         Status: data.OrderStatus,
         AssignedTo: buyerName
     };
+
+    requestHistory.appendChild(genFormStamp("Submitted", data.submittedOn));
+    if (approverResponseMap.size == 0) {
+        requestHistory.appendChild(genApprovalStamp(null, null));
+    } else {
+        for (const [key, value] of approverResponseMap.entries()) {
+            var appr = value.name;
+            var resp = value.response;
+            requestHistory.appendChild(genApprovalStamp(appr, resp));
+        }
+        // for (var i = 0; i < reqApproverArr.length; i++) {
+        //     var approver = reqApproverArr[i].Approver;
+        //     var responses = reqApproverArr[i].Responses;
+        //     requestHistory.appendChild(genApprovalStamp(approver, responses));
+        // }
+    }
+    // add status and timestamp
+    requestHistory.appendChild(genFiscalStaffStamp(reqBuyer.Status, reqBuyer.AssignedTo, data.lastModified));
+    requestHistory.appendChild(genClaimStamp(reqBuyer.Status, data.lastModified));
+    requestHistory.appendChild(genFinishStamp(reqBuyer.Status, data.lastModified));
 }
 
-function updateRequestHistory() {
-    requestHistory.appendChild(genFormStamp("Submitted"));
-    for (var i = 0; i < reqApproverArr.length; i++) {
-        var approver = reqApproverArr[i].Approver;
-        var responses = reqApproverArr[i].Responses;
-        requestHistory.appendChild(genApprovalStamp(approver, responses));
-    }
-    requestHistory.appendChild(genFiscalStaffStamp(reqBuyer.Status, reqBuyer.AssignedTo));
-    requestHistory.appendChild(genFinishStamp(reqBuyer.Status));
-}
+// function updateRequestHistory() {
+//     requestHistory.appendChild(genFormStamp("Submitted"));
+//     for (var i = 0; i < reqApproverArr.length; i++) {
+//         var approver = reqApproverArr[i].Approver;
+//         var responses = reqApproverArr[i].Responses;
+//         requestHistory.appendChild(genApprovalStamp(approver, responses));
+//     }
+//     requestHistory.appendChild(genFiscalStaffStamp(reqBuyer.Status, reqBuyer.AssignedTo));
+//     requestHistory.appendChild(genClaimStamp(reqBuyer.Status));
+//     requestHistory.appendChild(genFinishStamp(reqBuyer.Status));
+// }
 
 /**
  * Find the index of the given approver's name in reqApproverArr array
  * @param {string} name the approver's name
  * Return the index in reqApproverArr array
  */
-function findApprover(name) {
-    var result = -1;
-    for (var i = 0; i < reqApproverArr.length; i++) {
-        if (reqApproverArr[i].Approver) {
-            if (reqApproverArr[i].Approver == name) {
-                result = i;
-            }
-        }
+// function findApprover(name) {
+//     var result = -1;
+//     for (var i = 0; i < reqApproverArr.length; i++) {
+//         if (reqApproverArr[i].Approver) {
+//             if (reqApproverArr[i].Approver == name) {
+//                 result = i;
+//             }
+//         }
         
-    }
-    return result;
-}
+//     }
+//     return result;
+// }
 
 /**
  * Generate the history stamp of approval chain
  * @param {string} approver 
  * @param {array} responses
  */
-function genApprovalStamp(approver, responses) {
+function genApprovalStamp(approver, response) {
+     
     var stamp = document.createElement('li');
     var signal = document.createElement('div');
     var info = document.createElement('div');
 
-    var done = isDone(responses);
+    // var done = isDone(responses);
+    var done = response;
 
     var i = document.createElement('i');
     i.setAttribute('class', 'feather icon-alert-circle font-medium-2');
@@ -516,7 +776,11 @@ function genApprovalStamp(approver, responses) {
     
     info.appendChild(p);
     var span = document.createElement('span');
-    span.innerHTML = "By approver " + approver;
+    if (approver == null) {
+        span.innerHTML = "Not got approvers yet";
+    } else {
+        span.innerHTML = "By approver " + approver;
+    }
     info.appendChild(span);
     stamp.appendChild(signal);
     stamp.appendChild(info);
@@ -527,21 +791,22 @@ function genApprovalStamp(approver, responses) {
  * Check if this approver approved all budgets belongs to him
  * @param {array} responses array of responses of this approver
  */
-function isDone(responses) {
-    if (responses.length == 0) return false;
-    for (var i = 0; i < responses.length; i++) {
-        if (!responses[i]) return false;
-    }
-    return true;
-}
+// function isDone(responses) {
+//     if (responses.length == 0) return false;
+//     for (var i = 0; i < responses.length; i++) {
+//         if (!responses[i]) return false;
+//     }
+//     return true;
+// }
 
-function genFiscalStaffStamp(request_status, assignedTo) {
+function genFiscalStaffStamp(request_status, assignedTo, timeStamp) {
     var stamp = document.createElement('li');
     var signal = document.createElement('div');
     var info = document.createElement('div');
+    var time = document.createElement('small');
 
     var done = false;
-    if (request_status == "Accepted") {
+    if (request_status.indexOf("Accepted") >= 0) {
         done = true;
     }
 
@@ -568,9 +833,15 @@ function genFiscalStaffStamp(request_status, assignedTo) {
     } else {
         span.innerHTML = "Not assigned yet";
     }
+
+    if (done) {
+        time.innerHTML = moment(timeStamp).fromNow();
+    }
+
     info.appendChild(span);
     stamp.appendChild(signal);
     stamp.appendChild(info);
+    stamp.appendChild(time);
     return stamp;
 }
 
@@ -578,10 +849,11 @@ function genFiscalStaffStamp(request_status, assignedTo) {
  * Generate the stamp related to form
  * @param {string} action e.g. "Submitted"
  */
-function genFormStamp(action) {
+function genFormStamp(action, timeStamp) {
     var stamp = document.createElement('li');
     var signal = document.createElement('div');
     var info = document.createElement('div');
+    var time = document.createElement('small');
 
     var i = document.createElement('i');
     i.setAttribute('class', 'feather icon-plus font-medium-2');
@@ -595,18 +867,61 @@ function genFormStamp(action) {
     span.innerHTML = "Good job!";
     info.appendChild(p);
     info.appendChild(span);
+
+    time.innerHTML = moment(timeStamp).fromNow();
+
     stamp.appendChild(signal);
     stamp.appendChild(info);
+    stamp.appendChild(time);
     return stamp;
 }
 
-function genFinishStamp(request_status) {
+function genClaimStamp(request_status, timeStamp) {
     var stamp = document.createElement('li');
     var signal = document.createElement('div');
     var info = document.createElement('div');
+    var time = document.createElement('small');
 
     var done = false;
-    if (request_status == "Accepted") {
+    if (request_status.indexOf("Accepted") >= 0) {
+        done = true;
+    }
+
+    var i = document.createElement('i');
+    i.setAttribute('class', 'feather icon-check font-medium-2');
+    if (done) {
+        signal.setAttribute('class', 'timeline-icon bg-success');
+    } else {
+        signal.setAttribute('class', 'timeline-icon bg-success bg-lighten-5');
+    }
+    signal.appendChild(i);
+
+    var p = document.createElement('p');
+    p.setAttribute('class', 'font-weight-bold');
+    p.innerHTML = "Request Claimed";
+    var span = document.createElement('span');
+    span.innerHTML = "Good job!";
+    info.appendChild(p);
+    info.appendChild(span);
+
+    if (done) {
+        time.innerHTML = moment(timeStamp).fromNow();
+    }
+
+    stamp.appendChild(signal);
+    stamp.appendChild(info);
+    stamp.appendChild(time);
+    return stamp;
+}
+
+function genFinishStamp(request_status, timeStamp) {
+    var stamp = document.createElement('li');
+    var signal = document.createElement('div');
+    var info = document.createElement('div');
+    var time = document.createElement('small');
+
+    var done = false;
+    if (request_status.indexOf("Completed") >= 0) {
         done = true;
     }
 
@@ -626,143 +941,62 @@ function genFinishStamp(request_status) {
     span.innerHTML = "Good job!";
     info.appendChild(p);
     info.appendChild(span);
+
+    if (done) {
+        time.innerHTML = moment(timeStamp).fromNow();
+    }
+
     stamp.appendChild(signal);
     stamp.appendChild(info);
+    stamp.appendChild(time);
     return stamp;
 }
 
+// function accept() {
+//     var data = {"OrderStatus": "Accepted"};
+//     var onSuccess = function(data) {
+//         if (data.status == true) {
+//             info = data.data;
+//         } else {
+//             //error message
+//             info = null;
+//         }
+//     }
 
-function genNewTimeStamp(type, note) {
-    var stamp = document.createElement('li');
-    
-    var signal = document.createElement('div');
-    var info = document.createElement('div');
-    var time = document.createElement('div');
+//     var onFailure = function() {
+//         // failure message
+//         info = null;
+//     }
+//     makePutRequest("updateOrderStatus/order_id", data, onSuccess, onFailure);
+// }
 
-    if (type == "submitted") {
-        var i = document.createElement('i');
-        i.setAttribute('class', 'feather icon-plus font-medium-2');
-        signal.setAttribute('class', 'timeline-icon bg-primary');
-        signal.appendChild(i);
+// function updateChatInfo(request_id) {
+//     var data = {"ChatInfo": "chat from jieling the second time"};
+//     var onSuccess = function(data) {
+//         if (data.status == true) {
+//             console.log("update success");
+//         } else {
+//             //error message
+//             info = null;
+//         }
+//     }
 
-        var p = document.createElement('p');
-        p.setAttribute('class', 'font-weight-bold');
-        p.innerHTML = "Request Submitted";
-        var span = document.createElement('span');
-        span.innerHTML = note;
-        info.appendChild(p);
-        info.appendChild(span);
-    } else if (type == "approved") {
-        var i = document.createElement('i');
-        i.setAttribute('class', 'feather icon-alert-circle font-medium-2');
-        signal.setAttribute('class', 'timeline-icon bg-warning');
-        signal.appendChild(i);
-
-        var p = document.createElement('p');
-        p.setAttribute('class', 'font-weight-bold');
-        p.innerHTML = "Waiting for approval";
-        var span = document.createElement('span');
-        span.innerHTML = note;
-        info.appendChild(p);
-        info.appendChild(span);
-    } else if (type == "completed") {
-        var i = document.createElement('i');
-        i.setAttribute('class', 'feather icon-check font-medium-2');
-        signal.setAttribute('class', 'timeline-icon bg-success');
-        signal.appendChild(i);
-
-        var p = document.createElement('p');
-        p.setAttribute('class', 'font-weight-bold');
-        p.innerHTML = "Request Completed";
-        var span = document.createElement('span');
-        span.innerHTML = note;
-        info.appendChild(p);
-        info.appendChild(span);
-    }
-    
-    stamp.appendChild(signal);
-    stamp.appendChild(info);
-    // stamp.appendChild(time);
-    return stamp;
-}
-
-{/* <li>
-    <div class="timeline-icon bg-primary">
-        <i class="feather icon-plus font-medium-2"></i>
-    </div>
-    <div class="timeline-info">
-        <p class="font-weight-bold">Request Form Submitted</p>
-        <span></span>
-    </div>
-    <small class="">a few seconds ago</small>
-</li>
-<li>
-    <div class="timeline-icon bg-warning">
-        <i class="feather icon-alert-circle font-medium-2"></i>
-    </div>
-    <div class="timeline-info">
-        <p class="font-weight-bold">Waiting for approve</p>
-        <!-- <span>Cupcake gummi bears soufflé caramels candy</span> -->
-    </div>
-    <small class="">a few seconds ago</small>
-</li>
-<li>
-    <div class="timeline-icon bg-success">
-        <i class="feather icon-check font-medium-2"></i>
-    </div>
-    <div class="timeline-info">
-        <p class="font-weight-bold">Task Completed</p>
-        <span>Candy ice cream cake. Halvah gummi bears
-        </span>
-    </div>
-    <small class="">20 minutes ago</small>
-</li> */}
-
-
-function accept() {
-    var data = {"OrderStatus": "Accepted"};
-    var onSuccess = function(data) {
-        if (data.status == true) {
-            info = data.data;
-        } else {
-            //error message
-            info = null;
-        }
-    }
-
-    var onFailure = function() {
-        // failure message
-        info = null;
-    }
-    makePutRequest("updateOrderStatus/order_id", data, onSuccess, onFailure);
-}
-
-function updateChatInfo(request_id) {
-    var data = {"ChatInfo": "chat from jieling the second time"};
-    var onSuccess = function(data) {
-        if (data.status == true) {
-            console.log("update success");
-        } else {
-            //error message
-            info = null;
-        }
-    }
-
-    var onFailure = function() {
-        // failure message
-        info = null;
-    }
-    makePostRequest("updateChatInfo/" + request_id, data, onSuccess, onFailure);
-}
+//     var onFailure = function() {
+//         // failure message
+//         info = null;
+//     }
+//     makePostRequest("updateChatInfo/" + request_id, data, onSuccess, onFailure);
+// }
 
 
 
 var feedback = document.getElementById("feedback_input");
 
 function sendBackClicked() {
-    var notes = feedback.value;
-    var data = {
-        ChatInfo: window.sessionStorage.getItem("name") + ": " + notes
+    const timeStamp = new Date(Date.now()).toISOString();
+
+    var orderData = {
+        OrderStatus: "Updated" + "," + timeStamp
     };
     var onSuccess = function(data) {
         if (data.status == true) {
@@ -777,13 +1011,17 @@ function sendBackClicked() {
         // failure message
         info = null;
     }
-    makePostRequest("updateChatInfo/" + request_id, data, onSuccess, onFailure);
+    // makePostRequest("updateChatInfo/" + request_id, chatData, onSuccess, onFailure);
+    makePostRequest("updateOrderStatus/" + request_id, orderData, onSuccess, onFailure);
+    location.reload();
 }
 
 function approveClicked() {
     console.log('clicked');
+    const timeStamp = new Date(Date.now()).toISOString();
+
     var data = {
-        OrderStatus: "Accepted"
+        OrderStatus: "Accepted" + "," + timeStamp
     };
     var onSuccess = function(data) {
         if (data.status == true) {
@@ -799,4 +1037,60 @@ function approveClicked() {
         info = null;
     }
     makePostRequest("updateOrderStatus/" + request_id, data, onSuccess, onFailure);
+    location.reload();
+}
+
+
+function finishClicked() {
+    console.log('clicked');
+    const timeStamp = new Date(Date.now()).toISOString();
+    // console.log(timeStamp);
+    // console.log(moment(timeStamp).fromNow());
+    // const str = "Accepted,timestamp";
+    // var idx = str.indexOf(',');
+    // console.log(str.substring(idx + 1));
+
+    var data = {
+        OrderStatus: "Completed" + "," + timeStamp
+    };
+    var onSuccess = function(data) {
+        if (data.status == true) {
+            console.log("update success");
+        } else {
+            //error message
+            info = null;
+        }
+    }
+
+    var onFailure = function() {
+        // failure message
+        info = null;
+    }
+    makePostRequest("updateOrderStatus/" + request_id, data, onSuccess, onFailure);
+    location.reload();
+}
+
+function takeNoteClicked() {
+    // console.log('clicked');
+
+    // send data
+    var data = {
+        userName: window.sessionStorage.getItem("id"),
+        comment: feedback.value
+    };
+    var onSuccess = function(data) {
+        if (data.status == true) {
+            console.log("update success");
+        } else {
+            //error message
+            info = null;
+        }
+    }
+
+    var onFailure = function() {
+        // failure message
+        info = null;
+    }
+    makePostRequest("updateChatInfo/" + request_id, data, onSuccess, onFailure);
+    location.reload();
 }

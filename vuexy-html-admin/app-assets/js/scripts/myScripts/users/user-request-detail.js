@@ -24,14 +24,15 @@ var noteCard = document.getElementById("note_card");
 var noteContent = document.getElementById("notes");
 var feedbackBlock = document.getElementById("feedback-block");
 
-var request_id = null;
-
 var itemAmount = 0;
 var additionalTax = 0;
 
+var request_id = null;
+
 window.onload = function() {
-    var request_id = window.sessionStorage.getItem('RequestID');
-    this.console.log(request_id);
+
+    // request_id = window.sessionStorage.getItem('RequestID');
+    // this.console.log(request_id);
 
     // Request Example: Reimbursement
     // request_id = "5efb77159a0b5e00457acff8";
@@ -40,7 +41,7 @@ window.onload = function() {
     // Request Example: Procard Receipt
     // request_id = "5f0e484a7f2ae5004492a15e";
     // Request Example: Pay an Invoice
-    // request_id = "5f0e530b7f2ae5004492a161";
+    request_id = "5f0e530b7f2ae5004492a161";
 
     requestInfo = getRequestInfo(request_id);
     updateRequestInfo(requestInfo);
@@ -931,39 +932,6 @@ function genNewTimeStamp(type, note) {
     // stamp.appendChild(time);
     return stamp;
 }
-
-{/* <li>
-    <div class="timeline-icon bg-primary">
-        <i class="feather icon-plus font-medium-2"></i>
-    </div>
-    <div class="timeline-info">
-        <p class="font-weight-bold">Request Form Submitted</p>
-        <span></span>
-    </div>
-    <small class="">a few seconds ago</small>
-</li>
-<li>
-    <div class="timeline-icon bg-warning">
-        <i class="feather icon-alert-circle font-medium-2"></i>
-    </div>
-    <div class="timeline-info">
-        <p class="font-weight-bold">Waiting for approve</p>
-        <!-- <span>Cupcake gummi bears soufflé caramels candy</span> -->
-    </div>
-    <small class="">a few seconds ago</small>
-</li>
-<li>
-    <div class="timeline-icon bg-success">
-        <i class="feather icon-check font-medium-2"></i>
-    </div>
-    <div class="timeline-info">
-        <p class="font-weight-bold">Task Completed</p>
-        <span>Candy ice cream cake. Halvah gummi bears
-        </span>
-    </div>
-    <small class="">20 minutes ago</small>
-</li> */}
-
 
 function accept() {
     var data = {"OrderStatus": "Accepted"};
