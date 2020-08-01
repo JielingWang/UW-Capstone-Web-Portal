@@ -1,68 +1,8 @@
-const baseURL = "https://coe-api.azurewebsites.net/api/";
-const user_id = "5e8e55a8e8f8c60044517ca3";
-const unit_id = "5e8e483fa148b90044206520";
 var requestsInfo = [];
 var requesters = [];
 var subUnits = [];
 var users = [];
 var myPending = [];
-
-/************************************************ BEGIN: Template Ajax Call *****************************************************/
-
-// Template POst request Ajax call
-var makePostRequest = function(url, data, onSuccess, onFailure) {
-    $.ajax({
-        async:false,
-        type: 'POST',
-        url: baseURL + url,
-        data: JSON.stringify(data),
-        contentType: "application/json",
-        dataType: "json",
-        success: onSuccess,
-        error: onFailure
-    });
-};
-
-// Template PUT request Ajax call
-var makePutRequest = function(url, data, onSuccess, onFailure) {
-    $.ajax({
-        async:false,
-        type: 'PUT',
-        url: baseURL + url,
-        data: JSON.stringify(data),
-        contentType: "application/json",
-        dataType: "json",
-        success: onSuccess,
-        error: onFailure
-    });
-};
-
-
-// Template Delete request Ajax call
-var makeDeleteRequest = function(url, onSuccess, onFailure) {
-    $.ajax({
-        async:false,
-        type: 'DELETE',
-        url: baseURL + url,
-        dataType: "json",
-        success: onSuccess,
-        error: onFailure
-    });
-};	
-
-// Template GET request Ajax call
-var makeGetRequest = function(url, onSuccess, onFailure) {
-    $.ajax({
-        async:false,
-        type: 'GET',
-        url: baseURL + url,
-        dataType: "json",
-        success: onSuccess,
-        error: onFailure
-    });
-};
-
-/************************************************** END: Template Ajax Call *****************************************************/
 
 
 
@@ -74,16 +14,31 @@ var makeGetRequest = function(url, onSuccess, onFailure) {
  * then getAllOrders again and write to the requestsInfo global array
  */
 window.onload = function() {
+    update_Dashboard_welcomebar_navigationbar();
     this.getAllUsers();
-    // this.console.log(this.getUserInfo(users[0]));
     for (var i = 0; i < this.users.length; i++) {
-        this.getUserInfo(users[i]);
+        var r = this.getUserInfo(users[i]);
+        requesters.push(r.userInfo.Name);
+        subUnits.push(r.SubUnitName);
     }
     this.getAllRequestsInfo();
     this.updateSummaryTable();
     this.getMyPendingRequests();
     this.updatePendingCards();
 };
+
+/**
+ * Welcome messages
+ */
+function update_Dashboard_welcomebar_navigationbar() {
+    
+    //Now welcome mesaage
+    const welcome_message = welcomeMessage() + " " + sessionStorage.getItem("name").split(" ")[0] + " !";
+    document.getElementById("welcome_userName").innerHTML = "<b>"+welcome_message+"</b>";
+    //adding unit name
+    document.getElementById("welcome-unitName").innerHTML = '<i class="feather icon-map-pin"></i> ' + sessionStorage.getItem("unitName");
+
+}
 
 /**
  * Get all users id of all requests from datebase
@@ -108,7 +63,7 @@ function getAllUsers() {
         // failure message
     }
 
-    makeGetRequest("findOrdersForFiscal/" + unit_id, onSuccess, onFailure);
+    makeGetRequest("findOrdersForFiscal/" + window.sessionStorage.getItem("unitID"), onSuccess, onFailure);
 }
 
 /**
@@ -141,7 +96,7 @@ function getAllRequestsInfo() {
         // failure message
     }
 
-    makeGetRequest("findOrdersForFiscal/" + unit_id, onSuccess, onFailure);
+    makeGetRequest("findOrdersForFiscal/" + window.sessionStorage.getItem("unitID"), onSuccess, onFailure);
 }
 
 /**
@@ -149,20 +104,23 @@ function getAllRequestsInfo() {
  * @param {int} user_id extract from users global array
  */
 function getUserInfo(user_id) {
+    var response = null;
     var onSuccess = function(data) {
         if (data.status == true) {
-            requesters.push(data.data.userInfo.Name);
-            subUnits.push(data.data.SubUnitName);
+            response = data.data;
         } else {
             //error message
+            response = null;
         }
     }
 
     var onFailure = function() {
         // failure message
+        response = null;
     }
 
     makeGetRequest("getuserInformation/" + user_id, onSuccess, onFailure);
+    return response;
 }
 
 /**
@@ -219,15 +177,15 @@ function genRequestRow(_id, requester, type, subunit, date, status, assigned) {
     var assigned_td = null;
     if (assigned == null) {
         assigned_td = genAssignedCell(_id);
-    } else if (assigned == user_id) {
+    } else if (assigned == window.sessionStorage.getItem("id")) {
         assigned_td = document.createElement('td');
         var icon = document.createElement('i');
         icon.setAttribute('class', 'fa fa-check');
         assigned_td.appendChild(icon);
     } else {
         assigned_td = document.createElement('td');
-        getUserInfo(assigned)
-        assigned_td.innerHTML = assigned;
+        var r = getUserInfo(assigned);
+        assigned_td.innerHTML = r.userInfo.Name;
     }
     
     // create tr element
@@ -287,7 +245,7 @@ function updateAssignedInfo(request_id) {
         // failure message
     }
 
-    makePostRequest("assignOrder/" + request_id + "/" + user_id, onSuccess, onFailure);
+    makePostRequest("assignOrder/" + request_id + "/" + window.sessionStorage.getItem("id"), onSuccess, onFailure);
 }
 
 /**
@@ -301,9 +259,10 @@ function getMyPendingRequests() {
             myPending = [];
             var info = data.data;
             for (var i = 0; i < info.length; i++) {
+                var user_info = getUserInfo(info[i].userID_ref);
                 myPending.push({
                     RequestID: info[i]._id,
-                    Requester: info[i].userID_ref,
+                    Requester: user_info.userInfo.Name,
                     Type: info[i].OrderType,
                     Date: info[i].submittedOn.substr(0,10)
                 });
@@ -317,7 +276,7 @@ function getMyPendingRequests() {
         // failure message
     }
 
-    makeGetRequest("getAssignedOrders/" + user_id, onSuccess, onFailure);
+    makeGetRequest("getAssignedOrders/" + window.sessionStorage.getItem("id"), onSuccess, onFailure);
 }
 
 
@@ -380,6 +339,7 @@ function genPendingRequestCard(request_id, requester, type, date) {
     edit_btn.setAttribute('type', 'button');
     edit_btn.setAttribute('class', 'btn gradient-light-primary btn-block mt-2');
     edit_btn.setAttribute('id', "edit_" + request_id);
+    edit_btn.setAttribute('onclick',`sendRequestId('${request_id}');`);
     edit_btn.innerHTML = "Edit";
 
     body_block.appendChild(request_id_block);
@@ -394,6 +354,10 @@ function genPendingRequestCard(request_id, requester, type, date) {
     return box;
 }
 
+function sendRequestId(request_id) {
+    window.sessionStorage.setItem('RequestID', request_id);
+    window.location.href = "../../../html/ltr/buyers/buyer-request-detail.html";
+}
 
 /**
  * Update my pending request cards

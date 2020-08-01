@@ -61,10 +61,10 @@
                     <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
                       <ul class="nav navbar-nav">
                             <li class="nav-item mobile-menu d-xl-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ficon feather icon-menu"></i></a></li>
-                        </ul>
+                        </ul>  
 
                     </div>
-
+					
                     <ul class="nav navbar-nav float-right">
 
                         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
@@ -73,7 +73,6 @@
                                 <div class="search-input-icon"><i class="feather icon-search primary"></i></div>
                                 <input class="input" type="text" placeholder="Search..." tabindex="-1" data-search="template-list">
                                 <div class="search-input-close"><i class="feather icon-x"></i></div>
-                                <ul class="search-list search-list-main"></ul>
                             </div>
                         </li>
 
@@ -129,13 +128,13 @@
                             </ul>
                         </li>
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">Ted Hanson</span><span class="user-status">CEE Administrator</span></div><span><img class="round" src="../../../app-assets/images/portrait/small/avatar-s-9.jpg" alt="avatar" height="40" width="40"></span>
+                                <div class="user-nav d-sm-flex d-none"><span id="navigationBarName" class="user-name text-bold-600">Name</span><span class="user-status">Fiscal Staff</span></div><span><img id="navigationBarImage" class="round" src="" alt="avatar" height="40" width="40"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a>
-                                <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i class="feather icon-power"></i> Logout</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item" href="../login/auth-login.html" onclick="logout()"><i class="feather icon-power"></i> Logout</a>
                             </div>
                         </li>
-                    </ul>
+                    </ul> 
                 </div>
             </div>
         </div>
@@ -151,7 +150,7 @@
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item mr-auto"><a class="navbar-brand" href="../../../html/ltr/vertical-menu-template/index.html">
                         <div class="brand-logo"></div>
-                        <h2 class="brand-text mb-0">Davinci</h2>
+                        <h2 class="brand-text mb-0">AFWP</h2>
                     </a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary" data-ticon="icon-disc"></i></a></li>
             </ul>
@@ -207,6 +206,17 @@
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
+            <div class="content-body">
+                <div class="card text-white bg-gradient-primary text-center">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <img src="../../../app-assets/images/elements/UW.png" alt="element 05" width="120" class="mb-1 img-fluid">
+                            <h1 class="text-white " id="welcome_userName" style="font-size:50px;"><b></b></h1>
+                            <p class="card-text text-white" id="welcome-unitName"><i class="feather icon-map-pin"></i></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="content-header row">
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
@@ -233,6 +243,8 @@
                 </div>
             </div>
             <div class="content-body">
+
+                
                 <!-- Basic example and Profile cards section start -->
                 <section id="basic-examples">
                     <div class="row match-height" id="card_block">
@@ -375,12 +387,15 @@
 
     <!-- BEGIN: Page JS-->
     <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <script src="../../../app-assets/js/scripts/datatables/datatable.js"></script>
     <!-- END: Page JS-->
 
-    <!-- BEGIN: Page JS-->
-    <script src="../../../app-assets/js/scripts/datatables/datatable.js"></script>
+    <!-- BEGIN: My JS-->
+    <script src="../../../app-assets/js/scripts/myScripts/connections/connections.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/connections/welcomeGenerator.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/Admin/navigation_handler.js"></script>
     <script src="../../../app-assets/js/scripts/myScripts/buyers/buyer-dash.js"></script>
-    <!-- END: Page JS-->
+    <!-- END: My JS-->
 
 
 </body>

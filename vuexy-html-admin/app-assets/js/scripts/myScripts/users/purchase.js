@@ -1,4 +1,5 @@
 var itemNum = 1;
+var fileNum = 1;
 var lineItems = [];
 var formData = new FormData();
 var type = "";
@@ -193,7 +194,19 @@ $(".steps-validation").steps({
         JSON_toServer.ChatInfo = "TEST CHAT INFO"; //leaving this empty since there's no chat when user upload a order first
         JSON_toServer.assignedTo = null; //leaving this as null since there's no one assigned when a user upload/submit a order.
 
-        
+        for (var i = 1; i <= fileNum; i++) {
+            var fileSelect = document.getElementById("file_" + i);
+            if (fileSelect) {
+                for(var x = 0; x < fileSelect.files.length; x++) {
+                    formData.append(fileSelect.files[x].name, fileSelect.files[x]);
+                }
+                // "files" should stay as it is, 
+                // becuase this is how server can identify files from the JSON information, 
+                // when it get this HTTP request
+                formData.append("files", fileSelect.files[x]);
+            }
+        }
+
         //here we just pass in the JSON object we need to pass to the server. "JSON_body" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request
         formData.set("JSON_body", JSON.stringify(JSON_toServer));
         // Http Request  
@@ -208,6 +221,8 @@ $(".steps-validation").steps({
                 //convert order info to JSON
                 const requestInfo_obj = JSON.parse(data_obj.OrderInfo);
                 console.log(requestInfo_obj);
+                window.sessionStorage.setItem('RequestID', data_obj._id);
+                window.location.href = "../../../html/ltr/buyers/buyer-request-detail.html";
 
                 // window.location.href = "../../../html/ltr/users/user-summary.html";
 
@@ -697,7 +712,7 @@ function addNewLineItem(_id) {
     row.appendChild(addNewQuantity(_id));
     row.appendChild(addNewUnitPrice(_id));
     row.appendChild(addBudget(_id, 1, true));
-    row.appendChild(addOneMoreFile(_id, 1, true));
+    row.appendChild(addNewConfirmButton(_id));
 
     formBody.appendChild(row);
     form.appendChild(formBody);
@@ -929,8 +944,35 @@ function addNewUnitPrice(_id) {
 }
 
 
+function addNewConfirmButton(_id) {
+    var box = document.createElement('div');
+    box.setAttribute('class', 'col-12');
+    var row = document.createElement('div');
+    row.setAttribute('class', 'form-group row');
+
+    var first = document.createElement('div');
+    first.setAttribute('class', 'col-md-1 offset-md-11');
+    var btn = document.createElement('button');
+    btn.setAttribute('type', 'button');
+    btn.setAttribute('class', 'btn btn-icon rounded-circle btn-flat-success');
+    btn.setAttribute('id', 'confirm_' + _id);
+    var i = document.createElement('i');
+    i.setAttribute('class', 'fa fa-check');
+    btn.appendChild(i);
+    btn.onclick = function() {
+        confirmItem(_id);
+    }
+    first.appendChild(btn);
+
+    
+    row.appendChild(first);
+    box.appendChild(row);
+
+    return box; 
+}
+
+
 /**
- * Deprecated partly
  * @param {int} _id line item id
  * @param {int} file_id file id in this line item
  * @param {boolean} init indicate if this is the original file input in this line item
@@ -938,84 +980,86 @@ function addNewUnitPrice(_id) {
  * Which means users can only upload one file for one line item
  * So when calling this function, file_id will always be 1, init will always be true
  */
-function addOneMoreFile(_id, file_id, init) {
-    var box = document.createElement('div');
-    box.setAttribute('class', 'col-12');
-    box.setAttribute('id', 'file_box_' + _id + '_' + file_id);
+function addOneMoreFile(file_id) {
     var row = document.createElement('div');
     row.setAttribute('class', 'form-group row');
+    row.setAttribute('id', 'file_row_' + file_id);
 
     var first = document.createElement('div');
     first.setAttribute('class', 'col-md-4');
-    if (init) {
-        first.innerHTML = "<span>Upload Receipt</span>"
-    }
+    // if (init) {
+    //     first.innerHTML = "<span>Upload Receipt</span>"
+    // }
 
     var second = document.createElement('div');
-    second.setAttribute('class', 'col-md-4');
+    second.setAttribute('class', 'col-md-3');
     var file = document.createElement('input');
     file.setAttribute('type', 'file');
-    file.setAttribute('name', 'file_' + _id);
-    file.setAttribute('id', 'file_' + _id + '_' + file_id);
+    file.setAttribute('name', 'file_input');
+    file.setAttribute('id', 'file_' + file_id);
     second.appendChild(file);
 
     var third = document.createElement('div');
-    third.setAttribute('class', 'col-md-1 hidden');
+    third.setAttribute('class', 'col-md-1');
     var btn = document.createElement('button');
     btn.setAttribute('type', 'button');
-    if (init) {
-        btn.setAttribute('class', 'btn btn-icon rounded-circle btn-flat-success');
-    } else {
-        btn.setAttribute('class', 'btn btn-icon rounded-circle btn-flat-danger');
-    }
-    btn.setAttribute('id', 'file_btn_' + _id + '_' + file_id);
+    // if (init) {
+    //     btn.setAttribute('class', 'btn btn-icon rounded-circle btn-flat-success');
+    // } else {
+    //     btn.setAttribute('class', 'btn btn-icon rounded-circle btn-flat-danger');
+    // }
+    btn.setAttribute('class', 'btn btn-icon rounded-circle btn-flat-danger');
+    btn.setAttribute('id', 'file_btn_' + file_id);
 
     var icon = document.createElement('i');
-    if (init) {
-        icon.setAttribute('class', 'feather icon-plus-circle');
-    } else {
-        icon.setAttribute('class', 'feather icon-x-circle');
-    }
+    // if (init) {
+    //     icon.setAttribute('class', 'feather icon-plus-circle');
+    // } else {
+    //     icon.setAttribute('class', 'feather icon-x-circle');
+    // }
+    icon.setAttribute('class', 'feather icon-x-circle');
     btn.appendChild(icon);
-    if (init) {
-        btn.onclick = function() {
-            document.getElementById('file_box_' + _id + '_' + file_id).after(addOneMoreFile(_id, file_id + 1, false));
-        }
-    } else {
-        btn.onclick = function() {
-            document.getElementById('file_box_' + _id + '_' + file_id).remove();
-        };
-    }
+    // if (init) {
+    //     btn.onclick = function() {
+    //         document.getElementById('file_box_' + _id + '_' + file_id).after(addOneMoreFile(_id, file_id + 1, false));
+    //     }
+    // } else {
+    //     btn.onclick = function() {
+    //         document.getElementById('file_box_' + _id + '_' + file_id).remove();
+    //     };
+    // }
+    btn.onclick = function() {
+        document.getElementById('file_row_' + file_id).remove();
+    };
     third.appendChild(btn);
 
-    var forth = document.createElement('div');
-    forth.setAttribute('class', 'col-md-1 offset-md-3');
-    var confirm_btn = document.createElement('button');
-    confirm_btn.setAttribute('type', 'button');
-    confirm_btn.setAttribute('class', 'btn btn-icon rounded-circle btn-flat-success');
-    confirm_btn.setAttribute('id', 'confirm_' + _id);
-    var i = document.createElement('i');
-    i.setAttribute('class', 'fa fa-check');
-    confirm_btn.appendChild(i);
-    confirm_btn.onclick = function() {
-        confirmItem(_id);
-    }
-    forth.appendChild(confirm_btn);
+    // var forth = document.createElement('div');
+    // forth.setAttribute('class', 'col-md-1 offset-md-3');
+    // var confirm_btn = document.createElement('button');
+    // confirm_btn.setAttribute('type', 'button');
+    // confirm_btn.setAttribute('class', 'btn btn-icon rounded-circle btn-flat-success');
+    // confirm_btn.setAttribute('id', 'confirm_' + _id);
+    // var i = document.createElement('i');
+    // i.setAttribute('class', 'fa fa-check');
+    // confirm_btn.appendChild(i);
+    // confirm_btn.onclick = function() {
+    //     confirmItem(_id);
+    // }
+    // forth.appendChild(confirm_btn);
 
     row.appendChild(first);
     row.appendChild(second);
     row.appendChild(third);
-    row.appendChild(forth);
-    box.appendChild(row);
-    return box;
+    // row.appendChild(forth);
+    return row;
 }
 
 /** 
- * Deprecated
  * Bind initialized add-more-file button 
  */
 $(document).on('click', '#file_btn_1_1', function() {
-    document.getElementById('file_box_1_1').after(addOneMoreFile(1, 2, false));
+    fileNum ++;
+    document.getElementById('file_block').appendChild(addOneMoreFile(fileNum));
 });
 
 /** END: New Line Item Controller  */
@@ -1072,13 +1116,6 @@ function confirmItem(_id) {
             });
         }
     }
-    
-    var fileSelect = document.getElementById('file_' + _id + '_1');
-    for(var x = 0; x < fileSelect.files.length; x++) {
-        formData.append(fileSelect.files[x].name, fileSelect.files[x]);
-    }
-    formData.append("files", fileSelect.files[x]); //"files" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request"
-
     
     var q = document.getElementById('quantity_' + _id).value;
     var u = document.getElementById('unit_price_' + _id).value;
