@@ -10,6 +10,12 @@ var userInfo_updateBtn = document.getElementById("userInfo_updateBtn");
 var Image_holder = document.getElementById("Image_holder");
 var upload_btn = document.getElementById("upload_btn");
 
+var address_input = document.getElementById("address_input");
+var apartment_input = document.getElementById("apartment_input");
+var city_input = document.getElementById("city_input");
+var state_input = document.getElementById("state_input");
+var zip_input = document.getElementById("zip_input");
+
 window.onload = function(){
     load_userInformation();
     enable_disable_update_btn();
@@ -124,6 +130,24 @@ function load_userInformation()
     name_input.value = window.sessionStorage.getItem("name");
     UWID_input.value = window.sessionStorage.getItem("uwid");
     email_input.value = window.sessionStorage.getItem("email");
+
+    if(window.sessionStorage.getItem("address") != "null")
+    {
+        JSON_Object = JSON.parse(window.sessionStorage.getItem("address"));
+
+        address_input.value = JSON_Object.address;
+        apartment_input.value = JSON_Object.apartment;
+        city_input.value = JSON_Object.city;
+        state_input.value = JSON_Object.state;
+        zip_input.value = JSON_Object.zipCode;
+    }else
+    {
+        address_input.value = "";
+        apartment_input.value = "";
+        city_input.value = "";
+        state_input.value = "";
+        zip_input.value = "";
+    }
 
     if(window.sessionStorage.getItem("profile_pic_url") == "" || window.sessionStorage.getItem("profile_pic_url") == null)
         document.getElementById("userImage").setAttribute('src','../../../app-assets/images/portrait/small/default.jpg');
@@ -259,4 +283,72 @@ function update_user_information_request(newName,newEmail,newUWID,profile_pic_ur
     makePutRequest("usersbyID/"+window.sessionStorage.getItem("id"),User_JSON,onSuccess,onFaliure);
 
     return return_value;   
+}
+
+
+function updateAddress(address,apartment,city,state,zipCode)
+{
+    var address_JSON = {
+        "address": address,
+        "apartment": apartment,
+        "city":city,
+        "state":state,
+        "zipCode":zipCode
+    }
+
+    var onSuccess = function(data)
+    {
+        if(data.status == false)
+        {
+            toastr.error(data.data, 'Error', { positionClass: 'toast-top-right', containerId: 'toast-top-right' });
+
+        }else
+        {
+            window.sessionStorage.setItem("address",JSON.stringify(data.data.address));
+            reset_address_logic();
+            toastr.success('User default address successfully updated', 'Success', { positionClass: 'toast-top-right', containerId: 'toast-top-right' });
+        }
+
+    }
+
+    //this function will be called when data exchange with backend occured an error
+    var onFaliure = function()
+    {
+        toastr.error('Internal server error has occured. Please try again', 'Error', { positionClass: 'toast-top-right', containerId: 'toast-top-right' });
+
+    }
+
+    makePostRequest("users/updateAddress/"+window.sessionStorage.getItem("id"),address_JSON,onSuccess,onFaliure);  
+}
+
+function updateAddressBtn()
+{
+    updateAddress(address_input.value,apartment_input.value,city_input.value,state_input.value,zip_input.value);
+}
+
+
+function reset_address_logic()
+{
+    if(window.sessionStorage.getItem("address") != "null")
+    {
+        JSON_Object = JSON.parse(window.sessionStorage.getItem("address"));
+
+        address_input.value = JSON_Object.address;
+        apartment_input.value = JSON_Object.apartment;
+        city_input.value = JSON_Object.city;
+        state_input.value = JSON_Object.state;
+        zip_input.value = JSON_Object.zipCode;
+    }else
+    {
+        address_input.value = "";
+        apartment_input.value = "";
+        city_input.value = "";
+        state_input.value = "";
+        zip_input.value = "";
+    }   
+}
+
+function reset_address_btn()
+{
+    reset_address_logic();
 }

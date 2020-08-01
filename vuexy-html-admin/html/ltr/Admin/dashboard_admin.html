@@ -74,14 +74,17 @@
                             </div>
                         </li>
 
-                        <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon feather icon-bell"></i><span class="badge badge-pill badge-primary badge-up">5</span></a>
+                        <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon feather icon-bell"></i><span id="notification_span"class="badge badge-pill badge-primary badge-up"></span></a>
                             <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                                 <li class="dropdown-menu-header">
                                     <div class="dropdown-header m-0 p-2">
-                                        <h3 class="white">5 New</h3><span class="notification-title">App Notifications</span>
+                                        <h3 class="white">Notifications</h3><span class="notification-title"></span>
                                     </div>
                                 </li>
-                                <li class="scrollable-container media-list"><a class="d-flex justify-content-between" href="javascript:void(0)">
+
+                                <li class="scrollable-container media-list" id="notification_content">
+                                    <!--
+                                    <a class="d-flex justify-content-between" href="javascript:void(0)">
                                         <div class="media d-flex align-items-start">
                                             <div class="media-left"><i class="feather icon-plus-square font-medium-5 primary"></i></div>
                                             <div class="media-body">
@@ -89,7 +92,8 @@
                                             </div><small>
                                                 <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">9 hours ago</time></small>
                                         </div>
-                                    </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                    </a>
+                                    <a class="d-flex justify-content-between" href="javascript:void(0)">
                                         <div class="media d-flex align-items-start">
                                             <div class="media-left"><i class="feather icon-download-cloud font-medium-5 success"></i></div>
                                             <div class="media-body">
@@ -97,7 +101,8 @@
                                             </div><small>
                                                 <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">5 hour ago</time></small>
                                         </div>
-                                    </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                    </a>
+                                    <a class="d-flex justify-content-between" href="javascript:void(0)">
                                         <div class="media d-flex align-items-start">
                                             <div class="media-left"><i class="feather icon-alert-triangle font-medium-5 danger"></i></div>
                                             <div class="media-body">
@@ -105,7 +110,8 @@
                                             </div><small>
                                                 <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Today</time></small>
                                         </div>
-                                    </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                    </a>
+                                    <a class="d-flex justify-content-between" href="javascript:void(0)">
                                         <div class="media d-flex align-items-start">
                                             <div class="media-left"><i class="feather icon-check-circle font-medium-5 info"></i></div>
                                             <div class="media-body">
@@ -113,7 +119,8 @@
                                             </div><small>
                                                 <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Last week</time></small>
                                         </div>
-                                    </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                    </a>
+                                    <a class="d-flex justify-content-between" href="javascript:void(0)">
                                         <div class="media d-flex align-items-start">
                                             <div class="media-left"><i class="feather icon-file font-medium-5 warning"></i></div>
                                             <div class="media-body">
@@ -121,7 +128,9 @@
                                             </div><small>
                                                 <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Last month</time></small>
                                         </div>
-                                    </a></li>
+                                    </a>-->
+
+                                </li>
                                 <li class="dropdown-menu-footer"><a class="dropdown-item p-1 text-center" href="javascript:void(0)">View all notifications</a></li>
                             </ul>
                         </li>
@@ -277,6 +286,11 @@
 
     </footer>
     <!-- END: Footer-->
+
+    <!--SOCKET IO-->
+    <script defer src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <!--Moment JS-->
+    <script src="https://momentjs.com/downloads/moment.js"></script>
 
 
     <!-- BEGIN: Vendor JS-->

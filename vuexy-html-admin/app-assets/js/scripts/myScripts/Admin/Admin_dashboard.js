@@ -1,15 +1,126 @@
-var administrative_staff_table = null
+var administrative_staff_table = null;
+
 
 window.onload = function()
 {
-
+    //const socket = io.connect('http://localhost:3000');
     update_Dashboard_welcomebar_navigationbar();
     update_administrativeStaff_table();
     update_subunit_table();
 
+    /*socket.on('connect', function(data) {
+        socket.emit('join', window.sessionStorage.getItem('id'));
+     });
+    socket.on('message', data =>{
+        console.log(data);
+        console.log(data.Message);
+        Handle_notifications(data.Title,data.Message,data.timeStamp,data.Type);
+    });*/
 
 }
 
+/*
+<a class="d-flex justify-content-between" href="javascript:void(0)">
+<div class="media d-flex align-items-start">
+    <div class="media-left"><i class="feather icon-plus-square font-medium-5 primary"></i></div>
+    <div class="media-body">
+        <h6 class="primary media-heading">You have new order!</h6><small class="notification-text"> Amazon Web Services - Standard Order</small>
+    </div>
+    <small>
+        <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">9 hours ago</time>
+    </small>
+</div>
+</a>*/
+
+function getMonth_inName(monthNum)
+{
+    const months = ['Jan','Feb', 'Mar', "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Nov", "Dec"];
+
+    return months[monthNum-1];
+}
+
+function to_12_hours(hours, minutes)
+{
+    //it is pm if hours from 12 onwards
+    suffix = (parseInt(hours) >= 12)? 'PM' : 'AM';
+
+    //only -12 from hours if it is greater than 12 (if not back at mid night)
+    hours = (parseInt(hours) > 12)? hours -12 : hours;
+
+    //if 00 then it is 12 am
+    hours = (parseInt(hours) == '00')? 12 : hours;
+
+    if(parseInt(minutes) < 10)
+        minutes = "0"+minutes;
+
+    return hours+":"+minutes+" "+suffix;
+}
+
+function Handle_notifications(Title,content,timeStamp,type)
+{
+    var a_tag = document.createElement('a');
+    a_tag.setAttribute('class', 'd-flex justify-content-between'); //maybe Href to the main notification section ? href="javascript:void(0)"
+    var div_parent = document.createElement('div');
+    div_parent.setAttribute('class','media d-flex align-items-start');
+    var div_i_wrapper = document.createElement('div');
+    div_i_wrapper.setAttribute('class','media-left');
+    var i_tag = document.createElement('i');
+    var h6_tag = document.createElement('h6');
+    
+    if(type=="accepted")
+    {
+        i_tag.setAttribute('class','feather icon-check-circle font-medium-5 success'); //change class attributes to change notifcation color and icon
+        h6_tag.setAttribute('class','success media-heading');
+    }else if (type == "pending")
+    {
+        i_tag.setAttribute('class','feather icon-clipboard font-medium-5 warning');
+        h6_tag.setAttribute('class','warning media-heading');
+    }else if (type == "info")
+    {
+        i_tag.setAttribute('class','feather icon-info font-medium-5 primary');
+        h6_tag.setAttribute('class','primary media-heading');
+    }else if(type == "danger")
+    {
+        i_tag.setAttribute('class','feather icon-x font-medium-5 danger');
+        h6_tag.setAttribute('class','danger media-heading');
+    }
+        
+        
+    var div_media_body = document.createElement('div');
+    div_media_body.setAttribute('class','media-body');
+
+    h6_tag.innerHTML = Title;
+    var small_tag = document.createElement('small');
+    small_tag.setAttribute('class','notification-text');
+    small_tag.innerHTML = content;
+    var small_tag_2 = document.createElement('small');
+    var time_tag = document.createElement('time');
+    time_tag.setAttribute('class','media-meta');
+    const dateTime = new Date(timeStamp);
+    //const m = moment(dateTime).format().minutes();
+    time_tag.innerHTML = getMonth_inName(dateTime.getMonth()) +" "+dateTime.getDate()+" at "+to_12_hours(dateTime.getHours(),dateTime.getMinutes());
+
+    small_tag_2.appendChild(time_tag);
+    div_media_body.appendChild(h6_tag);
+    div_media_body.appendChild(small_tag);
+    div_i_wrapper.appendChild(i_tag);
+
+    div_parent.appendChild(div_i_wrapper);
+    div_parent.appendChild(div_media_body);
+    div_parent.appendChild(small_tag_2);
+
+    a_tag.appendChild(div_parent);
+
+    document.getElementById('notification_content').appendChild(a_tag);
+
+    //increment number of notifications
+    const notification_num_span = document.getElementById("notification_span");
+    if(notification_num_span.innerHTML == "" || notification_num_span.innerHTML == null)
+        notification_num_span.innerHTML = "1";
+    else
+        notification_num_span.innerHTML = (parseInt(notification_num_span.innerHTML)+1).toString(); 
+
+}
 
 
 function update_Dashboard_welcomebar_navigationbar()

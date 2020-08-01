@@ -83,7 +83,7 @@
                             <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                                 <li class="dropdown-menu-header">
                                     <div class="dropdown-header m-0 p-2">
-                                        <h3 class="white">5 New</h3><span class="notification-title">App Notifications</span>
+                                        <h3 class="white">5</h3><span class="notification-title">Notifications</span>
                                     </div>
                                 </li>
                                 <li class="scrollable-container media-list"><a class="d-flex justify-content-between" href="javascript:void(0)">
@@ -224,7 +224,7 @@
                     </div>
                     <section style="padding-top: 50px;" id="profile-info">
                         <div class="row">
-                            <div class="col-md-5 col-12" >
+                            <div class="col-md-6 col-12" >
                                 <div class="card h-100" >
                                     <div class="card-header">
                                         <h4 class="mb-0"><b>User Information</b></h4>
@@ -274,6 +274,7 @@
     
                                             </div>
                                         </div>
+
                                         <!--End of Input part-->   
                                         <div id="buttons_staff_overview" style="margin-right: 10px; padding-top: 30px;">
                                             <button type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="reset_button_logic();">Reset</button>
@@ -282,9 +283,96 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6 col-12" >
+                                <div class="card h-100" >
+                                    <div class="card-header">
+                                        <h4 class="mb-0"><b>Default Address</b></h4>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="card-body card-dashboard">
+                                        </div>
 
+                                        <!--Input part-->
+                                        <div class="row" style="margin-left: 10px; margin-right:10px; ">
+                                            <div class="col-md-12 col-12">
+                                                <div class="form-group">
+                                                    <label for="first-name-icon">Address</label>
+                                                    <div class="position-relative has-icon-left">
+                                                        <input type="text" id="address_input" class="form-control" name="fname-icon" placeholder="" onkeyup="">
+                                                        <div class="form-control-position">
+                                                            <i class="feather icon-mail"></i>
+                                                        </div>
+                                                    </div>
+                                                    <label id="address_input_error" style="color: #e74c3c;"></label>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="first-name-icon">Apartment, suite, etc.</label>
+                                                    <div class="position-relative has-icon-left">
+                                                        <input type="text" id="apartment_input" class="form-control" name="fname-icon" placeholder="" onkeyup="">
+                                                        <div class="form-control-position">
+                                                            <i class="feather icon-hash"></i>
+                                                        </div>
+                                                    </div>
+                                                    <label id="apartment_input_error" style="color: #e74c3c;"></label>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="first-name-icon">City</label>
+                                                    <div class="position-relative has-icon-left">
+                                                        <input type="text" id="city_input" class="form-control" name="fname-icon" placeholder="" onkeyup="">
+                                                        <div class="form-control-position">
+                                                            <i class="fa fa-building-o" aria-hidden="true"></i>
+                                                        </div>
+                                                    </div>
+                                                    <label id="city_input_error" style="color: #e74c3c;"></label>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="first-name-icon">State</label>
+                                                    <div class="position-relative has-icon-left">
+                                                        <input type="text" id="state_input" class="form-control" name="fname-icon" placeholder="" onkeyup="">
+                                                        <div class="form-control-position">
+                                                            <i class="fa fa-flag" aria-hidden="true"></i>
+                                                        </div>
+                                                    </div>
+                                                    <label id="state_input_error" style="color: #e74c3c;"></label>
+                                                </div>
+
+                                                
+                                                <div class="form-group">
+                                                    <label for="first-name-icon">Zip/Postal code</label>
+                                                    <div class="position-relative has-icon-left">
+                                                        <input type="text" id="zip_input" class="form-control" name="fname-icon" placeholder="" onkeyup="">
+                                                        <div class="form-control-position">
+                                                            <i class="fa fa-map-pin" aria-hidden="true"></i>
+                                                        </div>
+                                                    </div>
+                                                    <label id="zip_input_error" style="color: #e74c3c;"></label>
+                                                </div>
     
-                            <div class="col-md-7 col-12" >
+                                                
+    
+                                            </div>
+                                        </div>
+
+                                        <!--End of Input part-->   
+                                        <div id="buttons_staff_overview" style="margin-right: 10px; padding-top: 30px;">
+                                            <button type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="reset_address_btn()">Reset</button>
+                                            <button id="address_updateBtn" type="button" class="btn btn-primary mr-1 mb-1 pull-right" onclick="updateAddressBtn()">Update</button>
+                                        </div>                                 
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            </div>
+    
+                        </div>
+
+                        <div class="row" style="margin-top: 30px;">
+
+                            <div class="col-md-6 col-12" >
                                 <div class="card h-100" >
                                     <div class="card-header">
                                         <h4 class="mb-0"><b>Upload Profile Picture</b></h4>
@@ -323,9 +411,102 @@
                                         </div>       
                                     </div>
                                 </div>
+
+                                <div class="col-md-6 col-12" >
+                                    <div class="card h-100" >
+                                        <div class="card-header">
+                                            <h4 class="mb-0"><b>Notification Settings</b></h4>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="card-body card-dashboard">
+                                                <div class="row" >
+
+                                                    <div class="col-md-6 col-6" >
+                                                        <p>Form submission updates</p>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-6" >
+                                                        <div class="custom-control custom-switch custom-switch-success mr-2 mb-1">
+                                                            <input type="checkbox" class="custom-control-input" id="formSubmissionUpdates">
+                                                            <label class="custom-control-label" for="formSubmissionUpdates"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" >
+
+                                                    <div class="col-md-6 col-6" >
+                                                        <p>Budget table related updates</p>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-6" >
+                                                        <div class="custom-control custom-switch custom-switch-success mr-2 mb-1">
+                                                            <input type="checkbox" class="custom-control-input" id="BudgetTableUpdates">
+                                                            <label class="custom-control-label" for="BudgetTableUpdates"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" >
+
+                                                    <div class="col-md-6 col-6" >
+                                                        <p>Unit related updates</p>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-6" >
+                                                        <div class="custom-control custom-switch custom-switch-success mr-2 mb-1">
+                                                            <input type="checkbox" class="custom-control-input" id="UnitUpdates">
+                                                            <label class="custom-control-label" for="UnitUpdates"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                
+                                                <div class="row" >
+
+                                                    <div class="col-md-6 col-6" >
+                                                        <p>Subunits related updates</p>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-6" >
+                                                        <div class="custom-control custom-switch custom-switch-success mr-2 mb-1">
+                                                            <input type="checkbox" class="custom-control-input" id="SubunitsUpdates">
+                                                            <label class="custom-control-label" for="SubunitsUpdates"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" style="padding-top: 10px;">
+
+                                                    <div class="col-md-6 col-6" >
+                                                        <p style="padding-top: 7px;">Notification email address</p>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-6" >
+                                                <div class="form-group">
+                                                    <div class="position-relative has-icon-left">
+                                                        <input type="text" id="email_input" class="form-control" name="fname-icon" placeholder="" onkeyup="enable_disable_update_btn();" value="kalana.sahabandu@gmail.com">
+                                                        <div class="form-control-position">
+                                                            <i class="feather icon-mail"></i>
+                                                        </div>
+                                                    </div>
+                                                    <label id="email_input_error" style="color: #e74c3c;"></label>
+                                                </div>
+                                                    </div>
+                                                </div>
+         
+                                            </div>
+    
+                
+                  
+                                            </div>
+    
+                                        </div>
+                                    </div>
+
                             </div>
     
-                        </div>
+                        </div>                        
 
                     </section>
                 </div>
@@ -397,6 +578,8 @@
         <!-- BEGIN: Page JS-->
         <script src="../../../app-assets/js/scripts/pages/user-profile.js"></script>
         <!-- END: Page JS-->
+
+    <script src="https://kit.fontawesome.com/5f63d837ee.js" crossorigin="anonymous"></script>
 
 </body>
 <!-- END: Body-->

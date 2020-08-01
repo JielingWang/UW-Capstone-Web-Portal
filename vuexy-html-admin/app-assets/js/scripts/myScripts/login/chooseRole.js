@@ -104,6 +104,7 @@ function card_click(elementID, cardType)
     window.sessionStorage.setItem("email",data.userInfo.email);
     window.sessionStorage.setItem("verified_user",data.userInfo.verified_user);
     window.sessionStorage.setItem("profile_pic_url",data.userInfo.profileImage_URL);
+    window.sessionStorage.setItem("address",JSON.stringify(data.userInfo.address));
     console.log(elementID);
     console.log(cardType);
     if(cardType == "admin")
