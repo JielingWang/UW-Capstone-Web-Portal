@@ -147,6 +147,7 @@ $(".steps-validation").steps({
         return form.valid();
     },
     onFinished: function (event, currentIndex) {
+        // console.log("submit");
         alert("Submitted!");
         alert('send data to database');
 
@@ -166,14 +167,103 @@ $(".steps-validation").validate({
         $(element).removeClass(errorClass);
     },
     errorPlacement: function (error, element) {
-        error.insertAfter(element);
+        // console.log('errorPlacement... this never gets called :(', error, element.next());
+        if (element.hasClass('custom-control-input') || element.hasClass('form-control')) {
+            error.insertAfter(element.parent());
+        } else {
+            error.insertAfter(element);
+        }
+        // var elementNameStr = element[0].name;
+        // console.log(element[0].parentElement.className);
+        // if (element[0].parentElement.className == "custom-control custom-radio") {
+        //     error.insertAfter(element[0].parentElement);
+        // } else {
+        //     error.insertAfter(element);
+        // }
+
     },
     rules: {
-        email: {
+        myself_onbehalf_radio: {
+            required: true
+        },
+        individual_reimbursed: {
+            required: true
+        },
+        onbehalf_name: {
+            required: "#onBehalfRadio_Yes:checked"
+        },
+        onbehalf_email: {
+            required: "#onBehalfRadio_Yes:checked",
             email: true
+        },
+        onbehalf_affiliation: {
+            required: "#onBehalfRadio_Yes:checked"
+        },
+        paymentRadio: {
+            required: "#individual_employee:checked"
+        },
+        paymentRadio2: {
+            required: "#individual_student:checked" || "individual_nonuw:checked"
+        },
+        name: {
+            required: "#nonemployee_checkMail:checked"
+        },
+        "ship-address": {
+            required: "#nonemployee_checkMail:checked"
+        },
+        "ship-city": {
+            required: "#nonemployee_checkMail:checked"
+        },
+        "ship-state": {
+            required: "#nonemployee_checkMail:checked"
+        },
+        "ship-zip": {
+            required: "#nonemployee_checkMail:checked"
+        },
+        country: {
+            required: "#nonemployee_checkMail:checked"
+        },
+        amount: {
+            required: true,
+            number: true
+        },
+        taxRadio1: {
+            required: true
+        }
+    },
+    messages: {
+        myself_onbehalf_radio: {
+            required: "Please make your choice"
+        },
+        individual_reimbursed: {
+            required: "Please make your choice"
+        },
+        paymentRadio: {
+            required: "Please make your choice"
+        },
+        paymentRadio2: {
+            required: "Please make your choice"
         }
     }
 });
+
+
+
+// jQuery.validator.addMethod("radioCheck", function(value, element, params) {
+//     if ($("input[name='myself_onbehalf_radio']:checked").length == 1) {
+//         return true;
+//     } else {
+//         return false;
+//     }
+// }, jQuery.validator.format("This field is required"));
+
+// $("input[name='myself_onbehalf_radio']").rules('add', {
+//     required: true
+// });
+
+// $("input[name='individual_reimbursed]").rules('add', {
+//     required: true
+// });
 
 
 /************************************************ END: Wizard step control *******************************************************/
@@ -198,6 +288,13 @@ window.onload = function() {
         var num = budgets_database[i];
         budget_select.appendChild(addBudgetData(num));
     }
+
+    // $("input[name='amount']").each(function() {
+    //     $(this).rules('add', {
+    //         required: true,
+    //         number: true
+    //     });
+    // });
 };
 
 /**
@@ -260,7 +357,7 @@ function getBudgetsInfo() {
 
 $(document).on('click', 'input', function(){
     /** myself or onbehalf radio */
-    var mySelf = $("input[name='myself-onbehalf']:checked").val();
+    var mySelf = $("input[name='myself_onbehalf_radio']:checked").val();
     if (mySelf == "myself") {
         $('#onBehalf_Yes').attr('class', 'hidden');
     } else if (mySelf == "onbehalf") {
@@ -268,7 +365,7 @@ $(document).on('click', 'input', function(){
     }
 
     /** payment method part */
-    var individual = $("input[name='individual-reimbursed']:checked").val();
+    var individual = $("input[name='individual_reimbursed']:checked").val();
     if (individual == "employee") {
         $('#emplyee_payment').attr('class', 'col-11 visible');
         $('#nonemplyee_payment').attr('class', 'col-11 hidden');
@@ -278,8 +375,7 @@ $(document).on('click', 'input', function(){
     }
 
     /** control mail-addr */
-    var needsAddr = $("input[name='paymentRadio']:checked").val();
-    if (needsAddr == "Check mail") {
+    if ($('#nonemployee_checkMail').is(':checked')) {
         $('#mail-addr').attr('class', 'visible');
     } else {
         $('#mail-addr').attr('class', 'hidden');
@@ -332,12 +428,12 @@ function submitClicked() {
     };
 
     var requestInfo = {
-        ReimburseFor: $("input[name='myself-onbehalf']:checked").val(),
-        OnbehalfName: $("input[name='onbehalf-name']").val(),
-        OnbehalfEmail: $("input[name='onbehalf-email']").val(),
-        OnbehalfAffiliation: $("input[name='onbehalf-affiliation']").val(),
-        Individual: $("input[name='individual-reimbursed']").val(),
-        Payment: $("input[name='paymentRadio']:checked").val(),
+        ReimburseFor: $("input[name='myself_onbehalf_radio']:checked").val(),
+        OnbehalfName: $("input[name='onbehalf_name']").val(),
+        OnbehalfEmail: $("input[name='onbehalf_email']").val(),
+        OnbehalfAffiliation: $("input[name='onbehalf_affiliation']").val(),
+        Individual: $("input[name='individual_reimbursed']").val(),
+        Payment: $("input[name='paymentRadio']:checked").val() ? $("input[name='paymentRadio']:checked").val() : $("input[name='paymentRadio2']:checked").val(),
         Addr: addrInfo,
         LineItems: lineItems
         // ItemsCost: itemsCost
@@ -727,7 +823,7 @@ function genBudgetsSelectBox(_id, _budget_id) {
     sel.setAttribute('class', 'custom-select form-control');
     sel.setAttribute('name', 'budget_num_' + _id);
     sel.setAttribute('id', 'budget_num_' + _id + '_' + _budget_id);
-    sel.setAttribute('required', '');
+    // sel.setAttribute('required', '');
     sel.appendChild(addBudgetData('0'));
     
     for (var i = 0; i < budgets_database.length; i++) {

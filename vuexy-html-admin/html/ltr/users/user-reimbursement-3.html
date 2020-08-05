@@ -146,7 +146,7 @@
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item mr-auto"><a class="navbar-brand" href="../../../html/ltr/vertical-menu-template/index.html">
                         <div class="brand-logo"></div>
-                        <h2 class="brand-text mb-0">AFWP</h2>
+                        <h2 class="brand-text mb-0">ENGINE</h2>
                     </a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary" data-ticon="icon-disc"></i></a></li>
             </ul>
@@ -254,7 +254,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="myself-onbehalf" value="myself" id="myselfRadio_Yes">
+                                                                                <input type="radio" class="custom-control-input" name="myself_onbehalf_radio" value="myself" id="myselfRadio_Yes">
                                                                                 <label class="custom-control-label" for="myselfRadio_Yes">Myself</label>
                                                                             </div>
                                                                         </fieldset>
@@ -266,7 +266,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="myself-onbehalf" value="onbehalf" id="onBehalfRadio_Yes" >
+                                                                                <input type="radio" class="custom-control-input" name="myself_onbehalf_radio" value="onbehalf" id="onBehalfRadio_Yes" >
                                                                                 <label class="custom-control-label" for="onBehalfRadio_Yes">On behalf someone</label>
                                                                             </div>
                                                                         </fieldset>
@@ -284,19 +284,19 @@
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <label for="onbehalf-name">Name </label>
-                                                                    <input type="text" class="form-control" id="onbehalf-name" name="onbehalf-name" placeholder="Name">
+                                                                    <input type="text" class="form-control" id="onbehalf-name" name="onbehalf_name" placeholder="Name">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <label for="onbehalf-email">Email </label>
-                                                                    <input type="text" class="form-control" id="onbehalf-email" name="onbehalf-email" placeholder="Email">
+                                                                    <input type="text" class="form-control" id="onbehalf-email" name="onbehalf_email" placeholder="Email">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <label for="onbehalf-affiliation">Affiliation </label>
-                                                                    <input type="text" class="form-control" id="onbehalf-affiliation" name="onbehalf-affiliation" placeholder="Affiliation">
+                                                                    <input type="text" class="form-control" id="onbehalf-affiliation" name="onbehalf_affiliation" placeholder="Affiliation">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -315,7 +315,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="individual-reimbursed" value="employee" id="individual_employee">
+                                                                                <input type="radio" class="custom-control-input" name="individual_reimbursed" value="employee" id="individual_employee">
                                                                                 <label class="custom-control-label" for="individual_employee">Employee</label>
                                                                             </div>
                                                                         </fieldset>
@@ -327,7 +327,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="individual-reimbursed" value="student" id="individual_student">
+                                                                                <input type="radio" class="custom-control-input" name="individual_reimbursed" value="student" id="individual_student">
                                                                                 <label class="custom-control-label" for="individual_student">Student</label>
                                                                             </div>
                                                                         </fieldset>
@@ -339,7 +339,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="individual-reimbursed" value="nonuw" id="individual_nonuw">
+                                                                                <input type="radio" class="custom-control-input" name="individual_reimbursed" value="nonuw" id="individual_nonuw">
                                                                                 <label class="custom-control-label" for="individual_nonuw">Non-UW</label>
                                                                             </div>
                                                                         </fieldset>
@@ -357,10 +357,11 @@
                                                 <div class="row d-flex justify-content-center" style="margin-top: 1rem;">
                                                     <div class="col-11 hidden" id="emplyee_payment">
                                                         <div class="form-group row">
+                                                            <div class="col-md-1"></div>
                                                             <div class="col-md-4">
                                                                 <span>Preferred Payment Method:</span>
                                                             </div>
-                                                            <div class="col-md-8">
+                                                            <div class="col-md-2">
                                                                 <ul class="list-unstyled mb-0">
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
@@ -370,6 +371,10 @@
                                                                             </div>
                                                                         </fieldset>
                                                                     </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <ul class="list-unstyled mb-0">
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
@@ -378,38 +383,35 @@
                                                                             </div>
                                                                         </fieldset>
                                                                     </li>
-                                                                    <!-- <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" id="emplyee_checkMail">
-                                                                                <label class="custom-control-label" for="emplyee_checkMail">Check mail</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li> -->
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-11 hidden" id="nonemplyee_payment">
                                                         <div class="form-group row">
+                                                            <div class="col-md-1"></div>
                                                             <div class="col-md-4">
                                                                 <span>Preferred Payment Method:</span>
                                                             </div>
-                                                            <div class="col-md-8">
+                                                            <div class="col-md-2">
                                                                 <ul class="list-unstyled mb-0">
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="Picked up in department" id="nonemplyee_pick">
-                                                                                <label class="custom-control-label" for="nonemplyee_pick">Picked up in department</label>
+                                                                                <input type="radio" class="custom-control-input" name="paymentRadio2" value="Check mail" id="nonemployee_checkMail">
+                                                                                <label class="custom-control-label" for="nonemployee_checkMail">Check mail</label>
                                                                             </div>
                                                                         </fieldset>
                                                                     </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <ul class="list-unstyled mb-0">
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="paymentRadio" value="Check mail" id="nonemployee_checkMail">
-                                                                                <label class="custom-control-label" for="nonemployee_checkMail">Check mail</label>
+                                                                                <input type="radio" class="custom-control-input" name="paymentRadio2" value="Picked up in department" id="nonemplyee_pick">
+                                                                                <label class="custom-control-label" for="nonemplyee_pick">Picked up in department</label>
                                                                             </div>
                                                                         </fieldset>
                                                                     </li>
@@ -470,7 +472,7 @@
                                                             <div class="col-12">
                                                                 <div class="form-group">
                                                                     <label for="addr_country">Country</label>
-                                                                    <select class="crs-country custom-select form-control" id="addr_country" data-region-id="addr_region">
+                                                                    <select class="crs-country custom-select form-control" name="country" id="addr_country" data-region-id="addr_region">
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -570,7 +572,7 @@
                                                                                             <div class="input-group-prepend">
                                                                                                 <span class="input-group-text">$</span>
                                                                                             </div>
-                                                                                            <input type="text" id="amount_1" class="form-control" name="amount" placeholder="0.00" aria-label="Amount (to the nearest dollar)" required>
+                                                                                            <input type="text" id="amount_1" class="form-control" name="amount" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
                                                                                         </div>
                                                                                     </fieldset>
                                                                                 </div>
@@ -620,7 +622,7 @@
                                                                                     <label for="task-icon"><b><i>*If need to split budget please click plus icon.</i></b></label>
                                                                                 </div>
                                                                                 <div class="col-md-2">
-                                                                                    <select class="custom-select form-control" id="init_budget_select_box" name="budget_num_1" required>
+                                                                                    <select class="custom-select form-control" id="init_budget_select_box" name="budget_num_1">
                                                                                         <option value="">Please select</option>
                                                                                     </select>
                                                                                 </div>

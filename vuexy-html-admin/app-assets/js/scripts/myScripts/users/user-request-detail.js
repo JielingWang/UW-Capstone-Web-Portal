@@ -24,6 +24,8 @@ var noteCard = document.getElementById("note_card");
 var noteContent = document.getElementById("notes");
 var feedbackBlock = document.getElementById("feedback-block");
 
+var notesArr = [];
+
 var itemAmount = 0;
 var additionalTax = 0;
 
@@ -31,8 +33,8 @@ var request_id = null;
 
 window.onload = function() {
 
-    // request_id = window.sessionStorage.getItem('RequestID');
-    // this.console.log(request_id);
+    request_id = window.sessionStorage.getItem('RequestID');
+    this.console.log(request_id);
 
     // Request Example: Reimbursement
     // request_id = "5efb77159a0b5e00457acff8";
@@ -41,17 +43,15 @@ window.onload = function() {
     // Request Example: Procard Receipt
     // request_id = "5f0e484a7f2ae5004492a15e";
     // Request Example: Pay an Invoice
-    request_id = "5f0e530b7f2ae5004492a161";
+    // request_id = "5f0e530b7f2ae5004492a161";
 
     requestInfo = getRequestInfo(request_id);
     updateRequestInfo(requestInfo);
     collectHistoryInfo(requestInfo);
     updateRequestHistory();
-    updateNotes(requestInfo);
+    prepareNotesArr(requestInfo);
+    updateNotes();
     // changeOrderStatus();
-    if (requestInfo.OrderStatus != "Update") {
-        this.feedbackBlock.setAttribute('class', 'row hidden');
-    }
     // this.updateChatInfo(request_id);
     // getRequestHistory();
 }
@@ -78,9 +78,43 @@ function changeOrderStatus() {
     makePostRequest("updateOrderStatus/" + request_id, data, onSuccess, onFailure);
 }
 
-function updateNotes(data) {
+/**
+ * Collect note information into global variable notesArr from database
+ * @param {JSON Object} data Request data got from database
+ */
+function prepareNotesArr(data) {
+    var info = data.ChatInfo;
+    for (var x = 0; x < info.length; x++) {
+        notesArr.push({
+            Name: info[x].userName,
+            Time: info[x].timeStamp,
+            Comment: info[x].comment
+        });
+    }
+}
+
+/**
+ * Update the content of note block based on global variable notesArr
+ */
+function updateNotes() {
+    noteContent.innerHTML = "";
     noteCard.style.height = `${historyCard.clientHeight}px`;
-    noteContent.innerHTML = data.ChatInfo;
+    for (var x = 0; x < notesArr.length; x++) {
+        var p = document.createElement('p');
+        var n = document.createElement('span');
+        n.setAttribute('class', 'mr-1');
+        n.innerHTML = notesArr[x].Name;
+        var t = document.createElement('span');
+        t.setAttribute('class', 'mr-1');
+        t.innerHTML = moment(notesArr[x].Time).format('MMMM Do YYYY h:mm:ss a');
+        var c = document.createElement('span');
+        c.setAttribute('class', 'mr-1');
+        c.innerHTML = notesArr[x].Comment;
+        p.appendChild(n);
+        p.appendChild(t);
+        p.appendChild(c);
+        noteContent.appendChild(p);
+    }
 }
 
 /**
@@ -933,50 +967,53 @@ function genNewTimeStamp(type, note) {
     return stamp;
 }
 
-function accept() {
-    var data = {"OrderStatus": "Accepted"};
-    var onSuccess = function(data) {
-        if (data.status == true) {
-            info = data.data;
-        } else {
-            //error message
-            info = null;
-        }
-    }
+// function accept() {
+//     var data = {"OrderStatus": "Accepted"};
+//     var onSuccess = function(data) {
+//         if (data.status == true) {
+//             info = data.data;
+//         } else {
+//             //error message
+//             info = null;
+//         }
+//     }
 
-    var onFailure = function() {
-        // failure message
-        info = null;
-    }
-    makePutRequest("updateOrderStatus/order_id", data, onSuccess, onFailure);
-}
+//     var onFailure = function() {
+//         // failure message
+//         info = null;
+//     }
+//     makePutRequest("updateOrderStatus/order_id", data, onSuccess, onFailure);
+// }
 
-function updateChatInfo(request_id) {
-    var data = {"ChatInfo": "chat from jieling the second time"};
-    var onSuccess = function(data) {
-        if (data.status == true) {
-            console.log("update success");
-        } else {
-            //error message
-            info = null;
-        }
-    }
+// function updateChatInfo(request_id) {
+//     var data = {"ChatInfo": "chat from jieling the second time"};
+//     var onSuccess = function(data) {
+//         if (data.status == true) {
+//             console.log("update success");
+//         } else {
+//             //error message
+//             info = null;
+//         }
+//     }
 
-    var onFailure = function() {
-        // failure message
-        info = null;
-    }
-    makePostRequest("updateChatInfo/" + request_id, data, onSuccess, onFailure);
-}
+//     var onFailure = function() {
+//         // failure message
+//         info = null;
+//     }
+//     makePostRequest("updateChatInfo/" + request_id, data, onSuccess, onFailure);
+// }
 
 
 
 var feedback = document.getElementById("feedback_input");
 
-function sendBackClicked() {
-    var notes = feedback.value;
+function takeNoteClicked() {
+    // console.log('clicked');
+
+    // send data
     var data = {
-        ChatInfo: window.sessionStorage.getItem("name") + ": " + notes
+        userName: window.sessionStorage.getItem("id"),
+        comment: feedback.value
     };
     var onSuccess = function(data) {
         if (data.status == true) {
@@ -992,25 +1029,5 @@ function sendBackClicked() {
         info = null;
     }
     makePostRequest("updateChatInfo/" + request_id, data, onSuccess, onFailure);
-}
-
-function approveClicked() {
-    console.log('clicked');
-    var data = {
-        OrderStatus: "Accepted"
-    };
-    var onSuccess = function(data) {
-        if (data.status == true) {
-            console.log("update success");
-        } else {
-            //error message
-            info = null;
-        }
-    }
-
-    var onFailure = function() {
-        // failure message
-        info = null;
-    }
-    makePostRequest("updateOrderStatus/" + request_id, data, onSuccess, onFailure);
+    location.reload();
 }

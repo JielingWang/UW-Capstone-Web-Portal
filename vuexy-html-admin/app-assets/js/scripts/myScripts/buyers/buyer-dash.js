@@ -2,9 +2,10 @@ var requestsInfo = [];
 var requesters = [];
 var subUnits = [];
 var users = [];
-var myPending = [];
+var myReqArr = [];
 var unitStaff = [];
 let userInfoMap = new Map();
+let reqIdMap = new Map(); // <K, V> -> <request id, request index in requestsInfo>
 // contacts.set('Jessie', {phone: "213-555-1234", address: "123 N 1st Ave"})
 // contacts.has('Jessie') // true
 // contacts.get('Hilary') // undefined
@@ -13,20 +14,6 @@ let userInfoMap = new Map();
 // contacts.delete('Raymond') // false
 // contacts.delete('Jessie') // true
 // console.log(contacts.size) // 1
-
-
-// $(document).ready(function() {
-//     var table = $("#DataTables_Table_1").DataTable();
-//     table.row.add([
-//         '0001',
-//         'Jieling',
-//         'Test',
-//         'Test',
-//         '2020-7-20',
-//         'Approved',
-//         'Jieling'
-//     ]).draw();
-// });
 
 /**
  * Initialize the window
@@ -37,18 +24,37 @@ let userInfoMap = new Map();
  */
 window.onload = function() {
     update_Dashboard_welcomebar_navigationbar();
-    // this.getAllUsers();
-    // for (var i = 0; i < this.users.length; i++) {
-    //     var r = this.getUserInfo(users[i]);
-    //     requesters.push(r.userInfo.Name);
-    //     subUnits.push(r.SubUnitName);
-    // }
-    this.getAllRequestsInfo();
-    // this.updateSummaryTable();
-    this.getMyPendingRequests();
-    this.updatePendingCards();
-    this.prepareReassignSelector();
 
+    // All requests table
+    this.getAllRequestsInfo();
+    this.updateAllRequestsTable();
+
+    // My pending request table and card
+    this.getMyPendingRequestsInfo();
+    this.updatePendingCards();
+    var table = this.initMyPendingReqTable();
+    this.updateMyPendingRequestsTable(table);
+
+    $("input:radio[name='my-pending-format']").on('change', function () {
+        $("#my-pending-box").toggleClass("hidden");
+        $("#my-pending-table").toggleClass("hidden");
+        // if ($("input:radio[name='my-pending-format']:checked").val() == 'list-format') {
+        //     $("#my-pending-box").toggleClass("hidden");
+        //     $("#my-pending-table").toggleClass("hidden");
+        // }
+        // if ($("input:radio[name='my-pending-format']:checked").val() == 'box-format') {
+        //     $("#my-pending-box").toggleClass("hidden");
+        //     $("#my-pending-table").toggleClass("hidden");
+        // }
+    });
+
+    // Prepare for modal
+    this.prepareReassignSelector();
+    
+};
+
+
+function updateAllRequestsTable() {
     var table = $("#DataTables_Table_1").DataTable({
         "order": [[4, "desc"]]
     });
@@ -68,7 +74,7 @@ window.onload = function() {
     $('#DataTables_Table_1 tbody').on( 'click', 'tr td:not(:last-child)', function () {
         var data = table.row( $(this).parents('tr') ).data();
         console.log('row id: ' + data[0]);
-        // sendRequestId(data[0]);
+        sendRequestId(data[0]);
     } );
     
     $('#DataTables_Table_1 tbody').on( 'click', "button[name='takeButton']", function () {
@@ -76,27 +82,66 @@ window.onload = function() {
         // console.log('take id: ' + data[0]);
         var cell = table.cell($(this).parents('td'));
         cell.data('<button type="button" class="btn mr-0 mb-0 btn-outline-danger btn-sm" name="untakeButton" data-toggle="modal" data-target="#reassignModal">Untake</button>').draw();
-        // var assign_id = window.sessionStorage.getItem("id");
-        // updateAssignedInfo(data[0], assign_id);
+        var assign_id = window.sessionStorage.getItem("id");
+        updateAssignedInfo(data[0], assign_id);
 
-        // getMyPendingRequests();
-        // updatePendingCards();
+        getMyPendingRequestsInfo();
+        updatePendingCards();
+        // var table_0 = $("#DataTables_Table_0");
+        // updateMyPendingRequestsTable(table_0);
     } );
 
     $('#DataTables_Table_1 tbody').on( 'click', "button[name='untakeButton']", function () {
         var data = table.row( $(this).parents('tr') ).data();
         // console.log('untake id: ' + data[0]);
         var cell = table.cell( $(this).parents('td') );
-        var newAssign = null;
         $('#reassignModal').on('click', "button[name='reassign']", function() {
-            newAssign = modalReassignClicked(data[0]);
-            cell.data(newAssign).draw();
+            var newAssign = modalReassignClicked(data[0]);
+            if (newAssign) {
+                cell.data(newAssign).draw();
+            } else {
+                cell.data('<button type="button" class="btn mr-0 mb-0 btn-outline-primary btn-sm" name="takeButton">Take</button>');
+            }
+            getMyPendingRequestsInfo();
+            updatePendingCards();
+            // updateMyPendingRequestsTable();
         });
         
-        // getMyPendingRequests();
-        // updatePendingCards();
     } );
-};
+}
+
+function initMyPendingReqTable() {
+    var table = $("#DataTables_Table_0").DataTable({
+        "order": [[0, "asc"]]
+    });
+    return table;
+}
+
+
+function updateMyPendingRequestsTable(table) {
+    
+
+    // table.clear();
+
+    for (var i = 0; i < myReqArr.length; i++) {
+        var x = reqIdMap.get(myReqArr[i].RequestID);
+        table.row.add([
+            requestsInfo[x].RequestID,
+            requestsInfo[x].Requester,
+            requestsInfo[x].Type,
+            requestsInfo[x].Subunit,
+            requestsInfo[x].Date,
+            requestsInfo[x].Status
+        ]).draw();
+    }
+
+    $('#DataTables_Table_0 tbody').on( 'click', 'tr', function () {
+        var data = table.row( $(this) ).data();
+        console.log('row id: ' + data[0]);
+        sendRequestId(data[0]);
+    } );
+}
+
 
 function prepareReassignSelector() {
     getUnitFiscalStaff();
@@ -137,10 +182,14 @@ function getUnitFiscalStaff() {
 function modalReassignClicked(reqeust_id) {
     var selector = document.getElementById("reassignSelect");
     var assign_id = selector.value;
-    var assign_name = selector.options[selector.selectedIndex].text;
-    console.log("assign_name: " + assign_name);
+    var assign_name = null;
+    if (assign_id) {
+        assign_name = selector.options[selector.selectedIndex].text;
+        updateAssignedInfo(reqeust_id, assign_id);
+    } else {
+        untakeRequest(reqeust_id);
+    }
     $('#reassignModal').modal('hide');
-    // updateAssignedInfo(reqeust_id, assign_id);
     return assign_name;
 }
 
@@ -209,7 +258,7 @@ function getAllRequestsInfo() {
                     var status = info[j].OrderStatus;
                     var assigned = info[j].assignedTo;
                     if (status == "Approved" && assigned == null) { // take button cell
-                        assignedValue = genAssignedButtonCell();
+                        assignedValue = '<button type="button" class="btn mr-0 mb-0 btn-outline-primary btn-sm" name="takeButton">Take</button>';
                     } else if (assigned == window.sessionStorage.getItem("id")) { // check cell
                         assignedValue = '<button type="button" class="btn mr-0 mb-0 btn-outline-danger btn-sm" name="untakeButton" data-toggle="modal" data-target="#reassignModal">Untake</button>';
                     } else if (assigned != null) { // taken by others cell
@@ -233,6 +282,7 @@ function getAllRequestsInfo() {
                         Status: status,
                         Assigned: assignedValue
                     });
+                    reqIdMap.set(id, j);
                 }
             }            
         } else {
@@ -363,27 +413,27 @@ function getUserInfo(user_id) {
  * @param {int} request_id real id of this request, 
  *                         use to tie the button to the correct request
  */
-function genAssignedButtonCell() {
-    // var assigned_td = document.createElement('td');
-    // var btn = document.createElement('button');
-    // btn.setAttribute('type', 'button');
-    // btn.setAttribute('class', 'btn mr-0 mb-0 btn-outline-primary btn-sm');
-    // btn.setAttribute('id', request_id);
-    // btn.innerHTML = "Take";
-    // btn.onclick = function() {
-    //     btn.remove();
-    //     var icon = document.createElement('i');
-    //     icon.setAttribute('class', 'fa fa-check');
-    //     assigned_td.appendChild(icon);
-    //     updateAssignedInfo(request_id);
-    //     getMyPendingRequests();
-    //     updatePendingCards();
-    // };
-    // assigned_td.appendChild(btn);
-    // return assigned_td;
-    var assignedValue = '<button type="button" class="btn mr-0 mb-0 btn-outline-primary btn-sm" name="takeButton">Take</button>';
-    return assignedValue;
-}
+// function genAssignedButtonCell() {
+//     var assigned_td = document.createElement('td');
+//     var btn = document.createElement('button');
+//     btn.setAttribute('type', 'button');
+//     btn.setAttribute('class', 'btn mr-0 mb-0 btn-outline-primary btn-sm');
+//     btn.setAttribute('id', request_id);
+//     btn.innerHTML = "Take";
+//     btn.onclick = function() {
+//         btn.remove();
+//         var icon = document.createElement('i');
+//         icon.setAttribute('class', 'fa fa-check');
+//         assigned_td.appendChild(icon);
+//         updateAssignedInfo(request_id);
+//         getMyPendingRequestsInfo();
+//         updatePendingCards();
+//     };
+//     assigned_td.appendChild(btn);
+//     return assigned_td;
+//     var assignedValue = '<button type="button" class="btn mr-0 mb-0 btn-outline-primary btn-sm" name="takeButton">Take</button>';
+//     return assignedValue;
+// }
 
 /**
  * Update the assigned information of this request when clicking take button
@@ -406,14 +456,34 @@ function updateAssignedInfo(request_id, assign_id) {
 }
 
 /**
- * Get assigned Requests from database
+ * Untake the taken request without reassigning to others
+ * @param {int} request_id request id
  */
-function getMyPendingRequests() {
+function untakeRequest(request_id) {
     var onSuccess = function(data) {
         if (data.status == true) {
-            console.log("my pending requests information is here");
-            console.log(data.data);
-            myPending = [];
+           console.log("untake success!");
+        } else {
+            //error message
+        }
+    }
+
+    var onFailure = function() {
+        // failure message
+    }
+
+    makeGetRequest("untakeOrder/" + request_id, onSuccess, onFailure);
+}
+
+/**
+ * Get assigned Requests from database
+ */
+function getMyPendingRequestsInfo() {
+    myReqArr = [];
+    var onSuccess = function(data) {
+        if (data.status == true) {
+            // console.log("my pending requests information is here");
+            // console.log(data.data);
             var info = data.data;
             for (var i = 0; i < info.length; i++) {
                 var requesterID = info[i].userID_ref;
@@ -425,7 +495,7 @@ function getMyPendingRequests() {
                     });
                 }
                 var requester = userInfoMap.get(requesterID).name;
-                myPending.push({
+                myReqArr.push({
                     RequestID: info[i]._id,
                     Requester: requester,
                     Type: info[i].OrderType,
@@ -530,8 +600,9 @@ function sendRequestId(request_id) {
 function updatePendingCards() {
     var card_block = document.getElementById('card_block');
     card_block.innerHTML = '';
-    for (var i = 0; i < myPending.length; i++) {
-        card_block.appendChild(genPendingRequestCard(myPending[i].RequestID, 
-            myPending[i].Requester, myPending[i].Type, myPending[i].Date));
+    // console.log(myReqArr);
+    for (var i = 0; i < myReqArr.length; i++) {
+        card_block.appendChild(genPendingRequestCard(myReqArr[i].RequestID, 
+            myReqArr[i].Requester, myReqArr[i].Type, myReqArr[i].Date));
     }
 }

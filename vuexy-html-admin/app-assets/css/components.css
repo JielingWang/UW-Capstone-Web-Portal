@@ -22,7 +22,7 @@ html body .content {
   -webkit-backface-visibility : hidden;
           backface-visibility : hidden;
   min-height : calc(100% - 4rem);
-  margin-left : 330px;
+  margin-left : 260px;
 }
 html body .content.app-content {
   overflow : hidden;
@@ -184,11 +184,11 @@ html .pace .pace-progress {
 */
 @media (min-width: 992px) {
   body .content-right {
-    width : calc(100vw - (100vw - 100%) - 330px);
+    width : calc(100vw - (100vw - 100%) - 260px);
     float : right;
   }
   body .content-left {
-    width : calc(100vw - (100vw - 100%) - 330px);
+    width : calc(100vw - (100vw - 100%) - 260px);
     float : left;
   }
   body .content-detached {
@@ -196,22 +196,22 @@ html .pace .pace-progress {
   }
   body .content-detached.content-right {
     float : right;
-    margin-left : -330px;
+    margin-left : -260px;
   }
   body .content-detached.content-right .content-body {
-    margin-left : calc(330px + 2.2rem);
+    margin-left : calc(260px + 2.2rem);
   }
   body .content-detached.content-left {
     float : left;
-    margin-right : -330px;
+    margin-right : -260px;
   }
   body .content-detached.content-left .content-body {
-    margin-right : calc(330px + 2.2rem);
+    margin-right : calc(260px + 2.2rem);
   }
   .sidebar-right.sidebar-sticky {
     float : right !important;
-    margin-left : -330px;
-    width : 330px !important;
+    margin-left : -260px;
+    width : 260px !important;
     margin-top : 6rem;
   }
 }
@@ -727,7 +727,7 @@ body.fixed-footer footer.footer-dark {
 }
 .main-menu .navbar-header {
   height : 100%;
-  width : 330px;
+  width : 260px;
   height : 5rem;
   position : relative;
   padding : 0.35rem 1rem 0.3rem 1.64rem;

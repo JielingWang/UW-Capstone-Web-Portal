@@ -153,12 +153,23 @@ $(".steps-validation").steps({
         alert('send data to database');
 
         submitClicked();
+
+        // console.log('submit');
+        // var total = $('#quantity_1').val() * $('#unit_price_1').val();
+        // var amount = $('#split_dollar_input_value_1_1').val();
+        // console.log(total + ', ' + amount);
+        // if (total != amount) {
+        //     console.log('false');
+        //     return false;
+        // } else {
+        //     form.submit();
+        // }
     }
 });
 
 // Initialize validation
 $(".steps-validation").validate({
-    ignore: 'input[type=hidden]', // ignore hidden fields
+    ignore: "input[type=hidden], input[name='split_dollar_input_value_1']", // ignore hidden fields
     errorClass: 'danger',
     successClass: 'success',
     highlight: function (element, errorClass) {
@@ -199,7 +210,7 @@ $(".steps-validation").validate({
             error.insertAfter(element);
         }
         
-        console.log(elementNameStr);
+        // console.log(elementNameStr);
 
     },
     rules: {
@@ -208,6 +219,29 @@ $(".steps-validation").validate({
         }
     }
 });
+
+jQuery.validator.addMethod("sumEqual", function(value, element, params) {
+    return this.optional(element) || value == params[0];
+}, jQuery.validator.format("Please enter the correct value {0}"));
+
+
+// $( "input[name='split_dollar_input_value_1']" ).rules( "add", {
+//     required: true,
+//     minlength: 2,
+//     sumEqual: 10,
+//     messages: {
+//       required: "Required input",
+//       minlength: jQuery.validator.format("Please, at least {0} characters are necessary"),
+//       sumEqual: jQuery.validator.format("Please enter the correct value for {0}")
+//     }
+// });
+
+
+$( "input[name='split_dollar_input_value_1']" ).rules( "add", {
+    required: true
+});
+
+
 
 
 /************************************************ END: Wizard step control *******************************************************/

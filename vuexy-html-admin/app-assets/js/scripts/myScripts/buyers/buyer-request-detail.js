@@ -33,13 +33,13 @@ var additionalTax = 0;
 var request_id = null;
 
 window.onload = function() {
-    // request_id = window.sessionStorage.getItem('RequestID');
-    // this.console.log(request_id);
+    request_id = window.sessionStorage.getItem('RequestID');
+    this.console.log(request_id);
 
     // Request Example: Reimbursement
     // request_id = "5f1b2a648813560044fa2c52";
     // Request Example: Purchase Request
-    request_id = "5f1c92448813560044fa2c53";
+    // request_id = "5f1c92448813560044fa2c53";
     // Request Example: Procard Receipt
     // request_id = "5f1b14228cc64b1bd881ba65";
     // Request Example: Pay an Invoice
@@ -225,6 +225,20 @@ function updateRequestInfo(request_data) {
     // Part 2: Brief summary
     requestInfoHead.appendChild(genRequestInfoHead(request_type));
     requestInfoBody.appendChild(genRequestInfoBody(request_type, requestContent));
+
+    // Part 4: Action buttons
+    var request_status = basicInfo.OrderStatus;
+    var self_id = sessionStorage.getItem('id');
+    if (request_status == "Approved" && self_id == originalAssigndeTo) {
+        var acceptBtn = document.getElementById('accept-btn');
+        acceptBtn.disabled = false;
+        var sendBackBtn = document.getElementById('send-back-btn');
+        sendBackBtn.disabled = false;
+    }
+    if (request_status == "Accepted") {
+        var completeBtn = document.getElementById('complete-btn');
+        completeBtn.disabled = false;
+    }
 }
 
 
