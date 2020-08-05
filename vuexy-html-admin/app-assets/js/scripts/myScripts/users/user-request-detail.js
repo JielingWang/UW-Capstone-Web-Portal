@@ -19,7 +19,6 @@ var historyCard = document.getElementById("history_card");
 var requestHistory = document.getElementById("request-history");
 var reqApproverArr = [];
 var reqBuyer = {};
-let approverResponseMap = new Map(); // key: approverid, value: {name, response}
 
 var noteCard = document.getElementById("note_card");
 var noteContent = document.getElementById("notes");
@@ -33,31 +32,35 @@ var additionalTax = 0;
 var request_id = null;
 
 window.onload = function() {
+
     request_id = window.sessionStorage.getItem('RequestID');
     this.console.log(request_id);
 
     // Request Example: Reimbursement
-    // request_id = "5f1b2a648813560044fa2c52";
+    // request_id = "5efb77159a0b5e00457acff8";
     // Request Example: Purchase Request
-    // request_id = "5f1c92448813560044fa2c53";
+    // request_id = "5f0e13f67f2ae5004492a15c";
     // Request Example: Procard Receipt
-    // request_id = "5f1b14228cc64b1bd881ba65";
+    // request_id = "5f0e484a7f2ae5004492a15e";
     // Request Example: Pay an Invoice
     // request_id = "5f0e530b7f2ae5004492a161";
 
     requestInfo = getRequestInfo(request_id);
     updateRequestInfo(requestInfo);
     collectHistoryInfo(requestInfo);
+    updateRequestHistory();
     prepareNotesArr(requestInfo);
     updateNotes();
     // changeOrderStatus();
+    // this.updateChatInfo(request_id);
+    // getRequestHistory();
 }
 
 
 // just for debug
 function changeOrderStatus() {
     var data = {
-        OrderStatus: "Approved"
+        OrderStatus: "Awaiting Approval"
     };
     var onSuccess = function(data) {
         if (data.status == true) {
@@ -177,13 +180,7 @@ function updateRequestInfo(request_data) {
     var request_type = basicInfo.OrderType;
     requestType.innerHTML = request_type;
     requestDate.innerHTML = basicInfo.submittedOn.substr(0, 10);
-    var idx = basicInfo.OrderStatus.indexOf(',');
-    if (idx > 0) {
-        requestStatus.innerHTML = basicInfo.OrderStatus.substring(0, idx);
-    } else {
-        requestStatus.innerHTML = basicInfo.OrderStatus;
-    }
-    
+    requestStatus.innerHTML = basicInfo.OrderStatus;
     requestID.innerHTML = basicInfo._id;
     requester_id = basicInfo.userID_ref;
     var requester_info = getUserInfo(requester_id);
@@ -213,7 +210,7 @@ function updateRequestInfo(request_data) {
             payee.innerHTML = requester_info.userInfo.Name;
         }
     }
-    
+
     // Part 3: Line item table
     lineItemTableHead.appendChild(genLineItemTableHead(request_type));
     const lineItems = requestContent.LineItems;
@@ -225,20 +222,6 @@ function updateRequestInfo(request_data) {
     // Part 2: Brief summary
     requestInfoHead.appendChild(genRequestInfoHead(request_type));
     requestInfoBody.appendChild(genRequestInfoBody(request_type, requestContent));
-
-    // Part 4: Action buttons
-    var request_status = basicInfo.OrderStatus;
-    var self_id = sessionStorage.getItem('id');
-    if (request_status == "Approved" && self_id == originalAssigndeTo) {
-        var acceptBtn = document.getElementById('accept-btn');
-        acceptBtn.disabled = false;
-        var sendBackBtn = document.getElementById('send-back-btn');
-        sendBackBtn.disabled = false;
-    }
-    if (request_status == "Accepted") {
-        var completeBtn = document.getElementById('complete-btn');
-        completeBtn.disabled = false;
-    }
 }
 
 
@@ -331,7 +314,7 @@ function genRequestInfoBody(request_type, request_info) {
         p.innerHTML = request_info.Cardholder;
         td_1.appendChild(p);
     }
-
+    
 
     // Part 2: delivery method / vendor contacts
     if (request_type == "Reimbursement") {
@@ -538,6 +521,20 @@ function genLineItemTableRow(item_seq, request_type, line_item_info, line_item_l
         tr.appendChild(amount_td);
     }
 
+    // var viewBtn = document.createElement('button');
+    // var editBtn = document.createElement('button');
+    // viewBtn.setAttribute('class', 'btn btn-icon btn-flat-success');
+    // editBtn.setAttribute('class', 'btn btn-icon btn-flat-success');
+    // var viewIcon = document.createElement('i');
+    // var editIcon = document.createElement('i');
+    // viewIcon.className = 'feather icon-file';
+    // editIcon.className = 'feather icon-edit';
+    // viewBtn.appendChild(viewIcon);
+    // editBtn.appendChild(editIcon);
+    // receipt_td.appendChild(viewBtn);
+    // receipt_td.appendChild(editBtn);
+    
+
     // Append docs td
     if (item_seq == 1) {
         var doc_td = document.createElement('td');
@@ -558,6 +555,17 @@ function genLineItemTableRow(item_seq, request_type, line_item_info, line_item_l
         }
         
     }
+    
+    // if (Receipt == null) {
+    //     receipt_td.appendChild(editBtn);
+    // } else {
+    //     receipt_td.appendChild(viewBtn);
+    //     receipt_td.appendChild(editBtn);
+    // }
+
+    // create tr element
+    
+    
 
     return tr;
 }
@@ -586,6 +594,7 @@ function getDocsName(request_id) {
     makeGetRequest("getfilesAttached/" + request_id, onSuccess, onFailure);
     return info;
 }
+
 
 /**
  * Generate a cell to display split budget 
@@ -665,36 +674,25 @@ function genBudgetInfo(text, border) {
 function collectHistoryInfo(data) {
     var responses = data.ApprovalResponses;
     for (var i = 0; i < responses.length; i++) {
-        var responseData = responses[i].approverResponses;
-        for (var x = 0; x < responseData.length; x++) {
-            var approver_id = responseData[x].approverID_ref;
-            if (!approverResponseMap.has(approver_id)) {
-                approverResponseMap.set(approver_id, {
-                    name: getUserInfo(approver_id).userInfo.Name,
-                    response: responseData[x].response
+        var r = responses[i].approverResponses;
+        for (var j = 0; j < r.length; j++) {
+            var approverName = getUserInfo(r[j].approverID_ref).userInfo.Name;
+            var idx = findApprover(approverName);
+            if (idx > -1) {
+                if (r[j].response) {
+                    reqApproverArr[idx].Responses.push(r[j].response);
+                }
+            } else {
+                var res = [];
+                if (r[j].response) {
+                    res.push(r[j].response);
+                }
+                reqApproverArr.push({
+                    Approver: approverName,
+                    Responses: res
                 });
             }
         }
-        
-
-        // for (var j = 0; j < r.length; j++) {
-        //     var approverName = getUserInfo(r[j].approverID_ref).userInfo.Name;
-        //     var idx = findApprover(approverName);
-        //     if (idx > -1) {
-        //         if (r[j].response) {
-        //             reqApproverArr[idx].Responses.push(r[j].response);
-        //         }
-        //     } else {
-        //         var res = [];
-        //         if (r[j].response) {
-        //             res.push(r[j].response);
-        //         }
-        //         reqApproverArr.push({
-        //             Approver: approverName,
-        //             Responses: res
-        //         });
-        //     }
-        // }
     }
 
     var buyerName = null;
@@ -705,71 +703,49 @@ function collectHistoryInfo(data) {
         Status: data.OrderStatus,
         AssignedTo: buyerName
     };
-
-    requestHistory.appendChild(genFormStamp("Submitted", data.submittedOn));
-    if (approverResponseMap.size == 0) {
-        requestHistory.appendChild(genApprovalStamp(null, null));
-    } else {
-        for (const [key, value] of approverResponseMap.entries()) {
-            var appr = value.name;
-            var resp = value.response;
-            requestHistory.appendChild(genApprovalStamp(appr, resp));
-        }
-        // for (var i = 0; i < reqApproverArr.length; i++) {
-        //     var approver = reqApproverArr[i].Approver;
-        //     var responses = reqApproverArr[i].Responses;
-        //     requestHistory.appendChild(genApprovalStamp(approver, responses));
-        // }
-    }
-    // add status and timestamp
-    requestHistory.appendChild(genFiscalStaffStamp(reqBuyer.Status, reqBuyer.AssignedTo, data.lastModified));
-    requestHistory.appendChild(genClaimStamp(reqBuyer.Status, data.lastModified));
-    requestHistory.appendChild(genFinishStamp(reqBuyer.Status, data.lastModified));
 }
 
-// function updateRequestHistory() {
-//     requestHistory.appendChild(genFormStamp("Submitted"));
-//     for (var i = 0; i < reqApproverArr.length; i++) {
-//         var approver = reqApproverArr[i].Approver;
-//         var responses = reqApproverArr[i].Responses;
-//         requestHistory.appendChild(genApprovalStamp(approver, responses));
-//     }
-//     requestHistory.appendChild(genFiscalStaffStamp(reqBuyer.Status, reqBuyer.AssignedTo));
-//     requestHistory.appendChild(genClaimStamp(reqBuyer.Status));
-//     requestHistory.appendChild(genFinishStamp(reqBuyer.Status));
-// }
+function updateRequestHistory() {
+    requestHistory.appendChild(genFormStamp("Submitted"));
+    for (var i = 0; i < reqApproverArr.length; i++) {
+        var approver = reqApproverArr[i].Approver;
+        var responses = reqApproverArr[i].Responses;
+        requestHistory.appendChild(genApprovalStamp(approver, responses));
+    }
+    requestHistory.appendChild(genFiscalStaffStamp(reqBuyer.Status, reqBuyer.AssignedTo));
+    requestHistory.appendChild(genClaimStamp(reqBuyer.Status));
+    requestHistory.appendChild(genFinishStamp(reqBuyer.Status));
+}
 
 /**
  * Find the index of the given approver's name in reqApproverArr array
  * @param {string} name the approver's name
  * Return the index in reqApproverArr array
  */
-// function findApprover(name) {
-//     var result = -1;
-//     for (var i = 0; i < reqApproverArr.length; i++) {
-//         if (reqApproverArr[i].Approver) {
-//             if (reqApproverArr[i].Approver == name) {
-//                 result = i;
-//             }
-//         }
+function findApprover(name) {
+    var result = -1;
+    for (var i = 0; i < reqApproverArr.length; i++) {
+        if (reqApproverArr[i].Approver) {
+            if (reqApproverArr[i].Approver == name) {
+                result = i;
+            }
+        }
         
-//     }
-//     return result;
-// }
+    }
+    return result;
+}
 
 /**
  * Generate the history stamp of approval chain
  * @param {string} approver 
  * @param {array} responses
  */
-function genApprovalStamp(approver, response) {
-     
+function genApprovalStamp(approver, responses) {
     var stamp = document.createElement('li');
     var signal = document.createElement('div');
     var info = document.createElement('div');
 
-    // var done = isDone(responses);
-    var done = response;
+    var done = isDone(responses);
 
     var i = document.createElement('i');
     i.setAttribute('class', 'feather icon-alert-circle font-medium-2');
@@ -790,11 +766,7 @@ function genApprovalStamp(approver, response) {
     
     info.appendChild(p);
     var span = document.createElement('span');
-    if (approver == null) {
-        span.innerHTML = "Not got approvers yet";
-    } else {
-        span.innerHTML = "By approver " + approver;
-    }
+    span.innerHTML = "By approver " + approver;
     info.appendChild(span);
     stamp.appendChild(signal);
     stamp.appendChild(info);
@@ -805,22 +777,21 @@ function genApprovalStamp(approver, response) {
  * Check if this approver approved all budgets belongs to him
  * @param {array} responses array of responses of this approver
  */
-// function isDone(responses) {
-//     if (responses.length == 0) return false;
-//     for (var i = 0; i < responses.length; i++) {
-//         if (!responses[i]) return false;
-//     }
-//     return true;
-// }
+function isDone(responses) {
+    if (responses.length == 0) return false;
+    for (var i = 0; i < responses.length; i++) {
+        if (!responses[i]) return false;
+    }
+    return true;
+}
 
-function genFiscalStaffStamp(request_status, assignedTo, timeStamp) {
+function genFiscalStaffStamp(request_status, assignedTo) {
     var stamp = document.createElement('li');
     var signal = document.createElement('div');
     var info = document.createElement('div');
-    var time = document.createElement('small');
 
     var done = false;
-    if (request_status.indexOf("Accepted") >= 0) {
+    if (request_status == "Accepted") {
         done = true;
     }
 
@@ -847,15 +818,9 @@ function genFiscalStaffStamp(request_status, assignedTo, timeStamp) {
     } else {
         span.innerHTML = "Not assigned yet";
     }
-
-    if (done) {
-        time.innerHTML = moment(timeStamp).fromNow();
-    }
-
     info.appendChild(span);
     stamp.appendChild(signal);
     stamp.appendChild(info);
-    stamp.appendChild(time);
     return stamp;
 }
 
@@ -863,11 +828,10 @@ function genFiscalStaffStamp(request_status, assignedTo, timeStamp) {
  * Generate the stamp related to form
  * @param {string} action e.g. "Submitted"
  */
-function genFormStamp(action, timeStamp) {
+function genFormStamp(action) {
     var stamp = document.createElement('li');
     var signal = document.createElement('div');
     var info = document.createElement('div');
-    var time = document.createElement('small');
 
     var i = document.createElement('i');
     i.setAttribute('class', 'feather icon-plus font-medium-2');
@@ -881,23 +845,18 @@ function genFormStamp(action, timeStamp) {
     span.innerHTML = "Good job!";
     info.appendChild(p);
     info.appendChild(span);
-
-    time.innerHTML = moment(timeStamp).fromNow();
-
     stamp.appendChild(signal);
     stamp.appendChild(info);
-    stamp.appendChild(time);
     return stamp;
 }
 
-function genClaimStamp(request_status, timeStamp) {
+function genClaimStamp(request_status) {
     var stamp = document.createElement('li');
     var signal = document.createElement('div');
     var info = document.createElement('div');
-    var time = document.createElement('small');
 
     var done = false;
-    if (request_status.indexOf("Accepted") >= 0) {
+    if (request_status == "Claimed") {
         done = true;
     }
 
@@ -917,25 +876,18 @@ function genClaimStamp(request_status, timeStamp) {
     span.innerHTML = "Good job!";
     info.appendChild(p);
     info.appendChild(span);
-
-    if (done) {
-        time.innerHTML = moment(timeStamp).fromNow();
-    }
-
     stamp.appendChild(signal);
     stamp.appendChild(info);
-    stamp.appendChild(time);
     return stamp;
 }
 
-function genFinishStamp(request_status, timeStamp) {
+function genFinishStamp(request_status) {
     var stamp = document.createElement('li');
     var signal = document.createElement('div');
     var info = document.createElement('div');
-    var time = document.createElement('small');
 
     var done = false;
-    if (request_status.indexOf("Completed") >= 0) {
+    if (request_status == "Accepted") {
         done = true;
     }
 
@@ -955,14 +907,63 @@ function genFinishStamp(request_status, timeStamp) {
     span.innerHTML = "Good job!";
     info.appendChild(p);
     info.appendChild(span);
-
-    if (done) {
-        time.innerHTML = moment(timeStamp).fromNow();
-    }
-
     stamp.appendChild(signal);
     stamp.appendChild(info);
-    stamp.appendChild(time);
+    return stamp;
+}
+
+
+function genNewTimeStamp(type, note) {
+    var stamp = document.createElement('li');
+    
+    var signal = document.createElement('div');
+    var info = document.createElement('div');
+    var time = document.createElement('div');
+
+    if (type == "submitted") {
+        var i = document.createElement('i');
+        i.setAttribute('class', 'feather icon-plus font-medium-2');
+        signal.setAttribute('class', 'timeline-icon bg-primary');
+        signal.appendChild(i);
+
+        var p = document.createElement('p');
+        p.setAttribute('class', 'font-weight-bold');
+        p.innerHTML = "Request Submitted";
+        var span = document.createElement('span');
+        span.innerHTML = note;
+        info.appendChild(p);
+        info.appendChild(span);
+    } else if (type == "approved") {
+        var i = document.createElement('i');
+        i.setAttribute('class', 'feather icon-alert-circle font-medium-2');
+        signal.setAttribute('class', 'timeline-icon bg-warning');
+        signal.appendChild(i);
+
+        var p = document.createElement('p');
+        p.setAttribute('class', 'font-weight-bold');
+        p.innerHTML = "Waiting for approval";
+        var span = document.createElement('span');
+        span.innerHTML = note;
+        info.appendChild(p);
+        info.appendChild(span);
+    } else if (type == "completed") {
+        var i = document.createElement('i');
+        i.setAttribute('class', 'feather icon-check font-medium-2');
+        signal.setAttribute('class', 'timeline-icon bg-success');
+        signal.appendChild(i);
+
+        var p = document.createElement('p');
+        p.setAttribute('class', 'font-weight-bold');
+        p.innerHTML = "Request Completed";
+        var span = document.createElement('span');
+        span.innerHTML = note;
+        info.appendChild(p);
+        info.appendChild(span);
+    }
+    
+    stamp.appendChild(signal);
+    stamp.appendChild(info);
+    // stamp.appendChild(time);
     return stamp;
 }
 
@@ -1005,84 +1006,6 @@ function genFinishStamp(request_status, timeStamp) {
 
 
 var feedback = document.getElementById("feedback_input");
-
-function sendBackClicked() {
-    const timeStamp = new Date(Date.now()).toISOString();
-
-    var orderData = {
-        OrderStatus: "Updated" + "," + timeStamp
-    };
-    var onSuccess = function(data) {
-        if (data.status == true) {
-            console.log("update success");
-        } else {
-            //error message
-            info = null;
-        }
-    }
-
-    var onFailure = function() {
-        // failure message
-        info = null;
-    }
-    // makePostRequest("updateChatInfo/" + request_id, chatData, onSuccess, onFailure);
-    makePostRequest("updateOrderStatus/" + request_id, orderData, onSuccess, onFailure);
-    location.reload();
-}
-
-function approveClicked() {
-    console.log('clicked');
-    const timeStamp = new Date(Date.now()).toISOString();
-
-    var data = {
-        OrderStatus: "Accepted" + "," + timeStamp
-    };
-    var onSuccess = function(data) {
-        if (data.status == true) {
-            console.log("update success");
-        } else {
-            //error message
-            info = null;
-        }
-    }
-
-    var onFailure = function() {
-        // failure message
-        info = null;
-    }
-    makePostRequest("updateOrderStatus/" + request_id, data, onSuccess, onFailure);
-    location.reload();
-}
-
-
-function finishClicked() {
-    console.log('clicked');
-    const timeStamp = new Date(Date.now()).toISOString();
-    // console.log(timeStamp);
-    // console.log(moment(timeStamp).fromNow());
-    // const str = "Accepted,timestamp";
-    // var idx = str.indexOf(',');
-    // console.log(str.substring(idx + 1));
-
-    var data = {
-        OrderStatus: "Completed" + "," + timeStamp
-    };
-    var onSuccess = function(data) {
-        if (data.status == true) {
-            console.log("update success");
-        } else {
-            //error message
-            info = null;
-        }
-    }
-
-    var onFailure = function() {
-        // failure message
-        info = null;
-    }
-    makePostRequest("updateOrderStatus/" + request_id, data, onSuccess, onFailure);
-    location.reload();
-}
 
 function takeNoteClicked() {
     // console.log('clicked');

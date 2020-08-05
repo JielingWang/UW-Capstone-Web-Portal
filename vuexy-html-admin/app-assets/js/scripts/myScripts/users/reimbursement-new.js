@@ -1,6 +1,17 @@
 var itemNum = 1;
 var fileNum = 1;
+// Store all line items in an array
 var lineItems = [];
+// Track if this id is deleted
+var idFlags = [];
+// _id = 0, no such id
+idFlags.push(false);
+// _id = 1, the initial one
+idFlags.push(true);
+
+var budgetIds = [];
+budgetIds.push(2);
+
 var formData = new FormData();
 var type = "";
 var unit_id = "";
@@ -136,101 +147,11 @@ $(".steps-validation").steps({
         return form.valid();
     },
     onFinished: function (event, currentIndex) {
+        // console.log("submit");
         alert("Submitted!");
         alert('send data to database');
-        // getUserInfo();
-        var formData = new FormData();
 
-        // var itemsCost = 0;
-        // for (var i = 0; i < lineItems.length; i++) {
-        //     var firstChar = lineItems[i].Amount.charAt(0);
-        //     if (firstChar === "$") {
-        //         var amountNum = lineItems[i].Amount.substr(1);
-        //         itemsCost += parseFloat(amountNum);
-        //     } else {
-        //         itemsCost += parseFloat(lineItems[i].Amount);
-        //     }
-        // }
-
-        //this is the JSON Object we are sending to the server
-        var JSON_toServer = {
-            "userID_ref": null, 
-            "OrderType": null, 
-            "OrderInfo": null,  //this is where we are going to put JSON_OrderInfo_inForm JSON object, but we will convert JSON_OrderInfo_inForm JSON object to string to send to server
-            "OrderStatus": null, 
-            "ChatInfo": null,
-            "assignedTo": null
-        }
-
-        var addrInfo = {
-            FullName: $("input[name='full-name']").val(),
-            AddrLine1: $("input[name='addr-line-1']").val(),
-            AddrLine2: $("input[name='addr-line-2']").val(),
-            AddrCity: $("input[name='addr-city']").val(),
-            AddrState: $("input[name='addr-state']").val(),
-            AddrZip: $("input[name='addr-zip']").val()
-        }
-
-        var requestInfo = {
-            ReimburseFor: $("input[name='myselfOrBehalfRadio']:checked").val(),
-            Individual: $("input[name='individual-reimbursed']:checked").val(),
-            Payment: $("input[name='paymentRadio']:checked").val(),
-            Addr: addrInfo,
-            LineItems: lineItems
-            // ItemsCost: itemsCost
-        }
-
-        //now lets set up the JSON_toServer JSON Object
-        JSON_toServer.userID_ref = user_id;  // 5e63127145f8e019d1f26ddc
-        JSON_toServer.OrderType = "Reimbursement";
-        JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
-        // console.log(typeof(requestInfo));
-        JSON_toServer.OrderStatus = "Submitted"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
-        JSON_toServer.ChatInfo = "TEST CHAT INFO"; //leaving this empty since there's no chat when user upload a order first
-        JSON_toServer.assignedTo = null; //leaving this as null since there's no one assigned when a user upload/submit a order.
-
-        
-        for (var i = 1; i <= fileNum; i++) {
-            var fileSelect = document.getElementById("file_" + i);
-            if (fileSelect) {
-                for(var x = 0; x < fileSelect.files.length; x++) {
-                    formData.append(fileSelect.files[x].name, fileSelect.files[x]);
-                }
-                // "files" should stay as it is, 
-                // becuase this is how server can identify files from the JSON information, 
-                // when it get this HTTP request
-                formData.append("files", fileSelect.files[x]);
-            }
-        }
-            
-
-        //here we just pass in the JSON object we need to pass to the server. "JSON_body" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request
-        formData.set("JSON_body", JSON.stringify(JSON_toServer));
-        // Http Request  
-        var request = new XMLHttpRequest();
-        //this function will get the response from the server after we upload the order
-        request.onreadystatechange = function() {
-            console.log("Request info is here:");
-            if (request.readyState == 4) {
-                // show it in the console
-                const response_obj = JSON.parse(request.response);
-                const data_obj = response_obj.data;
-                console.log(data_obj);
-                //convert order info to JSON
-                const requestInfo_obj = JSON.parse(data_obj.OrderInfo);
-                console.log(requestInfo_obj);
-                window.sessionStorage.setItem('RequestID', data_obj._id);
-                window.location.href = "../../../html/ltr/buyers/buyer-request-detail.html";
-
-                // window.location.href = "../../../html/ltr/users/user-summary.html";
-
-                
-            }
-        }
-        request.open('POST', baseURL + "uploadOrder/" + type + "/" + unit_id);
-        request.send(formData);
-        // window.location.href = "../../../html/ltr/users/user-summary.html";
-        // window.location.replace("../../../html/ltr/users/user-summary.html");
+        submitClicked();
     }
 });
 
@@ -246,14 +167,103 @@ $(".steps-validation").validate({
         $(element).removeClass(errorClass);
     },
     errorPlacement: function (error, element) {
-        error.insertAfter(element);
+        // console.log('errorPlacement... this never gets called :(', error, element.next());
+        if (element.hasClass('custom-control-input') || element.hasClass('form-control')) {
+            error.insertAfter(element.parent());
+        } else {
+            error.insertAfter(element);
+        }
+        // var elementNameStr = element[0].name;
+        // console.log(element[0].parentElement.className);
+        // if (element[0].parentElement.className == "custom-control custom-radio") {
+        //     error.insertAfter(element[0].parentElement);
+        // } else {
+        //     error.insertAfter(element);
+        // }
+
     },
     rules: {
-        email: {
+        myself_onbehalf_radio: {
+            required: true
+        },
+        individual_reimbursed: {
+            required: true
+        },
+        onbehalf_name: {
+            required: "#onBehalfRadio_Yes:checked"
+        },
+        onbehalf_email: {
+            required: "#onBehalfRadio_Yes:checked",
             email: true
+        },
+        onbehalf_affiliation: {
+            required: "#onBehalfRadio_Yes:checked"
+        },
+        paymentRadio: {
+            required: "#individual_employee:checked"
+        },
+        paymentRadio2: {
+            required: "#individual_student:checked" || "individual_nonuw:checked"
+        },
+        name: {
+            required: "#nonemployee_checkMail:checked"
+        },
+        "ship-address": {
+            required: "#nonemployee_checkMail:checked"
+        },
+        "ship-city": {
+            required: "#nonemployee_checkMail:checked"
+        },
+        "ship-state": {
+            required: "#nonemployee_checkMail:checked"
+        },
+        "ship-zip": {
+            required: "#nonemployee_checkMail:checked"
+        },
+        country: {
+            required: "#nonemployee_checkMail:checked"
+        },
+        amount: {
+            required: true,
+            number: true
+        },
+        taxRadio1: {
+            required: true
+        }
+    },
+    messages: {
+        myself_onbehalf_radio: {
+            required: "Please make your choice"
+        },
+        individual_reimbursed: {
+            required: "Please make your choice"
+        },
+        paymentRadio: {
+            required: "Please make your choice"
+        },
+        paymentRadio2: {
+            required: "Please make your choice"
         }
     }
 });
+
+
+
+// jQuery.validator.addMethod("radioCheck", function(value, element, params) {
+//     if ($("input[name='myself_onbehalf_radio']:checked").length == 1) {
+//         return true;
+//     } else {
+//         return false;
+//     }
+// }, jQuery.validator.format("This field is required"));
+
+// $("input[name='myself_onbehalf_radio']").rules('add', {
+//     required: true
+// });
+
+// $("input[name='individual_reimbursed]").rules('add', {
+//     required: true
+// });
 
 
 /************************************************ END: Wizard step control *******************************************************/
@@ -271,13 +281,20 @@ $(".steps-validation").validate({
 window.onload = function() {
     this.getUserInfo();
     this.getBudgetsInfo();
-    this.console.log(this.budgets_database);
+    // this.console.log(this.budgets_database);
     // Initialize the budget select box
     var budget_select = this.document.getElementById('init_budget_select_box');
     for (var i = 0; i < this.budgets_database.length; i++) {
         var num = budgets_database[i];
         budget_select.appendChild(addBudgetData(num));
     }
+
+    // $("input[name='amount']").each(function() {
+    //     $(this).rules('add', {
+    //         required: true,
+    //         number: true
+    //     });
+    // });
 };
 
 /**
@@ -318,8 +335,8 @@ function getUserInfo() {
 function getBudgetsInfo() {
     var onSuccess = function(data) {
         if (data.status == true) {
-            console.log("budgets information is here");
-            console.log(data.data);
+            // console.log("budgets information is here");
+            // console.log(data.data);
             for (var i = 0; i < data.data.length; i++) {
                 budgets_database.push(data.data[i].budgetNumber);
             }
@@ -340,7 +357,7 @@ function getBudgetsInfo() {
 
 $(document).on('click', 'input', function(){
     /** myself or onbehalf radio */
-    var mySelf = $("input[name='myself-onbehalf']:checked").val();
+    var mySelf = $("input[name='myself_onbehalf_radio']:checked").val();
     if (mySelf == "myself") {
         $('#onBehalf_Yes').attr('class', 'hidden');
     } else if (mySelf == "onbehalf") {
@@ -348,7 +365,7 @@ $(document).on('click', 'input', function(){
     }
 
     /** payment method part */
-    var individual = $("input[name='individual-reimbursed']:checked").val();
+    var individual = $("input[name='individual_reimbursed']:checked").val();
     if (individual == "employee") {
         $('#emplyee_payment').attr('class', 'col-11 visible');
         $('#nonemplyee_payment').attr('class', 'col-11 hidden');
@@ -358,8 +375,7 @@ $(document).on('click', 'input', function(){
     }
 
     /** control mail-addr */
-    var needsAddr = $("input[name='paymentRadio']:checked").val();
-    if (needsAddr == "Check mail") {
+    if ($('#nonemployee_checkMail').is(':checked')) {
         $('#mail-addr').attr('class', 'visible');
     } else {
         $('#mail-addr').attr('class', 'hidden');
@@ -368,6 +384,111 @@ $(document).on('click', 'input', function(){
 
 
 /***************** BEGIN: Step3 *******************/
+
+function submitClicked() {
+    /** Confirm each line item */
+    for (var x = 1; x <= idFlags.length; x++) {
+        if (idFlags[x]) {
+            confirmItem(x);
+        }
+    }
+
+    // getUserInfo();
+    var formData = new FormData();
+
+    // var itemsCost = 0;
+    // for (var i = 0; i < lineItems.length; i++) {
+    //     var firstChar = lineItems[i].Amount.charAt(0);
+    //     if (firstChar === "$") {
+    //         var amountNum = lineItems[i].Amount.substr(1);
+    //         itemsCost += parseFloat(amountNum);
+    //     } else {
+    //         itemsCost += parseFloat(lineItems[i].Amount);
+    //     }
+    // }
+
+    //this is the JSON Object we are sending to the server
+    var JSON_toServer = {
+        "userID_ref": null, 
+        "OrderType": null, 
+        "OrderInfo": null,  //this is where we are going to put JSON_OrderInfo_inForm JSON object, but we will convert JSON_OrderInfo_inForm JSON object to string to send to server
+        "OrderStatus": null, 
+        "ChatInfo": null,
+        "assignedTo": null
+    }
+
+    var addrInfo = {
+        FullName: document.getElementById('full_name').value,
+        AddrLine1: document.getElementById('street_addr_1').value,
+        AddrLine2: document.getElementById('street_addr_2').value,
+        AddrCity: document.getElementById('addr_city').value,
+        AddrState: document.getElementById('addr_state').value,
+        AddrZip: document.getElementById('addr_zip').value,
+        AddrCountry: document.getElementById('addr_country').value
+    };
+
+    var requestInfo = {
+        ReimburseFor: $("input[name='myself_onbehalf_radio']:checked").val(),
+        OnbehalfName: $("input[name='onbehalf_name']").val(),
+        OnbehalfEmail: $("input[name='onbehalf_email']").val(),
+        OnbehalfAffiliation: $("input[name='onbehalf_affiliation']").val(),
+        Individual: $("input[name='individual_reimbursed']").val(),
+        Payment: $("input[name='paymentRadio']:checked").val() ? $("input[name='paymentRadio']:checked").val() : $("input[name='paymentRadio2']:checked").val(),
+        Addr: addrInfo,
+        LineItems: lineItems
+        // ItemsCost: itemsCost
+    }
+
+    //now lets set up the JSON_toServer JSON Object
+    JSON_toServer.userID_ref = user_id;  // 5e63127145f8e019d1f26ddc
+    JSON_toServer.OrderType = "Reimbursement";
+    JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
+    // console.log(typeof(requestInfo));
+    JSON_toServer.OrderStatus = "Submitted"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
+    JSON_toServer.ChatInfo = "TEST CHAT INFO"; //leaving this empty since there's no chat when user upload a order first
+    JSON_toServer.assignedTo = null; //leaving this as null since there's no one assigned when a user upload/submit a order.
+
+
+    for (var i = 1; i <= fileNum; i++) {
+        var fileSelect = document.getElementById("file_" + i);
+        if (fileSelect) {
+            for(var x = 0; x < fileSelect.files.length; x++) {
+                formData.append(fileSelect.files[x].name, fileSelect.files[x]);
+            }
+            // "files" should stay as it is, 
+            // becuase this is how server can identify files from the JSON information, 
+            // when it get this HTTP request
+            formData.append("files", fileSelect.files[x]);
+        }
+    }
+        
+
+    //here we just pass in the JSON object we need to pass to the server. "JSON_body" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request
+    formData.set("JSON_body", JSON.stringify(JSON_toServer));
+    // Http Request  
+    var request = new XMLHttpRequest();
+    //this function will get the response from the server after we upload the order
+    request.onreadystatechange = function() {
+        console.log("Request info is here:");
+        if (request.readyState == 4) {
+            // show it in the console
+            const response_obj = JSON.parse(request.response);
+            const data_obj = response_obj.data;
+            console.log(data_obj);
+            //convert order info to JSON
+            const requestInfo_obj = JSON.parse(data_obj.OrderInfo);
+            console.log(requestInfo_obj);
+            window.sessionStorage.setItem('RequestID', data_obj._id);
+            window.location.href = "../../../html/ltr/users/user-request-detailpage.html";
+            
+        }
+    }
+    request.open('POST', baseURL + "uploadOrder/" + type + "/" + unit_id);
+    request.send(formData);
+    // window.location.href = "../../../html/ltr/users/user-summary.html";
+    // window.location.replace("../../../html/ltr/users/user-summary.html");
+}
+
 
 /**
  * BEGIN: Budgets Controller
@@ -385,9 +506,7 @@ $(document).on('click', 'input', function(){
  * Functionality: add more budget numbers
  */
 $(document).on('click', '#budget_btn_1_1', function() {
-    var _id = 1;
-    var _budget_id = 1;
-    document.getElementById('budget_' + _id + '_' + _budget_id).after(addBudget(_id, _budget_id + 1, false));
+    document.getElementById('budget_1_1').after(addBudget(1, budgetIds[0] ++, false));
 });
 
 
@@ -401,6 +520,10 @@ $(document).on('click', '#budget_btn_1_1', function() {
  * the button will be plus button, otherwise the button will be delete button
  */
 function addBudget(_id, _budget_id, init) {
+    if (init) {
+        budgetIds.push(2);
+    }
+
     var box = document.createElement('div');
     box.setAttribute('class', 'col-12');
     box.setAttribute('id', 'budget_' + _id + '_' + _budget_id);
@@ -415,13 +538,14 @@ function addBudget(_id, _budget_id, init) {
 
     var second = document.createElement('div');
     second.setAttribute('class', 'col-md-2');
-    second.appendChild(genBudgetsSelectBox(_id));
+    second.appendChild(genBudgetsSelectBox(_id, _budget_id));
 
     var third = document.createElement('div');
     third.setAttribute('class', 'col-md-2');
     var sel2 = document.createElement('select');
     sel2.setAttribute('class', 'custom-select form-control');
     sel2.setAttribute('id', 'split_with_' + _id + '_' + _budget_id);
+    sel2.setAttribute('name', 'split_with_' + _id);
     sel2.onclick = function() {
         splitWithChanged(_id, _budget_id);
     };
@@ -466,7 +590,7 @@ function addBudget(_id, _budget_id, init) {
     btn.appendChild(icon);
     if (init) {
         btn.onclick = function() {
-            document.getElementById('budget_' + _id + '_' + _budget_id).after(addBudget(_id, _budget_id + 1, false));
+            document.getElementById('budget_' + _id + '_' + _budget_id).after(addBudget(_id, budgetIds[_id - 1]++, false));
         }
     } else {
         btn.onclick = function() {
@@ -517,6 +641,7 @@ function inputGroup(_id, _budget_id, isPre, label, name) {
     i.setAttribute('class', 'form-control');
     i.setAttribute('type', 'text');
     i.setAttribute('id', 'split_' + name + '_input_value_' + _id + '_' + _budget_id);
+    i.setAttribute('name', 'split_' + name + '_input_value_' + _id);
 
     if (isPre) {
         d.appendChild(sig);
@@ -531,6 +656,7 @@ function inputGroup(_id, _budget_id, isPre, label, name) {
 
 }
 
+
 /** 
  * Generate task/option/project options behind each budget number 
  */
@@ -538,37 +664,39 @@ function addBudgetOptions(_id, _budget_id) {
     var row = document.createElement('div');
     row.setAttribute('class', 'form-group row');
 
+    var zero = document.createElement('div');
+    zero.setAttribute('class', 'col-md-4');
+
     var first = document.createElement('div');
     first.setAttribute('class', 'col-md-1');
-    first.appendChild(genOption(_id, _budget_id, "Task", "option_task"));
+    first.appendChild(addNewBudgetInfoCheckbox(_id, _budget_id, 1));
 
     var second = document.createElement('div');
     second.setAttribute('class', 'col-md-1');
-    second.appendChild(genOption(_id, _budget_id, "Option", "option_option"));
+    second.appendChild(addNewBudgetInfoCheckbox(_id, _budget_id, 2));
 
     var third = document.createElement('div');
     third.setAttribute('class', 'col-md-1');
-    third.appendChild(genOption(_id, _budget_id, "Project", "option_project"));
+    third.appendChild(addNewBudgetInfoCheckbox(_id, _budget_id, 3));
     
+    row.appendChild(zero);
     row.appendChild(first);
-    row.appendChild(genOptionInput("task_input", _id, _budget_id));
+    row.appendChild(addNewBudgetInfoInput(_id, _budget_id, 1));
     row.appendChild(second);
-    row.appendChild(genOptionInput("option_input", _id, _budget_id));
+    row.appendChild(addNewBudgetInfoInput(_id, _budget_id, 2));
     row.appendChild(third);
-    row.appendChild(genOptionInput("project_input", _id, _budget_id));
+    row.appendChild(addNewBudgetInfoInput(_id, _budget_id, 3));
 
     return row;
 }
 
-/** 
- * Generate option of task/option/project 
- * @param _id id for line item
- * @param _budget_id id for budget number in this line item
- * @param {string} label the label for this options (Task/Option/Project)
- * @param {string} name use to set the name of this option
- * Each option group is bound to a single budget number
+/**
+ * Add additional information checkboxes for a certain budget number
+ * @param {int} _id the line item id
+ * @param {int} _budget_id the budget id of this line item
+ * @param {int} seq the info sequence of this budget number (1-task, 2-option, 3-project)
  */
-function genOption(_id, _budget_id, label, name) {
+function addNewBudgetInfoCheckbox(_id, _budget_id, seq) {
     var list = document.createElement('ul');
     list.setAttribute('class', 'list-unstyled mb-0');
     var bullet = document.createElement('li');
@@ -579,16 +707,20 @@ function genOption(_id, _budget_id, label, name) {
     var i = document.createElement('input');
     i.setAttribute('type', 'checkbox');
     i.setAttribute('class', 'custom-control-input');
-    i.setAttribute('name', name);
-    i.setAttribute('id', name + _id + '_' + _budget_id);
-    // i.onclick = function() {
-    //     var text = document.getElementById(name + _id + '_' + _budget_id);
-    //     text.setAttribute('class', 'col-md-3 hidden');
-    // };
+    i.setAttribute('id', 'budget-info-' + _id + '-' + _budget_id + '-' + seq);
+    i.onclick = function() {
+        toggleInputBox(_id, _budget_id, seq);
+    }
     var l = document.createElement('label');
     l.setAttribute('class', 'custom-control-label');
-    l.setAttribute('for', name + _id + '_' + _budget_id);
-    l.innerHTML = label;
+    l.setAttribute('for', 'budget-info-' + _id + '-' + _budget_id + '-' + seq);
+    if (seq == 1) {
+        l.innerHTML = "Task";
+    } else if (seq == 2) {
+        l.innerHTML = "Option";
+    } else if (seq == 3) {
+        l.innerHTML = "Project";
+    }
     d.appendChild(i);
     d.appendChild(l);
     f.appendChild(d);
@@ -597,20 +729,73 @@ function genOption(_id, _budget_id, label, name) {
     return list;
 }
 
-/** 
- * Generate the input box behind each task/option/project 
- * @param {string} name use to set the name of this input
+/**
+ * Add the budget information input row
+ * @param {int} _id 
+ * @param {int} _budget_id 
+ * @param {int} seq the info sequence of this budget number (1-task, 2-option, 3-project)
  */
-function genOptionInput(name, _id, _budget_id) {
+function addNewBudgetInfoInput(_id, _budget_id, seq) {
     var div = document.createElement('div');
-    div.setAttribute('class', 'col-md-3 hidden');
-    div.setAttribute('id', name + _id + '_' + _budget_id);
+    if (seq == 1 || seq == 2) {
+        div.setAttribute('class', 'col-md-2 hidden');
+    } else if (seq == 3) {
+        div.setAttribute('class', 'col-md-3 hidden');
+    }
+    div.setAttribute('id', 'budget-info-input-' + _id + '-' + _budget_id + '-' + seq);
     var i = document.createElement('input');
     i.setAttribute('type', 'text');
     i.setAttribute('class', 'form-control');
-    i.setAttribute('name', name);
+    i.setAttribute('id', 'budget-info-value-' + _id + '-' + _budget_id + '-' + seq);
+    if (seq == 1) {
+        i.setAttribute('name', 'budget-task-' + _id);
+    } else if (seq == 2) {
+        i.setAttribute('name', 'budget-option-' + _id);
+    } else if (seq == 3) {
+        i.setAttribute('name', 'budget-project-' + _id);
+    }
+    
+    div.appendChild(i);
     return div;
 }
+
+/**
+ * Determine if the additional budget info input box triggered
+ * @param {int} _id 
+ * @param {int} _budget_id 
+ * @param {int} seq 
+ */
+function toggleInputBox(_id, _budget_id, seq) {
+    var checkbox = document.getElementById('budget-info-' + _id + '-' + _budget_id + '-' + seq);
+    var infoInput = document.getElementById('budget-info-input-' + _id + '-' + _budget_id + '-' + seq);
+    if (checkbox.checked) {
+        if (seq == 1 || seq == 2) {
+            infoInput.setAttribute('class', 'col-md-1');
+        } else if (seq == 3) {
+            infoInput.setAttribute('class', 'col-md-2');
+        }
+    } else {
+        if (seq == 1 || seq == 2) {
+            infoInput.setAttribute('class', 'col-md-1 hidden');
+        } else if (seq == 3) {
+            infoInput.setAttribute('class', 'col-md-2 hidden');
+        }
+    }
+}
+
+/** 
+ * Bind to the initialized check box 
+ */
+$(document).on('click', '#budget-info-1-1-1', function() {
+    toggleInputBox(1, 1, 1);
+});
+$(document).on('click', '#budget-info-1-1-2', function() {
+    toggleInputBox(1, 1, 2);
+});
+$(document).on('click', '#budget-info-1-1-3', function() {
+    toggleInputBox(1, 1, 3);
+});
+
 
 /** 
  * Split with amount or percentage controller
@@ -633,11 +818,13 @@ function splitWithChanged(_id, _budget_id) {
     }
 }
 
-function genBudgetsSelectBox(_id) {
+function genBudgetsSelectBox(_id, _budget_id) {
     var sel = document.createElement('select');
     sel.setAttribute('class', 'custom-select form-control');
     sel.setAttribute('name', 'budget_num_' + _id);
-    sel.appendChild(addBudgetData('Please select'));
+    sel.setAttribute('id', 'budget_num_' + _id + '_' + _budget_id);
+    // sel.setAttribute('required', '');
+    sel.appendChild(addBudgetData('0'));
     
     for (var i = 0; i < budgets_database.length; i++) {
         var num = budgets_database[i];
@@ -661,8 +848,13 @@ $(document).on('click', '#split_with_1_1', function(){
  */
 function addBudgetData(num) {
     var op = document.createElement('option');
-    op.setAttribute('value', num);
-    op.innerHTML = num;
+    if (num == "0") {
+        op.setAttribute('value', '');
+        op.innerHTML = "Please select"
+    } else {
+        op.setAttribute('value', num);
+        op.innerHTML = num;
+    }
     return op;
 }
 
@@ -700,12 +892,10 @@ $(document).on('click', '#option_project', function() {
 
 /** 
  * BEGIN: New Line Item Controller 
- * @param _id line item id
- * @param itemNum this is a global variable, starts from 1,
- *                each time when uses add a new line item it will increase by 1 
- *                to generate a unique id for all components inside this line item
- *                but it will not decrease when users delete a line item
- *                so itemNum cannot reflect the real number of line items, it just use to set id
+ * @param _id line item id, assigned by idFlags.length, starts from 1
+ *            each time when user add a new line item this _id will increase by 1 
+ *            which serves as a unique id for all components inside this line item
+ *            when this item (block) is deleted, the corresponding idFlag will turn to false
  * Users can add one more line item by clicking add-new-line-item button
  * This funtion will generate all needed components of each line item,
  * exactly the same as original box,
@@ -714,6 +904,7 @@ $(document).on('click', '#option_project', function() {
 
 /** Core function */
 function addNewLineItem(_id) {
+    idFlags.push(true);
 
     var newBox = document.createElement('div');
     newBox.setAttribute('class', 'row d-flex justify-content-center');
@@ -739,7 +930,7 @@ function addNewLineItem(_id) {
     row.appendChild(addNewAmount(_id));
     row.appendChild(addNewTax(_id));
     row.appendChild(addBudget(_id, 1, true));
-    row.appendChild(addNewConfirmButton(_id));
+    // row.appendChild(addNewConfirmButton(_id));
 
     formBody.appendChild(row);
     form.appendChild(formBody);
@@ -752,8 +943,8 @@ function addNewLineItem(_id) {
 
 /** Bind to the initialized button */
 $(document).on('click', '#add_new_line_item', function(){
-    itemNum ++;
-    addNewLineItem(itemNum);
+    // itemNum ++;
+    addNewLineItem(idFlags.length);
 });
 
 
@@ -931,9 +1122,9 @@ function addNewTax(_id) {
     second.setAttribute('class', 'col-md-8');
     var list = document.createElement('ul');
     list.setAttribute('class', 'list-unstyled mb-0');
-    list.appendChild(addNewRadio(_id, 1, "Yes"));
-    list.appendChild(addNewRadio(_id, 2, "No"));
-    list.appendChild(addNewRadio(_id, 3, "Item Not Taxable"));
+    for (var x = 1; x <= 3; x++) {
+        list.appendChild(addNewTaxRadio(_id, x));
+    }
     second.appendChild(list);
     
     row.appendChild(first);
@@ -949,7 +1140,7 @@ function addNewTax(_id) {
  * @param {int} seq the sequence of this radio, use to set unique id
  * @param {string} label the label of this radio
  */
-function addNewRadio(_id, seq, label) {
+function addNewTaxRadio(_id, seq) {
     var bullet = document.createElement('li');
     bullet.setAttribute('class', 'd-inline-block mr-2');
     var f = document.createElement('fieldset');
@@ -958,13 +1149,22 @@ function addNewRadio(_id, seq, label) {
     var i = document.createElement('input');
     i.setAttribute('type', 'radio');
     i.setAttribute('class', 'custom-control-input');
-    i.setAttribute('name', 'taxRadio');
-    i.setAttribute('value', 'paid');
-    i.setAttribute('id', 'taxRadio' + seq + _id);
+    i.setAttribute('name', 'taxRadio' + _id);    
+    i.setAttribute('id', 'taxRadio-' + _id + '-' + seq);
     var l = document.createElement('label');
     l.setAttribute('class', 'custom-control-label');
-    l.setAttribute('for', 'taxRadio' + seq + _id);
-    l.innerHTML = label;
+    l.setAttribute('for', 'taxRadio-' + _id + '-' + seq);
+    if (seq == 1) {
+        i.setAttribute('value', 'yes');
+        l.innerHTML = "Yes";
+    } else if (seq == 2) {
+        i.setAttribute('value', 'no');
+        l.innerHTML = "No";
+    } else if (seq == 3) {
+        i.setAttribute('value', 'nontaxable');
+        l.innerHTML = "Item Not Taxable";
+    }
+    
     d.appendChild(i);
     d.appendChild(l);
     f.appendChild(d);
@@ -973,7 +1173,10 @@ function addNewRadio(_id, seq, label) {
     return bullet;
 }
 
-
+/**
+ * Add a new confirm button at the end of each item block
+ * @param {int} _id the line item id
+ */
 function addNewConfirmButton(_id) {
     var box = document.createElement('div');
     box.setAttribute('class', 'col-12');
@@ -990,10 +1193,9 @@ function addNewConfirmButton(_id) {
     i.setAttribute('class', 'fa fa-check');
     btn.appendChild(i);
     btn.onclick = function() {
-        confirmItem(_id);
+        // confirmItem(_id);
     }
     first.appendChild(btn);
-
     
     row.appendChild(first);
     box.appendChild(row);
@@ -1107,58 +1309,71 @@ $(document).on('click', '#file_btn_1_1', function() {
 
 /** Confirm function */
 function confirmItem(_id) {
+    // If this id exists (the item is not deleted)
+    if (idFlags[_id]) {
 
-    /** Get budgets info */
-    var budgetsNumArr = document.getElementsByName('budget_num_' + _id);
-    var budgetsLen = budgetsNumArr.length;
+        /** Get budgets info */
+        var budgetsNumArr = document.getElementsByName('budget_num_' + _id);
+        var tasksArr = document.getElementsByName('budget-task-' + _id);
+        var optionsArr = document.getElementsByName('budget-option-' + _id);
+        var projectsArr = document.getElementsByName('budget-project-' + _id);
+        var budgetsLen = budgetsNumArr.length;
 
-    /** Front-end control */
-    for (var i = 0; i < budgetsLen; i++) {
-        var budgetId = i + 1;
-        var btn = document.getElementById('budget_btn_' + _id + '_' + budgetId);
-        btn.remove();
-    }
-    var checkBtn = document.getElementById('confirm_' + _id);
-    checkBtn.remove();
+        /** Front-end control */
+        // for (var i = 0; i < budgetsLen; i++) {
+        //     var budgetId = i + 1;
+        //     var btn = document.getElementById('budget_btn_' + _id + '_' + budgetId);
+        //     btn.remove();
+        // }
+        // var checkBtn = document.getElementById('confirm_' + _id);
+        // checkBtn.remove();
 
-    
-    /** Build budgets array data structure */
-    var budgetsArr = [];
-    if (budgetsLen == 1) {
-        budgetsArr.push({
-            Number: budgetsNumArr[0].value,
-            Split: "100%"
-        });
-    } else {
-        for (var i = 1; i <= budgetsLen; i++) {
-            var num = budgetsNumArr[i - 1].value;
-            var perOrDolSel = document.getElementById('split_with_' + _id + '_' + i);
-            var perOrDolVal = perOrDolSel.options[perOrDolSel.selectedIndex].value;
-            var splitVal = "";
-            if (perOrDolVal == "amount") {
-                splitVal = "$" + document.getElementById('split_dollar_input_value_' + _id + '_' + i).value;
-            } else if (perOrDolVal == "percentage") {
-                splitVal = document.getElementById('split_percent_input_value_' + _id + '_' + i).value + "%";
-            }
+        
+        /** Build budgets array data structure */
+        var budgetsArr = [];
+        if (budgetsLen == 1) {
             budgetsArr.push({
-                Number: num,
-                Split: splitVal
+                Number: budgetsNumArr[0].value,
+                Split: "100%",
+                Task: tasksArr[0].value,
+                Option: optionsArr[0].value,
+                Project: projectsArr[0].value
             });
+        } else {
+            for (var i = 0; i < budgetsLen; i++) {
+                var num = budgetsNumArr[i].value;
+                var perOrDolSel = document.getElementsByName('split_with_' + _id)[i];
+                var perOrDolVal = perOrDolSel.options[perOrDolSel.selectedIndex].value;
+                var splitVal = "";
+                if (perOrDolVal == "amount") {
+                    splitVal = "$" + document.getElementsByName('split_dollar_input_value_' + _id)[i].value;
+                } else if (perOrDolVal == "percentage") {
+                    splitVal = document.getElementsByName('split_percent_input_value_' + _id)[i].value + "%";
+                }
+                budgetsArr.push({
+                    Number: num,
+                    Split: splitVal,
+                    Task: tasksArr[i].value,
+                    Option: optionsArr[i].value,
+                    Project: projectsArr[i].value
+                });
+            }
         }
-    }
-    console.log('budgets array:');
-    console.log(budgetsArr);
-    
-    lineItems.push({
-        id: _id,
-        Expense: document.getElementById('expense_' + _id).value,
-        Purpose: document.getElementById('purpose_' + _id).value,
-        Category: document.getElementById('category_' + _id).value,
-        Budgets: budgetsArr,
-        Amount: document.getElementById('amount_' + _id).value
-    });
+        // console.log('budgets array:');
+        // console.log(budgetsArr);
+        
+        lineItems.push({
+            id: _id,
+            Expense: document.getElementById('expense_' + _id).value,
+            Purpose: document.getElementById('purpose_' + _id).value,
+            Category: document.getElementById('category_' + _id).value,
+            Budgets: budgetsArr,
+            Amount: document.getElementById('amount_' + _id).value,
+            TaxPaid: document.querySelector(`input[name="taxRadio${_id}"]:checked`).value
+        });
 
-    updateSummaryTable();
+        // updateSummaryTable();
+    }
 
 }
 
@@ -1166,22 +1381,22 @@ function confirmItem(_id) {
 function removeLineItem(_id) {
     var box = document.getElementById('lineItemBox_' + _id);
     box.remove();
-    itemNum --;
+    idFlags[_id] = false;
     // var summary = document.getElementById('summary_row_' + _id);
     // summary.remove();
-    var n = lineItems.length;
-    for (var i = 0; i < n; i++) {
-        if (lineItems[i].id == _id) {
-            lineItems.splice(i, 1);
-        }
-    }
-    updateSummaryTable();
+    // var n = lineItems.length;
+    // for (var i = 0; i < n; i++) {
+    //     if (lineItems[i].id == _id) {
+    //         lineItems.splice(i, 1);
+    //     }
+    // }
+    // updateSummaryTable();
 }
 
 /** Init confirm button */
-$(document).on('click', '#confirm_1', function() {
-    confirmItem(1);
-});
+// $(document).on('click', '#confirm_1', function() {
+//     confirmItem(1);
+// });
 
 /** Init delete button */
 $(document).on('click', '#delete_1', function() {

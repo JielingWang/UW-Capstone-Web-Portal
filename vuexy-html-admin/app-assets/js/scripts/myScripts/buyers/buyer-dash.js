@@ -2,9 +2,18 @@ var requestsInfo = [];
 var requesters = [];
 var subUnits = [];
 var users = [];
-var myPending = [];
-
-
+var myReqArr = [];
+var unitStaff = [];
+let userInfoMap = new Map();
+let reqIdMap = new Map(); // <K, V> -> <request id, request index in requestsInfo>
+// contacts.set('Jessie', {phone: "213-555-1234", address: "123 N 1st Ave"})
+// contacts.has('Jessie') // true
+// contacts.get('Hilary') // undefined
+// contacts.set('Hilary', {phone: "617-555-4321", address: "321 S 2nd St"})
+// contacts.get('Jessie') // {phone: "213-555-1234", address: "123 N 1st Ave"}
+// contacts.delete('Raymond') // false
+// contacts.delete('Jessie') // true
+// console.log(contacts.size) // 1
 
 /**
  * Initialize the window
@@ -15,17 +24,174 @@ var myPending = [];
  */
 window.onload = function() {
     update_Dashboard_welcomebar_navigationbar();
-    this.getAllUsers();
-    for (var i = 0; i < this.users.length; i++) {
-        var r = this.getUserInfo(users[i]);
-        requesters.push(r.userInfo.Name);
-        subUnits.push(r.SubUnitName);
-    }
+
+    // All requests table
     this.getAllRequestsInfo();
-    this.updateSummaryTable();
-    this.getMyPendingRequests();
+    this.updateAllRequestsTable();
+
+    // My pending request table and card
+    this.getMyPendingRequestsInfo();
     this.updatePendingCards();
+    var table = this.initMyPendingReqTable();
+    this.updateMyPendingRequestsTable(table);
+
+    $("input:radio[name='my-pending-format']").on('change', function () {
+        $("#my-pending-box").toggleClass("hidden");
+        $("#my-pending-table").toggleClass("hidden");
+        // if ($("input:radio[name='my-pending-format']:checked").val() == 'list-format') {
+        //     $("#my-pending-box").toggleClass("hidden");
+        //     $("#my-pending-table").toggleClass("hidden");
+        // }
+        // if ($("input:radio[name='my-pending-format']:checked").val() == 'box-format') {
+        //     $("#my-pending-box").toggleClass("hidden");
+        //     $("#my-pending-table").toggleClass("hidden");
+        // }
+    });
+
+    // Prepare for modal
+    this.prepareReassignSelector();
+    
 };
+
+
+function updateAllRequestsTable() {
+    var table = $("#DataTables_Table_1").DataTable({
+        "order": [[4, "desc"]]
+    });
+
+    for (var x = 0; x < requestsInfo.length; x++) {
+        table.row.add([
+            requestsInfo[x].RequestID,
+            requestsInfo[x].Requester,
+            requestsInfo[x].Type,
+            requestsInfo[x].Subunit,
+            requestsInfo[x].Date,
+            requestsInfo[x].Status,
+            requestsInfo[x].Assigned
+        ]).draw();
+    }
+
+    $('#DataTables_Table_1 tbody').on( 'click', 'tr td:not(:last-child)', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        console.log('row id: ' + data[0]);
+        sendRequestId(data[0]);
+    } );
+    
+    $('#DataTables_Table_1 tbody').on( 'click', "button[name='takeButton']", function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        // console.log('take id: ' + data[0]);
+        var cell = table.cell($(this).parents('td'));
+        cell.data('<button type="button" class="btn mr-0 mb-0 btn-outline-danger btn-sm" name="untakeButton" data-toggle="modal" data-target="#reassignModal">Untake</button>').draw();
+        var assign_id = window.sessionStorage.getItem("id");
+        updateAssignedInfo(data[0], assign_id);
+
+        getMyPendingRequestsInfo();
+        updatePendingCards();
+        // var table_0 = $("#DataTables_Table_0");
+        // updateMyPendingRequestsTable(table_0);
+    } );
+
+    $('#DataTables_Table_1 tbody').on( 'click', "button[name='untakeButton']", function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        // console.log('untake id: ' + data[0]);
+        var cell = table.cell( $(this).parents('td') );
+        $('#reassignModal').on('click', "button[name='reassign']", function() {
+            var newAssign = modalReassignClicked(data[0]);
+            if (newAssign) {
+                cell.data(newAssign).draw();
+            } else {
+                cell.data('<button type="button" class="btn mr-0 mb-0 btn-outline-primary btn-sm" name="takeButton">Take</button>');
+            }
+            getMyPendingRequestsInfo();
+            updatePendingCards();
+            // updateMyPendingRequestsTable();
+        });
+        
+    } );
+}
+
+function initMyPendingReqTable() {
+    var table = $("#DataTables_Table_0").DataTable({
+        "order": [[0, "asc"]]
+    });
+    return table;
+}
+
+
+function updateMyPendingRequestsTable(table) {
+    
+
+    // table.clear();
+
+    for (var i = 0; i < myReqArr.length; i++) {
+        var x = reqIdMap.get(myReqArr[i].RequestID);
+        table.row.add([
+            requestsInfo[x].RequestID,
+            requestsInfo[x].Requester,
+            requestsInfo[x].Type,
+            requestsInfo[x].Subunit,
+            requestsInfo[x].Date,
+            requestsInfo[x].Status
+        ]).draw();
+    }
+
+    $('#DataTables_Table_0 tbody').on( 'click', 'tr', function () {
+        var data = table.row( $(this) ).data();
+        console.log('row id: ' + data[0]);
+        sendRequestId(data[0]);
+    } );
+}
+
+
+function prepareReassignSelector() {
+    getUnitFiscalStaff();
+    var selector = document.getElementById("reassignSelect");
+    for (var x = 0; x < unitStaff.length; x++) {
+        var op = document.createElement('option');
+        op.setAttribute('value', unitStaff[x].id);
+        op.innerHTML = unitStaff[x].Name;
+        selector.appendChild(op);
+    }
+}
+
+function getUnitFiscalStaff() {
+    var unit_id = window.sessionStorage.getItem("unitID");
+    var myself_id = window.sessionStorage.getItem("id");
+    var onSuccess = function(data) {
+        if (data.status == true) {
+            var info = data.data;
+            for (var i = 0; i < info.length; i++) {
+                if (info[i]._id == myself_id) continue;
+                unitStaff.push({
+                    Name: info[i].Name,
+                    id: info[i]._id
+                });
+            }
+        } else {
+            //error message
+        }
+    }
+
+    var onFailure = function() {
+        // failure message
+    }
+
+    makeGetRequest("units/getUserInfomation/" + unit_id, onSuccess, onFailure);
+}
+
+function modalReassignClicked(reqeust_id) {
+    var selector = document.getElementById("reassignSelect");
+    var assign_id = selector.value;
+    var assign_name = null;
+    if (assign_id) {
+        assign_name = selector.options[selector.selectedIndex].text;
+        updateAssignedInfo(reqeust_id, assign_id);
+    } else {
+        untakeRequest(reqeust_id);
+    }
+    $('#reassignModal').modal('hide');
+    return assign_name;
+}
 
 /**
  * Welcome messages
@@ -76,15 +242,47 @@ function getAllRequestsInfo() {
             for (var i = 0; i < data_subunits.length; i++) {
                 var info = data_subunits[i].orders;
                 for (var j = 0; j < info.length; j++) {
+                    var id = info[j]._id;
+                    var requesterID = info[j].userID_ref;
+                    if (!userInfoMap.has(requesterID)) {
+                        var userData = getUserInfo(requesterID);
+                        userInfoMap.set(requesterID, {
+                            name: userData.userInfo.Name,
+                            subunit: userData.SubUnitName
+                        });
+                    }
+                    var requester = userInfoMap.get(requesterID).name;
+                    var type = info[j].OrderType;
+                    var subunitName = userInfoMap.get(requesterID).subunit;
+                    var date = info[j].submittedOn.substr(0, 10);
+                    var status = info[j].OrderStatus;
+                    var assigned = info[j].assignedTo;
+                    if (status == "Approved" && assigned == null) { // take button cell
+                        assignedValue = '<button type="button" class="btn mr-0 mb-0 btn-outline-primary btn-sm" name="takeButton">Take</button>';
+                    } else if (assigned == window.sessionStorage.getItem("id")) { // check cell
+                        assignedValue = '<button type="button" class="btn mr-0 mb-0 btn-outline-danger btn-sm" name="untakeButton" data-toggle="modal" data-target="#reassignModal">Untake</button>';
+                    } else if (assigned != null) { // taken by others cell
+                        assignedValue = getUserInfo(assigned).userInfo.Name;
+                    } else {
+                        assignedValue = "Routing";
+                        // assigned_td = document.createElement('td');
+                        // var span = document.createElement('span');
+                        // span.setAttribute('class', 'badge badge-warning');
+                        // span.setAttribute('id', `${_id}`);
+                        // span.innerHTML = "Routing";
+                        // assigned_td.appendChild(span);
+                        // assigned_td.innerHTML = "Routing";
+                    }
                     requestsInfo.push({
-                        RequestID: info[j]._id,
-                        Requester: requesters[j],
-                        Type: info[j].OrderType,
-                        Subunit: subUnits[j],
-                        Date: info[j].submittedOn.substr(0, 10),
-                        Status: info[j].OrderStatus,
-                        Assigned: info[j].assignedTo
+                        RequestID: id,
+                        Requester: requester,
+                        Type: type,
+                        Subunit: subunitName,
+                        Date: date,
+                        Status: status,
+                        Assigned: assignedValue
                     });
+                    reqIdMap.set(id, j);
                 }
             }            
         } else {
@@ -104,44 +302,44 @@ function getAllRequestsInfo() {
  * @param {int} user_id extract from users global array
  */
 function getUserInfo(user_id) {
-    var response = null;
+    var info = null;
     var onSuccess = function(data) {
         if (data.status == true) {
-            response = data.data;
+            info = data.data;
         } else {
             //error message
-            response = null;
+            info = null;
         }
     }
 
     var onFailure = function() {
         // failure message
-        response = null;
+        info = null;
     }
 
     makeGetRequest("getuserInformation/" + user_id, onSuccess, onFailure);
-    return response;
+    return info;
 }
 
 /**
  * Core function
  * Update the request table
  */
-function updateSummaryTable() {
-    var len = requestsInfo.length;
-    var itemTable = document.getElementById('request_table_body');
-    itemTable.innerHTML = '';
-    for (var i = 0; i < len; i++) {
-        var id = requestsInfo[i].RequestID;
-        var requester = requestsInfo[i].Requester;
-        var type = requestsInfo[i].Type;
-        var subunit = requestsInfo[i].Subunit;
-        var date = requestsInfo[i].Date;
-        var status = requestsInfo[i].Status;
-        var assigned = requestsInfo[i].Assigned;
-        itemTable.appendChild(genRequestRow(id, requester, type, subunit, date, status, assigned));
-    }
-}
+// function updateSummaryTable() {
+//     var len = requestsInfo.length;
+//     var itemTable = document.getElementById('request_table_body');
+//     itemTable.innerHTML = '';
+//     for (var i = 0; i < len; i++) {
+//         var id = requestsInfo[i].RequestID;
+//         var requester = requestsInfo[i].Requester;
+//         var type = requestsInfo[i].Type;
+//         var subunit = requestsInfo[i].Subunit;
+//         var date = requestsInfo[i].Date;
+//         var status = requestsInfo[i].Status;
+//         var assigned = requestsInfo[i].Assigned;
+//         itemTable.appendChild(genRequestRow(id, requester, type, subunit, date, status, assigned));
+//     }
+// }
 
 
 /**
@@ -154,53 +352,60 @@ function updateSummaryTable() {
  * @param {string} status status of this request
  * @param {string} assigned assigned to which fiscal staff
  */
-function genRequestRow(_id, requester, type, subunit, date, status, assigned) {
+// function genRequestRow(_id, requester, type, subunit, date, status, assigned) {
 
-    var _id_td = document.createElement('td');
-    _id_td.innerHTML = _id;
+//     var _id_td = document.createElement('td');
+//     _id_td.innerHTML = _id;
 
-    var requester_td = document.createElement('td');
-    requester_td.innerHTML = requester;
+//     var requester_td = document.createElement('td');
+//     requester_td.innerHTML = requester;
 
-    var type_td = document.createElement('td');
-    type_td.innerHTML = type;
+//     var type_td = document.createElement('td');
+//     type_td.innerHTML = type;
     
-    var subunit_td = document.createElement('td');
-    subunit_td.innerHTML = subunit;
+//     var subunit_td = document.createElement('td');
+//     subunit_td.innerHTML = subunit;
 
-    var date_td = document.createElement('td');
-    date_td.innerHTML = date;
+//     var date_td = document.createElement('td');
+//     date_td.innerHTML = date;
     
-    var status_td = document.createElement('td');
-    status_td.innerHTML = status;
+//     var status_td = document.createElement('td');
+//     status_td.innerHTML = status;
 
-    var assigned_td = null;
-    if (assigned == null) {
-        assigned_td = genAssignedCell(_id);
-    } else if (assigned == window.sessionStorage.getItem("id")) {
-        assigned_td = document.createElement('td');
-        var icon = document.createElement('i');
-        icon.setAttribute('class', 'fa fa-check');
-        assigned_td.appendChild(icon);
-    } else {
-        assigned_td = document.createElement('td');
-        var r = getUserInfo(assigned);
-        assigned_td.innerHTML = r.userInfo.Name;
-    }
+//     var assigned_td = null;
+//     if (status == "Approved" && assigned == null) { // take button cell
+//         assigned_td = genAssignedButtonCell(_id);
+//     } else if (assigned == window.sessionStorage.getItem("id")) { // check cell
+//         assigned_td = document.createElement('td');
+//         var icon = document.createElement('i');
+//         icon.setAttribute('class', 'fa fa-check');
+//         assigned_td.appendChild(icon);
+//     } else if (assigned != null) { // taken by others cell
+//         assigned_td = document.createElement('td');
+//         assigned_td.innerHTML = getUserInfo(assigned);
+//     } else {
+//         assigned_td = document.createElement('td');
+//         // var span = document.createElement('span');
+//         // span.setAttribute('class', 'badge badge-warning');
+//         // span.setAttribute('id', `${_id}`);
+//         // span.innerHTML = "Routing";
+//         // assigned_td.appendChild(span);
+//         assigned_td.innerHTML = "Routing";
+//     }
     
-    // create tr element
-    var tr = document.createElement('tr');
-    tr.setAttribute('id', 'summary_row_' + _id);
-    tr.appendChild(_id_td);
-    tr.appendChild(requester_td);
-    tr.appendChild(type_td);
-    tr.appendChild(subunit_td);
-    tr.appendChild(date_td);
-    tr.appendChild(status_td);
-    tr.appendChild(assigned_td);
+//     // create tr element
+//     var tr = document.createElement('tr');
+//     tr.setAttribute('id', 'summary_row_' + _id);
+//     tr.appendChild(_id_td);
+//     tr.appendChild(requester_td);
+//     tr.appendChild(type_td);
+//     tr.appendChild(subunit_td);
+//     tr.appendChild(date_td);
+//     tr.appendChild(status_td);
+//     tr.appendChild(assigned_td);
 
-    return tr;
-}
+//     return tr;
+// }
 
 
 /**
@@ -208,34 +413,36 @@ function genRequestRow(_id, requester, type, subunit, date, status, assigned) {
  * @param {int} request_id real id of this request, 
  *                         use to tie the button to the correct request
  */
-function genAssignedCell(request_id) {
-    var assigned_td = document.createElement('td');
-    var btn = document.createElement('button');
-    btn.setAttribute('type', 'button');
-    btn.setAttribute('class', 'btn mr-1 mb-1 btn-outline-primary btn-sm');
-    btn.setAttribute('id', request_id);
-    btn.innerHTML = "Take";
-    btn.onclick = function() {
-        btn.remove();
-        var icon = document.createElement('i');
-        icon.setAttribute('class', 'fa fa-check');
-        assigned_td.appendChild(icon);
-        updateAssignedInfo(request_id);
-        getMyPendingRequests();
-        updatePendingCards();
-    };
-    assigned_td.appendChild(btn);
-    return assigned_td;
-}
+// function genAssignedButtonCell() {
+//     var assigned_td = document.createElement('td');
+//     var btn = document.createElement('button');
+//     btn.setAttribute('type', 'button');
+//     btn.setAttribute('class', 'btn mr-0 mb-0 btn-outline-primary btn-sm');
+//     btn.setAttribute('id', request_id);
+//     btn.innerHTML = "Take";
+//     btn.onclick = function() {
+//         btn.remove();
+//         var icon = document.createElement('i');
+//         icon.setAttribute('class', 'fa fa-check');
+//         assigned_td.appendChild(icon);
+//         updateAssignedInfo(request_id);
+//         getMyPendingRequestsInfo();
+//         updatePendingCards();
+//     };
+//     assigned_td.appendChild(btn);
+//     return assigned_td;
+//     var assignedValue = '<button type="button" class="btn mr-0 mb-0 btn-outline-primary btn-sm" name="takeButton">Take</button>';
+//     return assignedValue;
+// }
 
 /**
  * Update the assigned information of this request when clicking take button
  * @param {int} request_id request id
  */
-function updateAssignedInfo(request_id) {
+function updateAssignedInfo(request_id, assign_id) {
     var onSuccess = function(data) {
         if (data.status == true) {
-           console.log("success!");
+           console.log("assigned success!");
         } else {
             //error message
         }
@@ -245,24 +452,52 @@ function updateAssignedInfo(request_id) {
         // failure message
     }
 
-    makePostRequest("assignOrder/" + request_id + "/" + window.sessionStorage.getItem("id"), onSuccess, onFailure);
+    makePostRequest("assignOrder/" + request_id + "/" + assign_id, onSuccess, onFailure);
+}
+
+/**
+ * Untake the taken request without reassigning to others
+ * @param {int} request_id request id
+ */
+function untakeRequest(request_id) {
+    var onSuccess = function(data) {
+        if (data.status == true) {
+           console.log("untake success!");
+        } else {
+            //error message
+        }
+    }
+
+    var onFailure = function() {
+        // failure message
+    }
+
+    makeGetRequest("untakeOrder/" + request_id, onSuccess, onFailure);
 }
 
 /**
  * Get assigned Requests from database
  */
-function getMyPendingRequests() {
+function getMyPendingRequestsInfo() {
+    myReqArr = [];
     var onSuccess = function(data) {
         if (data.status == true) {
-            console.log("my pending requests information is here");
-            console.log(data.data);
-            myPending = [];
+            // console.log("my pending requests information is here");
+            // console.log(data.data);
             var info = data.data;
             for (var i = 0; i < info.length; i++) {
-                var user_info = getUserInfo(info[i].userID_ref);
-                myPending.push({
+                var requesterID = info[i].userID_ref;
+                if (!userInfoMap.has(requesterID)) {
+                    var userData = getUserInfo(requesterID);
+                    userInfoMap.set(requesterID, {
+                        name: userData.userInfo.Name,
+                        subunit: userData.SubUnitName
+                    });
+                }
+                var requester = userInfoMap.get(requesterID).name;
+                myReqArr.push({
                     RequestID: info[i]._id,
-                    Requester: user_info.userInfo.Name,
+                    Requester: requester,
                     Type: info[i].OrderType,
                     Date: info[i].submittedOn.substr(0,10)
                 });
@@ -365,8 +600,9 @@ function sendRequestId(request_id) {
 function updatePendingCards() {
     var card_block = document.getElementById('card_block');
     card_block.innerHTML = '';
-    for (var i = 0; i < myPending.length; i++) {
-        card_block.appendChild(genPendingRequestCard(myPending[i].RequestID, 
-            myPending[i].Requester, myPending[i].Type, myPending[i].Date));
+    // console.log(myReqArr);
+    for (var i = 0; i < myReqArr.length; i++) {
+        card_block.appendChild(genPendingRequestCard(myReqArr[i].RequestID, 
+            myReqArr[i].Requester, myReqArr[i].Type, myReqArr[i].Date));
     }
 }

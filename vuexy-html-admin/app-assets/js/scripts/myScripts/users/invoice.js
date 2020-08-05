@@ -145,7 +145,7 @@ $(".steps-validation").steps({
         return form.valid();
     },
     onFinishing: function (event, currentIndex) {
-        // form.validate().settings.ignore = ":disabled,:hidden";
+        form.validate().settings.ignore = ":disabled";
         return form.valid();
     },
     onFinished: function (event, currentIndex) {
@@ -153,23 +153,12 @@ $(".steps-validation").steps({
         alert('send data to database');
 
         submitClicked();
-
-        // console.log('submit');
-        // var total = $('#quantity_1').val() * $('#unit_price_1').val();
-        // var amount = $('#split_dollar_input_value_1_1').val();
-        // console.log(total + ', ' + amount);
-        // if (total != amount) {
-        //     console.log('false');
-        //     return false;
-        // } else {
-        //     form.submit();
-        // }
     }
 });
 
 // Initialize validation
 $(".steps-validation").validate({
-    ignore: "input[type=hidden], input[name='split_dollar_input_value_1']", // ignore hidden fields
+    ignore: 'input[type=hidden]', // ignore hidden fields
     errorClass: 'danger',
     successClass: 'success',
     highlight: function (element, errorClass) {
@@ -179,39 +168,7 @@ $(".steps-validation").validate({
         $(element).removeClass(errorClass);
     },
     errorPlacement: function (error, element) {
-        
-        var elementNameStr = element[0].name;
-        // if (elementNameStr.substring(0, 6) == "split_") {
-        //     var budgetNameId = elementNameStr.substring(elementNameStr.length - 1, elementNameStr.length);
-        //     var budgetBlocks = document.getElementsByName('budget_num_' + budgetNameId);
-        //     // console.log('budget_num_' + budgetNameId);
-        //     var budgetsLen = budgetBlocks.length;
-        //     // console.log("length: " + budgetsLen);
-        //     if (budgetsLen > 1) {
-        //         console.log('add error');
-        //         error.insertAfter(element[0].parentElement);
-        //         // if (element[0].parentElement.className == "input-group") {
-        //         //     error.insertAfter(element[0].parentElement);
-        //         // } else {
-        //         //     error.insertAfter(element);
-        //         // }
-        //     }
-        // } else {
-        //     if (element[0].parentElement.className == "input-group") {
-        //         error.insertAfter(element[0].parentElement);
-        //     } else {
-        //         error.insertAfter(element);
-        //     }
-        // }
-
-        if (element[0].parentElement.className == "input-group") {
-            error.insertAfter(element[0].parentElement);
-        } else {
-            error.insertAfter(element);
-        }
-        
-        // console.log(elementNameStr);
-
+        error.insertAfter(element);
     },
     rules: {
         email: {
@@ -219,29 +176,6 @@ $(".steps-validation").validate({
         }
     }
 });
-
-jQuery.validator.addMethod("sumEqual", function(value, element, params) {
-    return this.optional(element) || value == params[0];
-}, jQuery.validator.format("Please enter the correct value {0}"));
-
-
-// $( "input[name='split_dollar_input_value_1']" ).rules( "add", {
-//     required: true,
-//     minlength: 2,
-//     sumEqual: 10,
-//     messages: {
-//       required: "Required input",
-//       minlength: jQuery.validator.format("Please, at least {0} characters are necessary"),
-//       sumEqual: jQuery.validator.format("Please enter the correct value for {0}")
-//     }
-// });
-
-
-$( "input[name='split_dollar_input_value_1']" ).rules( "add", {
-    required: true
-});
-
-
 
 
 /************************************************ END: Wizard step control *******************************************************/
@@ -403,7 +337,7 @@ function submitClicked() {
     };
 
     var addrInfo = null;
-
+    
     if (defaultMode) {
         var useNewAddr = document.getElementById('use-new-addr');
         if (useNewAddr.checked) {
@@ -439,7 +373,7 @@ function submitClicked() {
         }
     }
 
-
+    
 
     var vendor_info = {
         Name: $("input[name='vendor-name']").val(),
@@ -457,7 +391,7 @@ function submitClicked() {
 
     //now lets set up the JSON_toServer JSON Object
     JSON_toServer.userID_ref = user_id;  // 5e63127145f8e019d1f26ddc
-    JSON_toServer.OrderType = "Purchase Request";
+    JSON_toServer.OrderType = "Pay an Invoice";
     JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
     // console.log(typeof(requestInfo));
     JSON_toServer.OrderStatus = "Submitted"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
@@ -498,29 +432,6 @@ function submitClicked() {
     };
     request.open('POST', baseURL + "uploadOrder/" + type + "/" + unit_id);
     request.send(formData);
-}
-
-$(document).on('change', '#unit_price_1', function() {
-    updateBudgetValueInput(1);
-});
-
-// $(document).on('change', '#split_with_1_1', function() {
-//     updateBudgetValueInput(1);
-// });
-
-function updateBudgetValueInput(_id) {
-    var inputBox = document.getElementsByName('split_dollar_input_value_' + _id);
-    if (inputBox.length == 1) {
-        if (inputBox[0].parentElement.parentElement.parentElement.className == "col-md-2 hidden") {
-            inputBox = document.getElementsByName('split_percent_input_value_' + _id);
-            inputBox[0].value = "100";
-        } else {
-            var q = document.getElementById('quantity_' + _id).value;
-            var u = document.getElementById('unit_price_' + _id).value;
-            var amount = q * parseFloat(u);
-            inputBox[0].value = amount;
-        }
-    }
 }
 
 /**
@@ -624,19 +535,10 @@ function addBudget(_id, _budget_id, init) {
     if (init) {
         btn.onclick = function() {
             document.getElementById('budget_' + _id + '_' + _budget_id).after(addBudget(_id, budgetIds[_id - 1]++, false));
-            document.getElementById('budget_' + _id + '_' + _budget_id).setAttribute('required', '');
         }
     } else {
         btn.onclick = function() {
             document.getElementById('budget_' + _id + '_' + _budget_id).remove();
-            var budgetsNumArr = document.getElementsByName('budget_num_' + _id);
-            var budgetsLen = budgetsNumArr.length;
-            if (budgetsLen == 1) {
-                var budgetAmountInput = document.getElementsByName('split_dollar_input_value_' + _id)[0];
-                var budgetPercentInput = document.getElementsByName('split_percent_input_value_' + _id)[0];
-                budgetAmountInput.removeAttribute('required');
-                budgetPercentInput.removeAttribute('required');
-            }
         };
     }
     fifth.appendChild(btn);
@@ -684,7 +586,6 @@ function inputGroup(_id, _budget_id, isPre, label, name) {
     i.setAttribute('type', 'text');
     i.setAttribute('id', 'split_' + name + '_input_value_' + _id + '_' + _budget_id);
     i.setAttribute('name', 'split_' + name + '_input_value_' + _id);
-    i.setAttribute('required', '');
 
     if (isPre) {
         d.appendChild(sig);
@@ -784,7 +685,7 @@ function addNewBudgetInfoInput(_id, _budget_id, seq) {
     } else if (seq == 3) {
         div.setAttribute('class', 'col-md-3 hidden');
     }
-    
+
     div.setAttribute('id', 'budget-info-input-' + _id + '-' + _budget_id + '-' + seq);
     var i = document.createElement('input');
     i.setAttribute('type', 'text');
@@ -886,6 +787,7 @@ $(document).on('click', '#split_with_1_1', function(){
 
 /**
  * Add budget numbers to selected box from database
+ * For now this is just test
  */
 function addBudgetData(num) {
     var op = document.createElement('option');
@@ -969,8 +871,7 @@ function addNewLineItem(_id) {
     row.appendChild(addNewExpense(_id));
     row.appendChild(addNewPurpose(_id));
     row.appendChild(addNewCategory(_id));
-    row.appendChild(addNewQuantity(_id));
-    row.appendChild(addNewUnitPrice(_id));
+    row.appendChild(addNewAmount(_id));
     row.appendChild(addBudget(_id, 1, true));
     // row.appendChild(addNewConfirmButton(_id));
 
@@ -1105,10 +1006,10 @@ function addNewCategory(_id) {
 }
 
 /**
- * Add quantity block
+ * Add amount block
  * @param {int} _id line item id
  */
-function addNewQuantity(_id) {
+function addNewAmount(_id) {
     var box = document.createElement('div');
     box.setAttribute('class', 'col-12');
 
@@ -1117,65 +1018,7 @@ function addNewQuantity(_id) {
 
     var first = document.createElement('div');
     first.setAttribute('class', 'col-md-4');
-    first.innerHTML = "<span>Quantity</span>";
-    
-    row.appendChild(first);
-    row.appendChild(genNumberInputGroup(_id));
-    box.appendChild(row);
-
-    return box; 
-}
-
-function genNumberInputGroup(_id) {
-    var box = document.createElement('div');
-    box.setAttribute('class', 'input-group bootstrap-touchspin');
-
-    var preSpan = document.createElement('span');
-    preSpan.setAttribute('class', 'input-group-btn input-group-prepend bootstrap-touchspin-injected');
-    var preBtn = document.createElement('button');
-    preBtn.setAttribute('type', 'button');
-    preBtn.setAttribute('class', 'btn btn-primary bootstrap-touchspin-down');
-    var preIcon = document.createElement('i');
-    preIcon.setAttribute('class', 'feather icon-chevron-down');
-    preBtn.appendChild(preIcon);
-    preSpan.appendChild(preBtn);
-
-    var input = document.createElement('input');
-    input.setAttribute('type', 'number');
-    input.setAttribute('class', 'touchspin-icon form-control');
-    input.setAttribute('value', '1');
-    input.setAttribute('id', 'quantity_' + _id);
-
-    var postSpan = document.createElement('span');
-    postSpan.setAttribute('class', 'input-group-btn input-group-append bootstrap-touchspin-injected');
-    var postBtn = document.createElement('button');
-    postBtn.setAttribute('type', 'button');
-    postBtn.setAttribute('class', 'btn btn-primary bootstrap-touchspin-up');
-    var postIcon = document.createElement('i');
-    postIcon.setAttribute('class', 'feather icon-chevron-up');
-    postBtn.appendChild(postIcon);
-    postSpan.appendChild(postBtn);
-
-    box.appendChild(preSpan);
-    box.appendChild(input);
-    box.appendChild(postSpan);
-    return box;
-}
-
-/**
- * Add unit price block
- * @param {int} _id line item id
- */
-function addNewUnitPrice(_id) {
-    var box = document.createElement('div');
-    box.setAttribute('class', 'col-12');
-
-    var row = document.createElement('div');
-    row.setAttribute('class', 'form-group row');
-
-    var first = document.createElement('div');
-    first.setAttribute('class', 'col-md-4');
-    first.innerHTML = "<span>Unit Price</span>";
+    first.innerHTML = "<span>Amount</span>";
 
     var second = document.createElement('div');
     second.setAttribute('class', 'col-md-4 col-12 mb-1');
@@ -1188,11 +1031,10 @@ function addNewUnitPrice(_id) {
     var input = document.createElement('input');
     input.setAttribute('type', 'text');
     input.setAttribute('class', 'form-control');
-    // input.setAttribute('placeholder', '0.00');
+    input.setAttribute('name', 'amount');
+    input.setAttribute('placeholder', '0.00');
     input.setAttribute('aria-label', 'Amount (to the nearest dollar)');
-    input.setAttribute('id', 'unit_price_' + _id);
-    input.setAttribute('name', 'unit-price-' + _id);
-    input.setAttribute('required', '');
+    input.setAttribute('id', 'amount_' + _id);
     group.appendChild(prepend);
     group.appendChild(input);
     fieldset.appendChild(group);
@@ -1234,7 +1076,6 @@ function addNewConfirmButton(_id) {
 
     return box; 
 }
-
 
 /**
  * @param {int} _id line item id
@@ -1318,6 +1159,7 @@ function addOneMoreFile(file_id) {
     return row;
 }
 
+
 /** 
  * Bind initialized add-more-file button 
  */
@@ -1341,7 +1183,6 @@ $(document).on('click', '#file_btn_1_1', function() {
 
 /** Confirm function */
 function confirmItem(_id) {
-
     // If this id exists (the item is not deleted)
     if (idFlags[_id]) {
 
@@ -1395,19 +1236,13 @@ function confirmItem(_id) {
         // console.log('budgets array:');
         // console.log(budgetsArr);
         
-        var q = document.getElementById('quantity_' + _id).value;
-        var u = document.getElementById('unit_price_' + _id).value;
-        var amount = q * u;
-        
         lineItems.push({
             id: _id,
             Expense: document.getElementById('expense_' + _id).value,
             Purpose: document.getElementById('purpose_' + _id).value,
             Category: document.getElementById('category_' + _id).value,
-            Quantity: document.getElementById('quantity_' + _id).value,
-            UnitPrice: document.getElementById('unit_price_' + _id).value,
             Budgets: budgetsArr,
-            Amount: amount
+            Amount: document.getElementById('amount_' + _id).value,
         });
 
         // updateSummaryTable();

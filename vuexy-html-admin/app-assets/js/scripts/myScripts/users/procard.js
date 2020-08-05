@@ -12,7 +12,6 @@ idFlags.push(true);
 var budgetIds = [];
 budgetIds.push(2);
 
-var defaultMode = false;
 
 var formData = new FormData();
 var type = "";
@@ -145,31 +144,20 @@ $(".steps-validation").steps({
         return form.valid();
     },
     onFinishing: function (event, currentIndex) {
-        // form.validate().settings.ignore = ":disabled,:hidden";
+        form.validate().settings.ignore = ":disabled";
         return form.valid();
     },
     onFinished: function (event, currentIndex) {
         alert("Submitted!");
         alert('send data to database');
-
+        
         submitClicked();
-
-        // console.log('submit');
-        // var total = $('#quantity_1').val() * $('#unit_price_1').val();
-        // var amount = $('#split_dollar_input_value_1_1').val();
-        // console.log(total + ', ' + amount);
-        // if (total != amount) {
-        //     console.log('false');
-        //     return false;
-        // } else {
-        //     form.submit();
-        // }
     }
 });
 
 // Initialize validation
 $(".steps-validation").validate({
-    ignore: "input[type=hidden], input[name='split_dollar_input_value_1']", // ignore hidden fields
+    ignore: 'input[type=hidden]', // ignore hidden fields
     errorClass: 'danger',
     successClass: 'success',
     highlight: function (element, errorClass) {
@@ -179,39 +167,7 @@ $(".steps-validation").validate({
         $(element).removeClass(errorClass);
     },
     errorPlacement: function (error, element) {
-        
-        var elementNameStr = element[0].name;
-        // if (elementNameStr.substring(0, 6) == "split_") {
-        //     var budgetNameId = elementNameStr.substring(elementNameStr.length - 1, elementNameStr.length);
-        //     var budgetBlocks = document.getElementsByName('budget_num_' + budgetNameId);
-        //     // console.log('budget_num_' + budgetNameId);
-        //     var budgetsLen = budgetBlocks.length;
-        //     // console.log("length: " + budgetsLen);
-        //     if (budgetsLen > 1) {
-        //         console.log('add error');
-        //         error.insertAfter(element[0].parentElement);
-        //         // if (element[0].parentElement.className == "input-group") {
-        //         //     error.insertAfter(element[0].parentElement);
-        //         // } else {
-        //         //     error.insertAfter(element);
-        //         // }
-        //     }
-        // } else {
-        //     if (element[0].parentElement.className == "input-group") {
-        //         error.insertAfter(element[0].parentElement);
-        //     } else {
-        //         error.insertAfter(element);
-        //     }
-        // }
-
-        if (element[0].parentElement.className == "input-group") {
-            error.insertAfter(element[0].parentElement);
-        } else {
-            error.insertAfter(element);
-        }
-        
-        // console.log(elementNameStr);
-
+        error.insertAfter(element);
     },
     rules: {
         email: {
@@ -219,29 +175,6 @@ $(".steps-validation").validate({
         }
     }
 });
-
-jQuery.validator.addMethod("sumEqual", function(value, element, params) {
-    return this.optional(element) || value == params[0];
-}, jQuery.validator.format("Please enter the correct value {0}"));
-
-
-// $( "input[name='split_dollar_input_value_1']" ).rules( "add", {
-//     required: true,
-//     minlength: 2,
-//     sumEqual: 10,
-//     messages: {
-//       required: "Required input",
-//       minlength: jQuery.validator.format("Please, at least {0} characters are necessary"),
-//       sumEqual: jQuery.validator.format("Please enter the correct value for {0}")
-//     }
-// });
-
-
-$( "input[name='split_dollar_input_value_1']" ).rules( "add", {
-    required: true
-});
-
-
 
 
 /************************************************ END: Wizard step control *******************************************************/
@@ -257,26 +190,9 @@ $( "input[name='split_dollar_input_value_1']" ).rules( "add", {
  * Set global variables
  */
 window.onload = function() {
-    if (window.localStorage.getItem('defaultAddr')) {
-        defaultMode = true;
-    }
-    if (defaultMode) {
-        var addrObj = JSON.parse(window.localStorage.getItem('defaultAddr'));
-        var addrContent = document.getElementById('addr-content');
-        addrContent.appendChild(genAddrLine(addrObj.FullName));
-        addrContent.appendChild(genAddrLine(addrObj.AddrLine1));
-        addrContent.appendChild(genAddrLine(addrObj.AddrLine2));
-        var city = addrObj.AddrCity + ', ' + addrObj.AddrState + ' ' + addrObj.AddrZip;
-        addrContent.appendChild(genAddrLine(city));
-        addrContent.appendChild(genAddrCountry(addrObj.AddrCountry));
-    } else {
-        var default_block = document.getElementById('default-block');
-        default_block.setAttribute('class', 'hidden');
-        var addrInput = document.getElementById('mail-addr');
-        addrInput.setAttribute('class', 'visible');
-    }
     this.getUserInfo();
     this.getBudgetsInfo();
+    // this.console.log(this.budgets_database);
     // Initialize the budget select box
     var budget_select = this.document.getElementById('init_budget_select_box');
     for (var i = 0; i < this.budgets_database.length; i++) {
@@ -284,19 +200,6 @@ window.onload = function() {
         budget_select.appendChild(addBudgetData(num));
     }
 };
-
-function genAddrLine(content) {
-    var p = document.createElement('p');
-    p.setAttribute('style', 'margin: 0');
-    p.innerHTML = content.toUpperCase();
-    return p;
-}
-
-function genAddrCountry(content) {
-    var p = document.createElement('p');
-    p.innerHTML = content;
-    return p;
-}
 
 /**
  * Get the user information from database
@@ -336,6 +239,8 @@ function getUserInfo() {
 function getBudgetsInfo() {
     var onSuccess = function(data) {
         if (data.status == true) {
+            // console.log("budgets information is here");
+            // console.log(data.data);
             for (var i = 0; i < data.data.length; i++) {
                 budgets_database.push(data.data[i].budgetNumber);
             }
@@ -352,20 +257,38 @@ function getBudgetsInfo() {
 }
 
 
-/************ BEGIIN:  Step1 & Step2 *****************/
+/************ Step1 & Step2 *****************/
 
-$(document).on('click', '#use-new-addr', function() {
-    var newAddr = document.getElementById('use-new-addr');
-    var addrInput = document.getElementById('mail-addr');
-    if (newAddr.checked) {
-        addrInput.setAttribute('class', 'visible');
-    } else {
-        addrInput.setAttribute('class', 'hidden');
-    }
+$(document).on('click', 'input', function(){
+    /** cardholder */
+    // var cardholder = document.getElementById('name-on-card').value;
+
+    // /** myself or onbehalf radio */
+    // var mySelf = $("input[name='myself-onbehalf']:checked").val();
+    // if (mySelf == "myself") {
+    //     $('#onBehalf_Yes').attr('class', 'hidden');
+    // } else if (mySelf == "onbehalf") {
+    //     $('#onBehalf_Yes').attr('class', 'visible');
+    // }
+
+    // /** payment method part */
+    // var individual = $("input[name='individual-reimbursed']:checked").val();
+    // if (individual == "employee") {
+    //     $('#emplyee_payment').attr('class', 'col-11 visible');
+    //     $('#nonemplyee_payment').attr('class', 'col-11 hidden');
+    // } else {
+    //     $('#emplyee_payment').attr('class', 'col-11 hidden');
+    //     $('#nonemplyee_payment').attr('class', 'col-11 visible');
+    // }
+
+    // /** control mail-addr */
+    // var needsAddr = $("input[name='paymentRadio']:checked").val();
+    // if (needsAddr == "Check mail") {
+    //     $('#mail-addr').attr('class', 'visible');
+    // } else {
+    //     $('#mail-addr').attr('class', 'hidden');
+    // }
 });
-
-
-/************ END:  Step1 & Step2 *****************/
 
 
 /***************** BEGIN: Step3 *******************/
@@ -400,46 +323,16 @@ function submitClicked() {
         "OrderStatus": null, 
         "ChatInfo": null,
         "assignedTo": null
-    };
-
-    var addrInfo = null;
-
-    if (defaultMode) {
-        var useNewAddr = document.getElementById('use-new-addr');
-        if (useNewAddr.checked) {
-            addrInfo = {
-                FullName: document.getElementById('full_name').value,
-                AddrLine1: document.getElementById('street_addr_1').value,
-                AddrLine2: document.getElementById('street_addr_2').value,
-                AddrCity: document.getElementById('addr_city').value,
-                AddrState: document.getElementById('addr_state').value,
-                AddrZip: document.getElementById('addr_zip').value,
-                AddrCountry: document.getElementById('addr_country').value
-            };
-            var saveAddr = document.getElementById('save-default-addr');
-            if (saveAddr.checked) {
-                window.localStorage.setItem('defaultAddr', JSON.stringify(addrInfo));
-            }
-        } else {
-            addrInfo = JSON.parse(window.localStorage.getItem('defaultAddr'));
-        }
-    } else {
-        addrInfo = {
-            FullName: document.getElementById('full_name').value,
-            AddrLine1: document.getElementById('street_addr_1').value,
-            AddrLine2: document.getElementById('street_addr_2').value,
-            AddrCity: document.getElementById('addr_city').value,
-            AddrState: document.getElementById('addr_state').value,
-            AddrZip: document.getElementById('addr_zip').value,
-            AddrCountry: document.getElementById('addr_country').value
-        };
-        var saveAddr = document.getElementById('save-default-addr');
-        if (saveAddr.checked) {
-            window.localStorage.setItem('defaultAddr', JSON.stringify(addrInfo));
-        }
     }
 
-
+    // var addrInfo = {
+    //     FullName: $("input[name='full-name']").val(),
+    //     AddrLine1: $("input[name='addr-line-1']").val(),
+    //     AddrLine2: $("input[name='addr-line-2']").val(),
+    //     AddrCity: $("input[name='addr-city']").val(),
+    //     AddrState: $("input[name='addr-state']").val(),
+    //     AddrZip: $("input[name='addr-zip']").val()
+    // }
 
     var vendor_info = {
         Name: $("input[name='vendor-name']").val(),
@@ -449,21 +342,34 @@ function submitClicked() {
     };
 
     var requestInfo = {
+        Cardholder: document.getElementById('name-on-card').value,
         VendorInfo: vendor_info,
-        Addr: addrInfo,
         LineItems: lineItems
         // ItemsCost: itemsCost
     };
 
+    // var requestInfo = {
+    //     ReimburseFor: $("input[name='myself-onbehalf']:checked").val(),
+    //     OnbehalfName: $("input[name='onbehalf-name']").val(),
+    //     OnbehalfEmail: $("input[name='onbehalf-email']").val(),
+    //     OnbehalfAffiliation: $("input[name='onbehalf-affiliation']").val(),
+    //     Individual: $("input[name='individual-reimbursed']").val(),
+    //     Payment: $("input[name='paymentRadio']:checked").val(),
+    //     Addr: addrInfo,
+    //     LineItems: lineItems
+    //     // ItemsCost: itemsCost
+    // }
+
     //now lets set up the JSON_toServer JSON Object
     JSON_toServer.userID_ref = user_id;  // 5e63127145f8e019d1f26ddc
-    JSON_toServer.OrderType = "Purchase Request";
+    JSON_toServer.OrderType = "Procard Receipt";
     JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
     // console.log(typeof(requestInfo));
     JSON_toServer.OrderStatus = "Submitted"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
     JSON_toServer.ChatInfo = "TEST CHAT INFO"; //leaving this empty since there's no chat when user upload a order first
     JSON_toServer.assignedTo = null; //leaving this as null since there's no one assigned when a user upload/submit a order.
 
+    
     for (var i = 1; i <= fileNum; i++) {
         var fileSelect = document.getElementById("file_" + i);
         if (fileSelect) {
@@ -476,6 +382,7 @@ function submitClicked() {
             formData.append("files", fileSelect.files[x]);
         }
     }
+        
 
     //here we just pass in the JSON object we need to pass to the server. "JSON_body" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request
     formData.set("JSON_body", JSON.stringify(JSON_toServer));
@@ -493,34 +400,13 @@ function submitClicked() {
             const requestInfo_obj = JSON.parse(data_obj.OrderInfo);
             console.log(requestInfo_obj);
             window.sessionStorage.setItem('RequestID', data_obj._id);
-            window.location.href = "../../../html/ltr/users/user-request-detailpage.html";
-        }
-    };
-    request.open('POST', baseURL + "uploadOrder/" + type + "/" + unit_id);
-    request.send(formData);
-}
-
-$(document).on('change', '#unit_price_1', function() {
-    updateBudgetValueInput(1);
-});
-
-// $(document).on('change', '#split_with_1_1', function() {
-//     updateBudgetValueInput(1);
-// });
-
-function updateBudgetValueInput(_id) {
-    var inputBox = document.getElementsByName('split_dollar_input_value_' + _id);
-    if (inputBox.length == 1) {
-        if (inputBox[0].parentElement.parentElement.parentElement.className == "col-md-2 hidden") {
-            inputBox = document.getElementsByName('split_percent_input_value_' + _id);
-            inputBox[0].value = "100";
-        } else {
-            var q = document.getElementById('quantity_' + _id).value;
-            var u = document.getElementById('unit_price_' + _id).value;
-            var amount = q * parseFloat(u);
-            inputBox[0].value = amount;
+            window.location.href = "../../../html/ltr/users/user-request-detailpage.html";            
         }
     }
+    request.open('POST', baseURL + "uploadOrder/" + type + "/" + unit_id);
+    request.send(formData);
+    // window.location.href = "../../../html/ltr/users/user-summary.html";
+    // window.location.replace("../../../html/ltr/users/user-summary.html");
 }
 
 /**
@@ -624,19 +510,10 @@ function addBudget(_id, _budget_id, init) {
     if (init) {
         btn.onclick = function() {
             document.getElementById('budget_' + _id + '_' + _budget_id).after(addBudget(_id, budgetIds[_id - 1]++, false));
-            document.getElementById('budget_' + _id + '_' + _budget_id).setAttribute('required', '');
         }
     } else {
         btn.onclick = function() {
             document.getElementById('budget_' + _id + '_' + _budget_id).remove();
-            var budgetsNumArr = document.getElementsByName('budget_num_' + _id);
-            var budgetsLen = budgetsNumArr.length;
-            if (budgetsLen == 1) {
-                var budgetAmountInput = document.getElementsByName('split_dollar_input_value_' + _id)[0];
-                var budgetPercentInput = document.getElementsByName('split_percent_input_value_' + _id)[0];
-                budgetAmountInput.removeAttribute('required');
-                budgetPercentInput.removeAttribute('required');
-            }
         };
     }
     fifth.appendChild(btn);
@@ -684,7 +561,6 @@ function inputGroup(_id, _budget_id, isPre, label, name) {
     i.setAttribute('type', 'text');
     i.setAttribute('id', 'split_' + name + '_input_value_' + _id + '_' + _budget_id);
     i.setAttribute('name', 'split_' + name + '_input_value_' + _id);
-    i.setAttribute('required', '');
 
     if (isPre) {
         d.appendChild(sig);
@@ -698,6 +574,7 @@ function inputGroup(_id, _budget_id, isPre, label, name) {
     return f;
 
 }
+
 
 /** 
  * Generate task/option/project options behind each budget number 
@@ -784,7 +661,7 @@ function addNewBudgetInfoInput(_id, _budget_id, seq) {
     } else if (seq == 3) {
         div.setAttribute('class', 'col-md-3 hidden');
     }
-    
+
     div.setAttribute('id', 'budget-info-input-' + _id + '-' + _budget_id + '-' + seq);
     var i = document.createElement('input');
     i.setAttribute('type', 'text');
@@ -839,6 +716,7 @@ $(document).on('click', '#budget-info-1-1-3', function() {
     toggleInputBox(1, 1, 3);
 });
 
+
 /** 
  * Split with amount or percentage controller
  * Use to transfer between split with amount or percentage
@@ -886,6 +764,7 @@ $(document).on('click', '#split_with_1_1', function(){
 
 /**
  * Add budget numbers to selected box from database
+ * For now this is just test
  */
 function addBudgetData(num) {
     var op = document.createElement('option');
@@ -933,7 +812,6 @@ $(document).on('click', '#option_project', function() {
 
 /** 
  * BEGIN: New Line Item Controller 
- * @param _id line item id
  * @param _id line item id, assigned by idFlags.length, starts from 1
  *            each time when user add a new line item this _id will increase by 1 
  *            which serves as a unique id for all components inside this line item
@@ -969,8 +847,8 @@ function addNewLineItem(_id) {
     row.appendChild(addNewExpense(_id));
     row.appendChild(addNewPurpose(_id));
     row.appendChild(addNewCategory(_id));
-    row.appendChild(addNewQuantity(_id));
-    row.appendChild(addNewUnitPrice(_id));
+    row.appendChild(addNewAmount(_id));
+    row.appendChild(addNewTax(_id));
     row.appendChild(addBudget(_id, 1, true));
     // row.appendChild(addNewConfirmButton(_id));
 
@@ -1105,10 +983,10 @@ function addNewCategory(_id) {
 }
 
 /**
- * Add quantity block
+ * Add amount block
  * @param {int} _id line item id
  */
-function addNewQuantity(_id) {
+function addNewAmount(_id) {
     var box = document.createElement('div');
     box.setAttribute('class', 'col-12');
 
@@ -1117,65 +995,7 @@ function addNewQuantity(_id) {
 
     var first = document.createElement('div');
     first.setAttribute('class', 'col-md-4');
-    first.innerHTML = "<span>Quantity</span>";
-    
-    row.appendChild(first);
-    row.appendChild(genNumberInputGroup(_id));
-    box.appendChild(row);
-
-    return box; 
-}
-
-function genNumberInputGroup(_id) {
-    var box = document.createElement('div');
-    box.setAttribute('class', 'input-group bootstrap-touchspin');
-
-    var preSpan = document.createElement('span');
-    preSpan.setAttribute('class', 'input-group-btn input-group-prepend bootstrap-touchspin-injected');
-    var preBtn = document.createElement('button');
-    preBtn.setAttribute('type', 'button');
-    preBtn.setAttribute('class', 'btn btn-primary bootstrap-touchspin-down');
-    var preIcon = document.createElement('i');
-    preIcon.setAttribute('class', 'feather icon-chevron-down');
-    preBtn.appendChild(preIcon);
-    preSpan.appendChild(preBtn);
-
-    var input = document.createElement('input');
-    input.setAttribute('type', 'number');
-    input.setAttribute('class', 'touchspin-icon form-control');
-    input.setAttribute('value', '1');
-    input.setAttribute('id', 'quantity_' + _id);
-
-    var postSpan = document.createElement('span');
-    postSpan.setAttribute('class', 'input-group-btn input-group-append bootstrap-touchspin-injected');
-    var postBtn = document.createElement('button');
-    postBtn.setAttribute('type', 'button');
-    postBtn.setAttribute('class', 'btn btn-primary bootstrap-touchspin-up');
-    var postIcon = document.createElement('i');
-    postIcon.setAttribute('class', 'feather icon-chevron-up');
-    postBtn.appendChild(postIcon);
-    postSpan.appendChild(postBtn);
-
-    box.appendChild(preSpan);
-    box.appendChild(input);
-    box.appendChild(postSpan);
-    return box;
-}
-
-/**
- * Add unit price block
- * @param {int} _id line item id
- */
-function addNewUnitPrice(_id) {
-    var box = document.createElement('div');
-    box.setAttribute('class', 'col-12');
-
-    var row = document.createElement('div');
-    row.setAttribute('class', 'form-group row');
-
-    var first = document.createElement('div');
-    first.setAttribute('class', 'col-md-4');
-    first.innerHTML = "<span>Unit Price</span>";
+    first.innerHTML = "<span>Amount</span>";
 
     var second = document.createElement('div');
     second.setAttribute('class', 'col-md-4 col-12 mb-1');
@@ -1188,11 +1008,10 @@ function addNewUnitPrice(_id) {
     var input = document.createElement('input');
     input.setAttribute('type', 'text');
     input.setAttribute('class', 'form-control');
-    // input.setAttribute('placeholder', '0.00');
+    input.setAttribute('name', 'amount');
+    input.setAttribute('placeholder', '0.00');
     input.setAttribute('aria-label', 'Amount (to the nearest dollar)');
-    input.setAttribute('id', 'unit_price_' + _id);
-    input.setAttribute('name', 'unit-price-' + _id);
-    input.setAttribute('required', '');
+    input.setAttribute('id', 'amount_' + _id);
     group.appendChild(prepend);
     group.appendChild(input);
     fieldset.appendChild(group);
@@ -1203,6 +1022,75 @@ function addNewUnitPrice(_id) {
     box.appendChild(row);
 
     return box; 
+}
+
+/**
+ * Add tax block
+ * @param {int} _id 
+ */
+function addNewTax(_id) {
+    var box = document.createElement('div');
+    box.setAttribute('class', 'col-12');
+    var row = document.createElement('div');
+    row.setAttribute('class', 'form-group row');
+
+    var first = document.createElement('div');
+    first.setAttribute('class', 'col-md-4');
+    first.innerHTML = "<span>Was Sales Tax Paid?</span>";
+
+    var second = document.createElement('div');
+    second.setAttribute('class', 'col-md-8');
+    var list = document.createElement('ul');
+    list.setAttribute('class', 'list-unstyled mb-0');
+    for (var x = 1; x <= 3; x++) {
+        list.appendChild(addNewTaxRadio(_id, x));
+    }
+    second.appendChild(list);
+    
+    row.appendChild(first);
+    row.appendChild(second);
+    box.appendChild(row);
+
+    return box; 
+}
+
+/**
+ * Helper function to add new radio for tax block
+ * @param {int} _id line item id
+ * @param {int} seq the sequence of this radio, use to set unique id
+ * @param {string} label the label of this radio
+ */
+function addNewTaxRadio(_id, seq) {
+    var bullet = document.createElement('li');
+    bullet.setAttribute('class', 'd-inline-block mr-2');
+    var f = document.createElement('fieldset');
+    var d = document.createElement('div');
+    d.setAttribute('class', 'custom-control custom-radio');
+    var i = document.createElement('input');
+    i.setAttribute('type', 'radio');
+    i.setAttribute('class', 'custom-control-input');
+    i.setAttribute('name', 'taxRadio' + _id);    
+    i.setAttribute('id', 'taxRadio-' + _id + '-' + seq);
+    var l = document.createElement('label');
+    l.setAttribute('class', 'custom-control-label');
+    l.setAttribute('for', 'taxRadio-' + _id + '-' + seq);
+    if (seq == 1) {
+        i.setAttribute('value', 'yes');
+        l.innerHTML = "Yes";
+    } else if (seq == 2) {
+        i.setAttribute('value', 'no');
+        l.innerHTML = "No";
+    } else if (seq == 3) {
+        i.setAttribute('value', 'nontaxable');
+        l.innerHTML = "Item Not Taxable";
+    }
+    
+    d.appendChild(i);
+    d.appendChild(l);
+    f.appendChild(d);
+    bullet.appendChild(f);
+
+    return bullet;
 }
 
 /**
@@ -1228,13 +1116,12 @@ function addNewConfirmButton(_id) {
         // confirmItem(_id);
     }
     first.appendChild(btn);
-
+    
     row.appendChild(first);
     box.appendChild(row);
 
     return box; 
 }
-
 
 /**
  * @param {int} _id line item id
@@ -1318,6 +1205,7 @@ function addOneMoreFile(file_id) {
     return row;
 }
 
+
 /** 
  * Bind initialized add-more-file button 
  */
@@ -1341,7 +1229,6 @@ $(document).on('click', '#file_btn_1_1', function() {
 
 /** Confirm function */
 function confirmItem(_id) {
-
     // If this id exists (the item is not deleted)
     if (idFlags[_id]) {
 
@@ -1395,23 +1282,19 @@ function confirmItem(_id) {
         // console.log('budgets array:');
         // console.log(budgetsArr);
         
-        var q = document.getElementById('quantity_' + _id).value;
-        var u = document.getElementById('unit_price_' + _id).value;
-        var amount = q * u;
-        
         lineItems.push({
             id: _id,
             Expense: document.getElementById('expense_' + _id).value,
             Purpose: document.getElementById('purpose_' + _id).value,
             Category: document.getElementById('category_' + _id).value,
-            Quantity: document.getElementById('quantity_' + _id).value,
-            UnitPrice: document.getElementById('unit_price_' + _id).value,
             Budgets: budgetsArr,
-            Amount: amount
+            Amount: document.getElementById('amount_' + _id).value,
+            TaxPaid: document.querySelector(`input[name="taxRadio${_id}"]:checked`).value
         });
 
         // updateSummaryTable();
     }
+
 }
 
 /** Delete function */
@@ -1461,9 +1344,8 @@ function updateSummaryTable() {
         var pur = lineItems[i].Purpose;
         var cate = lineItems[i].Category;
         var budgetsArr = lineItems[i].Budgets;
-        var quan = lineItems[i].Quantity;
-        var unitPri = lineItems[i].UnitPrice;
-        itemTable.appendChild(genNewLineItemRow(i + 1, exp, pur, cate, quan, unitPri, budgetsArr));
+        var amo = lineItems[i].Amount;
+        itemTable.appendChild(genNewLineItemRow(i + 1, exp, pur, cate, budgetsArr, amo));
     }
 }
 
@@ -1498,7 +1380,7 @@ function genBudgetsCell(arr) {
  * @param {table cell} Budgets a generated table cell which can be added to the table directly
  * @param {string} Amount content to fill in the amount cell
  */
-function genNewLineItemRow(_id, Expense, Purpose, Category, Quantity, UnitPrice, Budgets) {
+function genNewLineItemRow(_id, Expense, Purpose, Category, Budgets, Amount) {
 
     var _id_td = document.createElement('td');
     _id_td.innerHTML = _id;
@@ -1516,13 +1398,10 @@ function genNewLineItemRow(_id, Expense, Purpose, Category, Quantity, UnitPrice,
     var category_td = document.createElement('td');
     category_td.innerHTML = Category;
 
-    var quantity_td = document.createElement('td');
-    quantity_td.innerHTML = Quantity;
-
-    var price_td = document.createElement('td');
-    price_td.innerHTML = UnitPrice;
-
     var budgets_td = genBudgetsCell(Budgets);
+    
+    var amount_td = document.createElement('td');
+    amount_td.innerHTML = Amount;
 
     var receipt_td = document.createElement('td');
     var viewBtn = document.createElement('button');
@@ -1550,9 +1429,8 @@ function genNewLineItemRow(_id, Expense, Purpose, Category, Quantity, UnitPrice,
     tr.appendChild(_id_td);
     tr.appendChild(expense_purpose_td);
     tr.appendChild(category_td);
-    tr.appendChild(quantity_td);
-    tr.appendChild(price_td);
     tr.appendChild(budgets_td);
+    tr.appendChild(amount_td);
     tr.appendChild(receipt_td);
 
     return tr;

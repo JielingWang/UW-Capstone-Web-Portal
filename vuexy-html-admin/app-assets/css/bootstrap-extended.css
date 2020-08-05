@@ -1675,7 +1675,7 @@ button, html [type='button'], [type='reset'], [type='submit'] {
   /* For sm screen*/
 }
 .header-navbar.fixed-top {
-  left : 330px;
+  left : 260px;
 }
 .header-navbar[class*='bg-'] .navbar-nav .nav-item > a {
   color : #FFFFFF !important;
@@ -1693,7 +1693,7 @@ button, html [type='button'], [type='reset'], [type='submit'] {
   margin : 1.3rem 2.2rem 0;
   border-radius : 0.5rem;
   position : fixed;
-  width : calc( 100vw - (100vw - 100%) - calc(2.2rem * 2) - 330px);
+  width : calc( 100vw - (100vw - 100%) - calc(2.2rem * 2) - 260px);
   z-index : 12;
   right : 0;
 }
@@ -1702,8 +1702,8 @@ button, html [type='button'], [type='reset'], [type='submit'] {
   box-shadow : none !important;
   top : 0;
   right : 0;
-  left : 330px;
-  width : calc(100vw - (100vw - 100%) - 330px);
+  left : 260px;
+  width : calc(100vw - (100vw - 100%) - 260px);
 }
 .header-navbar .navbar-wrapper {
   width : 100%;
@@ -2190,7 +2190,7 @@ body[data-col='1-column'] .header-navbar.floating-nav {
 
 @media (min-width: 1200px) and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   body:not([data-col='1-columns']) .header-navbar.floating-nav {
-    width : calc(100vw - (100vw - 100%) - 60px - 330px);
+    width : calc(100vw - (100vw - 100%) - 60px - 260px);
   }
 }
 

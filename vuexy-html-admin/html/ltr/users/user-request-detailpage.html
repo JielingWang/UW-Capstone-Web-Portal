@@ -119,10 +119,10 @@
                             </ul>
                         </li>
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">Ted Hanson</span><span class="user-status">CEE Administrator</span></div><span><img class="round" src="../../../app-assets/images/portrait/small/avatar-s-9.jpg" alt="avatar" height="40" width="40"></span>
+                            <div class="user-nav d-sm-flex d-none"><span id="navigationBarName" class="user-name text-bold-600">Name</span><span class="user-status">General User</span></div><span><img id="navigationBarImage" class="round" src="" alt="avatar" height="40" width="40"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a>
-                                <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i class="feather icon-power"></i> Logout</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item" href="../login/auth-login.html" onclick="logout()"><i class="feather icon-power"></i> Logout</a>
                             </div>
                         </li>
                     </ul>
@@ -141,7 +141,7 @@
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item mr-auto"><a class="navbar-brand" href="../../../html/ltr/vertical-menu-template/index.html">
                         <div class="brand-logo"></div>
-                        <h2 class="brand-text mb-0">Davinci</h2>
+                        <h2 class="brand-text mb-0">ENGINE</h2>
                     </a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary" data-ticon="icon-disc"></i></a></li>
             </ul>
@@ -154,15 +154,17 @@
 				<li class=" navigation-header"><span>General User</span></li>
 				<li class=" nav-item"><a href="#"><i class="feather icon-file-plus"></i><span class="menu-title" data-i18n="User">Create Request</span></a>
                     <ul class="menu-content" style="margin-left:10px;">
-                        <li><a href="user-reimbursement.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Reimbursement</span></a>
+                        <li><a href="user-reimbursement-3.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Reimbursement</span></a>
                         </li>
-                        <li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="View">Travel Reimbursement</span></a>
+                        <li><a href="travelReimbursement.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="View">Travel Reimbursement</span></a>
                         </li>
-                        <li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Purchase Request</span></a>
+                        <li><a href="user-purchase.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Purchase Request</span></a>
                         </li>
-						<li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Pay an Invoice</span></a>
+						<li><a href="user-invoice.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Pay an Invoice</span></a>
                         </li>
-						<li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Procard Receipt</span></a>
+						<li><a href="user-procard.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Procard Receipt</span></a>
+                        </li>
+                        <li><a href="travelRequest.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Travel Request</span></a>
                         </li>
                     </ul>
                 </li>
@@ -244,35 +246,35 @@
                         <!-- Invoice Company Details -->
                         <div id="invoice-company-details" class="row">
                             <div class="col-sm-6 col-12 text-left">
-                                <h1>Reimbursement</h1>
+                                <h1 id="request-type"></h1>
                             </div>
                             <div class="col-sm-6 col-12 text-right">
-                                <h1>Request ID: 0012020</h1>
+                                <h1>Request ID: <span id="requestID"></span></h1>
                             </div>
                         </div>
                         <div id="invoice-company-details" class="row">
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">REQUESTER</h6>
-                                    <p>Jieling Wang</p>
+                                    <p id="requester"></p>
                                     <h6 class="mt-2">SUB-UNIT</h6>
-                                    <p>Qwertt Lab</p>
+                                    <p id="subunit"></p>
                                 </div>
                             </div>
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">REQUEST DATE</h6>
-                                    <p>21 Feb 2020</p>
-                                    <h6 class="mt-2">PAYEE</h6>
-                                    <p>Jieling Wang</p>
+                                    <p id="request-date"></p>
+                                    <h6 class="mt-2 hidden" id="payee-label">PAYEE</h6>
+                                    <p class="hidden" id="payee"></p>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-12 text-right">
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">STATUS</h6>
-                                    <p><i class="fa fa-circle font-small-3 text-warning mr-50"></i>Pending</p>
+                                    <p id="status"><i class="fa fa-circle font-small-3 text-warning mr-50"></i></p>
                                     <h6 class="mt-2">ASSIGNED TO</h6>
-                                    <p>Not assigned yet</p>
+                                    <p id="assignedTo"></p>
                                 </div>
                             </div>
                         </div>
@@ -282,37 +284,38 @@
                             <div class="row">
                                 <div class="table-responsive col-12">
                                     <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
+                                        <thead id="request-info-head">
+                                            <!-- <tr>
                                                 <th>SHIPPING ADDRESS</th>
                                                 <th>DELIVERY METHODS</th>
                                                 <th colspan="2">REQUEST SUMMARY</th>
-                                            </tr>
+                                            </tr> -->
                                         </thead>
-                                        <tbody class="recipient-info my2">
-                                            <tr>
+                                        <tbody id="request-info-body" class="recipient-info my2">
+                                            <!-- <tr>
                                                 <td style="vertical-align: top;">
-                                                    <p>Jieling Wang</p>
-                                                    <p>3927 Adams Lane NE</p>
-                                                    <p>Seattle, WA</p>
-                                                    <p>98105</p>
+                                                    <p id="addr-full-name"></p>
+                                                    <p id="addr-line-1"></p>
+                                                    <p id="addr-line-2"></p>
+                                                    <p> <span id="addr-city"></span> , <span id="addr-state"></span> </p>
+                                                    <p id="addr-zip"></p>
                                                 </td>
-                                                <td style="vertical-align: top;">Mail Check</td>
+                                                <td style="vertical-align: top;" id="deliveryMethod">Mail Check</td>
                                                 <td style="vertical-align: top;">
-                                                    <p>Subtotal:</p>
+                                                    <p>Items:</p>
                                                     <p>Shipping & Handling:</p>
                                                     <p>Total before tax:</p>
-                                                    <p>Estimated tax to be:</p>
+                                                    <p>Estimated tax to be collected:</p>
                                                     <p><strong>Grand total:</strong></p>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <p>$1234.4</p>
-                                                    <p>$3.89</p>
-                                                    <p>$26.87</p>
-                                                    <p>$2.71</p>
-                                                    <p>$29.58</p>
+                                                    <p id="cost-items">$300.00</p>
+                                                    <p id="cost-shipping">$0.00</p>
+                                                    <p id="cost-total-before-tax">$300.00</p>
+                                                    <p id="cost-estimated-tax">$3.30</p>
+                                                    <p id="cost-total">$303.3</p>
                                                 </td>
-                                            </tr>
+                                            </tr> -->
                                         </tbody>
                                     </table>
                                 </div>
@@ -322,107 +325,25 @@
                         <!-- Invoice Items Details -->
                         <div class="col-12" style="margin-top: 1rem;">
                             <div class="form-group row">
-                                <table class="table table-hover-animation zero-configuration">
-                                    <thead>
-                                        <tr>
-                                            <th>Expense Description</th>
-                                            <th>Category</th>
-                                            <th>Amount</th>
-                                            <th>Receipt</th>
-                                         </tr>
+                                <table class="table table-bordered zero-configuration" id="summary_table">
+                                    <thead id="line-item-table-head">
+                                        
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Template Design</td>
-                                            <td>Food and Beverage</td>
-                                            <td>$123</td>
-                                            <td>
-                                                <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-file"></i></button>
-                                                <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-edit"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Template Design</td>
-                                            <td>Food and Beverage</td>
-                                            <td>$123</td>
-                                            <td>
-                                                <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-file"></i></button>
-                                                <button type="button" class="btn btn-icon btn-flat-success"><i class="feather icon-edit"></i></button>
-                                            </td>
-                                        </tr>
+                                    <tbody id="line-item-table-body">
+                                        
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <!-- <div id="invoice-items-details" class="pt-1 invoice-items-table">
-                            <div class="row">
-                                <div class="table-responsive col-12">
-                                    <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
-                                                <th>DESCRIPTION</th>
-                                                <th>BUSINESS PURPOSE</th>
-                                                <th>CATEGORY</th>
-                                                <th>BUDGET NUMBER</th>
-                                                <th>AMOUNT</th>
-                                                <th>TAX</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Website Redesign</td>
-                                                <td>Website Redesign</td>
-                                                <td>Food and Beverage</td>
-                                                <td>#68-123</td>
-                                                <td>$1234</td>
-                                                <td>$123.4</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Newsletter Design</td>
-                                                <td>Template Redesign</td>
-                                                <td>Other</td>
-                                                <td>#68-123</td>
-                                                <td>$1234</td>
-                                                <td>$123.4</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div> -->
-                        <!-- <div id="invoice-total-details" class="invoice-total-table">
-                            <div class="row">
-                                <div class="col-5 offset-7">
-                                    <div class="table-responsive">
-                                        <table class="table table-borderless">
-                                            <tbody>
-                                                <tr>
-                                                    <th>SUBTOTAL</th>
-                                                    <td>$1357.4</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>SHIPPING</th>
-                                                    <td>$0</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>TOTAL</th>
-                                                    <td>$1357.4</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
 
                         <!-- Invoice Footer -->
-                        <div id="invoice-footer" class="text-right pt-3">
-                            <!-- <p>Transfer the amounts to the business amount below. Please include invoice number on your check. -->
+                        <!-- <div id="invoice-footer" class="text-right pt-3">
+                            <p>Transfer the amounts to the business amount below. Please include invoice number on your check.
                                 <p class="bank-details mb-0">
                                     <span class="mr-4">Apartment: <strong>ECE</strong></span>
                                     <span>Phone: <strong>G882-1111-2222-3333</strong></span>
                                 </p>
-                        </div>
+                        </div> -->
                         <!--/ Invoice Footer -->
 
                     </div>
@@ -430,44 +351,44 @@
                 <!-- invoice page end -->
 
                 <!-- Timeline Starts -->
-                <section id="timeline-card">
+                <section>
                     <div class="row">
-                        <div class="col-lg-12 col-sm-12">
-                            <div class="card">
+                        <div class="col-6">
+                            <div class="card" id="history_card">
                                 <div class="card-header">
                                     <h4 class="card-title">Request History</h4>
-                                    <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                                    <!-- <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
                                             <li><a data-action="collapse"><i class="feather icon-chevron-down"></i></a></li>
                                         </ul>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <ul class="activity-timeline timeline-left list-unstyled">
-                                            <li>
-                                                <div class="timeline-icon bg-primary">
+                                        <ul id="request-history" class="activity-timeline timeline-left list-unstyled">
+                                            <!-- <li>
+                                                <div class="timeline-icon bg-primary bg-lighten-5">
                                                     <i class="feather icon-plus font-medium-2"></i>
                                                 </div>
                                                 <div class="timeline-info">
-                                                    <p class="font-weight-bold">Request Submitted</p>
-                                                    <!-- <span>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</span> -->
+                                                    <p class="font-weight-bold">Request Form Submitted</p>
+                                                    <span></span>
                                                 </div>
-                                                <small class="">25 days ago</small>
+                                                <small class="">a few seconds ago</small>
                                             </li>
                                             <li>
-                                                <div class="timeline-icon bg-warning">
+                                                <div class="timeline-icon bg-warning bg-lighten-5">
                                                     <i class="feather icon-alert-circle font-medium-2"></i>
                                                 </div>
                                                 <div class="timeline-info">
-                                                    <p class="font-weight-bold">Request Approved</p>
-                                                    <span>Notes from approver: </span>
+                                                    <p class="font-weight-bold">Waiting for approve</p>
+                                                    <span>Cupcake gummi bears soufflé caramels candy</span>
                                                 </div>
-                                                <small class="">15 days ago</small>
+                                                <small class="">a few seconds ago</small>
                                             </li>
                                             <li>
-                                                <div class="timeline-icon bg-success">
+                                                <div class="timeline-icon bg-success bg-lighten-5">
                                                     <i class="feather icon-check font-medium-2"></i>
                                                 </div>
                                                 <div class="timeline-info">
@@ -476,16 +397,137 @@
                                                     </span>
                                                 </div>
                                                 <small class="">20 minutes ago</small>
-                                            </li>
+                                            </li> -->
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        <div class="col-6">
+                            <div class="card" id="note_card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Notes</h4>
+                                </div>
+                                <div class="card-content" id="notes" style="padding-top: 1.5rem; padding-left: 1.5rem;">
+
+                                </div>
+                                <!-- <div class="chat-app-window">
+                                    <div class="user-chats">
+                                        <div class="chats" id="notes">
+                                            <div class="chat chat-left">
+                                                <div class="chat-avatar mt-50">
+                                                    <p>Jieling Wang: </p>
+                                                    <a class="avatar m-0" data-toggle="tooltip" href="#" data-placement="left" title="" data-original-title="">
+                                                        <img src="../../../app-assets/images/portrait/small/avatar-s-2.jpg" alt="avatar" height="40" width="40" />
+                                                    </a>
+                                                </div>
+                                                <div class="chat-body">
+                                                    <div class="chat-content">
+                                                        <p>Cake sesame snaps cupcake gingerbread</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="chat">
+                                                <div class="chat-avatar">
+                                                    <a class="avatar m-0" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title="">
+                                                        <img src="../../../app-assets/images/portrait/small/avatar-s-5.jpg" alt="avatar" height="40" width="40" />
+                                                    </a>
+                                                </div>
+                                                <div class="chat-body">
+                                                    <div class="chat-content">
+                                                        <p>Apple pie pie jujubes chupa chups muffin</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="chat chat-left">
+                                                <div class="chat-avatar mt-50">
+                                                    <a class="avatar m-0" data-toggle="tooltip" href="#" data-placement="left" title="" data-original-title="">
+                                                        <img src="../../../app-assets/images/portrait/small/avatar-s-2.jpg" alt="avatar" height="40" width="40" />
+                                                    </a>
+                                                </div>
+                                                <div class="chat-body">
+                                                    <div class="chat-content">
+                                                        <p>Chocolate cake</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="chat">
+                                                <div class="chat-avatar">
+                                                    <a class="avatar m-0" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title="">
+                                                        <img src="../../../app-assets/images/portrait/small/avatar-s-5.jpg" alt="avatar" height="40" width="40" />
+                                                    </a>
+                                                </div>
+                                                <div class="chat-body">
+                                                    <div class="chat-content">
+                                                        <p>Donut sweet pie oat cake dragée fruitcake</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="chat chat-left">
+                                                <div class="chat-avatar mt-50">
+                                                    <a class="avatar m-0" data-toggle="tooltip" href="#" data-placement="left" title="" data-original-title="">
+                                                        <img src="../../../app-assets/images/portrait/small/avatar-s-2.jpg" alt="avatar" height="40" width="40" />
+                                                    </a>
+                                                </div>
+                                                <div class="chat-body">
+                                                    <div class="chat-content">
+                                                        <p>Liquorice chocolate bar jelly beans icing</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="chat">
+                                                <div class="chat-avatar mt-50">
+                                                    <a class="avatar m-0" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title="">
+                                                        <img src="../../../app-assets/images/portrait/small/avatar-s-5.jpg" alt="avatar" height="40" width="40" />
+                                                    </a>
+                                                </div>
+                                                <div class="chat-body">
+                                                    <div class="chat-content">
+                                                        <p>Pudding candy</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="chat-footer">
+                                        <div class="card-body d-flex justify-content-around pt-0">
+                                            <input type="text" class="form-control mr-50" placeholder="Type your Message">
+                                            <button type="button" class="btn btn-icon btn-primary"><i class="feather icon-navigation"></i></button>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+
                     </div>
                 </section>
                 <!-- Timeline Ends -->
+
+                
+
+                <div class="row" id="feedback-block">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <h4 class="card-title">Add new notes</h4>
+                                    <form class="form">
+                                        <div class="form-body">
+                                            <div class="form-group">
+                                                <label for="feedback_input" class="sr-only">Notes</label>
+                                                <textarea id="feedback_input" rows="3" class="form-control" name="message" placeholder="Notes"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions">
+                                            <button type="button" class="btn btn-outline-primary mr-1" onclick="takeNoteClicked()"><i class="mr-1 fa fa-pencil"></i>Take Note</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -509,6 +551,7 @@
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -519,7 +562,14 @@
 
     <!-- BEGIN: Page JS-->
     <script src="../../../app-assets/js/scripts/pages/invoice.js"></script>
+    <script src="../../../app-assets/js/scripts/pages/app-chat.js"></script>
     <!-- END: Page JS-->
+
+    <!-- BEGIN: My JS-->
+    <script src="../../../app-assets/js/scripts/myScripts/connections/connections.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/Admin/navigation_handler.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/users/user-request-detail.js"></script>
+    <!-- END: My JS-->
 
 </body>
 <!-- END: Body-->
