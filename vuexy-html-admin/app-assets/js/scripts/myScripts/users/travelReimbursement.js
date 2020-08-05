@@ -1,11 +1,12 @@
 var itemNum = 1;
 var lineItems = [];
+var table1 = [];
+var table2 = [];
 var formData = new FormData();
 var type = "";
 var unitID = "";
 const baseURL = "https://coe-api.azurewebsites.net/api/";
 var user_id = "5e8e4bcaa148b90044206526";
-
 var user_name="";
 var user_uwid="";
 var user_email="";
@@ -80,68 +81,73 @@ var makeGetRequest = function(url, onSuccess, onFailure) {
 
 
 $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS() {
-        if(document.getElementById("firstName").value==""){
-            alert("Please fill out the First Name field.");
+        if($("input[name='beforeRadio']:checked").val()!="yes" && $("input[name='beforeRadio']:checked").val()!="no"){
+            alert("Please fill out \"Have you been reimbursed before this trip?\".");
+            document.getElementById("warning").innerHTML="Please fill out all * field.";
+            return false;
+        } 
+        if($("input[name='myself']:checked").val()!="yes" && $("input[name='myself']:checked").val()!="no"){
+            alert("Please fill out \"I am requesting travel reimbursement for myself\".");
+            document.getElementById("warning").innerHTML="Please fill out all * field.";
+            return false;
+        } 
+        if($("input[name='myself']:checked").val()=="no"){
+            if(document.getElementById("someone_name").value==""){
+                alert("Please fill out the Someone's name field.");
+                document.getElementById("warning").innerHTML="Please fill out all * field.";
+                return false;
+            }else if(document.getElementById("someone_affliation").value==""){
+                alert("Please fill out the Someone's affliation field.");
+                document.getElementById("warning").innerHTML="Please fill out all * field.";
+                return false;
+            }else if(document.getElementById("someone_email").value==""){
+                alert("Please fill out the Someone's email field.");
+                document.getElementById("warning").innerHTML="Please fill out all * field.";
+                return false;
+            }
+        }
+        if($("input[name='submit_date']:checked").val()==""){
+            alert("Please fill out Date Submitted field");
+            document.getElementById("warning").innerHTML="Please fill out all * field.";
+            return false;
+        } 
+        if($("input[name='US_Radio']:checked").val()!="yes" && $("input[name='US_Radio']:checked").val()!="no"){
+            alert("Please fill out \"US Citizen or Permanent Resident?\".");
+            document.getElementById("warning").innerHTML="Please fill out all * field.";
+            return false;
+        } 
+        if($("input[name='US_Radio']:checked").val()=="no"){
+            if( !document.getElementById("passport").value){
+                alert("Please include the passport file.");
+                document.getElementById("warning").innerHTML="Please fill out all * field.";
+                return false;
+            }
+            if( !document.getElementById("visa").value){
+                alert("Please include the visa file.");
+                document.getElementById("warning").innerHTML="Please fill out all * field.";
+                return false;
+            }
+        }
+        if(document.getElementById("purpose").value==""){
+            alert("Please fill out the Purpose of Travel field.");
             document.getElementById("warning").innerHTML="Please fill out all * field.";
             return false;
         }
-        if(document.getElementById("lastName").value==""){
-            alert("Please fill out the Last Name field.");
+        if($("input[name='personalTravel_Radio']:checked").val()!="yes" && $("input[name='personalTravel_Radio']:checked").val()!="no"){
+            alert("Please fill out \"Was personal travel included?\".");
             document.getElementById("warning").innerHTML="Please fill out all * field.";
             return false;
-        }
-        if(document.getElementById("departure").value==""){
-            alert("Please fill out the Departure field.");
-            document.getElementById("warning").innerHTML="Please fill out all * field.";
-            return false;
-        }
-        if(document.getElementById("destination").value==""){
-            alert("Please fill out the Destionation field.");
-            document.getElementById("warning").innerHTML="Please fill out all * field.";
-            return false;
-        }
-        if(document.getElementById("date").value==""){
-            alert("Please fill out the Departing Date field.");
-            document.getElementById("warning").innerHTML="Please fill out all * field.";
-            return false;
-        }
-        if(document.getElementById("returnDate").value==""){
-            alert("Please fill out the Returning Date field.");
-            document.getElementById("warning").innerHTML="Please fill out all * field.";
-            return false;
-        }
-        if(document.getElementById("reason").value==""){
-            alert("Please fill out the Reason field.");
-            document.getElementById("warning").innerHTML="Please fill out all * field.";
-            return false;
-        }
-        
-        if(document.getElementById("reason").value.length>1500){
-            alert("No more than 1500 characters.");
-            document.getElementById("warning").innerHTML="Please fill out all * field.";
-            return false;
-        }
-       
-        if($("input[name='flight']:checked").val()!="yes" && $("input[name='flight']:checked").val()!="no"){
-            alert("Please fill out the Flight option.");
-            document.getElementById("warning").innerHTML="Please fill out all * field.";
-            return false;
-        }
-        if($("input[name='hotel']:checked").val()!="yes" && $("input[name='hotel']:checked").val()!="no"){
-            alert("Please fill out the Hotel option.");
-            document.getElementById("warning").innerHTML="Please fill out all * field.";
-            return false;
-        }
-        if($("input[name='flight']:checked").val()=="yes"){
-            if(document.getElementById("birthday").value==""){
-                alert("Please fill out the Birthday field.");
+        } 
+        if($("input[name='personalTravel_Radio']:checked").val()=="yes"){
+            if( document.getElementById("personalTravel_detail").value==""){
+                alert("Please fill out the personal travel details field.");
                 document.getElementById("warning").innerHTML="Please fill out all * field.";
                 return false;
             }
         }
 
         //------------- budget validation -------------------------------------------------------------------------------------------- 
-        if(document.getElementById("budget_num_1").value==""){
+         if(document.getElementById("budget_num_1").value==""){
             alert("Please fill out the Budget Number field.");
             document.getElementById("warning").innerHTML="Please fill out all * field.";
             return false;
@@ -171,8 +177,8 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
                 }
             }
         }
-        //-------------- budget validation end ------------------------------------------------------------------------------------------
-
+        //---------------------------------------------------------------------------------------------------------------------------------
+       
         alert("Submitted!");
         alert('send data to database');
         getUserInfo();
@@ -192,6 +198,7 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
         var split1;
         var budget2;
         var split2;
+
         //---------------First Budget---------------------------------------------------
         var amount_percent=document.getElementById("split_with_1_1").value;
         if(amount_percent=="amount"){
@@ -209,7 +216,8 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
             budget1=document.getElementById("budget_num_1").value;
             split1=document.getElementById("split_dollar_input_value_1_1").value+"%";
         } 
-        //----------------Second Budget -------------------------------------------------
+        //--------------- Second Budget -------------------------------------------------
+        //alert(split_with_1_1("budget_num_2").value);
         if(document.getElementById("budget_num_2").value!="select"){
             var amount_percent2=document.getElementById("split_with_2_2").value;
             if(amount_percent2=="amount"){
@@ -234,73 +242,144 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
             Budgets: budgetsArr,
             Amount: "0"
         });
-        
-        
-        getUserInfo1();
 
+        var i;
+        var c1=$("input[name='colNum1']").val();
+        for(i=1;i<=c1;i++){
+            var dateId = "1meal_date";
+            dateId+=i;
+            var breakfastId =  "1breakfast";
+            breakfastId+=i;
+            var lunchId =  "1lunch";
+            lunchId+=i;
+            var dinnerId =  "1dinner";
+            dinnerId+=i;
+            table1.push({
+                Date: document.getElementById(dateId).value,
+                Breakfast: document.getElementById(breakfastId).checked,
+                Lunch:  document.getElementById(lunchId).checked,
+                Dinner:  document.getElementById(dinnerId).checked
+            });
+        }
+
+        var c2=$("input[name='colNum2']").val();
+        for(i=1;i<=c2;i++){
+            var dateId = "2meal_date";
+            dateId+=i;
+            var breakfastId =  "2breakfast";
+            breakfastId+=i;
+            var lunchId =  "2lunch";
+            lunchId+=i;
+            var dinnerId =  "2dinner";
+            dinnerId+=i;
+            table2.push({
+                Date: document.getElementById(dateId).value,
+                Breakfast: document.getElementById(breakfastId).checked,
+                Lunch:  document.getElementById(lunchId).checked,
+                Dinner:  document.getElementById(dinnerId).checked
+            });
+        }
+
+         //-------------------------files -----------------------------------
+        var visa_name;
+        var passport_name;
+        var airfare_name;
+        var train_name;
+        var rental_name;
+        var hotel_name;
+        var car_name;
+        var registration_name;
+        var fileSelect = document.getElementById("passport");
+        for(var x = 0; x < fileSelect.files.length; x++) {
+            formData.append(fileSelect.files[x].name, fileSelect.files[x]);
+            passport_name=fileSelect.files[x].name;
+        }
+        fileSelect = document.getElementById("visa");
+        for(var x = 0; x < fileSelect.files.length; x++) {
+            formData.append(fileSelect.files[x].name, fileSelect.files[x]);
+            visa_name=fileSelect.files[x].name;
+        }
+        fileSelect = document.getElementById("airfare_receipt");
+        for(var x = 0; x < fileSelect.files.length; x++) {
+            formData.append(fileSelect.files[x].name, fileSelect.files[x]);
+            airfare_name=fileSelect.files[x].name;
+        }
+        fileSelect = document.getElementById("trainReceipt");
+        for(var x = 0; x < fileSelect.files.length; x++) {
+            formData.append(fileSelect.files[x].name, fileSelect.files[x]);
+            train_name=fileSelect.files[x].name;
+        }
+        fileSelect = document.getElementById("rentalReceipt");
+        for(var x = 0; x < fileSelect.files.length; x++) {
+            formData.append(fileSelect.files[x].name, fileSelect.files[x]);
+            rental_name=fileSelect.files[x].name;
+        }
+        fileSelect = document.getElementById("hotelReceipt");
+        for(var x = 0; x < fileSelect.files.length; x++) {
+            formData.append(fileSelect.files[x].name, fileSelect.files[x]);
+            hotel_name=fileSelect.files[x].name;
+        }
+        fileSelect = document.getElementById("registration_receipt");
+        for(var x = 0; x < fileSelect.files.length; x++) {
+            formData.append(fileSelect.files[x].name, fileSelect.files[x]);
+            registration_name=fileSelect.files[x].name;
+        }
+        fileSelect = document.getElementById("car_receipt");
+        for(var x = 0; x < fileSelect.files.length; x++) {
+            formData.append(fileSelect.files[x].name, fileSelect.files[x]);
+            car_name=fileSelect.files[x].name;
+        }
+        
+        formData.append("files", fileSelect.files[x]);
+        //---------------------------------------------------------------------
+        getUserInfo1();
         var requestInfo = {
-            FirstName: $("input[name='firstName']").val(),
-            LastName: $("input[name='lastName']").val(),
-            Departure: $("input[name='departure']").val(),
-            Destination: $("input[name='destination']").val(),
-            Date: $("input[name='date']").val(),
-            ReturnDate: $("input[name='returnDate']").val(),
-            Reason: $("input[name='reason']").val(),
-            Birthday: $("input[name='birthday']").val(),
-            //Flight:
-            Flight: $("input[name='flight']:checked").val(),
-            FlightCompany: $("input[name='flight_company']").val(),
-            FlightNumber: $("input[name='flight_number']").val(),
-            FlightFrom: $("input[name='flight_from']").val(),
-            FlightTo: $("input[name='flight_to']").val(),
-            FlightDepartingDate: $("input[name='flight_departingDate']").val(),
-            FlightReturningDate: $("input[name='flight_returningDate']").val(),
-            FlightAmount: $("input[name='flight_amount']").val(),
-            FlightReference: $("input[name='flight_reference']").val(),
-            //hotel:
-            Hotel: $("input[name='hotel']:checked").val(),
-            HotelName: $("input[name='hotel_name']").val(),
-            HotelAddress: $("input[name='hotel_address']").val(),
-            HotelNum: $("input[name='hotel_num']").val(),
-            HotelAddress: $("input[name='hotel_address']").val(),
-            HotelZip: $("input[name='hotel_zip']").val(),
-            HotelMovein:  $("input[name='hotel_movenin']").val(),
-            HotelMoveout: $("input[name='hotel_movenout']").val(),
-            HotelAmount: $("input[name='hotel_amount']").val(),
-            HotelLink: $("input[name='hotel_link']").val(),
-            HotelNote: $("input[name='hotel_note']").val(),
+            TravelBefore: $("input[name='beforeRadio']:checked").val(),
+            ReferenceNumber: $("input[name='reference_number_input']").val(),
+            ForMyself: $("input[name='myself']").val(),
+            SomeoneName: $("input[name='someone_name']").val(),
+            SomeoneAffliation: $("input[name='someone_affliation']").val(),
+            SomeoneEmail: $("input[name='someone_email']").val(),
+            SubmitDate: $("input[name='submit_date']").val(),
+            UScitizen: $("input[name='US_Radio']:checked").val(),
+            Purpose: $("input[name='purpose']").val(),
+            Registration: $("input[name='registration']").val(),
+            PersonalTravel: $("input[name='personalTravel_Radio']:checked").val(),
+            PersonalTravelDetail: $("input[name='personalTravel_detail']").val(),
+            AirFare: $("input[name='airfare']").val(),
+            Car: $("input[name='car']").val(),
+            Train: $("input[name='train']").val(),
+            CarRental: $("input[name='carRental']").val(),
+            HotelFee: $("input[name='hotel']").val(),
+            Meal: $("input[name='meal_Radio']:checked").val(),
+
+            MealProvided: $("input[name='meal2_Radio']:checked").val(),
+            Visa_file: visa_name,
+            Passport_file: passport_name,
+            Airfare_file: airfare_name,
+            Train_file: train_name,
+            Rental_file: rental_name,
+            Hotel_file: hotel_name,
+            Registration_file: registration_name,
+            Car_file: car_name,
+
+            Col1: $("input[name='colNum1']").val(),
+            Col2: $("input[name='colNum2']").val(),
+            Meal_amount: $("input[name='meal_amount']").val(),
+            Meal_table1: table1,
+            Meal_table2: table2,
             NoteFromApprover: "",
             LineItems: lineItems
         }
 
-        var date;
-        n =  new Date();
-        y = n.getFullYear();
-        m = n.getMonth() + 1;
-        d = n.getDate();
-        if(m==1)    m="January";
-        else if(m==2)    m="February";
-        else if(m==3)    m="March";
-        else if(m==4)    m="April";
-        else if(m==5)    m="May";
-        else if(m==6)    m="June";
-        else if(m==7)    m="July";
-        else if(m==8)    m="August";
-        else if(m==9)    m="September";
-        else if(m==10)    m="October";
-        else if(m==11)    m="November";
-        else if(m==12)    m="December";
-        date= d + " " + m + ", " + y;
-
         //now lets set up the JSON_toServer JSON Object
         JSON_toServer.userID_ref = user_id;  // 5e63127145f8e019d1f26ddc
-        JSON_toServer.OrderType = "Travel Request";
+        JSON_toServer.OrderType = "Travel Reimbursement";
         JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
         // console.log(typeof(requestInfo));
         JSON_toServer.OrderStatus = "Pending"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
         JSON_toServer.ChatInfo = "TEST CHAT INFO2234"; //leaving this empty since there's no chat when user upload a order first
         JSON_toServer.assignedTo = null; //leaving this as null since there's no one assigned when a user upload/submit a order.
-
         
         //here we just pass in the JSON object we need to pass to the server. "JSON_body" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request
         formData.set("JSON_body", JSON.stringify(JSON_toServer));
@@ -317,56 +396,58 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
                 //convert order info to JSON
                 const requestInfo_obj = JSON.parse(data_obj.OrderInfo);
                 console.log(requestInfo_obj);
-                //window.location.href = "../../../html/ltr/users/user-summary.php";
-                window.location.href = "summary.php?id="+data_obj._id
+                var amount = $("input[name='registration']").val()+$("input[name='airfare']").val()+$("input[name='car']").val()+$("input[name='train']").val()+ $("input[name='carRental']").val()+$("input[name='hotel']").val();
+                window.location.href = "summary-travelReimbursement.php?id="+data_obj._id
                                         +"&user_id="+user_id
                                         +"&user_name="+user_name
                                         +"&user_uwid="+user_uwid
                                         +"&user_email="+user_email
                                         +"&user_subunitName="+user_subunitName
                                         +"&user_AccessLevel="+user_accessLevel
-                                        +"&type=Travel Request"
-                                        +"&submit_date="+date
+                                        +"&type=Travel Reimbursement"
+                                        +"&submit_date="+$("input[name='submit_date']").val()
                                         +"&status=Awaiting Approval"
-                                        +"&amount=N/A"
-                                        +"&firstname="+$("input[name='firstName']").val()
-                                        +"&lastname="+$("input[name='lastName']").val()
-                                        +"&departure="+$("input[name='departure']").val()
-                                        +"&destination="+$("input[name='destination']").val()
-                                        +"&date="+$("input[name='date']").val()
-                                        +"&returndate="+$("input[name='returnDate']").val()
-                                        +"&reason="+$("input[name='reason']").val()
-                                        +"&flight="+$("input[name='flight']:checked").val()
-                                        +"&flight_company="+$("input[name='flight_company']").val()
-                                        +"&flight_number="+$("input[name='flight_number']").val()
-                                        +"&flight_from="+$("input[name='flight_from']").val()
-                                        +"&flight_to="+ $("input[name='flight_to']").val()
-                                        +"&flight_departdate="+$("input[name='flight_departingDate']").val()
-                                        +"&flight_returndate="+$("input[name='flight_returningDate']").val()
-                                        +"&flight_amount="+$("input[name='flight_amount']").val()
-                                        +"&hotel="+$("input[name='hotel']:checked").val()
-                                        +"&hotel_name="+$("input[name='hotel_name']").val()
-                                        +"&hotel_address="+ $("input[name='hotel_address']").val()
-                                        +"&hotel_num="+$("input[name='hotel_num']").val()
-                                        +"&hotel_zip="+$("input[name='hotel_zip']").val()
-                                        +"&hotel_amount="+ $("input[name='hotel_amount']").val()
-                                        +"&hotel_link="+ $("input[name='hotel_link']").val()
-                                        +"&flight_reference="+$("input[name='flight_reference']").val()
-                                        +"&hotel_note="+$("input[name='hotel_note']").val()
-                                        +"&birthday="+$("input[name='birthday']").val()
+                                        +"&amount="+amount
+                                        +"&TravelBefore="+$("input[name='beforeRadio']:checked").val()
+                                        +"&ReferenceNumber="+$("input[name='reference_number_input']").val()
+                                        +"&ForMyself="+$("input[name='myself']").val()
+                                        +"&SomeoneName="+$("input[name='someone_name']").val()
+                                        +"&SomeoneAffliation="+$("input[name='someone_affliation']").val()
+                                        +"&SomeoneEmail="+$("input[name='someone_email']").val()
+                                        +"&US="+$("input[name='US_Radio']:checked").val()
+                                        +"&purpose="+$("input[name='purpose']").val()
+                                        +"&personalTravel="+$("input[name='personalTravel_Radio']:checked").val()
+                                        +"&personalTravelDetails="+$("input[name='personalTravel_Radio']:checked").val()
+                                        +"&registration="+$("input[name='registration']").val()
+                                        +"&airfare="+$("input[name='airfare']").val()
+                                        +"&car="+$("input[name='car']").val()
+                                        +"&train="+$("input[name='train']").val()
+                                        +"&carRental="+ $("input[name='carRental']").val()
+                                        +"&hotelFee="+$("input[name='hotel']").val()
+                                        +"&visa_file="+visa_name
+                                        +"&passport_file="+passport_name
+                                        +"&airfare_file="+airfare_name
+                                        +"&train_file="+train_name
+                                        +"&rental_file="+rental_name
+                                        +"&hotel_file="+hotel_name
+                                        +"&meal="+$("input[name='meal_Radio']:checked").val()
+                                        +"&meal_amount="+$("input[name='meal_amount']").val()
+                                        +"&mealProvided="+$("input[name='meal2_Radio']:checked").val()
+                                        +"&registration_file="+registration_name
+                                        +"&car_file="+car_name
                                         +"&note="+""
                                         +"&budget1="+budget1
                                         +"&split1="+split1
                                         +"&budget_length="+budgetsArr.length
                                         +"&budget2="+budget2
-                                        +"&split2="+split2
-                                        +"&hotel_movein="+$("input[name='hotel_movenin']").val()
-                                        +"&hotel_moveout="+$("input[name='hotel_movenout']").val();
+                                        +"&split2="+split2;
             }
         }
         request.open('POST', baseURL + "uploadOrder/" + type + "/" + unitID);
         request.send(formData);
         return true;
+        // window.location.href = "../../../html/ltr/users/user-summary.html";
+        // window.location.replace("../../../html/ltr/users/user-summary.html");
 });
 
 function deleteOrder(order_id)
@@ -377,6 +458,7 @@ function deleteOrder(order_id)
         alert(order_id);
         //On success execution this is where you update your frontend
         //document.getElementById("result").innerHTML = JSON.stringify(data);
+        
     }
 
     //this function will be called when data exchange with backend occured an error
@@ -468,7 +550,6 @@ function getUserInfo1() {
 
     makeGetRequest("getuserInformation/5e8e4bcaa148b90044206526" , onSuccess, onFailure);
 }
-
 
 
 /************************************************ END: Wizard step control *******************************************************/
@@ -604,38 +685,6 @@ function genOptionInput(name, _id, _budget_id) {
     i.setAttribute('name', name);
     return div;
 }
-
-/** 
- * Split with amount or percentage controller
- * Use to transfer between split with amount or percentage
- * Each split select box and input value is bound to a single budget number,
- * so we use split_with_{line-item-id}_{budget-id} to set select box id
- * use split_input_with_{line-item-id}_{budget-id} to set user input id
- */
-function splitWithChanged(_id, _budget_id) {
-    var sel = document.getElementById('split_with_' + _id + '_' + _budget_id);
-    var pick = sel.options[sel.selectedIndex].value;
-    var dollar = document.getElementById('split_dollar_input_' + _id + '_' + _budget_id);
-    var perc = document.getElementById('split_percent_input_' + _id + '_' + _budget_id);
-    if (pick == "amount") {
-        dollar.setAttribute('class', 'col-md-2 visible');
-        perc.setAttribute('class', 'col-md-2 hidden');
-    } else if (pick == "percentage") {
-        dollar.setAttribute('class', 'col-md-2 hidden');
-        perc.setAttribute('class', 'col-md-2 visible');
-    }
-}
-
-/** 
- * Bind to the initialized select box 
- */
-$(document).on('click', '#split_with_1_1', function(){
-    splitWithChanged(1, 1);
-});
-$(document).on('click', '#split_with_2_2', function(){
-    splitWithChanged(2, 2);
-});
-
 
 /**
  * Add budget numbers to selected box from database

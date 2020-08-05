@@ -223,23 +223,23 @@
                                                             <div class="col-12">
                                                                 <div class="form-group row">
                                                                     <div class="col-md-4">
-                                                                        <span>Have you been reimbursed before this trip?</span>
+                                                                        <span>*Have you been reimbursed before this trip?</span>
                                                                     </div>
                                                                     <div class="col-md-8">
                                                                         <ul class="list-unstyled mb-0">
                                                                             <li class="d-inline-block mr-2">
                                                                                 <fieldset>
                                                                                     <div class="custom-control custom-radio">
-                                                                                        <input type="radio" class="custom-control-input" name="beforeRadio" id="Haveyoubeenreimbursed1" onclick="know_reference(1)">
-                                                                                        <label class="custom-control-label" for="Haveyoubeenreimbursed1">Yes</label>
+                                                                                        <input type="radio" class="custom-control-input" value="yes" name="beforeRadio" id="Haveyoubeenreimbursed1" onclick="know_reference(1)">
+                                                                                        <label class="custom-control-label" for="Haveyoubeenreimbursed1">YES</label>
                                                                                     </div>
                                                                                 </fieldset>
                                                                             </li>
                                                                             <li class="d-inline-block mr-2">
                                                                                 <fieldset>
                                                                                     <div class="custom-control custom-radio">
-                                                                                        <input type="radio" class="custom-control-input" name="beforeRadio" id="Haveyoubeenreimbursed2" onclick="know_reference(0)">
-                                                                                        <label class="custom-control-label" for="Haveyoubeenreimbursed2">No</label>
+                                                                                        <input type="radio" class="custom-control-input" value="no" name="beforeRadio" id="Haveyoubeenreimbursed2" onclick="know_reference(0)">
+                                                                                        <label class="custom-control-label" for="Haveyoubeenreimbursed2">NO</label>
                                                                                     </div>
                                                                                 </fieldset>
                                                                             </li>
@@ -260,23 +260,23 @@
                                                                 <span>Reference Number:</span>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <input type="text" id="name" class="form-control" name="submitter-name" placeholder="Leave it blank if you do not know">
+                                                                <input type="text" id="reference_number_input" class="form-control" name="reference_number_input" placeholder="Leave it blank if you do not know">
                                                             </div>
-                                                            <button>Enter</button>
+                                                           
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>I am requesting travel reimbursement for myself</span>
+                                                                <span>*I am requesting travel reimbursement for myself</span>
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <ul class="list-unstyled mb-0">
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="myself" id="myself_yes" onclick="request_formyself(1)">
+                                                                                <input type="radio" class="custom-control-input" value="yes" name="myself" id="myself_yes" onclick="request_someone(0)">
                                                                                 <label class="custom-control-label" for="myself_yes">YES</label>
                                                                             </div>
                                                                         </fieldset>
@@ -284,7 +284,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="myself" id="myself_no" onclick="request_formyself(0)">
+                                                                                <input type="radio" class="custom-control-input" value="no" name="myself" id="myself_no" onclick="request_someone(1)">
                                                                                 <label class="custom-control-label" for="myself_no">NO</label>
                                                                             </div>
                                                                         </fieldset>
@@ -292,38 +292,7 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                    </div>
-
-                                                    <div class="col-12 hidden" id="for_myself">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-1">
-                                                                <span></span>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <span>I am requesting on someone behalf</span>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="someone" id="someone_behalf_yes" onclick="request_someone(1)">
-                                                                                <label class="custom-control-label" for="someone_behalf_yes">YES</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="someone" id="someone_behalf_no" onclick="request_someone(0)">
-                                                                                <label class="custom-control-label" for="someone_behalf_no">NO</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>                             
+                                                    </div>                           
 
                                                     <div class="col-12 hidden" id="for_someone1">
                                                         <div class="form-group row">
@@ -331,10 +300,10 @@
                                                                 <span></span>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <span>Name</span>
+                                                                <span>*Name</span>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <input type="text" id="name" class="form-control" name="submitter-name">
+                                                                <input type="text" id="someone_name" name="someone_name" class="form-control">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -344,10 +313,10 @@
                                                                 <span></span>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <span>Affliation</span>
+                                                                <span>*Affliation</span>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <input type="text" id="name" class="form-control" name="submitter-affiliation">
+                                                                <input type="text" id="someone_affliation" name="someone_affliation" class="form-control">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -357,10 +326,10 @@
                                                                 <span></span>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <span>Email</span>
+                                                                <span>*Email</span>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <input type="text" id="name" class="form-control" name="submitter-affiliation" >
+                                                                <input type="text" id="someone_email" class="form-control" name="someone_email" >
                                                             </div>
                                                         </div>
                                                     </div>
@@ -368,189 +337,226 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Date Submitted</span>
+                                                                <span>*Date Submitted</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" class="form-control pickadate" id="submit_date" placeholder="">
+                                                                <input type="text" class="form-control pickadate" id="submit_date" name="submit_date" placeholder="">
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <!-- BEGIN: first budget -->
-                                                    <div class="col-12" id="first_budget">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-4">
-                                                                <span>Budget Number</span>
-                                                                <label for="task-icon"><b><i>*If need to split budget please click plus icon.</i></b></label>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <select class="custom-select form-control">
-                                                                    <option value="food">Please select</option>
-                                                                    <option value="square">61-2692</option>
-                                                                    <option value="rectangle">66-1981</option>
-                                                                    <option value="rombo">80-2535</option>
-                                                                    <option value="romboid">61-2692</option>
-                                                                    <option value="trapeze">66-1981</option>
-                                                                    <option value="traible">80-2535</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-2 hidden" id="first_split_amount">
-                                                                <input type="text" id="business_purpose" class="form-control" name="split_amount" placeholder="$00.00" value="$">
-                                                            </div>
-                                                            <div class="col-md-2 hidden" id="first_split_perc">
-                                                                <input type="text" id="business_purpose" class="form-control" name="split_perc" placeholder="00.00%" value="%">
-                                                            </div>
-                                                            <div class="col-md-1">
-                                                                <button type="button" class="btn btn-icon btn-icon rounded-circle btn-flat-success" id="add_budget"><i class="feather icon-plus-circle"></i></button>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <div class="col-md-1">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-checkbox">
-                                                                                <input type="checkbox" class="custom-control-input" name="option_task" id="option_task">
-                                                                                <label class="custom-control-label" for="option_task">Task</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-3 hidden" id="task_checked">
-                                                                <input type="text" class="form-control" name="task_input" id="task_input">
-                                                            </div>
-                                                            <div class="col-md-1">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-checkbox">
-                                                                                <input type="checkbox" class="custom-control-input" name="option_option" id="option_option">
-                                                                                <label class="custom-control-label" for="option_option">Option</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-3 hidden" id="option_checked">
-                                                                <input type="text" class="form-control" name="option_input" id="option_input">
-                                                            </div>
-                                                            <div class="col-md-1">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-checkbox">
-                                                                                <input type="checkbox" class="custom-control-input" name="option_project" id="option_project">
-                                                                                <label class="custom-control-label" for="option_project">Project</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-3 hidden" id="project_checked">
-                                                                <input type="text" class="form-control" name="project_input" id="project_input">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- END: first budget -->
+                          <div class="col-12" id="budget_1_1">
+                            <div class="form-group row">
+                                <div class="col-md-4">
+                                    <span>*Budget Number</span>
+                                    <label for="task-icon"><b><i>*If need to split budget please click plus icon.</i></b></label>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="custom-select form-control" id="budget_num_1" name="budget_num_1">
+                                        <option value="">Please select</option>
+                                        <option value="910-11">910-11</option>
+                                        <option value="910-22">910-22</option>
+                                        <option value="922-266">922-266</option>
+                                    </select>
+                                </div>
+                                <!-- <div class="col-md-1">Split with:</div> -->
+                                <div class="col-md-2">
+                                    <select class="custom-select form-control" id="split_with_1_1">
+                                        <option value="amount">Amount</option>
+                                        <option value="percentage">Percentage</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2" id="split_dollar_input_1_1">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="split_dollar_input_value_1_1" aria-label="Amount (to the nearest dollar)">
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-2 hidden" id="split_percent_input_1_1">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="split_percent_input_value_1_1">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" onclick="addBudget()" class="btn btn-icon rounded-circle btn-flat-success" id="budget_btn_1_1"><i class="feather icon-plus-circle"></i></button>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-1">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="d-inline-block mr-2">
+                                            <fieldset>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" name="option_task" id="option_task">
+                                                    <label class="custom-control-label" for="option_task">Task</label>
+                                                </div>
+                                            </fieldset>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-3 hidden" id="task_checked">
+                                    <input type="text" class="form-control" name="task_input" id="task_input">
+                                </div>
+                                <div class="col-md-1">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="d-inline-block mr-2">
+                                            <fieldset>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" name="option_option" id="option_option">
+                                                    <label class="custom-control-label" for="option_option">Option</label>
+                                                </div>
+                                            </fieldset>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-3 hidden" id="option_checked">
+                                    <input type="text" class="form-control" name="option_input" id="option_input">
+                                </div>
+                                <div class="col-md-1">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="d-inline-block mr-2">
+                                            <fieldset>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" name="option_project" id="option_project">
+                                                    <label class="custom-control-label" for="option_project">Project</label>
+                                                </div>
+                                            </fieldset>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-3 hidden" id="project_checked">
+                                    <input type="text" class="form-control" name="project_input" id="project_input">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END: first budget -->
 
-                                                    <!-- BEGIN: added budget -->
-                                                    <div class="col-12 hidden" id="added_budget">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-4">
-                                                                <span>Budget Number</span>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <select class="custom-select form-control">
-                                                                    <option value="food">Please select</option>
-                                                                    <option value="square">61-2692</option>
-                                                                    <option value="rectangle">66-1981</option>
-                                                                    <option value="rombo">80-2535</option>
-                                                                    <option value="romboid">61-2692</option>
-                                                                    <option value="trapeze">66-1981</option>
-                                                                    <option value="traible">80-2535</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <input type="text" id="business_purpose" class="form-control" name="split_amount" placeholder="$00.00" value="$">
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <input type="text" id="business_purpose" class="form-control" name="split_perc" placeholder="00.00%" value="%">
-                                                            </div>
-                                                            <div class="col-md-1">
-                                                                <button type="button" class="btn btn-icon btn-icon rounded-circle btn-flat-success" id="remove_budget"><i class="feather icon-minus-circle"></i></button>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <div class="col-md-1">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-checkbox">
-                                                                                <input type="checkbox" class="custom-control-input" name="option_task" id="option_task">
-                                                                                <label class="custom-control-label" for="option_task">Task</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-3 hidden" id="task_checked">
-                                                                <input type="text" class="form-control" name="task_input" id="task_input">
-                                                            </div>
-                                                            <div class="col-md-1">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-checkbox">
-                                                                                <input type="checkbox" class="custom-control-input" name="option_option" id="option_option">
-                                                                                <label class="custom-control-label" for="option_option">Option</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-3 hidden" id="option_checked">
-                                                                <input type="text" class="form-control" name="option_input" id="option_input">
-                                                            </div>
-                                                            <div class="col-md-1">
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li class="d-inline-block mr-2">
-                                                                        <fieldset>
-                                                                            <div class="custom-control custom-checkbox">
-                                                                                <input type="checkbox" class="custom-control-input" name="option_project" id="option_project">
-                                                                                <label class="custom-control-label" for="option_project">Project</label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-3 hidden" id="project_checked">
-                                                                <input type="text" class="form-control" name="project_input" id="project_input">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- END: added budget -->
+                        <!-- Hidden budget-->
+                        <div class="col-12 hidden" id="budget_1_2">
+                            <div class="form-group row">
+                                <div class="col-md-4">
+                                    <span>Budget Number</span>
+                                    <label for="task-icon"><b><i>*If need to split budget please click plus icon.</i></b></label>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="custom-select form-control" id="budget_num_2" name="budget_num_2">
+                                        <option value="select">Please select</option>
+                                        <option value="910-11">910-11</option>
+                                        <option value="910-22">910-22</option>
+                                        <option value="922-266">922-266</option>
+                                    </select>
+                                </div>
+                                <!-- <div class="col-md-1">Split with:</div> -->
+                                <div class="col-md-2">
+                                    <select class="custom-select form-control" id="split_with_2_2">
+                                        <option value="amount">Amount</option>
+                                        <option value="percentage">Percentage</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2" id="split_dollar_input_2_2">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="split_dollar_input_value_2_2" aria-label="Amount (to the nearest dollar)">
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-2 hidden" id="split_percent_input_2_2">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="split_percent_input_value_2_2">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" onclick="removeBudget()" class="btn btn-icon rounded-circle btn-flat-danger" id="budget_btn_2_2"><i class="feather icon-x-circle"></i></button>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-1">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="d-inline-block mr-2">
+                                            <fieldset>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" name="option_task" id="option_task">
+                                                    <label class="custom-control-label" for="option_task">Task</label>
+                                                </div>
+                                            </fieldset>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-3 hidden" id="task_checked">
+                                    <input type="text" class="form-control" name="task_input" id="task_input">
+                                </div>
+                                <div class="col-md-1">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="d-inline-block mr-2">
+                                            <fieldset>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" name="option_option" id="option_option">
+                                                    <label class="custom-control-label" for="option_option">Option</label>
+                                                </div>
+                                            </fieldset>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-3 hidden" id="option_checked">
+                                    <input type="text" class="form-control" name="option_input" id="option_input">
+                                </div>
+                                <div class="col-md-1">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="d-inline-block mr-2">
+                                            <fieldset>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" name="option_project" id="option_project">
+                                                    <label class="custom-control-label" for="option_project">Project</label>
+                                                </div>
+                                            </fieldset>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-3 hidden" id="project_checked">
+                                    <input type="text" class="form-control" name="project_input" id="project_input">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Hidden Budget End-->
 
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>US Citizen or Permanent Resident?</span>
+                                                                <span>*US Citizen or Permanent Resident?</span>
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <ul class="list-unstyled mb-0">
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="foodAndBeverages_Radio" id="foodAndBeverages_YES" onclick="US_Citizen_or_Permanent(1)">
-                                                                                <label class="custom-control-label" for="foodAndBeverages_YES">YES</label>
+                                                                                <input type="radio" class="custom-control-input" value="yes" name="US_Radio" id="US_YES" onclick="US_Citizen_or_Permanent(0)">
+                                                                                <label class="custom-control-label" for="US_YES">YES</label>
                                                                             </div>
                                                                         </fieldset>
                                                                     </li>
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="foodAndBeverages_Radio" id="foodAndBeverages_NO" onclick="US_Citizen_or_Permanent(0)">
-                                                                                <label class="custom-control-label" for="foodAndBeverages_NO">NO</label>
+                                                                                <input type="radio" class="custom-control-input" value="no" name="US_Radio" id="US_NO" onclick="US_Citizen_or_Permanent(1)">
+                                                                                <label class="custom-control-label" for="US_NO">NO</label>
                                                                                 <span style="font-size:small;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UW policy -<a href="http://f2.washington.edu/fm/travel/visitors"> http://f2.washington.edu/fm/travel/visitors </a></span>
                                                                             </div>
                                                                         </fieldset>
@@ -566,19 +572,19 @@
                                                                 <span></span>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <span>copy of passport identity page</span>
+                                                                <span>*copy of passport identity page</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="file" id="name" class="form-control" name="submitter-name" placeholder="Name">
+                                                                <input type="file" id="passport" class="form-control" name="passport">
                                                             </div>
                                                             <div class="col-md-1">
                                                                 <span></span>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <span>I-94 or US port entry stamp,visa info,etc</span>
+                                                                <span>*I-94 or US port entry stamp,visa info,etc</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="file" id="name" class="form-control" name="submitter-name" placeholder="Name">
+                                                                <input type="file" id="visa" class="form-control" name="visa">
                                                             </div>
 
                                                         </div>
@@ -587,10 +593,10 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Purpose of Travel</span>
+                                                                <span>*Purpose of Travel</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <textarea class="form-control" placeholder="ex:To attend American Geophysical Union conf. to present research paper held at San Francisco, CA, 12/3-5/2-14"></textarea>
+                                                                <input type="text" class="form-control" id="purpose" name="purpose">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -598,25 +604,14 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Registration</span>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <input type="text" id="title" class="form-control" name="fname" placeholder="$(Please include conference agenda, if available)">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-12">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-4">
-                                                                <span>Was personal travel included?</span>
+                                                                <span>*Was personal travel included?</span>
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <ul class="list-unstyled mb-0">
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="foodAndBeverages_Radio" id="personalTravel_YES" onclick="personalTravel(1)">
+                                                                                <input type="radio" class="custom-control-input" name="personalTravel_Radio" value="yes" id="personalTravel_YES" onclick="personalTravel(1)">
                                                                                 <label class="custom-control-label" for="personalTravel_YES">YES</label>
                                                                             </div>
                                                                         </fieldset>
@@ -624,7 +619,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="foodAndBeverages_Radio" id="personalTravel_NO" onclick="personalTravel(0)">
+                                                                                <input type="radio" class="custom-control-input" name="personalTravel_Radio" value="no" id="personalTravel_NO" onclick="personalTravel(0)">
                                                                                 <label class="custom-control-label" for="personalTravel_NO">NO</label>
                                                                                 <span style="font-size:small;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UW policy -<a href="http://f2.washington.edu/fm/travel/responsibility#personal"> http://f2.washington.edu/fm/travel/responsibility#personal </a></span>
                                                                             </div>
@@ -641,10 +636,10 @@
                                                                 <span></span>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <span>If Yes, please list starting/end dates & times:</span>
+                                                                <span>*If Yes, please list starting/end dates & times:</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <textarea class="form-control" placeholder="includes comparison airfare if personal travel destionation is different from bussiness destination"></textarea>
+                                                                <input type="text" class="form-control" name="personalTravel_detail" id="personalTravel_detail" >
                                                             </div>
 
                                                         </div>
@@ -681,13 +676,40 @@
                            
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Transporation</h4>
+                                    <h4 class="card-title">Travel Costs</h4>
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
                                         <form class="form form-horizontal">
                                             <div class="form-body">
                                                 <div class="row">
+                                                    
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Registration</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">$</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control" name="registration" id="registration" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Registration Receipt</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input type="file" id="registration_receipt" class="form-control" name="registration_receipt" >
+                                                            </div>
+                                                        </div>
+                                                    </div>      
 
                                                     <div class="col-12">
                                                         <div class="form-group row">
@@ -699,7 +721,7 @@
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text">$</span>
                                                                     </div>
-                                                                    <input type="text" class="form-control" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
+                                                                    <input type="text" class="form-control" name="airfare" id="airfare" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -711,7 +733,7 @@
                                                                 <span>Airfare Receipt</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="file" id="name" class="form-control" name="submitter-name" placeholder="Name">
+                                                                <input type="file" id="airfare_receipt" class="form-control" name="airfare_receipt" >
                                                             </div>
                                                         </div>
                                                     </div>            
@@ -726,11 +748,22 @@
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text">$</span>
                                                                     </div>
-                                                                    <input type="text" class="form-control" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
+                                                                    <input type="text" class="form-control" id="car" name="car" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>           
+
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Car Service Receipt</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input type="file" id="car_receipt" class="form-control" name="car_receipt" >
+                                                            </div>
+                                                        </div>
+                                                    </div>      
                                                     
                                                     <div class="col-12">
                                                         <div class="form-group row">
@@ -742,7 +775,7 @@
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text">$</span>
                                                                     </div>
-                                                                    <input type="text" class="form-control" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
+                                                                    <input type="text" id="train" name="train" class="form-control" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -754,7 +787,7 @@
                                                                 <span>Train / Rail itinerary and receipt of payment</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="file" id="name" class="form-control" name="submitter-name" placeholder="Name">
+                                                                <input type="file" id="trainReceipt" class="form-control" name="trainReceipt">
                                                             </div>
                                                         </div>
                                                     </div>     
@@ -769,7 +802,7 @@
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text">$</span>
                                                                     </div>
-                                                                    <input type="text" class="form-control" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
+                                                                    <input type="text" name="carRental" id="carRental" class="form-control" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -781,7 +814,7 @@
                                                                 <span>Final car rental agreement</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="file" id="name" class="form-control" name="submitter-name" placeholder="Name">
+                                                                <input type="file" id="rentalReceipt" class="form-control" name="rentalReceipt">
                                                             </div>
                                                         </div>
                                                     </div>     
@@ -796,7 +829,7 @@
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text">$</span>
                                                                     </div>
-                                                                    <input type="text" class="form-control" placeholder="calculate for me" aria-label="Amount (to the nearest dollar)">
+                                                                    <input type="text" class="form-control" id="hotel" name="hotel" placeholder="0.00" aria-label="Amount (to the nearest dollar)">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -808,7 +841,7 @@
                                                                 <span>Hotel Receipt</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="file" id="name" class="form-control" name="submitter-name" placeholder="Name">
+                                                                <input type="file" id="hotelReceipt" class="form-control" name="hotelReceipt">
                                                             </div>
                                                         </div>
                                                     </div>     
@@ -823,7 +856,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="meal_Radio" id="meal_1" onclick="meal(0)">
+                                                                                <input type="radio" class="custom-control-input" value="meal1" name="meal_Radio" id="meal_1" onclick="meal(0)">
                                                                                 <label class="custom-control-label" for="meal_1">Yes, maximum allowable perdiem</label>
                                                                             </div>
                                                                         </fieldset>
@@ -831,7 +864,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="meal_Radio" id="meal_2" onclick="meal(1)">
+                                                                                <input type="radio" class="custom-control-input" value="meal2" name="meal_Radio" id="meal_2" onclick="meal(1)">
                                                                                 <label class="custom-control-label" for="meal_2">Yes, specifc days and meals</label>
                                                                             </div>
                                                                         </fieldset>
@@ -839,7 +872,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="meal_Radio" id="meal_3" onclick="meal(2)">
+                                                                                <input type="radio" class="custom-control-input" value="meal3" name="meal_Radio" id="meal_3" onclick="meal(2)">
                                                                                 <label class="custom-control-label" for="meal_3">Yes, specific amount</label>
                                                                             </div>
                                                                         </fieldset>
@@ -847,7 +880,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="meal_Radio" id="meal_4" onclick="meal(3)">
+                                                                                <input type="radio" class="custom-control-input" value="meal4" name="meal_Radio" id="meal_4" onclick="meal(3)">
                                                                                 <label class="custom-control-label" for="meal_4">No</label>
                                                                                
                                                                             </div>
@@ -860,18 +893,19 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-
+                                                    <div class="col-12 hidden">
+                                                        <input id="colNum1" name="colNum1" value="1">
+                                                    </div>
                                                     <div id="meal_table" class="row hidden">
                                                         <div class="col-12">
                                                             <div class="card">
                                                                 <div class="card-header">
-                                                                    <h4 class="mb-0">MEAL PER DIEM & LODGING</h4> 
-                                                                    <button onclick="addCol()"> Add Additional dates </button>
+                                                                    <h4 class="mb-0">MEAL PER DIEM</h4>
+                                                                    <button type="button" onclick="addCol()"> Add Additional dates </button>
                                                                 </div>
                                                                 <div class="card-content">
                                                                     <div class="table-responsive mt-1">
-                                                                        <table class="table table-hover-animation mb-0">
+                                                                        <table class="table table-hover-animation mb-0" id="meal_table1">
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>DATE</th>
@@ -885,13 +919,13 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr>
-                                                                                    <td><input type="text"  name="fname" placeholder="MM/DD/YEAR"></td>
+                                                                                    <td><input type="text"  id="1meal_date1" name="1meal_date1" placeholder="MM/DD/YEAR"></td>
                                                                                     <td></td>
-                                                                                    <td><input type="checkbox"></td>
+                                                                                    <td><input type="checkbox" id="1breakfast1" name="1breakfast1"></td>
                                                                                     <td></td>
-                                                                                    <td><input type="checkbox"> </td>
+                                                                                    <td><input type="checkbox" id="1lunch1" name="1lunch1"> </td>
                                                                                     <td></td>
-                                                                                    <td><input type="checkbox"></td>
+                                                                                    <td><input type="checkbox" id="1dinner1" name="1dinner1"></td>
                                                                                 </tr>
                                                                                 
                                                                             </tbody>
@@ -910,13 +944,13 @@
                                                             <div class="col-md-3">
                                                                 <span>Amount:</span>
                                                             </div>
-
+                                                           
                                                             <div class="col-md-8">
                                                                 <div class="input-group">
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text">$</span>
                                                                     </div>
-                                                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                                                    <input type="text" name="meal_amount" id="meal_amount" class="form-control" aria-label="Amount (to the nearest dollar)">
                                                                 </div>
                                                             </div>
 
@@ -933,7 +967,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="meal2_Radio" id="meal2_1" onclick="meal2(0)">
+                                                                                <input type="radio" class="custom-control-input" value="yes" name="meal2_Radio" id="meal2_1" onclick="meal2(0)">
                                                                                 <label class="custom-control-label" for="meal2_1">Yes</label>
                                                                             </div>
                                                                         </fieldset>
@@ -941,7 +975,7 @@
                                                                     <li class="d-inline-block mr-2">
                                                                         <fieldset>
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" class="custom-control-input" name="meal2_Radio" id="meal2_2" onclick="meal2(1)">
+                                                                                <input type="radio" class="custom-control-input" value="no" name="meal2_Radio" id="meal2_2" onclick="meal2(1)">
                                                                                 <label class="custom-control-label" for="meal2_2">No</label>
                                                                             </div>
                                                                         </fieldset>
@@ -952,16 +986,19 @@
                                                         </div>
                                                     </div>
 
+                                                    <div class="col-12 hidden">
+                                                        <input id="colNum2" name="colNum2" value="1">
+                                                    </div>
                                                     <div id="meal2_table" class="row hidden">
                                                         <div class="col-12">
                                                             <div class="card">
                                                                 <div class="card-header">
-                                                                    <h4 class="mb-0">MEAL PER DIEM & LODGING</h4> 
-                                                                    <button onclick="addCol1()"> Add Additional dates </button>
+                                                                    <h4 class="mb-0">MEAL PER DIEM</h4> 
+                                                                    <button type="button" onclick="addCol1()"> Add Additional dates </button>
                                                                 </div>
                                                                 <div class="card-content">
                                                                     <div class="table-responsive mt-1">
-                                                                        <table class="table table-hover-animation mb-0">
+                                                                        <table class="table table-hover-animation mb-0" id="meal_table2">
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>DATE</th>
@@ -975,13 +1012,13 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr>
-                                                                                    <td><input type="text"  name="fname" placeholder="MM/DD/YEAR"></td>
+                                                                                    <td><input type="text"  id="2meal_date1" name="2meal_date1" placeholder="MM/DD/YEAR"></td>
                                                                                     <td></td>
-                                                                                    <td><input type="checkbox"></td>
+                                                                                    <td><input type="checkbox" id="2breakfast1" name="2breakfast1"></td>
                                                                                     <td></td>
-                                                                                    <td><input type="checkbox"> </td>
+                                                                                    <td><input type="checkbox" id="2lunch1" name="2lunch1"> </td>
                                                                                     <td></td>
-                                                                                    <td><input type="checkbox"></td>
+                                                                                    <td><input type="checkbox" id="2dinner1" name="2dinner1"></td>
                                                                                 </tr>
                                                                                 
                                                                             </tbody>
@@ -991,21 +1028,18 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-
-
-                                                    
-                                                
-                                                  
+             
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
+                                <div><p style="color:red" id="warning">  </p></div>
                                 <div class="row" style="padding-top: 20px; padding-bottom: 20px;">
                                     <div class="col-sm-12 text-center">
-                                        <button type="button" onclick="submit()" class="btn btn-outline-primary mr-1 mb-1 waves-effect waves-light" id="confirm_item">Submit</button>
+                                        <button type="button" class="btn btn-outline-primary mr-1 mb-1 waves-effect waves-light" id="confirm_item">Submit</button>
                                     </div>
+                                   
                 
                                 </div> 
                             </div>
@@ -1069,10 +1103,35 @@
     <!-- BEGIN: Page JS-->
     
     <!-- END: Page JS-->
-    <script src="../../../app-assets/js/scripts/myScripts/users/reimbursement-new.js"></script>
-    <script src="travelReimbursement.js"></script>
+
+
     <!--auto generate date-->
     <script>
+        function splitWithChanged(_id, _budget_id) {
+            var sel = document.getElementById('split_with_' + _id + '_' + _budget_id);
+            var pick = sel.options[sel.selectedIndex].value;
+            var dollar = document.getElementById('split_dollar_input_' + _id + '_' + _budget_id);
+            var perc = document.getElementById('split_percent_input_' + _id + '_' + _budget_id);
+            if (pick == "amount") {
+                dollar.setAttribute('class', 'col-md-2 visible');
+                perc.setAttribute('class', 'col-md-2 hidden');
+            } else if (pick == "percentage") {
+                dollar.setAttribute('class', 'col-md-2 hidden');
+                perc.setAttribute('class', 'col-md-2 visible');
+            }
+        }
+
+        /** 
+         * Bind to the initialized select box 
+         */
+        $(document).on('click', '#split_with_1_1', function(){
+            //alert("split");
+            splitWithChanged(1, 1);
+        });
+        $(document).on('click', '#split_with_2_2', function(){
+            splitWithChanged(2, 2);
+        });
+
         var date=document.getElementById("submit_date");
         n =  new Date();
         y = n.getFullYear();
@@ -1186,50 +1245,106 @@
 
     function addCol(){
         col=col+1;
-        var str="";
-        str="<div id=\"meal_table\" class=\"row\"><div class=\"col-12\"><div class=\"card\"><div class=\"card-header\"> <h4 class=\"mb-0\">MEAL PER DIEM & LODGING</h4> <button onclick=\"addCol()\"> Add one Column </button></div><div class=\"card-content\"><div class=\"table-responsive mt-1\"><table class=\"table table-hover-animation mb-0\"><thead><tr><th>DATE</th><th></th><th>Breakfast</th><th></th><th>Lunch</th><th></th><th>Dinner</th></tr></thead><tbody>";                                            
-        for(var i=0;i<col;i=i+1){
-            str += "<tr>";
-            str += "<td><input type=\"text\" placeholder=\"MM/DD/YEAR\"></td>";
-            str += "<td></td>";
-            str += "<td><input type=\"checkbox\"></td>";
-            str += "<td></td>";
-            str += "<td><input type=\"checkbox\"></td>";
-            str += "<td></td>";
-            str += "<td><input type=\"checkbox\"></td>";                                                   
-            str += "</tr>";
-        }
+        var table = document.getElementById("meal_table1");
+        var row = table.insertRow(col);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);//space
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);//space
+        var cell5 = row.insertCell(4);
+        var cell6 = row.insertCell(5);//space
+        var cell7 = row.insertCell(6);
 
-        str+="</tbody></table></div></div></div></div></div>";
-        document.getElementById("meal_table").innerHTML= str;
+        var cell1_inner = "<input type=\"text\"id=\"1meal_date";
+        cell1_inner += col;
+        cell1_inner += "\" name=\"1meal_date";
+        cell1_inner += col;
+        cell1_inner += "\" placeholder=\"MM/DD/YEAR\">";
+        cell1.innerHTML=cell1_inner;
+
+        var cell3_inner = "<input type=\"checkbox\"id=\"1breakfast";
+        cell3_inner += col;
+        cell3_inner += "\" name=\"1breakfast";
+        cell3_inner += col;
+        cell3_inner += "\">";
+        cell3.innerHTML=cell3_inner;
+
+        var cell5_inner = "<input type=\"checkbox\"id=\"1lunch";
+        cell5_inner += col;
+        cell5_inner += "\" name=\"1lunch";
+        cell5_inner += col;
+        cell5_inner += "\">";
+        cell5.innerHTML=cell5_inner;
+
+        var cell7_inner = "<input type=\"checkbox\"id=\"1dinner";
+        cell7_inner += col;
+        cell7_inner += "\" name=\"1dinner";
+        cell7_inner += col;
+        cell7_inner += "\">";
+        cell7.innerHTML=cell7_inner;
+        document.getElementById("colNum1").innerHTML=col;
+        document.getElementById("colNum1").value=col;
+        //alert("a");
     }
 
     var col1=1;
     function addCol1(){
         col1=col1+1;
-        var str="";
-        str="<div id=\"meal2_table\" class=\"row\"><div class=\"col-12\"><div class=\"card\"><div class=\"card-header\"> <h4 class=\"mb-0\">MEAL PER DIEM & LODGING</h4> <button onclick=\"addCol1()\"> Add one Column </button></div><div class=\"card-content\"><div class=\"table-responsive mt-1\"><table class=\"table table-hover-animation mb-0\"><thead><tr><th>DATE</th><th></th><th>Breakfast</th><th></th><th>Lunch</th><th></th><th>Dinner</th></tr></thead><tbody>";                                            
-        for(var i=0;i<col1;i=i+1){
-            str += "<tr>";
-            str += "<td><input type=\"text\" placeholder=\"MM/DD/YEAR\"></td>";
-            str += "<td></td>";
-            str += "<td><input type=\"checkbox\"></td>";
-            str += "<td></td>";
-            str += "<td><input type=\"checkbox\"></td>";
-            str += "<td></td>";
-            str += "<td><input type=\"checkbox\"></td>";                                                   
-            str += "</tr>";
-        }
+        var table = document.getElementById("meal_table2");
+        var row = table.insertRow(col1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);//space
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);//space
+        var cell5 = row.insertCell(4);
+        var cell6 = row.insertCell(5);//space
+        var cell7 = row.insertCell(6);
 
-        str+="</tbody></table></div></div></div></div></div>";
-        document.getElementById("meal2_table").innerHTML= str;
+        var cell1_inner = "<input type=\"text\"id=\"2meal_date";
+        cell1_inner += col1;
+        cell1_inner += "\" name=\"2meal_date";
+        cell1_inner += col1;
+        cell1_inner += "\" placeholder=\"MM/DD/YEAR\">";
+        cell1.innerHTML=cell1_inner;
+
+        var cell3_inner = "<input type=\"checkbox\"id=\"2breakfast";
+        cell3_inner += col1;
+        cell3_inner += "\" name=\"2breakfast";
+        cell3_inner += col1;
+        cell3_inner += "\">";
+        cell3.innerHTML=cell3_inner;
+
+        var cell5_inner = "<input type=\"checkbox\"id=\"2lunch";
+        cell5_inner += col1;
+        cell5_inner += "\" name=\"2lunch";
+        cell5_inner += col1;
+        cell5_inner += "\">";
+        cell5.innerHTML=cell5_inner;
+
+        var cell7_inner = "<input type=\"checkbox\"id=\"2dinner";
+        cell7_inner += col1;
+        cell7_inner += "\" name=\"2dinner";
+        cell7_inner += col1;
+        cell7_inner += "\">";
+        cell7.innerHTML=cell7_inner;
+        document.getElementById("colNum2").innerHTML=col1;
+        document.getElementById("colNum2").value=col1;
+        //alert("a");
+    }
+
+    function addBudget(){
+         //alert("add Budget!!!");
+        document.getElementById("budget_1_2").className = "col-12 visible";
+    }
+
+    function removeBudget(){
+        document.getElementById("budget_1_2").className = "col-12 hidden";
     }
 
    
     </script>
 
-
 </body>
 <!-- END: Body-->
-
+<script src="../../../app-assets/js/scripts/myScripts/users/travelReimbursement.js"></script>
 </html>
