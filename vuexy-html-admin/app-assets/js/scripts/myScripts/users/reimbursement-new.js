@@ -12,6 +12,9 @@ idFlags.push(true);
 var budgetIds = [];
 budgetIds.push(2);
 
+// <K, V> => <line item id, {total, dollar, percent}>
+let budgetMap = new Map();
+
 var formData = new FormData();
 var type = "";
 var unit_id = "";
@@ -167,19 +170,11 @@ $(".steps-validation").validate({
         $(element).removeClass(errorClass);
     },
     errorPlacement: function (error, element) {
-        // console.log('errorPlacement... this never gets called :(', error, element.next());
-        if (element.hasClass('custom-control-input') || element.hasClass('form-control')) {
+        if (element.hasClass('custom-control-input') || element.parent().hasClass('input-group')) {
             error.insertAfter(element.parent());
         } else {
             error.insertAfter(element);
         }
-        // var elementNameStr = element[0].name;
-        // console.log(element[0].parentElement.className);
-        // if (element[0].parentElement.className == "custom-control custom-radio") {
-        //     error.insertAfter(element[0].parentElement);
-        // } else {
-        //     error.insertAfter(element);
-        // }
 
     },
     rules: {
@@ -229,6 +224,9 @@ $(".steps-validation").validate({
         },
         taxRadio1: {
             required: true
+        },
+        budget_num_1: {
+            required: true
         }
     },
     messages: {
@@ -243,6 +241,12 @@ $(".steps-validation").validate({
         },
         paymentRadio2: {
             required: "Please make your choice"
+        },
+        taxRadio1: {
+            required: "Please make your choice"
+        },
+        budget_num_1: {
+            required: "Please choose a budget number"
         }
     }
 });
@@ -289,13 +293,21 @@ window.onload = function() {
         budget_select.appendChild(addBudgetData(num));
     }
 
-    // $("input[name='amount']").each(function() {
-    //     $(this).rules('add', {
-    //         required: true,
-    //         number: true
-    //     });
-    // });
 };
+
+$(document).on('change', '#amount_1', function() {
+    var amount = $('#amount_1').val();
+    // $('#split_dollar_input_value_1_1').val(amount);
+    budgetMap.set(1, {
+        total: parseFloat(amount),
+        dollar: 0,
+        perc: 0
+    });
+
+    var dollarInputs = document.getElementsByName('split_dollar_input_value_1');
+    var lastDollar = dollarInputs[dollarInputs.length - 1];
+    lastDollar.value = parseFloat(this.value) - budgetMap.get(1).dollar;
+});
 
 /**
  * Get the user information from database
@@ -367,11 +379,11 @@ $(document).on('click', 'input', function(){
     /** payment method part */
     var individual = $("input[name='individual_reimbursed']:checked").val();
     if (individual == "employee") {
-        $('#emplyee_payment').attr('class', 'col-11 visible');
-        $('#nonemplyee_payment').attr('class', 'col-11 hidden');
+        $('#emplyee_payment').attr('class', 'col-12 visible');
+        $('#nonemplyee_payment').attr('class', 'col-12 hidden');
     } else {
-        $('#emplyee_payment').attr('class', 'col-11 hidden');
-        $('#nonemplyee_payment').attr('class', 'col-11 visible');
+        $('#emplyee_payment').attr('class', 'col-12 hidden');
+        $('#nonemplyee_payment').attr('class', 'col-12 visible');
     }
 
     /** control mail-addr */
@@ -506,7 +518,7 @@ function submitClicked() {
  * Functionality: add more budget numbers
  */
 $(document).on('click', '#budget_btn_1_1', function() {
-    document.getElementById('budget_1_1').after(addBudget(1, budgetIds[0] ++, false));
+    document.getElementById(`budget_1_${budgetIds[0]-1}`).after(addBudget(1, budgetIds[0]++, false));
 });
 
 
@@ -520,6 +532,46 @@ $(document).on('click', '#budget_btn_1_1', function() {
  * the button will be plus button, otherwise the button will be delete button
  */
 function addBudget(_id, _budget_id, init) {
+    // Make the previous budget active
+    if (!init) {
+        var dollarValInput = document.getElementById(`split_dollar_input_value_${_id}_${_budget_id-1}`);
+        var percentValInput = document.getElementById(`split_percent_input_value_${_id}_${_budget_id-1}`);
+        dollarValInput.removeAttribute('disabled');
+        percentValInput.removeAttribute('disabled');
+
+        dollarValInput.addEventListener('change', function() {
+            // console.log('change');
+            var total_pre = budgetMap.get(_id).total;
+            var dollar_pre = budgetMap.get(_id).dollar;
+            var perc_pre = budgetMap.get(_id).perc;
+            budgetMap.set(_id, {
+                total: total_pre,
+                dollar: dollar_pre + parseFloat(this.value),
+                perc: perc_pre
+            });
+    
+            var dollarInputs = document.getElementsByName(`split_dollar_input_value_${_id}`);
+            var lastDollar = dollarInputs[dollarInputs.length - 1];
+            lastDollar.value = budgetMap.get(_id).total - budgetMap.get(_id).dollar;
+        });
+
+        percentValInput.addEventListener('change', function() {
+            // console.log('change');
+            var total_pre = budgetMap.get(_id).total;
+            var dollar_pre = budgetMap.get(_id).dollar;
+            var perc_pre = budgetMap.get(_id).perc;
+            budgetMap.set(_id, {
+                total: total_pre,
+                dollar: dollar_pre,
+                perc: perc_pre + parseFloat(this.value)
+            });
+            
+            var percentInputs = document.getElementsByName(`split_percent_input_value_${_id}`);
+            var lastPerc = percentInputs[percentInputs.length - 1];
+            lastPerc.value = 100 - budgetMap.get(_id).perc;
+        });
+    }
+
     if (init) {
         budgetIds.push(2);
     }
@@ -590,7 +642,8 @@ function addBudget(_id, _budget_id, init) {
     btn.appendChild(icon);
     if (init) {
         btn.onclick = function() {
-            document.getElementById('budget_' + _id + '_' + _budget_id).after(addBudget(_id, budgetIds[_id - 1]++, false));
+            console.log(budgetIds);
+            document.getElementById(`budget_${_id}_${budgetIds[_id-1]-1}`).after(addBudget(_id, budgetIds[_id - 1]++, false));
         }
     } else {
         btn.onclick = function() {
@@ -642,6 +695,7 @@ function inputGroup(_id, _budget_id, isPre, label, name) {
     i.setAttribute('type', 'text');
     i.setAttribute('id', 'split_' + name + '_input_value_' + _id + '_' + _budget_id);
     i.setAttribute('name', 'split_' + name + '_input_value_' + _id);
+    i.setAttribute('disabled', '');
 
     if (isPre) {
         d.appendChild(sig);
@@ -1092,6 +1146,22 @@ function addNewAmount(_id) {
     input.setAttribute('placeholder', '0.00');
     input.setAttribute('aria-label', 'Amount (to the nearest dollar)');
     input.setAttribute('id', 'amount_' + _id);
+    input.addEventListener('change', function() {
+        console.log('change');
+        budgetMap.set(_id, {
+            total: this.value,
+            dollar: 0,
+            perc: 0
+        });
+
+        var dollarInputs = document.getElementsByName(`split_dollar_input_value_${_id}`);
+        var lastDollar = dollarInputs[dollarInputs.length - 1];
+        lastDollar.value = this.value - budgetMap.get(_id).dollar;
+
+        var percentInputs = document.getElementsByName(`split_percent_input_value_${_id}`);
+        var lastPerc = percentInputs[percentInputs.length - 1];
+        lastPerc.value = 100 - budgetMap.get(_id).perc;
+    });
     group.appendChild(prepend);
     group.appendChild(input);
     fieldset.appendChild(group);
