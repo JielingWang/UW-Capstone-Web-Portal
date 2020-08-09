@@ -93,7 +93,7 @@ function updateAllRequestsTable() {
 
     $('#DataTables_Table_1 tbody').on( 'click', "button[name='untakeButton']", function () {
         var data = table.row( $(this).parents('tr') ).data();
-        // console.log('untake id: ' + data[0]);
+        console.log('untake id: ' + data[0]);
         var cell = table.cell( $(this).parents('td') );
         $('#reassignModal').on('click', "button[name='reassign']", function() {
             var newAssign = modalReassignClicked(data[0]);

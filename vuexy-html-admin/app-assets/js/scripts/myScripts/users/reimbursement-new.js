@@ -297,17 +297,60 @@ window.onload = function() {
 
 $(document).on('change', '#amount_1', function() {
     var amount = $('#amount_1').val();
-    // $('#split_dollar_input_value_1_1').val(amount);
-    budgetMap.set(1, {
-        total: parseFloat(amount),
-        dollar: 0,
-        perc: 0
-    });
-
-    var dollarInputs = document.getElementsByName('split_dollar_input_value_1');
-    var lastDollar = dollarInputs[dollarInputs.length - 1];
-    lastDollar.value = parseFloat(this.value) - budgetMap.get(1).dollar;
+    updateLastSplitVal(1, parseFloat(amount));
 });
+
+
+/**
+ * Auto-calculate the last budget split value
+ * @param {int} idx the line item index
+ * @param {float} amount input amount
+ * @param {float} currD input dollar
+ * @param {float} currP input percentage
+ * @param {boolean} DorP true represent dollar, flase represent percentage
+ */
+
+function updateLastSplitVal(idx, amount) {
+    var total_pre = amount;
+    var presumD = 0;
+    var presumP = 0;
+    if (budgetMap.has(idx)) {
+        total_pre = budgetMap.get(idx).total;
+    }
+    
+    var dollarInputs = document.getElementsByName(`split_dollar_input_value_${idx}`);
+    var percInputs = document.getElementsByName(`split_percent_input_value_${idx}`);
+    var n = dollarInputs.length;
+    if (amount != total_pre) {
+        budgetMap.set(idx, {
+            total: amount,
+            dollar: 0,
+            perc: 0
+        })
+        for (var x = 0; x < n - 1; x++) {
+            dollarInputs[x].value = 0;
+            percInputs[x].value = 0;
+        }
+    } else {
+        for (var x = 0; x < n - 1; x++) {
+            presumD += parseFloat(dollarInputs[x].value);
+            presumP += parseFloat(percInputs[x].value);
+        }
+        budgetMap.set(idx, {
+            total: amount,
+            dollar: presumD,
+            perc: presumP
+        });
+    }
+    
+    var lastPerc = percInputs[n - 1];
+    var lastDollar = dollarInputs[n - 1];
+
+    lastDollar.value = budgetMap.get(idx).total - budgetMap.get(idx).dollar;
+    lastPerc.value = 100 - budgetMap.get(idx).perc;
+    
+    console.log(budgetMap);
+}
 
 /**
  * Get the user information from database
@@ -540,35 +583,11 @@ function addBudget(_id, _budget_id, init) {
         percentValInput.removeAttribute('disabled');
 
         dollarValInput.addEventListener('change', function() {
-            // console.log('change');
-            var total_pre = budgetMap.get(_id).total;
-            var dollar_pre = budgetMap.get(_id).dollar;
-            var perc_pre = budgetMap.get(_id).perc;
-            budgetMap.set(_id, {
-                total: total_pre,
-                dollar: dollar_pre + parseFloat(this.value),
-                perc: perc_pre
-            });
-    
-            var dollarInputs = document.getElementsByName(`split_dollar_input_value_${_id}`);
-            var lastDollar = dollarInputs[dollarInputs.length - 1];
-            lastDollar.value = budgetMap.get(_id).total - budgetMap.get(_id).dollar;
+            updateLastSplitVal(_id, budgetMap.get(_id).total);
         });
 
         percentValInput.addEventListener('change', function() {
-            // console.log('change');
-            var total_pre = budgetMap.get(_id).total;
-            var dollar_pre = budgetMap.get(_id).dollar;
-            var perc_pre = budgetMap.get(_id).perc;
-            budgetMap.set(_id, {
-                total: total_pre,
-                dollar: dollar_pre,
-                perc: perc_pre + parseFloat(this.value)
-            });
-            
-            var percentInputs = document.getElementsByName(`split_percent_input_value_${_id}`);
-            var lastPerc = percentInputs[percentInputs.length - 1];
-            lastPerc.value = 100 - budgetMap.get(_id).perc;
+            updateLastSplitVal(_id, budgetMap.get(_id).total);
         });
     }
 
@@ -648,6 +667,7 @@ function addBudget(_id, _budget_id, init) {
     } else {
         btn.onclick = function() {
             document.getElementById('budget_' + _id + '_' + _budget_id).remove();
+            updateLastSplitVal(_id, budgetMap.get(_id).total);
         };
     }
     fifth.appendChild(btn);
@@ -1147,20 +1167,7 @@ function addNewAmount(_id) {
     input.setAttribute('aria-label', 'Amount (to the nearest dollar)');
     input.setAttribute('id', 'amount_' + _id);
     input.addEventListener('change', function() {
-        console.log('change');
-        budgetMap.set(_id, {
-            total: this.value,
-            dollar: 0,
-            perc: 0
-        });
-
-        var dollarInputs = document.getElementsByName(`split_dollar_input_value_${_id}`);
-        var lastDollar = dollarInputs[dollarInputs.length - 1];
-        lastDollar.value = this.value - budgetMap.get(_id).dollar;
-
-        var percentInputs = document.getElementsByName(`split_percent_input_value_${_id}`);
-        var lastPerc = percentInputs[percentInputs.length - 1];
-        lastPerc.value = 100 - budgetMap.get(_id).perc;
+        updateLastSplitVal(_id, parseFloat(this.value));
     });
     group.appendChild(prepend);
     group.appendChild(input);
