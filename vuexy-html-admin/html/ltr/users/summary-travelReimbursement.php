@@ -144,7 +144,7 @@
     <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
         <div class="navbar-header">
             <ul class="nav navbar-nav flex-row">
-                <li class="nav-item mr-auto"><a class="navbar-brand" href="../../../html/ltr/vertical-menu-template/index.html">
+                <li class="nav-item mr-auto"><a class="navbar-brand" href="user-dashboard.html">
                         <div class="brand-logo"></div>
                         <h2 class="brand-text mb-0">AWFT</h2>
                     </a></li>
@@ -243,18 +243,12 @@
                         <div id="invoice-company-details" class="row">
                             <div class="col-sm-6 col-12 text-left">
                                 <h1 id="request-type">
-                                    <?php
-                                        $type=$_GET["type"];
-                                        echo $type;
-                                    ?>
+                                  
                                 </h1>
                             </div>
                             <div class="col-sm-6 col-12 text-right">
                                 <h1>Request ID: <span id="requestID">
-                                    <?php
-                                        $id=$_GET["id"];
-                                        echo $id;
-                                    ?>
+                                  
                                 </span></h1>
                             </div>
                         </div>
@@ -263,47 +257,27 @@
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">REQUESTER</h6>
                                     <p id="requester">
-                                        <?php
-                                            $user_name=$_GET["user_name"];
-                                            echo $user_name;
-                                            echo "&nbsp;";
-                                        ?>
+                                      
                                     </p>
                                     <h6 class="mt-2">SUB-UNIT</h6>
                                     <p id="subunit">
-                                        <?php
-                                            $user_subunitName=$_GET["user_subunitName"];
-                                            echo $user_subunitName;
-                                            echo "&nbsp;";
-                                        ?>
+                                       
                                     </p>
                                     <h6 class="mt-2">Email</h6>
-                                    <p id="request-date">
-                                         <?php
-                                            $user_email=$_GET["user_email"];
-                                            echo $user_email;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="userEmail">
+                                      
                                     </p>
                                 </div>
                             </div>
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">UW ID</h6>
-                                    <p id="request-date">
-                                         <?php
-                                            $user_uwid=$_GET["user_uwid"];
-                                            echo $user_uwid;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="userUWID">
+                                       
                                     </p>
                                     <h6 class="mt-2">Access Level</h6>
                                     <p id="accessLevel">
-                                         <?php
-                                            $user_subunitName=$_GET["user_AccessLevel"];
-                                            echo $user_subunitName;
-                                            echo "&nbsp;";
-                                        ?>
+                                      
                                     </p>
                                 </div>
                             </div>
@@ -312,11 +286,7 @@
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">STATUS</h6>
                                     <p id="status"><i class="fa fa-circle font-small-3 text-warning mr-50"></i>  
-                                        <?php
-                                            $status=$_GET["status"];
-                                            echo $status;
-                                            echo "&nbsp;";
-                                        ?></p>
+                                       </p>
                                     <h6 class="mt-2">ASSIGNED TO</h6>
                                     <p id="assignedTo"></p>
                                 </div>
@@ -326,54 +296,18 @@
                                 <div class="invoice-details mt-2">
                                     <h4>Request Information</h4>
                                     <h6 class="mt-2">Submitted Date</h6>
-                                    <p>
-                                        <?php
-                                            $submit_date=$_GET["submit_date"];
-                                            echo $submit_date;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="submitDate">
+                                       
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-6 text-left">
-                                <div class="invoice-details mt-2">
-                                    <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Amount</h6>
-                                    <p>
-                                        <?php
-                                            $amount=$_GET["hotelFee"]+$_GET["car"]+$_GET["airfare"]+$_GET["train"]+$_GET["registration"]+$_GET["carRental"];
-                                            echo "$";
-                                            echo $amount;
-                                            echo "&nbsp;";
-                                        ?>
-                                    </p>
-                                </div>
-                            </div>
+                           
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">Budget</h6>
-                                    <p>
-                                        <?php
-                                            $budget_length=$_GET["budget_length"];
-                                            $budget1=$_GET["budget1"];
-                                            $split1=$_GET["split1"];
-                                            echo $budget1;
-                                            echo ":";
-                                            echo "&nbsp&nbsp";
-                                            echo $split1;
-                                            if($budget_length==2){
-                                                echo ";&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
-                                                $budget2=$_GET["budget2"];
-                                                $split2=$_GET["split2"];
-                                                echo $budget2;
-                                                echo ":";
-                                                echo "&nbsp&nbsp";
-                                                echo $split2;
-                                            }
-                                            echo "&nbsp;";
-                                                //echo $budget2;
-                                        ?>
+                                    <p id="budget">
+                                       
                                     </p>
                                 </div>
                             </div>
@@ -390,40 +324,20 @@
                                 <div class="invoice-details mt-2">
                                     <h4>Reimbursement Information </h4>
                                     <h6 class="mt-2">Have you been reimbursed before this trip?</h6>
-                                    <p>
-                                        <?php
-                                            $TravelBefore= $_GET["TravelBefore"];
-                                            echo $TravelBefore;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="travelBefore">
+                                       
                                     </p>
                                     <h6 class="mt-2">Request For</h6>
-                                    <p>
-                                        <?php
-                                            $someoneName = $_GET["SomeoneName"];
-                                            if(strlen($someoneName)==0){
-                                                echo $user_name;
-                                            }else{
-                                                echo $someoneName;
-                                            }
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="requestFor">
+                                      
                                     </p>
                                     <h6 class="mt-2">US Citizen or Permanent Resident?</h6>
-                                    <p>
-                                        <?php
-                                            $US= $_GET["US"];
-                                            echo $US;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="us">
+                                 
                                     </p>
                                     <h6 class="mt-2">Purpose of Travel?</h6>
-                                    <p>
-                                        <?php
-                                             $purpose= $_GET["purpose"];
-                                            echo $purpose;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="purpose">
+                                       
                                     </p>
 
                                 </div>
@@ -433,45 +347,20 @@
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">Reference Number</h6>
-                                    <p>
-                                        <?php
-                                            $referenceNumber = $_GET["ReferenceNumber"];
-                                            echo $referenceNumber;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="referenceNumber">
+                                      
                                     </p>
                                     <h6 class="mt-2">Email</h6>
-                                    <p>
-                                        <?php
-                                            if(strlen($someoneName)==0){
-                                                echo $user_email;;
-                                            }else{
-                                                $someoneEmail= $_GET["SomeoneEmail"];
-                                                echo $someoneEmail;
-                                            }
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="email">
+                                       
                                     </p>
                                     <h6 class="mt-2">Copy of Passport Identity Page</h6>
-                                    <p>
-                                        <?php
-                                            if($_GET["passport_file"]!="undefined" ){
-                                                echo "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/";
-                                                echo $_GET["id"];
-                                                echo "/";
-                                                echo $_GET["passport_file"];
-                                                echo "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";   
-                                            }      
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="passportFile">
+                                    &nbsp;
                                     </p>
                                     <h6 class="mt-2">Was personal travel included?</h6>
-                                    <p>
-                                        <?php
-                                            $personalTravel= $_GET["personalTravel"];
-                                            echo $personalTravel;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="personalTravel">
+                                       
                                     </p>
                                 </div>
                             </div>
@@ -480,38 +369,19 @@
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">&nbsp;</h6>
                                     <p>
-                                       <?php
-                                            echo "&nbsp;";
-                                        ?> 
+                                       &nbsp;
                                     </p>
                                     <h6 class="mt-2">Affliation</h6>
-                                    <p>
-                                        <?php
-                                            $someoneAffliation = $_GET["SomeoneAffliation"];
-                                            echo $someoneAffliation;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="affliation">
+                                         &nbsp;
                                     </p>
                                     <h6 class="mt-2">US Port Entry Stamp,Visa Info</h6>
-                                    <p>
-                                        <?php
-                                            if($_GET["visa_file"]!="undefined" ){
-                                                echo "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/";
-                                                echo $_GET["id"];
-                                                echo "/";
-                                                echo $_GET["visa_file"];
-                                                echo "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";  
-                                             }
-                                             echo "&nbsp;";  
-                                        ?>
+                                    <p id="visaFile">
+                                         &nbsp;
                                     </p>
                                     <h6 class="mt-2">Personal Travel Starting/End Dates & Times</h6>
-                                    <p>
-                                        <?php
-                                           $personalTravelDetails= $_GET["personalTravelDetails"];
-                                           echo $personalTravelDetails;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="travelDetail">
+                                      
                                     </p>
                                 </div>
                             </div>
@@ -523,31 +393,16 @@
                                 <div class="invoice-details mt-2">
                                     <h4>Travel Costs</h4>
                                     <h6 class="mt-2">Registration</h6>
-                                    <p>
-                                        <?php
-                                             $registration = $_GET["registration"];
-                                             echo "$";
-                                             echo $registration;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="registration">
+                                       
                                     </p>
                                     <h6 class="mt-2">Car Service Fee</h6>
-                                    <p>
-                                        <?php
-                                             $car= $_GET["car"];
-                                             echo "$";
-                                             echo $car;
-                                             echo "&nbsp;";
-                                        ?>
+                                    <p id="carFee">
+                                       
                                     </p>
                                     <h6 class="mt-2">Car Rental</h6>
-                                    <p>
-                                        <?php
-                                              $carRental= $_GET["carRental"];
-                                              echo "$";
-                                              echo $carRental;
-                                              echo "&nbsp;";
-                                        ?>
+                                    <p id="carRental">
+                                       
                                     </p>
 
                                 </div>
@@ -556,43 +411,16 @@
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">Registration Receipt</h6>
-                                    <p>
-                                        <?php
-                                           if($_GET["registration_file"]!="undefined" ){
-                                                echo "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/";
-                                                echo $_GET["id"];
-                                                echo "/";
-                                                echo $_GET["registration_file"];
-                                                echo "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";  
-                                           }
-                                           echo "&nbsp;";
-                                        ?>
+                                    <p id="registrationFile">
+                                        &nbsp;
                                     </p>
                                     <h6 class="mt-2">Car Service Receipt</h6>
-                                    <p>
-                                        <?php
-                                            if($_GET["car_file"]!="undefined" ){
-                                                echo "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/";
-                                                echo $_GET["id"];
-                                                echo "/";
-                                                echo $_GET["car_file"];
-                                                echo "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>"; 
-                                            } 
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="carFile">
+                                        &nbsp;
                                     </p>
                                     <h6 class="mt-2">Final Car Rental Agreement</h6>
-                                    <p>
-                                        <?php
-                                             if($_GET["rental_file"]!="undefined" ){
-                                                echo "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/";
-                                                echo $_GET["id"];
-                                                echo "/";
-                                                echo $_GET["rental_file"];
-                                                echo "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";  
-                                              }
-                                              echo "&nbsp;";
-                                        ?>
+                                    <p id="carRentalFile">
+                                        &nbsp;
                                     </p>
                                 </div>
                             </div>
@@ -600,31 +428,16 @@
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">Airfare Fee</h6>
-                                    <p>
-                                        <?php
-                                            $airfare= $_GET["airfare"];
-                                            echo "$";
-                                            echo $airfare;
-                                           echo "&nbsp;";
-                                        ?>
+                                    <p id="airfare">
+                                       
                                     </p>
                                     <h6 class="mt-2">Train/Rail Fee</h6>
-                                    <p>
-                                        <?php
-                                            $train= $_GET["train"];
-                                            echo "$";
-                                            echo $train;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="train">
+                                       
                                     </p>
                                     <h6 class="mt-2">Hotel Fee</h6>
-                                    <p>
-                                        <?php
-                                               $hotelFee= $_GET["hotelFee"];
-                                               echo "$";
-                                               echo $hotelFee;
-                                              echo "&nbsp;";
-                                        ?>
+                                    <p id="hotel">
+                                       
                                     </p>
                                 </div>
                             </div>
@@ -632,43 +445,16 @@
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">Airfare Receipt</h6>
-                                    <p>
-                                        <?php
-                                            if($_GET["airfare_file"]!="undefined" ){
-                                                echo "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/";
-                                                echo $_GET["id"];
-                                                echo "/";
-                                                echo $_GET["airfare_file"];
-                                                echo "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";  
-                                             }
-                                           echo "&nbsp;";
-                                        ?>
+                                    <p id="airfareFile">
+                                        &nbsp;
                                     </p>
                                     <h6 class="mt-2">Train/Rail Receipt</h6>
-                                    <p>
-                                        <?php
-                                            if($_GET["train_file"]!="undefined" ){
-                                                echo "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/";
-                                                echo $_GET["id"];
-                                                echo "/";
-                                                echo $_GET["train_file"];
-                                                echo "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";    
-                                            } 
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="trainFile">
+                                        &nbsp;
                                     </p>
                                     <h6 class="mt-2">Hotel Receipt</h6>
-                                    <p>
-                                        <?php
-                                               if($_GET["hotel_file"]!="undefined" ){
-                                                echo "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/";
-                                                echo $_GET["id"];
-                                                echo "/";
-                                                echo $_GET["hotel_file"];
-                                                echo "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";  
-                                              }
-                                              echo "&nbsp;";
-                                        ?>
+                                    <p id="hotelFile">
+                                        &nbsp;
                                     </p>
                                 </div>
                             </div>
@@ -679,20 +465,8 @@
                                 <div class="invoice-details mt-2">
                                     <h4>Meal Per Diem</h4>
                                     <h6 class="mt-2">Are you claiming meal per diem?</h6>
-                                    <p>
-                                        <?php
-                                            $meal= $_GET["meal"];
-                                            if(strcmp($meal, "meal1")==0){
-                                              echo "Yes, maximum allowable perdiem";
-                                            }else if(strcmp($meal, "meal2")==0){
-                                              echo "Yes, specifc days and meals";
-                                            }else if(strcmp($meal, "meal3")==0){
-                                              echo "Yes, specific amount";
-                                            }else if(strcmp($meal, "meal4")==0){
-                                              echo "No";
-                                            }
-                                           echo "&nbsp;";
-                                        ?>
+                                    <p id="meal">
+                                       
                                     </p> 
                                     <h6 class="mt-2">Specific Days and Meals</h6>
                                     <p>
@@ -723,13 +497,8 @@
                                 <div class="invoice-details mt-2">
                                     <h4>&nbsp;</h4>
                                     <h6 class="mt-2">Specific Amount</h6>
-                                    <p>
-                                        <?php
-                                            $meal_amount= $_GET["meal_amount"];
-                                            echo "$";
-                                            echo $meal_amount;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="mealAmount">
+                                       
                                     </p>
                                 </div>
                             </div>
@@ -737,12 +506,8 @@
                                 <div class="invoice-details mt-2">
                                     <h4>Meal Provided</h4>
                                     <h6 class="mt-2">Were meals provided to you?</h6>
-                                    <p>
-                                        <?php    
-                                            $mealProvided= $_GET["mealProvided"];
-                                            echo $mealProvided;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="mealProvid">
+                                       
                                     </p>
                                     <h6 class="mt-2">Specifc Days and Meals</h6>
                                     <p>
@@ -799,10 +564,7 @@
                                     <h4 class="card-title">Notes</h4>
                                 </div>
                                 <div class="card-content" id="notes" style="padding-top: 1.5rem; padding-left: 1.5rem;">
-                                    <?php
-                                        $note=$_GET["note"];
-                                        echo $note;
-                                    ?>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -825,13 +587,7 @@
                                             </div>
                                             <div class="form-actions">
                                                 <button type="button" class="btn btn-primary mr-1" onclick="addNote()">Add a note</button>
-                                                <?php
-                                                    if($status=="Updated"){
-                                                        echo "<a href=\"edit_order.php?id=";
-                                                        echo $id; 
-                                                        echo "\"class=\"btn btn-primary mr-1\"><i class=\"feather icon-edit-1\"></i> Edit My Request</a>";
-                                                    }
-                                                ?>
+                                              
                                             </div>
                                         </form>
                                     </div>
@@ -860,7 +616,6 @@
     </footer>
     <!-- END: Footer-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="Examples.js"></script>
 
 
     <!-- BEGIN: Vendor JS-->
@@ -897,7 +652,7 @@
     <!-- BEGIN: Page JS-->
     <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
     <script src="../../../app-assets/js/scripts/forms/validation/form-validation.js"></script>
-    <script src="../../../app-assets/js/scripts/myScripts/users/travelReim-summary.js"></script>
+    <!--<script src="../../../app-assets/js/scripts/myScripts/users/travelReim-summary.js"></script>-->
     <!-- END: Page JS-->
 
     <!-- BEGIN: Page JS-->
@@ -930,73 +685,112 @@
                 error: onFailure
             });
         };
-        var js_id = "<?php echo $_GET["id"]; ?>";
-        var type = "<?php echo $_GET["type"]; ?>";
+        var js_id=window.sessionStorage.getItem("orderId");
+
         var i;
         var file_name;
-
-        function getFiles(index){
+        window.onload = function(){
+            document.getElementById('requestID').innerHTML = window.sessionStorage.getItem("orderId");
+            document.getElementById('request-type').innerHTML = window.sessionStorage.getItem("type")+"&nbsp;";
+            document.getElementById('requester').innerHTML = window.sessionStorage.getItem("user_name");
+            document.getElementById('subunit').innerHTML = window.sessionStorage.getItem("user_subunitName");
+            document.getElementById('userEmail').innerHTML = window.sessionStorage.getItem("user_email");
+            document.getElementById('userUWID').innerHTML = window.sessionStorage.getItem("user_uwid");
+            document.getElementById('accessLevel').innerHTML = window.sessionStorage.getItem("user_AccessLevel");
+            document.getElementById('status').innerHTML ="<i class=\"fa fa-circle font-small-3 text-warning mr-50\"></i>" + window.sessionStorage.getItem("status");
+            document.getElementById('submitDate').innerHTML = window.sessionStorage.getItem("submit_date");
+            if(window.sessionStorage.getItem("budget_length").localeCompare("1")==0){
+                document.getElementById('budget').innerHTML = window.sessionStorage.getItem("budget1") +" "+window.sessionStorage.getItem("split1");
+            }else{
+                document.getElementById('budget').innerHTML = window.sessionStorage.getItem("budget1") +" "+window.sessionStorage.getItem("split1")
+                                                     +"<br>"+window.sessionStorage.getItem("budget2") +" "+window.sessionStorage.getItem("split2");
+            }
+            document.getElementById('travelBefore').innerHTML = window.sessionStorage.getItem("TravelBefore");
+            if(window.sessionStorage.getItem("SomeoneName").length==0){
+                document.getElementById('requestFor').innerHTML = window.sessionStorage.getItem("user_name");
+            }else{
+                document.getElementById('requestFor').innerHTML = window.sessionStorage.getItem("SomeoneName");
+            }
+            document.getElementById('us').innerHTML = window.sessionStorage.getItem("US");
+            document.getElementById('purpose').innerHTML = window.sessionStorage.getItem("purpose");
+            document.getElementById('referenceNumber').innerHTML = window.sessionStorage.getItem("ReferenceNumber")+"&nbsp;";
+            if(window.sessionStorage.getItem("SomeoneName").length==0){
+                document.getElementById('email').innerHTML = window.sessionStorage.getItem("user_email");
+            }else{
+                document.getElementById('email').innerHTML = window.sessionStorage.getItem("SomeoneEmail");
+            }
+            if(window.sessionStorage.getItem("passport_file").localeCompare("undefined")!=0){
+                document.getElementById('passportFile').innerHTML = "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/" 
+                                                                + window.sessionStorage.getItem("orderId") + "/" 
+                                                                + window.sessionStorage.getItem("passport_file")
+                                                                + "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";
+            }
+            if(window.sessionStorage.getItem("visa_file").localeCompare("undefined")!=0){
+                document.getElementById('visaFile').innerHTML = "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/" 
+                                                                + window.sessionStorage.getItem("orderId") + "/" 
+                                                                + window.sessionStorage.getItem("visa_file")
+                                                                + "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";
+            }
+            if(window.sessionStorage.getItem("registration_file").localeCompare("undefined")!=0){
+                document.getElementById('registrationFile').innerHTML = "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/" 
+                                                                + window.sessionStorage.getItem("orderId") + "/" 
+                                                                + window.sessionStorage.getItem("registration_file")
+                                                                + "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";
+            }
+            if(window.sessionStorage.getItem("car_file").localeCompare("undefined")!=0){
+                document.getElementById('carFile').innerHTML = "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/" 
+                                                                + window.sessionStorage.getItem("orderId") + "/" 
+                                                                + window.sessionStorage.getItem("car_file")
+                                                                + "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";
+            }
+            if(window.sessionStorage.getItem("rental_file").localeCompare("undefined")!=0){
+                document.getElementById('carRentalFile').innerHTML = "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/" 
+                                                                + window.sessionStorage.getItem("orderId") + "/" 
+                                                                + window.sessionStorage.getItem("rental_file")
+                                                                + "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";
+            }
+            if(window.sessionStorage.getItem("airfare_file").localeCompare("undefined")!=0){
+                document.getElementById('airfareFile').innerHTML = "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/" 
+                                                                + window.sessionStorage.getItem("orderId") + "/" 
+                                                                + window.sessionStorage.getItem("airfare_file")
+                                                                + "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";
+            }
+            if(window.sessionStorage.getItem("train_file").localeCompare("undefined")!=0){
+                document.getElementById('trainFile').innerHTML = "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/" 
+                                                                + window.sessionStorage.getItem("orderId") + "/" 
+                                                                + window.sessionStorage.getItem("train_file")
+                                                                + "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";
+            }
+            if(window.sessionStorage.getItem("hotel_file").localeCompare("undefined")!=0){
+                document.getElementById('hotelFile').innerHTML = "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/" 
+                                                                + window.sessionStorage.getItem("orderId") + "/" 
+                                                                + window.sessionStorage.getItem("hotel_file")
+                                                                + "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";
+            }
+            document.getElementById('personalTravel').innerHTML = window.sessionStorage.getItem("personalTravel");
+            document.getElementById('affliation').innerHTML = window.sessionStorage.getItem("SomeoneAffliation")+"&nbsp;";
+            document.getElementById('travelDetail').innerHTML = window.sessionStorage.getItem("personalTravelDetails");
+            document.getElementById('registration').innerHTML = "$"+window.sessionStorage.getItem("registration")+"&nbsp;";
+            document.getElementById('carFee').innerHTML = "$"+window.sessionStorage.getItem("car")+"&nbsp;";
+            document.getElementById('carRental').innerHTML = "$"+window.sessionStorage.getItem("carRental")+"&nbsp;";
+            document.getElementById('airfare').innerHTML = "$"+window.sessionStorage.getItem("airfare")+"&nbsp;";
+            document.getElementById('train').innerHTML = "$"+window.sessionStorage.getItem("train")+"&nbsp;";
+            document.getElementById('hotel').innerHTML = "$"+window.sessionStorage.getItem("hotelFee")+"&nbsp;";
+            if(window.sessionStorage.getItem("meal").localeCompare("meal1")==0){
+                document.getElementById('meal').innerHTML = "Yes, maximum allowable perdiem";
+            }else if(window.sessionStorage.getItem("meal").localeCompare("meal2")==0){
+                document.getElementById('meal').innerHTML = "Yes, specifc days and meals";
+            }else if(window.sessionStorage.getItem("meal").localeCompare("meal3")==0){
+                document.getElementById('meal').innerHTML = "Yes, specific amount";
+            }else if(window.sessionStorage.getItem("meal").localeCompare("meal4")==0){
+                document.getElementById('meal').innerHTML = "No";
+            }
+            document.getElementById('mealAmount').innerHTML = "$"+window.sessionStorage.getItem("meal_amount")+"&nbsp;";
+            document.getElementById('mealProvid').innerHTML = window.sessionStorage.getItem("mealProvided")+"&nbsp;";
+          
+            //alert(window.sessionStorage.getItem("car"));
+            //parseInt(+parseInt(window.sessionStorage.getItem("carRental"))+parseInt(window.sessionStorage.getItem("train"))+parseInt(window.sessionStorage.getItem("hotel"))
             var onSuccess = function(data){
-            if(index==0){
-                file_name="<?php echo $_GET["passport_file"]; ?>";
-                for(i=0;i<data.data.length;i++){
-                    if( data.data[i].localeCompare(file_name)==0){
-                        window.location.href = "https://coe-api.azurewebsites.net/api/downloadAttachment/"+js_id+"/"+file_name;
-                    }
-                }
-            }
-            else if(index==1){
-                file_name="<?php echo $_GET["visa_file"]; ?>";
-                for(i=0;i<data.data.length;i++){
-                    if( data.data[i].localeCompare(file_name)==0){
-                        window.location.href = "https://coe-api.azurewebsites.net/api/downloadAttachment/"+js_id+"/"+file_name;
-                    }
-                }
-            }
-            else if(index==2){
-                file_name="<?php echo $_GET["airfare_file"]; ?>";
-                for(i=0;i<data.data.length;i++){
-                    if( data.data[i].localeCompare(file_name)==0){
-                        window.location.href = "https://coe-api.azurewebsites.net/api/downloadAttachment/"+js_id+"/"+file_name;
-                    }
-                }
-            }
-            else if(index==3){
-                file_name="<?php echo $_GET["train_file"]; ?>";
-                for(i=0;i<data.data.length;i++){
-                    if( data.data[i].localeCompare(file_name)==0){
-                        window.location.href = "https://coe-api.azurewebsites.net/api/downloadAttachment/"+js_id+"/"+file_name;
-                    }
-                }
-            }
-            else if(index==4){
-                file_name="<?php echo $_GET["rental_file"]; ?>";
-                for(i=0;i<data.data.length;i++){
-                    if( data.data[i].localeCompare(file_name)==0){
-                        window.location.href = "https://coe-api.azurewebsites.net/api/downloadAttachment/"+js_id+"/"+file_name;
-                    }
-                }
-            }
-            else if(index==5){
-                file_name="<?php echo $_GET["hotel_file"]; ?>";
-                for(i=0;i<data.data.length;i++){
-                    if( data.data[i].localeCompare(file_name)==0){
-                        window.location.href = "https://coe-api.azurewebsites.net/api/downloadAttachment/"+js_id+"/"+file_name;
-                    }
-                }
-            }
-               
-               // window.location.href = "https://coe-api.azurewebsites.net/api/downloadAttachment/"+js_id+"/"+file_name;
-            }
-            var onFaliure = function(){
-                alert("fail");
-            }
-            makeGetRequest("getfilesAttached/"+js_id,onSuccess,onFaliure);
-            
-    }
-
-    window.onload = function() {        
-        var onSuccess = function(data){
             var col1=1;
             var orderinfo = JSON.parse(data.data.OrderInfo);
             var table = document.getElementById("meal_table1");
@@ -1042,11 +836,11 @@
             }
 
             request_id = "5efb77159a0b5e00457acff8";
-            requestInfo = getRequestInfo(request_id);
+            //requestInfo = getRequestInfo(request_id);
 
-            collectHistoryInfo(requestInfo);
-            updateRequestHistory();
-            updateNotes(requestInfo);
+            //collectHistoryInfo(requestInfo);
+            //updateRequestHistory();
+            //updateNotes(requestInfo);
 
             
         }
@@ -1055,7 +849,9 @@
         }
         makeGetRequest("getOrderInformation/"+js_id,onSuccess,onFaliure);
     }
+       
 
+    
     function update_order(orderinfo){
         alert("Update!!!");
         //var note_approver = document.getElementById("approver_note").value;
@@ -1069,12 +865,11 @@
         var onFaliure = function(){
             alert("fail");
         }
-        var js_id = "<?php echo $id ?>";
         makePostRequest("updateOrderInfo/"+js_id,JSON_data,onSuccess,onFaliure);
     }
     function addNote(){
         var onSuccess = function(data){
-            var user_name = "<?php echo $user_name ?>";
+            var user_name = window.sessionStorage.getItem("user_name");
             var temp = JSON.parse(data.data.OrderInfo);   
             var today = new Date();
             var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -1092,7 +887,6 @@
         var onFaliure = function(){
             alert("fail");
         }
-        var js_id = "<?php echo $id ?>";
         makeGetRequest("getOrderInformation/"+js_id,onSuccess,onFaliure);
     }
 

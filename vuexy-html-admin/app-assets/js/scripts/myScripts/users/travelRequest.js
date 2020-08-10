@@ -217,14 +217,14 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
                     Number: document.getElementById("budget_num_2").value,
                     Split: "$"+document.getElementById("split_dollar_input_value_2_2").value
                 });
-                number2=document.getElementById("budget_num_2").value;
+                budget2=document.getElementById("budget_num_2").value;
                 split2="$"+document.getElementById("split_dollar_input_value_2_2").value;
             }else if(amount_percent2=="percentage"){
                 budgetsArr.push({
                     Number: document.getElementById("budget_num_2").value,
                     Split: document.getElementById("split_percent_input_value_2_2").value+"%"
                 });
-                number2=document.getElementById("budget_num_2").value;
+                budget2=document.getElementById("budget_num_2").value;
                 split2=document.getElementById("split_dollar_input_value_2_2").value+"%";
             } 
         }
@@ -317,51 +317,52 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
                 //convert order info to JSON
                 const requestInfo_obj = JSON.parse(data_obj.OrderInfo);
                 console.log(requestInfo_obj);
-                //window.location.href = "../../../html/ltr/users/user-summary.php";
-                window.location.href = "summary.php?id="+data_obj._id
-                                        +"&user_id="+user_id
-                                        +"&user_name="+user_name
-                                        +"&user_uwid="+user_uwid
-                                        +"&user_email="+user_email
-                                        +"&user_subunitName="+user_subunitName
-                                        +"&user_AccessLevel="+user_accessLevel
-                                        +"&type=Travel Request"
-                                        +"&submit_date="+date
-                                        +"&status=Awaiting Approval"
-                                        +"&amount=N/A"
-                                        +"&firstname="+$("input[name='firstName']").val()
-                                        +"&lastname="+$("input[name='lastName']").val()
-                                        +"&departure="+$("input[name='departure']").val()
-                                        +"&destination="+$("input[name='destination']").val()
-                                        +"&date="+$("input[name='date']").val()
-                                        +"&returndate="+$("input[name='returnDate']").val()
-                                        +"&reason="+$("input[name='reason']").val()
-                                        +"&flight="+$("input[name='flight']:checked").val()
-                                        +"&flight_company="+$("input[name='flight_company']").val()
-                                        +"&flight_number="+$("input[name='flight_number']").val()
-                                        +"&flight_from="+$("input[name='flight_from']").val()
-                                        +"&flight_to="+ $("input[name='flight_to']").val()
-                                        +"&flight_departdate="+$("input[name='flight_departingDate']").val()
-                                        +"&flight_returndate="+$("input[name='flight_returningDate']").val()
-                                        +"&flight_amount="+$("input[name='flight_amount']").val()
-                                        +"&hotel="+$("input[name='hotel']:checked").val()
-                                        +"&hotel_name="+$("input[name='hotel_name']").val()
-                                        +"&hotel_address="+ $("input[name='hotel_address']").val()
-                                        +"&hotel_num="+$("input[name='hotel_num']").val()
-                                        +"&hotel_zip="+$("input[name='hotel_zip']").val()
-                                        +"&hotel_amount="+ $("input[name='hotel_amount']").val()
-                                        +"&hotel_link="+ $("input[name='hotel_link']").val()
-                                        +"&flight_reference="+$("input[name='flight_reference']").val()
-                                        +"&hotel_note="+$("input[name='hotel_note']").val()
-                                        +"&birthday="+$("input[name='birthday']").val()
-                                        +"&note="+""
-                                        +"&budget1="+budget1
-                                        +"&split1="+split1
-                                        +"&budget_length="+budgetsArr.length
-                                        +"&budget2="+budget2
-                                        +"&split2="+split2
-                                        +"&hotel_movein="+$("input[name='hotel_movenin']").val()
-                                        +"&hotel_moveout="+$("input[name='hotel_movenout']").val();
+                
+                window.sessionStorage.setItem('orderId',data_obj._id);
+                window.sessionStorage.setItem('user_id',user_id);
+                window.sessionStorage.setItem('user_name',user_name);
+                window.sessionStorage.setItem('user_uwid',user_uwid);
+                window.sessionStorage.setItem('user_email',user_email);
+                window.sessionStorage.setItem('user_subunitName',user_subunitName);
+                window.sessionStorage.setItem('user_AccessLevel',user_accessLevel);
+                window.sessionStorage.setItem('type',"Travel Request");
+                window.sessionStorage.setItem('submit_date',date);
+                window.sessionStorage.setItem('status',"Awaiting Approval");
+                window.sessionStorage.setItem('amount',"N/A");
+                window.sessionStorage.setItem('firstname',$("input[name='firstName']").val());
+                window.sessionStorage.setItem('lastname',$("input[name='lastName']").val());
+                window.sessionStorage.setItem('departure',$("input[name='departure']").val());
+                window.sessionStorage.setItem('destionation',$("input[name='destination']").val());
+                window.sessionStorage.setItem('date',$("input[name='date']").val());
+                window.sessionStorage.setItem('returndate',$("input[name='returnDate']").val());
+                window.sessionStorage.setItem('reason',$("input[name='reason']").val());
+                window.sessionStorage.setItem('flight',$("input[name='flight']:checked").val());
+                window.sessionStorage.setItem('flight_company',$("input[name='flight_company']").val());
+                window.sessionStorage.setItem('flight_number',$("input[name='flight_number']").val());
+                window.sessionStorage.setItem('flight_from',$("input[name='flight_from']").val());
+                window.sessionStorage.setItem('flight_to',$("input[name='flight_to']").val());
+                window.sessionStorage.setItem('flight_departdate',$("input[name='flight_departingDate']").val());
+                window.sessionStorage.setItem('flight_returndate',$("input[name='flight_returningDate']").val());
+                window.sessionStorage.setItem('flight_amount',$("input[name='flight_amount']").val());
+                window.sessionStorage.setItem('hotel',$("input[name='hotel']:checked").val());
+                window.sessionStorage.setItem('hotel_name',$("input[name='hotel_name']").val());
+                window.sessionStorage.setItem('hotel_address',$("input[name='hotel_address']").val());
+                window.sessionStorage.setItem('hotel_num',$("input[name='hotel_num']").val());
+                window.sessionStorage.setItem('hotel_zip',$("input[name='hotel_zip']").val());
+                window.sessionStorage.setItem('hotel_amount',$("input[name='hotel_amount']").val());
+                window.sessionStorage.setItem('hotel_link',$("input[name='hotel_link']").val());
+                window.sessionStorage.setItem('flight_reference',$("input[name='flight_reference']").val());
+                window.sessionStorage.setItem('hotel_note',$("input[name='hotel_note']").val());
+                window.sessionStorage.setItem('birthday',$("input[name='birthday']").val());
+                window.sessionStorage.setItem('note',"");
+                window.sessionStorage.setItem('budget1',budget1);
+                window.sessionStorage.setItem('split1',split1);
+                window.sessionStorage.setItem('budget_length',budgetsArr.length);
+                window.sessionStorage.setItem('budget2',budget2);
+                window.sessionStorage.setItem('split2',split2);
+                window.sessionStorage.setItem('hotel_movein',$("input[name='hotel_movenin']").val());
+                window.sessionStorage.setItem('hotel_moveout',$("input[name='hotel_movenout']").val());
+                window.location.href = "summary.php";
             }
         }
         request.open('POST', baseURL + "uploadOrder/" + type + "/" + unitID);

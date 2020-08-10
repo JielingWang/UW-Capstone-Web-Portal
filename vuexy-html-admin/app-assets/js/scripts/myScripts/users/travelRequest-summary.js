@@ -88,7 +88,7 @@ window.onload = function() {
     //this.console.log(request_id);
     request_id = "5efb77159a0b5e00457acff8";
     requestInfo = getRequestInfo(request_id);
-
+    
     collectHistoryInfo(requestInfo);
     updateRequestHistory();
     updateNotes(requestInfo);

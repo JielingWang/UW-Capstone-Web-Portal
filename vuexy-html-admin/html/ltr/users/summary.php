@@ -144,7 +144,7 @@
     <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
         <div class="navbar-header">
             <ul class="nav navbar-nav flex-row">
-                <li class="nav-item mr-auto"><a class="navbar-brand" href="../../../html/ltr/vertical-menu-template/index.html">
+                <li class="nav-item mr-auto"><a class="navbar-brand" href="user-dashboard.html">
                         <div class="brand-logo"></div>
                         <h2 class="brand-text mb-0">AWFT</h2>
                     </a></li>
@@ -243,18 +243,11 @@
                         <div id="invoice-company-details" class="row">
                             <div class="col-sm-6 col-12 text-left">
                                 <h1 id="request-type">
-                                    <?php
-                                        $type=$_GET["type"];
-                                        echo $type;
-                                    ?>
+                                   
                                 </h1>
                             </div>
                             <div class="col-sm-6 col-12 text-right">
                                 <h1>Request ID: <span id="requestID">
-                                    <?php
-                                        $id=$_GET["id"];
-                                        echo $id;
-                                    ?>
                                 </span></h1>
                             </div>
                         </div>
@@ -263,47 +256,27 @@
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">REQUESTER</h6>
                                     <p id="requester">
-                                        <?php
-                                            $user_name=$_GET["user_name"];
-                                            echo $user_name;
-                                            echo "&nbsp;";
-                                        ?>
+                                       
                                     </p>
                                     <h6 class="mt-2">SUB-UNIT</h6>
                                     <p id="subunit">
-                                        <?php
-                                            $user_subunitName=$_GET["user_subunitName"];
-                                            echo $user_subunitName;
-                                            echo "&nbsp;";
-                                        ?>
+                                       
                                     </p>
                                     <h6 class="mt-2">Email</h6>
-                                    <p id="request-date">
-                                         <?php
-                                            $user_email=$_GET["user_email"];
-                                            echo $user_email;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="userEmail">
+                                        
                                     </p>
                                 </div>
                             </div>
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">UW ID</h6>
-                                    <p id="request-date">
-                                         <?php
-                                            $user_uwid=$_GET["user_uwid"];
-                                            echo $user_uwid;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="userUWID">
+      
                                     </p>
                                     <h6 class="mt-2">Access Level</h6>
                                     <p id="accessLevel">
-                                         <?php
-                                            $user_subunitName=$_GET["user_AccessLevel"];
-                                            echo $user_subunitName;
-                                            echo "&nbsp;";
-                                        ?>
+                                        
                                     </p>
                                 </div>
                             </div>
@@ -311,12 +284,8 @@
                             <div class="col-sm-6 col-12 text-right">
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">STATUS</h6>
-                                    <p id="status"><i class="fa fa-circle font-small-3 text-warning mr-50"></i>  
-                                        <?php
-                                            $status=$_GET["status"];
-                                            echo $status;
-                                            echo "&nbsp;";
-                                        ?></p>
+                                    <p id="status">
+                                    </p>
                                     <h6 class="mt-2">ASSIGNED TO</h6>
                                     <p id="assignedTo"></p>
                                 </div>
@@ -326,12 +295,8 @@
                                 <div class="invoice-details mt-2">
                                     <h4>Request Information</h4>
                                     <h6 class="mt-2">Submitted Date</h6>
-                                    <p>
-                                        <?php
-                                            $submit_date=$_GET["submit_date"];
-                                            echo $submit_date;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="submitDate">
+                                       
                                     </p>
                                 </div>
                             </div>
@@ -342,11 +307,7 @@
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">Amount</h6>
                                     <p>
-                                        <?php
-                                            $amount=$_GET["amount"];
-                                            echo $amount;
-                                            echo "&nbsp;";
-                                        ?>
+                                      N/A  
                                     </p>
                                 </div>
                             </div>
@@ -354,27 +315,8 @@
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">Budget</h6>
-                                    <p>
-                                        <?php
-                                            $budget_length=$_GET["budget_length"];
-                                            $budget1=$_GET["budget1"];
-                                            $split1=$_GET["split1"];
-                                            echo $budget1;
-                                            echo ":";
-                                            echo "&nbsp&nbsp";
-                                            echo $split1;
-                                            if($budget_length==2){
-                                                echo ";&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
-                                                $budget2=$_GET["budget2"];
-                                                $split2=$_GET["split2"];
-                                                echo $budget2;
-                                                echo ":";
-                                                echo "&nbsp&nbsp";
-                                                echo $split2;
-                                            }
-                                            echo "&nbsp;";
-                                                //echo $budget2;
-                                        ?>
+                                    <p id="budget">
+                                        
                                     </p>
                                 </div>
                             </div>
@@ -390,12 +332,8 @@
                              <div class="col-sm-12 col-6" text-left>
                                 <div class="invoice-details mt-2">
                                     <h4>Request Reason</h4>
-                                    <p>
-                                        <?php
-                                            $reason= $_GET["reason"];
-                                            echo $reason;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="reason">
+                                       
                                     </p>
                                 </div>
                             </div>                            
@@ -406,20 +344,12 @@
                                 <div class="invoice-details mt-2">
                                     <h4>Travel Information</h4>
                                     <h6 class="mt-2">FirstName</h6>
-                                    <p>
-                                        <?php
-                                            $firstname = $_GET["firstname"];
-                                            echo $firstname;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="firstName">
+                                       
                                     </p>
                                     <h6 class="mt-2">Departing Date</h6>
-                                    <p>
-                                        <?php
-                                             $date= $_GET["date"];
-                                             echo $date;
-                                             echo "&nbsp;";
-                                        ?>
+                                    <p id="departDate">
+                                       
                                     </p>
 
                                 </div>
@@ -428,20 +358,12 @@
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">LastName</h6>
-                                    <p>
-                                        <?php
-                                            $lastname = $_GET["lastname"];
-                                            echo $lastname;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="lastName">
+                                       
                                     </p>
                                     <h6 class="mt-2">Returning Date</h6>
-                                    <p>
-                                        <?php
-                                             $returndate= $_GET["returndate"];
-                                             echo $returndate;
-                                             echo "&nbsp;";
-                                        ?>
+                                    <p id="returnDate">
+                                        
                                     </p>
                                 </div>
                             </div>
@@ -449,20 +371,12 @@
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">Departure</h6>
-                                    <p>
-                                        <?php
-                                            $departure = $_GET["departure"];
-                                            echo $departure;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="departure">
+                                       
                                     </p>
                                     <h6 class="mt-2">Birthday</h6>
-                                    <p>
-                                        <?php
-                                            $birthday = $_GET["birthday"];
-                                            echo $birthday;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="birthday">
+                                       
                                     </p>
                                 </div>
                             </div>
@@ -470,12 +384,8 @@
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">Destination</h6>
-                                    <p>
-                                        <?php
-                                           $destination = $_GET["destination"];
-                                           echo $destination;
-                                           echo "&nbsp;";
-                                        ?>
+                                    <p id="destination">
+                                       
                                     </p>
                                 </div>
                             </div>
@@ -486,28 +396,16 @@
                                 <div class="invoice-details mt-2">
                                     <h4>Flight Information</h4>
                                     <h6 class="mt-2">Need unit to pay the flight?</h6>
-                                    <p>
-                                        <?php
-                                            $flight=$_GET["flight"];
-                                            echo $flight;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="flight">
+                                       
                                     </p>
                                     <h6 class="mt-2">Flight From</h6>
-                                    <p>
-                                        <?php
-                                             $flight_from=$_GET["flight_from"];
-                                             echo $flight_from;
-                                             echo "&nbsp;";
-                                        ?>
+                                    <p id="flightFrom">
+                                      
                                     </p>
                                     <h6 class="mt-2">Flight Reference</h6>
-                                    <p>
-                                        <?php
-                                              $flight_reference=$_GET["flight_reference"];
-                                              echo $flight_reference;
-                                              echo "&nbsp;";
-                                        ?>
+                                    <p id="flightReference">
+                                       
                                     </p>
 
                                 </div>
@@ -516,20 +414,12 @@
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">Airline</h6>
-                                    <p>
-                                        <?php
-                                           $airline=$_GET["flight_company"];
-                                           echo $airline;
-                                           echo "&nbsp;";
-                                        ?>
+                                    <p id="airline">
+                                       
                                     </p>
                                     <h6 class="mt-2">Flight To</h6>
-                                    <p>
-                                        <?php
-                                            $flight_to=$_GET["flight_to"];
-                                            echo $flight_to;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="flightTo">
+                                       
                                     </p>
                                 </div>
                             </div>
@@ -537,20 +427,12 @@
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">Flight Number</h6>
-                                    <p>
-                                        <?php
-                                           $flight_number=$_GET["flight_number"];
-                                           echo $flight_number;
-                                           echo "&nbsp;";
-                                        ?>
+                                    <p id="flightNumber">
+                                       
                                     </p>
                                     <h6 class="mt-2">Departing Date</h6>
-                                    <p>
-                                        <?php
-                                            $flight_departdate=$_GET["flight_departdate"];
-                                            echo $flight_departdate;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="flightDepartDate">
+                                       
                                     </p>
                                 </div>
                             </div>
@@ -558,21 +440,12 @@
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">Amount</h6>
-                                    <p>
-                                        <?php
-                                           $flight_amount=$_GET["flight_amount"];
-                                           echo "$";
-                                           echo $flight_amount;
-                                           echo "&nbsp;";
-                                        ?>
+                                    <p id="flightAmount">
+                                       
                                     </p>
                                     <h6 class="mt-2">Returning Date</h6>
-                                    <p>
-                                        <?php
-                                            $flight_returndate=$_GET["flight_returndate"];
-                                            echo $flight_returndate;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="flightReturnDate">
+                                        
                                     </p>
                                 </div>
                             </div>
@@ -582,27 +455,16 @@
                                 <div class="invoice-details mt-2">
                                     <h4>Hotel Information</h4>
                                     <h6 class="mt-2">Need unit to pay the hotel?</h6>
-                                    <p>
-                                        <?php
-                                            $flight=$_GET["flight"];
-                                            echo $flight;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="hotel">
+                                      
                                     </p>
                                     <h6 class="mt-2">Number of People</h6>
-                                    <p>
-                                        <?php
-                                             $hotel_num = $_GET["hotel_num"];
-                                             echo $hotel_num;
-                                             echo "&nbsp;";
-                                        ?>
+                                    <p id="hotelNum">
+                                       
                                     </p>
                                     <h6 class="mt-2">Link</h6>
-                                    <p>
-                                        <?php
-                                              $hotel_link= $_GET["hotel_link"];
-                                              echo $hotel_link;
-                                        ?>
+                                    <p id="hotelLink">
+                                      
                                     </p>
 
                                 </div>
@@ -611,28 +473,16 @@
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">Hotel Name</h6>
-                                    <p>
-                                        <?php
-                                           $hotelname = $_GET["hotel_name"];
-                                           echo $hotelname;
-                                           echo "&nbsp;";
-                                        ?>
+                                    <p id="hotelName">
+                                       
                                     </p>
                                     <h6 class="mt-2">Check in Date</h6>
-                                    <p>
-                                        <?php
-                                            $hotel_checkin= $_GET["hotel_movein"];
-                                            echo $hotel_checkin;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="hotelCheckIn">
+                                       
                                     </p>
                                     <h6 class="mt-2">Hotel Note</h6>
-                                    <p>
-                                        <?php
-                                              $hotel_note= $_GET["hotel_note"];
-                                              echo $hotel_note;
-                                              echo "&nbsp;";
-                                        ?>
+                                    <p id="hotelNote">
+                                       
                                     </p>
                                 </div>
                             </div>
@@ -640,20 +490,12 @@
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">Hotel Address</h6>
-                                    <p>
-                                        <?php
-                                           $hotel_address = $_GET["hotel_address"];
-                                           echo $hotel_address;
-                                           echo "&nbsp;";
-                                        ?>
+                                    <p id="hotelAddress">
+                                        
                                     </p>
                                     <h6 class="mt-2">Check out Date</h6>
-                                    <p>
-                                        <?php
-                                            $hotel_checkout= $_GET["hotel_moveout"];
-                                            echo $hotel_checkout;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="hotelCheckout">
+                                       
                                     </p>
                                 </div>
                             </div>
@@ -661,21 +503,12 @@
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">Zip Code</h6>
-                                    <p>
-                                        <?php
-                                           $zip= $_GET["hotel_zip"];
-                                           echo $zip;
-                                           echo "&nbsp;";
-                                        ?>
+                                    <p id="hotelZip">
+                                       
                                     </p>
                                     <h6 class="mt-2">Amount</h6>
-                                    <p>
-                                        <?php
-                                            $hotel_amount= $_GET["hotel_amount"];
-                                            echo "$";
-                                            echo $hotel_amount;
-                                            echo "&nbsp;";
-                                        ?>
+                                    <p id="hotelAmount">
+                                       
                                     </p>
                                 </div>
                             </div>
@@ -712,10 +545,7 @@
                                     <h4 class="card-title">Notes</h4>
                                 </div>
                                 <div class="card-content" id="notes" style="padding-top: 1.5rem; padding-left: 1.5rem;">
-                                    <?php
-                                        $note=$_GET["note"];
-                                        echo $note;
-                                    ?>
+                                   
                                 </div>
                                 
                             </div>
@@ -741,13 +571,7 @@
                                             </div>
                                             <div class="form-actions">
                                                 <button type="button" class="btn btn-primary mr-1" onclick="addNote()">Add a note</button>
-                                                <?php
-                                                    if($status=="Updated"){
-                                                        echo "<a href=\"edit_order.php?id=";
-                                                        echo $id; 
-                                                        echo "\"class=\"btn btn-primary mr-1\"><i class=\"feather icon-edit-1\"></i> Edit My Request</a>";
-                                                    }
-                                                ?>
+                                              
                                             </div>
                                         </form>
                                     </div>
@@ -760,12 +584,6 @@
         </div>
     </div>
     <!-- END: Content-->
-    
-      
-                            
-
-    
-
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>
 
@@ -775,7 +593,7 @@
     </footer>
     <!-- END: Footer-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="Examples.js"></script>
+
 
 
     <!-- BEGIN: Vendor JS-->
@@ -812,7 +630,7 @@
     <!-- BEGIN: Page JS-->
     <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
     <script src="../../../app-assets/js/scripts/forms/validation/form-validation.js"></script>
-    <script src="../../../app-assets/js/scripts/myScripts/users/travelRequest-summary.js"></script>
+    <!--<script src="../../../app-assets/js/scripts/myScripts/users/travelRequest-summary.js"></script>-->
     <!-- END: Page JS-->
 
     <!-- BEGIN: Page JS-->
@@ -845,70 +663,54 @@
                 error: onFailure
             });
         };
-        var js_id = "<?php echo $_GET["id"]; ?>";
-        var type = "<?php echo $_GET["type"]; ?>";
         var i;
         var file_name;
-
-        function getFiles(index){
-            var onSuccess = function(data){
-            if(index==0){
-                file_name="<?php echo $_GET["passport_file"]; ?>";
-                for(i=0;i<data.data.length;i++){
-                    if( data.data[i].localeCompare(file_name)==0){
-                        window.location.href = "https://coe-api.azurewebsites.net/api/downloadAttachment/"+js_id+"/"+file_name;
-                    }
-                }
+        var js_id=window.sessionStorage.getItem("orderId");
+        window.onload = function(){
+            document.getElementById('requestID').innerHTML = window.sessionStorage.getItem("orderId");
+            document.getElementById('requester').innerHTML = window.sessionStorage.getItem("user_name");
+            document.getElementById('subunit').innerHTML = window.sessionStorage.getItem("user_subunitName");
+            document.getElementById('userEmail').innerHTML = window.sessionStorage.getItem("user_email");
+            document.getElementById('userUWID').innerHTML = window.sessionStorage.getItem("user_uwid");
+            document.getElementById('accessLevel').innerHTML = window.sessionStorage.getItem("user_AccessLevel");
+            document.getElementById('status').innerHTML ="<i class=\"fa fa-circle font-small-3 text-warning mr-50\"></i>" + window.sessionStorage.getItem("status");
+            document.getElementById('submitDate').innerHTML = window.sessionStorage.getItem("submit_date");
+            if(window.sessionStorage.getItem("budget_length").localeCompare("1")==0){
+                document.getElementById('budget').innerHTML = window.sessionStorage.getItem("budget1") +" "+window.sessionStorage.getItem("split1");
+            }else{
+                document.getElementById('budget').innerHTML = window.sessionStorage.getItem("budget1") +" "+window.sessionStorage.getItem("split1")
+                                                     +"<br>"+window.sessionStorage.getItem("budget2") +" "+window.sessionStorage.getItem("split2");
             }
-            else if(index==1){
-                file_name="<?php echo $_GET["visa_file"]; ?>";
-                for(i=0;i<data.data.length;i++){
-                    if( data.data[i].localeCompare(file_name)==0){
-                        window.location.href = "https://coe-api.azurewebsites.net/api/downloadAttachment/"+js_id+"/"+file_name;
-                    }
-                }
-            }
-            else if(index==2){
-                file_name="<?php echo $_GET["airfare_file"]; ?>";
-                for(i=0;i<data.data.length;i++){
-                    if( data.data[i].localeCompare(file_name)==0){
-                        window.location.href = "https://coe-api.azurewebsites.net/api/downloadAttachment/"+js_id+"/"+file_name;
-                    }
-                }
-            }
-            else if(index==3){
-                file_name="<?php echo $_GET["train_file"]; ?>";
-                for(i=0;i<data.data.length;i++){
-                    if( data.data[i].localeCompare(file_name)==0){
-                        window.location.href = "https://coe-api.azurewebsites.net/api/downloadAttachment/"+js_id+"/"+file_name;
-                    }
-                }
-            }
-            else if(index==4){
-                file_name="<?php echo $_GET["rental_file"]; ?>";
-                for(i=0;i<data.data.length;i++){
-                    if( data.data[i].localeCompare(file_name)==0){
-                        window.location.href = "https://coe-api.azurewebsites.net/api/downloadAttachment/"+js_id+"/"+file_name;
-                    }
-                }
-            }
-            else if(index==5){
-                file_name="<?php echo $_GET["hotel_file"]; ?>";
-                for(i=0;i<data.data.length;i++){
-                    if( data.data[i].localeCompare(file_name)==0){
-                        window.location.href = "https://coe-api.azurewebsites.net/api/downloadAttachment/"+js_id+"/"+file_name;
-                    }
-                }
-            }
-               
-               // window.location.href = "https://coe-api.azurewebsites.net/api/downloadAttachment/"+js_id+"/"+file_name;
-            }
-            var onFaliure = function(){
-                alert("fail");
-            }
-            makeGetRequest("getfilesAttached/"+js_id,onSuccess,onFaliure);
-            
-    }
+            document.getElementById('reason').innerHTML = window.sessionStorage.getItem("reason");
+            document.getElementById('firstName').innerHTML = window.sessionStorage.getItem("firstname");
+            document.getElementById('departDate').innerHTML = window.sessionStorage.getItem("date");
+            document.getElementById('lastName').innerHTML = window.sessionStorage.getItem("lastname");
+            document.getElementById('returnDate').innerHTML = window.sessionStorage.getItem("returndate");
+            document.getElementById('departure').innerHTML = window.sessionStorage.getItem("departure");
+            document.getElementById('birthday').innerHTML = window.sessionStorage.getItem("birthday")+"&nbsp;";
+            document.getElementById('destination').innerHTML = window.sessionStorage.getItem("destionation");
+            document.getElementById('flight').innerHTML = window.sessionStorage.getItem("flight")+"&nbsp;";
+            document.getElementById('flightFrom').innerHTML = window.sessionStorage.getItem("flight_from")+"&nbsp;";
+            document.getElementById('flightReference').innerHTML = window.sessionStorage.getItem("flight_reference")+"&nbsp;";
+            document.getElementById('airline').innerHTML = window.sessionStorage.getItem("flight_company")+"&nbsp;";
+            document.getElementById('flightTo').innerHTML = window.sessionStorage.getItem("flight_to")+"&nbsp;";
+            document.getElementById('flightNumber').innerHTML = window.sessionStorage.getItem("flight_number")+"&nbsp;";
+            document.getElementById('flightDepartDate').innerHTML = window.sessionStorage.getItem("flight_departdate")+"&nbsp;";
+            document.getElementById('flightAmount').innerHTML = window.sessionStorage.getItem("flight_amount")+"&nbsp;";
+            document.getElementById('flightReturnDate').innerHTML = window.sessionStorage.getItem("flight_returndate")+"&nbsp;";
+            document.getElementById('hotel').innerHTML = window.sessionStorage.getItem("hotel")+"&nbsp;";
+            document.getElementById('hotelNum').innerHTML = window.sessionStorage.getItem("hotel_num")+"&nbsp;";
+            document.getElementById('hotelLink').innerHTML = window.sessionStorage.getItem("hotel_link")+"&nbsp;";
+            document.getElementById('hotelName').innerHTML = window.sessionStorage.getItem("hotel_name")+"&nbsp;";
+            document.getElementById('hotelCheckIn').innerHTML = window.sessionStorage.getItem("hotel_movein")+"&nbsp;";
+            document.getElementById('hotelNote').innerHTML = window.sessionStorage.getItem("hotel_note")+"&nbsp;";
+            document.getElementById('hotelAddress').innerHTML = window.sessionStorage.getItem("hotel_address")+"&nbsp;";
+            document.getElementById('hotelCheckout').innerHTML = window.sessionStorage.getItem("hotel_moveout")+"&nbsp;";
+            document.getElementById('hotelZip').innerHTML = window.sessionStorage.getItem("hotel_zip")+"&nbsp;";
+            document.getElementById('hotelAmount').innerHTML = window.sessionStorage.getItem("hotel_amount")+"&nbsp;";
+            document.getElementById('request-type').innerHTML = window.sessionStorage.getItem("type")+"&nbsp;";
+        }
+       
 
     function update_order(orderinfo){
         alert("Update!!!");
@@ -923,12 +725,11 @@
         var onFaliure = function(){
             alert("fail");
         }
-        var js_id = "<?php echo $id ?>";
         makePostRequest("updateOrderInfo/"+js_id,JSON_data,onSuccess,onFaliure);
     }
     function addNote(){
         var onSuccess = function(data){
-            var user_name = "<?php echo $user_name ?>";
+            var user_name = window.sessionStorage.getItem("user_name");
             var temp = JSON.parse(data.data.OrderInfo);   
             var today = new Date();
             var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -946,7 +747,6 @@
         var onFaliure = function(){
             alert("fail");
         }
-        var js_id = "<?php echo $id ?>";
         makeGetRequest("getOrderInformation/"+js_id,onSuccess,onFaliure);
     }
 
