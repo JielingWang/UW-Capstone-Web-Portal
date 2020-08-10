@@ -12,6 +12,9 @@ idFlags.push(true);
 var budgetIds = [];
 budgetIds.push(2);
 
+// <K, V> => <line item id, {total, dollar, percent}>
+let budgetMap = new Map();
+
 var defaultMode = false;
 
 var formData = new FormData();
@@ -168,11 +171,45 @@ $(".steps-validation").validate({
         $(element).removeClass(errorClass);
     },
     errorPlacement: function (error, element) {
-        error.insertAfter(element);
+        if (element.hasClass('custom-control-input') || element.parent().hasClass('input-group')) {
+            error.insertAfter(element.parent());
+        } else {
+            error.insertAfter(element);
+        }
     },
     rules: {
-        email: {
-            email: true
+        name: {
+            required: true
+        },
+        "ship-address": {
+            required: true
+        },
+        "ship-city": {
+            required: true
+        },
+        "ship-state": {
+            required: true
+        },
+        "ship-zip": {
+            required: true
+        },
+        country: {
+            required: true
+        },
+        "vendor-name": {
+            required: true
+        },
+        amount: {
+            required: true,
+            number: true
+        },
+        budget_num_1: {
+            required: true
+        }
+    },
+    messages: {
+        budget_num_1: {
+            required: "Please choose a budget number"
         }
     }
 });
@@ -218,6 +255,64 @@ window.onload = function() {
         budget_select.appendChild(addBudgetData(num));
     }
 };
+
+
+$(document).on('change', '#amount_1', function() {
+    var amount = $('#amount_1').val();
+    updateLastSplitVal(1, parseFloat(amount));
+});
+
+/**
+ * Auto-calculate the last budget split value
+ * @param {int} idx the line item index
+ * @param {float} amount input amount
+ * @param {float} currD input dollar
+ * @param {float} currP input percentage
+ * @param {boolean} DorP true represent dollar, flase represent percentage
+ */
+
+function updateLastSplitVal(idx, amount) {
+    var total_pre = amount;
+    var presumD = 0;
+    var presumP = 0;
+    if (budgetMap.has(idx)) {
+        total_pre = budgetMap.get(idx).total;
+    }
+    
+    var dollarInputs = document.getElementsByName(`split_dollar_input_value_${idx}`);
+    var percInputs = document.getElementsByName(`split_percent_input_value_${idx}`);
+    var n = dollarInputs.length;
+    if (amount != total_pre) {
+        budgetMap.set(idx, {
+            total: amount,
+            dollar: 0,
+            perc: 0
+        })
+        for (var x = 0; x < n - 1; x++) {
+            dollarInputs[x].value = 0;
+            percInputs[x].value = 0;
+        }
+    } else {
+        for (var x = 0; x < n - 1; x++) {
+            presumD += parseFloat(dollarInputs[x].value);
+            presumP += parseFloat(percInputs[x].value);
+        }
+        budgetMap.set(idx, {
+            total: amount,
+            dollar: presumD,
+            perc: presumP
+        });
+    }
+    
+    var lastPerc = percInputs[n - 1];
+    var lastDollar = dollarInputs[n - 1];
+
+    lastDollar.value = budgetMap.get(idx).total - budgetMap.get(idx).dollar;
+    lastPerc.value = 100 - budgetMap.get(idx).perc;
+    
+    console.log(budgetMap);
+}
+
 
 function genAddrLine(content) {
     var p = document.createElement('p');
@@ -450,7 +545,7 @@ function submitClicked() {
  * Functionality: add more budget numbers
  */
 $(document).on('click', '#budget_btn_1_1', function() {
-    document.getElementById('budget_1_1').after(addBudget(1, budgetIds[0] ++, false));
+    document.getElementById(`budget_1_${budgetIds[0]-1}`).after(addBudget(1, budgetIds[0]++, false));
 });
 
 
@@ -464,6 +559,22 @@ $(document).on('click', '#budget_btn_1_1', function() {
  * the button will be plus button, otherwise the button will be delete button
  */
 function addBudget(_id, _budget_id, init) {
+    // Make the previous budget active
+    if (!init) {
+        var dollarValInput = document.getElementById(`split_dollar_input_value_${_id}_${_budget_id-1}`);
+        var percentValInput = document.getElementById(`split_percent_input_value_${_id}_${_budget_id-1}`);
+        dollarValInput.removeAttribute('disabled');
+        percentValInput.removeAttribute('disabled');
+
+        dollarValInput.addEventListener('change', function() {
+            updateLastSplitVal(_id, budgetMap.get(_id).total);
+        });
+
+        percentValInput.addEventListener('change', function() {
+            updateLastSplitVal(_id, budgetMap.get(_id).total);
+        });
+    }
+
     if (init) {
         budgetIds.push(2);
     }
@@ -534,11 +645,13 @@ function addBudget(_id, _budget_id, init) {
     btn.appendChild(icon);
     if (init) {
         btn.onclick = function() {
-            document.getElementById('budget_' + _id + '_' + _budget_id).after(addBudget(_id, budgetIds[_id - 1]++, false));
+            // console.log(budgetIds);
+            document.getElementById(`budget_${_id}_${budgetIds[_id-1]-1}`).after(addBudget(_id, budgetIds[_id - 1]++, false));
         }
     } else {
         btn.onclick = function() {
             document.getElementById('budget_' + _id + '_' + _budget_id).remove();
+            updateLastSplitVal(_id, budgetMap.get(_id).total);
         };
     }
     fifth.appendChild(btn);
@@ -586,6 +699,7 @@ function inputGroup(_id, _budget_id, isPre, label, name) {
     i.setAttribute('type', 'text');
     i.setAttribute('id', 'split_' + name + '_input_value_' + _id + '_' + _budget_id);
     i.setAttribute('name', 'split_' + name + '_input_value_' + _id);
+    i.setAttribute('disabled', '');
 
     if (isPre) {
         d.appendChild(sig);
@@ -1035,6 +1149,9 @@ function addNewAmount(_id) {
     input.setAttribute('placeholder', '0.00');
     input.setAttribute('aria-label', 'Amount (to the nearest dollar)');
     input.setAttribute('id', 'amount_' + _id);
+    input.addEventListener('change', function() {
+        updateLastSplitVal(_id, parseFloat(this.value));
+    });
     group.appendChild(prepend);
     group.appendChild(input);
     fieldset.appendChild(group);

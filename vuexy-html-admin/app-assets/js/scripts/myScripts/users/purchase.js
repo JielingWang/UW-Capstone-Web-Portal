@@ -12,6 +12,9 @@ idFlags.push(true);
 var budgetIds = [];
 budgetIds.push(2);
 
+// <K, V> => <line item id, {total, dollar, percent}>
+let budgetMap = new Map();
+
 var defaultMode = false;
 
 var formData = new FormData();
@@ -153,17 +156,6 @@ $(".steps-validation").steps({
         alert('send data to database');
 
         submitClicked();
-
-        // console.log('submit');
-        // var total = $('#quantity_1').val() * $('#unit_price_1').val();
-        // var amount = $('#split_dollar_input_value_1_1').val();
-        // console.log(total + ', ' + amount);
-        // if (total != amount) {
-        //     console.log('false');
-        //     return false;
-        // } else {
-        //     form.submit();
-        // }
     }
 });
 
@@ -179,50 +171,55 @@ $(".steps-validation").validate({
         $(element).removeClass(errorClass);
     },
     errorPlacement: function (error, element) {
-        
-        var elementNameStr = element[0].name;
-        // if (elementNameStr.substring(0, 6) == "split_") {
-        //     var budgetNameId = elementNameStr.substring(elementNameStr.length - 1, elementNameStr.length);
-        //     var budgetBlocks = document.getElementsByName('budget_num_' + budgetNameId);
-        //     // console.log('budget_num_' + budgetNameId);
-        //     var budgetsLen = budgetBlocks.length;
-        //     // console.log("length: " + budgetsLen);
-        //     if (budgetsLen > 1) {
-        //         console.log('add error');
-        //         error.insertAfter(element[0].parentElement);
-        //         // if (element[0].parentElement.className == "input-group") {
-        //         //     error.insertAfter(element[0].parentElement);
-        //         // } else {
-        //         //     error.insertAfter(element);
-        //         // }
-        //     }
-        // } else {
-        //     if (element[0].parentElement.className == "input-group") {
-        //         error.insertAfter(element[0].parentElement);
-        //     } else {
-        //         error.insertAfter(element);
-        //     }
-        // }
-
-        if (element[0].parentElement.className == "input-group") {
-            error.insertAfter(element[0].parentElement);
+        if (element.hasClass('custom-control-input') || element.parent().hasClass('input-group')) {
+            error.insertAfter(element.parent());
         } else {
             error.insertAfter(element);
         }
-        
-        // console.log(elementNameStr);
-
     },
     rules: {
-        email: {
-            email: true
+        name: {
+            required: true
+        },
+        "ship-address": {
+            required: true
+        },
+        "ship-city": {
+            required: true
+        },
+        "ship-state": {
+            required: true
+        },
+        "ship-zip": {
+            required: true
+        },
+        country: {
+            required: true
+        },
+        "vendor-name": {
+            required: true
+        },
+        quantity: {
+            required: true
+        },
+        "unit-price-1": {
+            required: true,
+            number: true
+        },
+        budget_num_1: {
+            required: true
+        }
+    },
+    messages: {
+        budget_num_1: {
+            required: "Please choose a budget number"
         }
     }
 });
 
-jQuery.validator.addMethod("sumEqual", function(value, element, params) {
-    return this.optional(element) || value == params[0];
-}, jQuery.validator.format("Please enter the correct value {0}"));
+// jQuery.validator.addMethod("sumEqual", function(value, element, params) {
+//     return this.optional(element) || value == params[0];
+// }, jQuery.validator.format("Please enter the correct value {0}"));
 
 
 // $( "input[name='split_dollar_input_value_1']" ).rules( "add", {
@@ -237,9 +234,9 @@ jQuery.validator.addMethod("sumEqual", function(value, element, params) {
 // });
 
 
-$( "input[name='split_dollar_input_value_1']" ).rules( "add", {
-    required: true
-});
+// $( "input[name='split_dollar_input_value_1']" ).rules( "add", {
+//     required: true
+// });
 
 
 
@@ -284,6 +281,71 @@ window.onload = function() {
         budget_select.appendChild(addBudgetData(num));
     }
 };
+
+$(document).on('change', '#unit_price_1', function() {
+    var u = $('#unit_price_1').val();
+    var q = $('#quantity_1').val();
+
+    updateLastSplitVal(1, parseFloat(u) * parseFloat(q));
+});
+
+$(document).on('change', '#quantity_1', function() {
+    var u = $('#unit_price_1').val();
+    var q = $('#quantity_1').val();
+
+    updateLastSplitVal(1, parseFloat(u) * parseFloat(q));
+});
+
+/**
+ * Auto-calculate the last budget split value
+ * @param {int} idx the line item index
+ * @param {float} amount input amount
+ * @param {float} currD input dollar
+ * @param {float} currP input percentage
+ * @param {boolean} DorP true represent dollar, flase represent percentage
+ */
+
+function updateLastSplitVal(idx, amount) {
+    var total_pre = amount;
+    var presumD = 0;
+    var presumP = 0;
+    if (budgetMap.has(idx)) {
+        total_pre = budgetMap.get(idx).total;
+    }
+    
+    var dollarInputs = document.getElementsByName(`split_dollar_input_value_${idx}`);
+    var percInputs = document.getElementsByName(`split_percent_input_value_${idx}`);
+    var n = dollarInputs.length;
+    if (amount != total_pre) {
+        budgetMap.set(idx, {
+            total: amount,
+            dollar: 0,
+            perc: 0
+        })
+        for (var x = 0; x < n - 1; x++) {
+            dollarInputs[x].value = 0;
+            percInputs[x].value = 0;
+        }
+    } else {
+        for (var x = 0; x < n - 1; x++) {
+            presumD += parseFloat(dollarInputs[x].value);
+            presumP += parseFloat(percInputs[x].value);
+        }
+        budgetMap.set(idx, {
+            total: amount,
+            dollar: presumD,
+            perc: presumP
+        });
+    }
+    
+    var lastPerc = percInputs[n - 1];
+    var lastDollar = dollarInputs[n - 1];
+
+    lastDollar.value = budgetMap.get(idx).total - budgetMap.get(idx).dollar;
+    lastPerc.value = 100 - budgetMap.get(idx).perc;
+    
+    console.log(budgetMap);
+}
 
 function genAddrLine(content) {
     var p = document.createElement('p');
@@ -500,28 +562,28 @@ function submitClicked() {
     request.send(formData);
 }
 
-$(document).on('change', '#unit_price_1', function() {
-    updateBudgetValueInput(1);
-});
+// $(document).on('change', '#unit_price_1', function() {
+//     updateBudgetValueInput(1);
+// });
 
 // $(document).on('change', '#split_with_1_1', function() {
 //     updateBudgetValueInput(1);
 // });
 
-function updateBudgetValueInput(_id) {
-    var inputBox = document.getElementsByName('split_dollar_input_value_' + _id);
-    if (inputBox.length == 1) {
-        if (inputBox[0].parentElement.parentElement.parentElement.className == "col-md-2 hidden") {
-            inputBox = document.getElementsByName('split_percent_input_value_' + _id);
-            inputBox[0].value = "100";
-        } else {
-            var q = document.getElementById('quantity_' + _id).value;
-            var u = document.getElementById('unit_price_' + _id).value;
-            var amount = q * parseFloat(u);
-            inputBox[0].value = amount;
-        }
-    }
-}
+// function updateBudgetValueInput(_id) {
+//     var inputBox = document.getElementsByName('split_dollar_input_value_' + _id);
+//     if (inputBox.length == 1) {
+//         if (inputBox[0].parentElement.parentElement.parentElement.className == "col-md-2 hidden") {
+//             inputBox = document.getElementsByName('split_percent_input_value_' + _id);
+//             inputBox[0].value = "100";
+//         } else {
+//             var q = document.getElementById('quantity_' + _id).value;
+//             var u = document.getElementById('unit_price_' + _id).value;
+//             var amount = q * parseFloat(u);
+//             inputBox[0].value = amount;
+//         }
+//     }
+// }
 
 /**
  * BEGIN: Budgets Controller
@@ -539,7 +601,7 @@ function updateBudgetValueInput(_id) {
  * Functionality: add more budget numbers
  */
 $(document).on('click', '#budget_btn_1_1', function() {
-    document.getElementById('budget_1_1').after(addBudget(1, budgetIds[0] ++, false));
+    document.getElementById(`budget_1_${budgetIds[0]-1}`).after(addBudget(1, budgetIds[0]++, false));
 });
 
 
@@ -553,6 +615,22 @@ $(document).on('click', '#budget_btn_1_1', function() {
  * the button will be plus button, otherwise the button will be delete button
  */
 function addBudget(_id, _budget_id, init) {
+    // Make the previous budget active
+    if (!init) {
+        var dollarValInput = document.getElementById(`split_dollar_input_value_${_id}_${_budget_id-1}`);
+        var percentValInput = document.getElementById(`split_percent_input_value_${_id}_${_budget_id-1}`);
+        dollarValInput.removeAttribute('disabled');
+        percentValInput.removeAttribute('disabled');
+
+        dollarValInput.addEventListener('change', function() {
+            updateLastSplitVal(_id, budgetMap.get(_id).total);
+        });
+
+        percentValInput.addEventListener('change', function() {
+            updateLastSplitVal(_id, budgetMap.get(_id).total);
+        });
+    }
+
     if (init) {
         budgetIds.push(2);
     }
@@ -623,20 +701,21 @@ function addBudget(_id, _budget_id, init) {
     btn.appendChild(icon);
     if (init) {
         btn.onclick = function() {
-            document.getElementById('budget_' + _id + '_' + _budget_id).after(addBudget(_id, budgetIds[_id - 1]++, false));
-            document.getElementById('budget_' + _id + '_' + _budget_id).setAttribute('required', '');
+            console.log(budgetIds);
+            document.getElementById(`budget_${_id}_${budgetIds[_id-1]-1}`).after(addBudget(_id, budgetIds[_id - 1]++, false));
         }
     } else {
         btn.onclick = function() {
             document.getElementById('budget_' + _id + '_' + _budget_id).remove();
-            var budgetsNumArr = document.getElementsByName('budget_num_' + _id);
-            var budgetsLen = budgetsNumArr.length;
-            if (budgetsLen == 1) {
-                var budgetAmountInput = document.getElementsByName('split_dollar_input_value_' + _id)[0];
-                var budgetPercentInput = document.getElementsByName('split_percent_input_value_' + _id)[0];
-                budgetAmountInput.removeAttribute('required');
-                budgetPercentInput.removeAttribute('required');
-            }
+            updateLastSplitVal(_id, budgetMap.get(_id).total);
+            // var budgetsNumArr = document.getElementsByName('budget_num_' + _id);
+            // var budgetsLen = budgetsNumArr.length;
+            // if (budgetsLen == 1) {
+            //     var budgetAmountInput = document.getElementsByName('split_dollar_input_value_' + _id)[0];
+            //     var budgetPercentInput = document.getElementsByName('split_percent_input_value_' + _id)[0];
+            //     budgetAmountInput.removeAttribute('required');
+            //     budgetPercentInput.removeAttribute('required');
+            // }
         };
     }
     fifth.appendChild(btn);
@@ -684,7 +763,7 @@ function inputGroup(_id, _budget_id, isPre, label, name) {
     i.setAttribute('type', 'text');
     i.setAttribute('id', 'split_' + name + '_input_value_' + _id + '_' + _budget_id);
     i.setAttribute('name', 'split_' + name + '_input_value_' + _id);
-    i.setAttribute('required', '');
+    i.setAttribute('disabled', '');
 
     if (isPre) {
         d.appendChild(sig);
@@ -981,6 +1060,22 @@ function addNewLineItem(_id) {
     var end = document.getElementById('new_line_item');
     end.before(newBox);
 
+    // Register change event for quantity and unit price
+    var qi = document.getElementById(`quantity_${_id}`);
+    var ui = document.getElementById(`unit_price_${_id}`);
+    qi.addEventListener('change', function() {
+        var u = ui.value;
+        var q = qi.value;
+
+        updateLastSplitVal(_id, parseFloat(u) * parseFloat(q));
+    });
+    ui.addEventListener('change', function() {
+        var u = ui.value;
+        var q = qi.value;
+
+        updateLastSplitVal(_id, parseFloat(u) * parseFloat(q));
+    });
+
 }
 
 /** Bind to the initialized button */
@@ -1192,7 +1287,6 @@ function addNewUnitPrice(_id) {
     input.setAttribute('aria-label', 'Amount (to the nearest dollar)');
     input.setAttribute('id', 'unit_price_' + _id);
     input.setAttribute('name', 'unit-price-' + _id);
-    input.setAttribute('required', '');
     group.appendChild(prepend);
     group.appendChild(input);
     fieldset.appendChild(group);
