@@ -57,7 +57,7 @@ window.onload = function() {
 // just for debug
 function changeOrderStatus() {
     var data = {
-        OrderStatus: "Approved"
+        OrderStatus: "Updated"
     };
     var onSuccess = function(data) {
         if (data.status == true) {
@@ -1010,7 +1010,7 @@ function sendBackClicked() {
     const timeStamp = new Date(Date.now()).toISOString();
 
     var orderData = {
-        OrderStatus: "Updated" + "," + timeStamp
+        OrderStatus: "Updated"
     };
     var onSuccess = function(data) {
         if (data.status == true) {
@@ -1035,7 +1035,7 @@ function approveClicked() {
     const timeStamp = new Date(Date.now()).toISOString();
 
     var data = {
-        OrderStatus: "Accepted" + "," + timeStamp
+        OrderStatus: "Accepted"
     };
     var onSuccess = function(data) {
         if (data.status == true) {
@@ -1065,7 +1065,7 @@ function finishClicked() {
     // console.log(str.substring(idx + 1));
 
     var data = {
-        OrderStatus: "Completed" + "," + timeStamp
+        OrderStatus: "Completed"
     };
     var onSuccess = function(data) {
         if (data.status == true) {
