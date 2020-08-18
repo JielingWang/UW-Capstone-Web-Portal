@@ -32,20 +32,11 @@ window.onload = function() {
     // My pending request table and card
     this.getMyPendingRequestsInfo();
     this.updatePendingCards();
-    var table = this.initMyPendingReqTable();
-    this.updateMyPendingRequestsTable(table);
+    this.updateMyPendingRequestsTable();
 
     $("input:radio[name='my-pending-format']").on('change', function () {
         $("#my-pending-box").toggleClass("hidden");
         $("#my-pending-table").toggleClass("hidden");
-        // if ($("input:radio[name='my-pending-format']:checked").val() == 'list-format') {
-        //     $("#my-pending-box").toggleClass("hidden");
-        //     $("#my-pending-table").toggleClass("hidden");
-        // }
-        // if ($("input:radio[name='my-pending-format']:checked").val() == 'box-format') {
-        //     $("#my-pending-box").toggleClass("hidden");
-        //     $("#my-pending-table").toggleClass("hidden");
-        // }
     });
 
     // Prepare for modal
@@ -87,8 +78,20 @@ function updateAllRequestsTable() {
 
         getMyPendingRequestsInfo();
         updatePendingCards();
-        // var table_0 = $("#DataTables_Table_0");
-        // updateMyPendingRequestsTable(table_0);
+
+        // update datatable
+        var table_0 = $("#DataTables_Table_0").DataTable().clear().draw();
+        for (var i = 0; i < myReqArr.length; i++) {
+            var x = reqIdMap.get(myReqArr[i].RequestID);
+            table_0.row.add([
+                requestsInfo[x].RequestID,
+                requestsInfo[x].Requester,
+                requestsInfo[x].Type,
+                requestsInfo[x].Subunit,
+                requestsInfo[x].Date,
+                requestsInfo[x].Status
+            ]).draw();
+        }
     } );
 
     $('#DataTables_Table_1 tbody').on( 'click', "button[name='untakeButton']", function () {
@@ -104,24 +107,31 @@ function updateAllRequestsTable() {
             }
             getMyPendingRequestsInfo();
             updatePendingCards();
-            // updateMyPendingRequestsTable();
+            
+            // update datatable
+            var table_0 = $("#DataTables_Table_0").DataTable().clear().draw();
+            for (var i = 0; i < myReqArr.length; i++) {
+                var x = reqIdMap.get(myReqArr[i].RequestID);
+                table_0.row.add([
+                    requestsInfo[x].RequestID,
+                    requestsInfo[x].Requester,
+                    requestsInfo[x].Type,
+                    requestsInfo[x].Subunit,
+                    requestsInfo[x].Date,
+                    requestsInfo[x].Status
+                ]).draw();
+            }
         });
         
     } );
 }
 
-function initMyPendingReqTable() {
+
+function updateMyPendingRequestsTable() {
+
     var table = $("#DataTables_Table_0").DataTable({
         "order": [[0, "asc"]]
     });
-    return table;
-}
-
-
-function updateMyPendingRequestsTable(table) {
-    
-
-    // table.clear();
 
     for (var i = 0; i < myReqArr.length; i++) {
         var x = reqIdMap.get(myReqArr[i].RequestID);
