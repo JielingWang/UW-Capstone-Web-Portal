@@ -53,7 +53,8 @@ function changeOrderStatus() {
 
 
 function updateActionField(data) {
-    var request_status = basicInfo.OrderStatus;
+    var request_status = data.OrderStatus;
+    var originalAssigndeTo = data.assignedTo;
     var self_id = sessionStorage.getItem('id');
     if (request_status == "Approved" && self_id == originalAssigndeTo) {
         var acceptBtn = document.getElementById('accept-btn');

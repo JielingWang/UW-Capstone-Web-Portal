@@ -75,6 +75,7 @@ function updateAllRequestsTable() {
         cell.data('<button type="button" class="btn mr-0 mb-0 btn-outline-danger btn-sm" name="untakeButton" data-toggle="modal" data-target="#reassignModal">Untake</button>').draw();
         var assign_id = window.sessionStorage.getItem("id");
         updateAssignedInfo(data[0], assign_id);
+        sendRequestHistory(data[0], "Assigned");
 
         getMyPendingRequestsInfo();
         updatePendingCards();
@@ -189,15 +190,17 @@ function getUnitFiscalStaff() {
     makeGetRequest("units/getUserInfomation/" + unit_id, onSuccess, onFailure);
 }
 
-function modalReassignClicked(reqeust_id) {
+function modalReassignClicked(request_id) {
     var selector = document.getElementById("reassignSelect");
     var assign_id = selector.value;
     var assign_name = null;
     if (assign_id) {
         assign_name = selector.options[selector.selectedIndex].text;
-        updateAssignedInfo(reqeust_id, assign_id);
+        updateAssignedInfo(request_id, assign_id);
+        sendRequestHistory(request_id, "Reassigned to " + assign_name);
     } else {
-        untakeRequest(reqeust_id);
+        untakeRequest(request_id);
+        sendRequestHistory(request_id, "Untaken");
     }
     $('#reassignModal').modal('hide');
     return assign_name;
@@ -463,6 +466,26 @@ function updateAssignedInfo(request_id, assign_id) {
     }
 
     makePostRequest("assignOrder/" + request_id + "/" + assign_id, onSuccess, onFailure);
+}
+
+function sendRequestHistory(request_id, actionstr) {
+    var history = {
+        userName: window.sessionStorage.getItem("id"),
+        action: actionstr
+    };
+
+    var onSuccess = function(data) {
+        if (data.status == true) {
+            console.log("update success");
+        } else {
+            //error message
+        }
+    }
+
+    var onFailure = function() {
+        // failure message
+    }
+    makePostRequest("updateOrderHistory/" + request_id, history, onSuccess, onFailure);
 }
 
 /**

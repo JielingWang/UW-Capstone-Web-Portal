@@ -499,8 +499,8 @@ function submitClicked() {
     JSON_toServer.OrderType = "Reimbursement";
     JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
     // console.log(typeof(requestInfo));
-    JSON_toServer.OrderStatus = "Submitted"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
-    JSON_toServer.ChatInfo = "TEST CHAT INFO"; //leaving this empty since there's no chat when user upload a order first
+    JSON_toServer.OrderStatus = "Awaiting Approval"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
+    // JSON_toServer.ChatInfo = "TEST CHAT INFO"; //leaving this empty since there's no chat when user upload a order first
     JSON_toServer.assignedTo = null; //leaving this as null since there's no one assigned when a user upload/submit a order.
 
 
@@ -533,15 +533,33 @@ function submitClicked() {
             //convert order info to JSON
             const requestInfo_obj = JSON.parse(data_obj.OrderInfo);
             console.log(requestInfo_obj);
+            sendRequestHistory(data_obj._id, "Submitted");
             window.sessionStorage.setItem('RequestID', data_obj._id);
             window.location.href = "../../../html/ltr/users/user-request-detailpage.html";
-            
         }
     }
     request.open('POST', baseURL + "uploadOrder/" + type + "/" + unit_id);
     request.send(formData);
-    // window.location.href = "../../../html/ltr/users/user-summary.html";
-    // window.location.replace("../../../html/ltr/users/user-summary.html");
+}
+
+function sendRequestHistory(request_id, actionstr) {
+    var history = {
+        userName: window.sessionStorage.getItem("id"),
+        action: actionstr
+    };
+
+    var onSuccess = function(data) {
+        if (data.status == true) {
+            console.log("update success");
+        } else {
+            //error message
+        }
+    }
+
+    var onFailure = function() {
+        // failure message
+    }
+    makePostRequest("updateOrderHistory/" + request_id, history, onSuccess, onFailure);
 }
 
 
