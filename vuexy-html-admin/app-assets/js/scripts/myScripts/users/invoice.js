@@ -148,7 +148,7 @@ $(".steps-validation").steps({
         return form.valid();
     },
     onFinishing: function (event, currentIndex) {
-        form.validate().settings.ignore = ":disabled";
+        // form.validate().settings.ignore = ":disabled";
         return form.valid();
     },
     onFinished: function (event, currentIndex) {
@@ -171,6 +171,7 @@ $(".steps-validation").validate({
         $(element).removeClass(errorClass);
     },
     errorPlacement: function (error, element) {
+        console.log(error);
         if (element.hasClass('custom-control-input') || element.parent().hasClass('input-group')) {
             error.insertAfter(element.parent());
         } else {
@@ -901,7 +902,7 @@ function genBudgetsSelectBox(_id, _budget_id) {
     sel.setAttribute('class', 'custom-select form-control');
     sel.setAttribute('name', 'budget_num_' + _id);
     sel.setAttribute('id', 'budget_num_' + _id + '_' + _budget_id);
-    sel.setAttribute('required', '');
+    // sel.setAttribute('required', '');
     sel.appendChild(addBudgetData('0'));
     
     for (var i = 0; i < budgets_database.length; i++) {

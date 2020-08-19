@@ -6,6 +6,7 @@ var feedbackBlock = document.getElementById("feedback-block");
 var feedback = document.getElementById("feedback_input");
 
 var request_id = null;
+var requestInfo = null;
 
 window.onload = function() {
     request_id = window.sessionStorage.getItem('RequestID');
@@ -14,7 +15,7 @@ window.onload = function() {
     // Request Example: Reimbursement
     // request_id = "5f330189f2dc670044ab53f5";
     // Request Example: Purchase Request
-    // request_id = "5f1c92448813560044fa2c53";
+    // request_id = "5f3086c5f2dc670044ab53ea";
     // Request Example: Procard Receipt
     // request_id = "5f1b14228cc64b1bd881ba65";
     // Request Example: Pay an Invoice
@@ -53,13 +54,12 @@ function changeOrderStatus() {
 
 
 function updateActionField(data) {
-    // var request_status = data.OrderStatus;
-    // if (request_status == "Awaiting Approval") {
-    //     var approveBtn = document.getElementById('approve-btn');
-    //     approveBtn.disabled = false;
-    //     var sendBackBtn = document.getElementById('send-back-btn');
-    //     sendBackBtn.disabled = false;
-    // }
+    var request_status = data.OrderStatus;
+    var request_history = data.OrderHistory;
+    if (request_status == "Awaiting Approval" && request_history[0].action !== "Submitted") {
+        var updateBtn = document.getElementById('update-btn');
+        updateBtn.disabled = false;
+    }
 }
 
 
@@ -139,6 +139,37 @@ function takeNoteClicked() {
     }
     makePostRequest("updateChatInfo/" + request_id, data, onSuccess, onFailure);
     location.reload();
+}
+
+function updateClicked() {
+
+    var history = {
+        userName: window.sessionStorage.getItem("id"),
+        action: "Updated"
+    };
+
+    var onSuccess = function(data) {
+        if (data.status == true) {
+            console.log("update success");
+        } else {
+            //error message
+        }
+    }
+
+    var onFailure = function() {
+        // failure message
+    }
+    makePostRequest("updateOrderHistory/" + request_id, history, onSuccess, onFailure);
+    if (requestInfo.OrderType == "Reimbursement") {
+        window.location.href = "../../../html/ltr/users/user-reimbursement-new.html";
+    } else if (requestInfo.OrderType == "Purchase Request") {
+        window.location.href = "../../../html/ltr/users/user-purchase.html";
+    } else if (requestInfo.OrderType == "Procard Receipt") {
+        window.location.href = "../../../html/ltr/users/user-procard.html";
+    } else if (requestInfo.OrderType == "Pay an Invoice") {
+        window.location.href = "../../../html/ltr/users/user-invoice.html";
+    }
+    
 }
 
 
