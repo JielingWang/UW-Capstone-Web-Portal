@@ -142,7 +142,7 @@ function card_click(elementID, cardType)
         window.sessionStorage.setItem("subunitID",subunitID);
         window.sessionStorage.setItem("subunitName",SubunitName);
 
-        window.location.replace("../approvers/dashboard.html");
+        window.location.replace("../approvers/approver-dashboard.html");
     }
 }
 

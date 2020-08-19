@@ -12,7 +12,7 @@ window.onload = function() {
     this.console.log(request_id);
 
     // Request Example: Reimbursement
-    // request_id = "5f330189f2dc670044ab53f5";
+    // request_id = "5f1b2a648813560044fa2c52";
     // Request Example: Purchase Request
     // request_id = "5f1c92448813560044fa2c53";
     // Request Example: Procard Receipt
@@ -53,55 +53,13 @@ function changeOrderStatus() {
 
 
 function updateActionField(data) {
-    var request_status = basicInfo.OrderStatus;
-    var self_id = sessionStorage.getItem('id');
-    if (request_status == "Approved" && self_id == originalAssigndeTo) {
-        var acceptBtn = document.getElementById('accept-btn');
-        acceptBtn.disabled = false;
+    var request_status = data.OrderStatus;
+    if (request_status == "Awaiting Approval") {
+        var approveBtn = document.getElementById('approve-btn');
+        approveBtn.disabled = false;
         var sendBackBtn = document.getElementById('send-back-btn');
         sendBackBtn.disabled = false;
     }
-    if (request_status == "Accepted") {
-        var completeBtn = document.getElementById('complete-btn');
-        completeBtn.disabled = false;
-    }
-}
-
-
-function finishClicked() {
-    console.log('clicked');
-    const timeStamp = new Date(Date.now()).toISOString();
-    // console.log(timeStamp);
-    // console.log(moment(timeStamp).fromNow());
-    // const str = "Accepted,timestamp";
-    // var idx = str.indexOf(',');
-    // console.log(str.substring(idx + 1));
-
-    var data = {
-        OrderStatus: "Completed"
-    };
-
-    var history = {
-        userName: window.sessionStorage.getItem("id"),
-        action: "Completed"
-    };
-
-    var onSuccess = function(data) {
-        if (data.status == true) {
-            console.log("update success");
-        } else {
-            //error message
-            info = null;
-        }
-    }
-
-    var onFailure = function() {
-        // failure message
-        info = null;
-    }
-    makePostRequest("updateOrderStatus/" + request_id, data, onSuccess, onFailure);
-    makePostRequest("updateOrderHistory/" + request_id, history, onSuccess, onFailure);
-    location.reload();
 }
 
 
@@ -136,12 +94,12 @@ function sendBackClicked() {
 
 function approveClicked() {
     var data = {
-        OrderStatus: "Accepted"
+        OrderStatus: "Approved"
     };
 
     var history = {
         userName: window.sessionStorage.getItem("id"),
-        action: "Accepted"
+        action: "Approved"
     };
 
     var onSuccess = function(data) {
@@ -478,5 +436,3 @@ function genFinishStamp(request_status, timeStamp) {
     stamp.appendChild(time);
     return stamp;
 }
-
-

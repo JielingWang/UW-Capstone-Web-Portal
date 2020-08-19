@@ -9,13 +9,21 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Request History</title>
+    <title>Approver-dashboard</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/datatables.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/apexcharts.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/tether-theme-arrows.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/tether.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/shepherd-theme-default.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/datatables.min.css">
     <!-- END: Vendor CSS-->
 
@@ -30,6 +38,9 @@
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/dashboard-analytics.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/card-analytics.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/tour/tour.css">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -63,9 +74,6 @@
                                 <div class="search-input-icon"><i class="feather icon-search primary"></i></div>
                                 <input class="input" type="text" placeholder="Search..." tabindex="-1" data-search="template-list">
                                 <div class="search-input-close"><i class="feather icon-x"></i></div>
-                                <ul class="search-list search-list-main"> 
-                                    
-                                </ul>
                             </div>
                         </li>
 
@@ -121,10 +129,10 @@
                             </ul>
                         </li>
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">Ted Hanson</span><span class="user-status">CEE Administrator</span></div><span><img class="round" src="../../../app-assets/images/portrait/small/avatar-s-9.jpg" alt="avatar" height="40" width="40"></span>
+                                <div class="user-nav d-sm-flex d-none"><span id="navigationBarName" class="user-name text-bold-600">Name</span><span class="user-status">Approver</span></div><span><img id="navigationBarImage" class="round" src="" alt="avatar" height="40" width="40"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a>
-                                <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i class="feather icon-power"></i> Logout</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item" href="../login/auth-login.html" onclick="logout()"><i class="feather icon-power"></i> Logout</a>
                             </div>
                         </li>
                     </ul> 
@@ -132,6 +140,8 @@
             </div>
         </div>
     </nav>
+
+
     <!-- END: Header-->
 
 
@@ -149,7 +159,7 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-			    <li class="active"><a href="dashboard.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
+			    <li class="active"><a href="approver-dashboard.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
 				
 				<!-- <li class=" navigation-header"><span>General User</span></li>
 				<li class=" nav-item"><a href="#"><i class="feather icon-file-plus"></i><span class="menu-title" data-i18n="User">Create Request</span></a>
@@ -172,11 +182,11 @@
                 
 				<li class="nav-item"><a href="../users/orderHistory-new.html"><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">My Requests</span></a></li> -->
                 
-				<li class=" navigation-header"><span>Approver</span></li>
-				<li class=" nav-item"><a href="dashboard.html"><i class="feather icon-aperture"></i><span class="menu-title" data-i18n="UserSettings">Pending Requests</span></a></li>
+                <li class=" navigation-header"><span>Financial Staff</span></li>
+				<li class=" nav-item"><a href="approver-dashboard.html"><i class="feather icon-aperture"></i><span class="menu-title" data-i18n="UserSettings">Pending Requests</span></a></li>
 				
 				<li class=" navigation-header"><span>Settings</span></li>
-				<li class=" nav-item"><a href=""><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
+				<li class=" nav-item"><a href="approver-user-settings.html"><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-bell"></i><span class="menu-title" data-i18n="Notifications">Notifications</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-power"></i><span class="menu-title" data-i18n="Logout">Logout</span></a></li>
 				
@@ -197,53 +207,81 @@
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
-           
             <div class="content-body">
-               
-                <!-- Zero configuration table -->
-                <section id="basic-datatable">
+                <div class="card text-white bg-gradient-primary text-center">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <img src="../../../app-assets/images/elements/UW.png" alt="element 05" width="120" class="mb-1 img-fluid">
+                            <h1 class="text-white " id="welcome_userName" style="font-size:50px;"><b></b></h1>
+                            <p class="card-text text-white" id="welcome-unitName"><i class="feather icon-map-pin"></i></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BEGIN: General Requests Table -->
+            <div class="content-header row">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="col-12">
+                            <h2 class="content-header-title float-left mb-0">Pending Requests</h2>
+                            <div class="breadcrumb-wrapper col-12">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">Home</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">Pending Requests
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+                    <div class="form-group breadcrum-right">
+                        <div class="dropdown">
+                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-settings"></i></button>
+                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">Chat</a><a class="dropdown-item" href="#">Email</a><a class="dropdown-item" href="#">Calendar</a></div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+
+            <div class="content-body">
+                <section id="basic-databable">
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Request History</h4>
-                                </div>
+                                <!-- <div class="card-header">
+                                    <h4 class="card-title">All Requests</h4>
+                                </div> -->
                                 <div class="card-content">
                                     <div class="card-body card-dashboard">
                                         <div class="table-responsive">
-                                            <table id="table" class="table zero-configuration">
+                                            <table class="table zero-configuration table-hover" id="DataTables_Table_1">
                                                 <thead>
                                                     <tr>
                                                         <th>Request ID</th>
-                                                        <th>Name</th>
-                                                        <th>Type</th>
-                                                        <th>Amount</th>
+                                                        <th>Requester</th>
+                                                        <th>Type of Request</th>
+                                                        <th>Sub-unit</th>
                                                         <th>Date</th>
                                                         <th>Status</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
+                                                <tbody id="request_table_body">
                                                     
-                                                   
                                                 </tbody>
-                                                <tfoot>
+                                                <!-- <tfoot>
                                                     <tr>
                                                         <th>Request ID</th>
-                                                        <th>Name</th>
-                                                        <th>Type</th>
-                                                        <th>Amount</th>
+                                                        <th>Requester</th>
+                                                        <th>Type of Request</th>
+                                                        <th>Sub-unit</th>
                                                         <th>Date</th>
                                                         <th>Status</th>
+                                                        <th>Assigned To</th>
                                                     </tr>
-                                                </tfoot>
+                                                </tfoot> -->
                                             </table>
                                         </div>
                                     </div>
@@ -252,179 +290,94 @@
                         </div>
                     </div>
                 </section>
-                <!--/ Zero configuration table -->
-
             </div>
+            <!-- END: General Requests Table -->
+
+            <!-- <div class="content-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="mb-0">All Requests</h4> 
+                                
+                                <p>    Sort by
+                                    <select id="basicSelect">
+                                        <option></option>
+                                        <option>Requester</option>
+                                        <option>Department</option>
+                                        <option>Date</option>
+                                    </select>
+                                </p>
+                                
+                                
+                            </div>
+                            <div class="card-content">
+                                <div class="table-responsive mt-1">
+                                    <table class="table table-hover-animation mb-0" id="request_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Request ID</th>
+                                                <th>Requester</th>
+                                                <th>Type of Request</th>
+                                                <th>Sub-unit</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                                <th>Assigned To</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="request_table_body">
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div> -->
         </div>
     </div>
     <!-- END: Content-->
 
+    <!-- BEGIN: Modal -->
+    <div class="modal fade" id="reassignModal" tabindex="-1" role="dialog" aria-labelledby="reassignModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reassignModalLabel">Untake Request</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- <span>Please select a fiscal staff to reassign:</span> -->
+                    <form>
+                        <div class="form-group">
+                            <label for="reassignSelect">Please select a fiscal staff to reassign</label>
+                            <select class="form-control" id="reassignSelect">
+                                <option value="">Not reassign to others</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" name="reassign">Reassign</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END: Modal -->
+
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>
-    <script>
-        const baseURL = "https://coe-api.azurewebsites.net/api/";
-        var user_id = "5e8e4bcaa148b90044206526";
 
+    <!-- BEGIN: Footer-->
+    <footer class="footer footer-static footer-light">
 
-        // Template POst request Ajax call
-        var makePostRequest = function(url, data, onSuccess, onFailure) {
-            $.ajax({
-                async:false,
-                type: 'POST',
-                url: baseURL + url,
-                data: JSON.stringify(data),
-                contentType: "application/json",
-                dataType: "json",
-                success: onSuccess,
-                error: onFailure
-            });
-        };
-
-        // Template PUT request Ajax call
-        var makePutRequest = function(url, data, onSuccess, onFailure) {
-            $.ajax({
-                async:false,
-                type: 'PUT',
-                url: baseURL + url,
-                data: JSON.stringify(data),
-                contentType: "application/json",
-                dataType: "json",
-                success: onSuccess,
-                error: onFailure
-            });
-        };
-
-
-        // Template Delete request Ajax call
-        var makeDeleteRequest = function(url, onSuccess, onFailure) {
-            $.ajax({
-                async:false,
-                type: 'DELETE',
-                url: baseURL + url,
-                dataType: "json",
-                success: onSuccess,
-                error: onFailure
-            });
-        };	
-
-        // Template GET request Ajax call
-        var makeGetRequest = function(url, onSuccess, onFailure) {
-            $.ajax({
-                async:false,
-                type: 'GET',
-                url: baseURL + url,
-                dataType: "json",
-                success: onSuccess,
-                error: onFailure
-            });
-        };
-
-        window.onload = function(){
-            //alert("hello");
-            var onSuccess = function(data)
-            {
-                alert("success");
-                var index=0;
-                var rowindex = 1;
-
-                var createClickHandler = function(arg,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23,arg24,arg25,arg26,arg27,arg28,arg29) {
-                            return function() {
-                                //var id = cell1.innerHTML;
-                                window.location.href = "test.php?id="+arg.innerHTML
-                                                    +"&type="+arg1.innerHTML
-                                                    +"&date="+arg2.innerHTML
-                                                    +"&status="+arg3.innerHTML
-                                                    +"&amount="+arg4.innerHTML
-                                                    +"&firstname="+arg5
-                                                    +"&lastname="+arg6
-                                                    +"&departure="+arg7
-                                                    +"&destination="+arg8
-                                                    +"&date="+arg9
-                                                    +"&returndate="+arg10
-                                                    +"&reason="+arg11
-                                                    +"&flight="+arg12
-                                                    +"&flight_company="+arg13
-                                                    +"&flight_number="+arg14
-                                                    +"&flight_from="+arg15
-                                                    +"&flight_to="+arg16
-                                                    +"&flight_departdate="+arg17
-                                                    +"&flight_returndate="+arg18
-                                                    +"&flight_amount="+arg19
-                                                    +"&hotel="+arg20
-                                                    +"&hotel_name="+arg21
-                                                    +"&hotel_address="+arg22
-                                                    +"&hotel_num="+arg23
-                                                    +"&hotel_zip="+arg24
-                                                    +"&hotel_amount="+arg25
-                                                    +"&hotel_link="+arg26
-                                                    +"&flight_reference="+arg27
-                                                    +"&hotel_note="+arg28
-                                                    +"&birthday="+arg29;
-                            };
-                }
-
-                var table = document.getElementById("table");               
-                while(data.data[index]){
-                   
-                    var temp = JSON.parse(data.data[index].OrderInfo);
-
-                    var row=table.insertRow(rowindex);
-                    var cell1=row.insertCell(0);
-                    var cell2=row.insertCell(1);
-                    var cell3=row.insertCell(2);
-                    var cell4=row.insertCell(3);
-                    var cell5=row.insertCell(4);
-                    var cell6=row.insertCell(5);
-                    cell1.innerHTML=data.data[index]._id;
-                    cell2.innerHTML=temp.FirstName;
-                    cell3.innerHTML=data.data[index].OrderType;
-                    cell4.innerHTML="N/A";
-                    cell5.innerHTML=data.data[index].submittedOn.substring(0,10);
-                    cell6.innerHTML=data.data[index].OrderStatus;
-
-                    row.onclick = createClickHandler(cell1,cell3,cell5,cell6,cell4
-                                                    ,temp.FirstName
-                                                    ,temp.LastName
-                                                    ,temp.Departure
-                                                    ,temp.Destination
-                                                    ,temp.Date
-                                                    ,temp.ReturnDate
-                                                    ,temp.Reason
-                                                    ,temp.Flight
-                                                    ,temp.FlightCompany
-                                                    ,temp.FlightNumber
-                                                    ,temp.FlightFrom
-                                                    ,temp.FlightTo
-                                                    ,temp.FlightDepartingDate
-                                                    ,temp.FlightReturningDate
-                                                    ,temp.FlightAmount
-                                                    ,temp.Hotel
-                                                    ,temp.HotelName
-                                                    ,temp.HotelAddress
-                                                    ,temp.HotelNum
-                                                    ,temp.HotelZip
-                                                    ,temp.HotelAmount
-                                                    ,temp.HotelLink
-                                                    ,temp.FlightReference
-                                                    ,temp.HotelNote
-                                                    ,temp.Birthday
-                                                    
-                                                    );
-                    console.error(temp.Date);
-                    row.style="cursor:pointer";
-                    rowindex++;
-                    index++
-                }
-                //table.className='table zero-configuration'
-            }
-            var onFaliure = function(){
-                alert("fail");
-                document.getElementById("test").innerHTML = "Backend faliure occured";
-            }
-            makeGetRequest("getOrders/5e8e4bcaa148b90044206526",onSuccess,onFaliure);
-        }
-
-    </script>
+    </footer>
+    <!-- END: Footer-->
 
 
     <!-- BEGIN: Vendor JS-->
@@ -442,6 +395,12 @@
     <script src="../../../app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
     <!-- END: Page Vendor JS-->
 
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/tether.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/shepherd.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
     <!-- BEGIN: Theme JS-->
     <script src="../../../app-assets/js/core/app-menu.js"></script>
     <script src="../../../app-assets/js/core/app.js"></script>
@@ -449,8 +408,16 @@
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
-    <script src="../../../app-assets/js/scripts/datatables/datatable.js"></script>
+    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
     <!-- END: Page JS-->
+
+    <!-- BEGIN: My JS-->
+    <script src="../../../app-assets/js/scripts/myScripts/connections/connections.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/connections/welcomeGenerator.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/Admin/navigation_handler.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/approvers/approver-dash.js"></script>
+    <!-- END: My JS-->
+
 
 </body>
 <!-- END: Body-->

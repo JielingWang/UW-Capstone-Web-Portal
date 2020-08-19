@@ -119,7 +119,7 @@
                             </ul>
                         </li>
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="user-nav d-sm-flex d-none"><span id="navigationBarName" class="user-name text-bold-600">Name</span><span class="user-status">Fiscal Staff</span></div><span><img id="navigationBarImage" class="round" src="" alt="avatar" height="40" width="40"></span>
+                                <div class="user-nav d-sm-flex d-none"><span id="navigationBarName" class="user-name text-bold-600">Name</span><span class="user-status">Approver</span></div><span><img id="navigationBarImage" class="round" src="" alt="avatar" height="40" width="40"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a>
                                 <div class="dropdown-divider"></div><a class="dropdown-item" href="../login/auth-login.html" onclick="logout()"><i class="feather icon-power"></i> Logout</a>
@@ -149,7 +149,7 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-			    <li><a href="buyer-dashboard.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
+			    <li><a href="approver-dashboard.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
 				
 				<!-- <li class=" navigation-header"><span>General User</span></li>
 				<li class=" nav-item"><a href="#"><i class="feather icon-file-plus"></i><span class="menu-title" data-i18n="User">Create Request</span></a>
@@ -173,7 +173,7 @@
 				<li class="nav-item"><a href="../users/orderHistory-new.html"><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">My Requests</span></a></li> -->
                 
                 <li class=" navigation-header"><span>Financial Staff</span></li>
-				<li class="active nav-item"><a href="../buyers/buyer-dashboard.html"><i class="feather icon-aperture"></i><span class="menu-title" data-i18n="UserSettings">Pending Requests</span></a></li>
+				<li class="active nav-item"><a href="../approvers/approver-dashboard.html"><i class="feather icon-aperture"></i><span class="menu-title" data-i18n="UserSettings">Pending Requests</span></a></li>
 				
 				<li class=" navigation-header"><span>Settings</span></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
@@ -525,9 +525,9 @@
                                         </div>
                                         <div class="form-actions">
                                             <button type="button" class="btn btn-outline-primary mr-1" onclick="takeNoteClicked()"><i class="mr-1 fa fa-pencil"></i>Take Note</button>
-                                            <button type="button" class="btn btn-outline-success mr-1" id="accept-btn" disabled onclick="approveClicked()"><i class="mr-1 fa fa-check"></i>Accept</button>
+                                            <button type="button" class="btn btn-outline-success mr-1" id="approve-btn" disabled onclick="approveClicked()"><i class="mr-1 fa fa-check"></i>Approve</button>
                                             <button type="button" class="btn btn-outline-danger mr-1" id="send-back-btn" disabled onclick="sendBackClicked()"><i class="mr-1 fa fa-times"></i>Send Back</button>
-                                            <button type="button" class="btn btn-success mr-1" id="complete-btn" disabled onclick="finishClicked()"><i class="mr-1 fa fa-check-square-o"></i>Complete</button>
+                                            <!-- <button type="button" class="btn btn-success mr-1" id="complete-btn" disabled onclick="finishClicked()"><i class="mr-1 fa fa-check-square-o"></i>Complete</button> -->
                                         </div>
                                     </form>
                                 </div>
@@ -577,7 +577,7 @@
     <script src="../../../app-assets/js/scripts/myScripts/Admin/navigation_handler.js"></script>
     <script src="../../../app-assets/js/scripts/myScripts/requests/requestinfo.js"></script>
     <script src="../../../app-assets/js/scripts/myScripts/requests/historyandnote.js"></script>
-    <script src="../../../app-assets/js/scripts/myScripts/buyers/buyer-request-detail.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/approvers/approver-request-detail.js"></script>
     <!-- END: My JS-->
 
 </body>

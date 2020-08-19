@@ -1,5 +1,5 @@
 const baseURL = "https://coe-api.azurewebsites.net/api/";
-//const baseURL = "http://localhost:3000/api/";
+// const baseURL = "http://localhost:3000/api/";
 
 // Template POst request Ajax call
 var makePostRequest = function(url, data, onSuccess, onFailure) {
