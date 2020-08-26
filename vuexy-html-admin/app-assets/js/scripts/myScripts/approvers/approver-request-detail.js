@@ -54,7 +54,9 @@ function changeOrderStatus() {
 
 function updateActionField(data) {
     var request_status = data.OrderStatus;
-    if (request_status == "Awaiting Approval") {
+    var request_history = data.OrderHistory;
+    var n = request_history.length;
+    if (request_history[n - 1].action == "Submitted" || request_history[n - 1].action == "Updated") {
         var approveBtn = document.getElementById('approve-btn');
         approveBtn.disabled = false;
         var sendBackBtn = document.getElementById('send-back-btn');

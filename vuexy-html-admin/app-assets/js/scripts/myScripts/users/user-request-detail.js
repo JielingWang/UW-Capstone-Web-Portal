@@ -56,41 +56,12 @@ function changeOrderStatus() {
 function updateActionField(data) {
     var request_status = data.OrderStatus;
     var request_history = data.OrderHistory;
-    if (request_status == "Awaiting Approval" && request_history[0].action !== "Submitted") {
+    var n = request_history.length;
+    if (request_history[n - 1].action == "Sent Back") {
         var updateBtn = document.getElementById('update-btn');
         updateBtn.disabled = false;
     }
 }
-
-
-// function sendBackClicked() {
-//     var orderData = {
-//         OrderStatus: "Awaiting Approval"
-//     };
-
-//     var history = {
-//         userName: window.sessionStorage.getItem("id"),
-//         action: "Sent Back"
-//     };
-
-//     var onSuccess = function(data) {
-//         if (data.status == true) {
-//             console.log("update success");
-//         } else {
-//             //error message
-//             info = null;
-//         }
-//     }
-
-//     var onFailure = function() {
-//         // failure message
-//         info = null;
-//     }
-//     // makePostRequest("updateChatInfo/" + request_id, chatData, onSuccess, onFailure);
-//     makePostRequest("updateOrderStatus/" + request_id, orderData, onSuccess, onFailure);
-//     makePostRequest("updateOrderHistory/" + request_id, history, onSuccess, onFailure);
-//     location.reload();
-// }
 
 // function approveClicked() {
 //     var data = {
@@ -143,30 +114,34 @@ function takeNoteClicked() {
 
 function updateClicked() {
 
-    var history = {
-        userName: window.sessionStorage.getItem("id"),
-        action: "Updated"
-    };
+    // var history = {
+    //     userName: window.sessionStorage.getItem("id"),
+    //     action: "Updated"
+    // };
 
-    var onSuccess = function(data) {
-        if (data.status == true) {
-            console.log("update success");
-        } else {
-            //error message
-        }
-    }
+    // var onSuccess = function(data) {
+    //     if (data.status == true) {
+    //         console.log("update success");
+    //     } else {
+    //         //error message
+    //     }
+    // }
 
-    var onFailure = function() {
-        // failure message
-    }
-    makePostRequest("updateOrderHistory/" + request_id, history, onSuccess, onFailure);
+    // var onFailure = function() {
+    //     // failure message
+    // }
+    // makePostRequest("updateOrderHistory/" + request_id, history, onSuccess, onFailure);
     if (requestInfo.OrderType == "Reimbursement") {
-        window.location.href = "../../../html/ltr/users/user-reimbursement-new.html";
+        window.sessionStorage.setItem('RequestType', "Reimbursement");
+        window.location.href = "../../../html/ltr/users/user-reimbursement-3.html";
     } else if (requestInfo.OrderType == "Purchase Request") {
+        window.sessionStorage.setItem('RequestType', "Purchase Request");
         window.location.href = "../../../html/ltr/users/user-purchase.html";
     } else if (requestInfo.OrderType == "Procard Receipt") {
+        window.sessionStorage.setItem('RequestType', "Procard Receipt");
         window.location.href = "../../../html/ltr/users/user-procard.html";
     } else if (requestInfo.OrderType == "Pay an Invoice") {
+        window.sessionStorage.setItem('RequestType', "Pay an Invoice");
         window.location.href = "../../../html/ltr/users/user-invoice.html";
     }
     
