@@ -1,35 +1,14 @@
-var requestType = document.getElementById("request-type");
-var requester = document.getElementById("requester");
-var payee = document.getElementById("payee");
-var subunit = document.getElementById("subunit");
-
-var requestStatus = document.getElementById("status");
-var requestDate = document.getElementById("request-date");
-var requestID = document.getElementById("requestID");
-var assignedTo = document.getElementById("assignedTo");
-
-var requestInfoHead = document.getElementById('request-info-head');
-var requestInfoBody = document.getElementById('request-info-body');
-
-var lineItemTableHead = document.getElementById('line-item-table-head');
-var lineItemTableBody = document.getElementById('line-item-table-body');
-
-var historyCard = document.getElementById("history_card");
-var requestHistory = document.getElementById("request-history");
 var reqApproverArr = [];
 var reqBuyer = {};
+let approverResponseMap = new Map(); // key: approverid, value: {name, response}
 
-var noteCard = document.getElementById("note_card");
-var noteContent = document.getElementById("notes");
 var feedbackBlock = document.getElementById("feedback-block");
+var feedback = document.getElementById("feedback_input");
 
 var request_id = null;
+const baseURL = "https://coe-api.azurewebsites.net/api/";
+var user_id = "5e8e45eea148b9004420651f";
 
-var itemAmount = 0;
-var addTax = 0;
-
-//const baseURL = "https://coe-api.azurewebsites.net/api/";
-var user_id = "5e8e4bcaa148b90044206526";
 // Template POst request Ajax call
 var makePostRequest = function(url, data, onSuccess, onFailure) {
     $.ajax({
@@ -44,7 +23,7 @@ var makePostRequest = function(url, data, onSuccess, onFailure) {
     });
 };
 
-        // Template PUT request Ajax call
+// Template PUT request Ajax call
 var makePutRequest = function(url, data, onSuccess, onFailure) {
     $.ajax({
         async:false,
@@ -69,9 +48,9 @@ var makeDeleteRequest = function(url, onSuccess, onFailure) {
         success: onSuccess,
         error: onFailure
     });
-};	
+};
 
-        // Template GET request Ajax call
+// Template GET request Ajax call
 var makeGetRequest = function(url, onSuccess, onFailure) {
     $.ajax({
         async:false,
@@ -82,24 +61,188 @@ var makeGetRequest = function(url, onSuccess, onFailure) {
         error: onFailure
     });
 };
+window.onload = function() {
+    document.getElementById('requestID').innerHTML = window.sessionStorage.getItem("orderId");
+    document.getElementById('request-type').innerHTML = window.sessionStorage.getItem("type")+"&nbsp;";
+    document.getElementById('requester').innerHTML = window.sessionStorage.getItem("user_name");
+    document.getElementById('subunit').innerHTML = window.sessionStorage.getItem("user_subunitName");
+    document.getElementById('userEmail').innerHTML = window.sessionStorage.getItem("user_email");
+    document.getElementById('userUWID').innerHTML = window.sessionStorage.getItem("user_uwid");
+    document.getElementById('accessLevel').innerHTML = window.sessionStorage.getItem("user_AccessLevel");
+    document.getElementById('status').innerHTML ="<i class=\"fa fa-circle font-small-3 text-warning mr-50\"></i>" + window.sessionStorage.getItem("status");
+    document.getElementById('submitDate').innerHTML = window.sessionStorage.getItem("submit_date");
+    if(window.sessionStorage.getItem("budget_length").localeCompare("1")==0){
+        document.getElementById('budget').innerHTML = window.sessionStorage.getItem("budget1") +" "+window.sessionStorage.getItem("split1");
+    }else{
+        document.getElementById('budget').innerHTML = window.sessionStorage.getItem("budget1") +" "+window.sessionStorage.getItem("split1")
+                                                +"<br>"+window.sessionStorage.getItem("budget2") +" "+window.sessionStorage.getItem("split2");
+    }
+    document.getElementById('travelBefore').innerHTML = window.sessionStorage.getItem("TravelBefore");
+    if(window.sessionStorage.getItem("SomeoneName").length==0){
+        document.getElementById('requestFor').innerHTML = window.sessionStorage.getItem("user_name");
+    }else{
+        document.getElementById('requestFor').innerHTML = window.sessionStorage.getItem("SomeoneName");
+    }
+    document.getElementById('us').innerHTML = window.sessionStorage.getItem("US");
+    document.getElementById('purpose').innerHTML = window.sessionStorage.getItem("purpose");
+    document.getElementById('referenceNumber').innerHTML = window.sessionStorage.getItem("ReferenceNumber")+"&nbsp;";
+    if(window.sessionStorage.getItem("SomeoneName").length==0){
+        document.getElementById('email').innerHTML = window.sessionStorage.getItem("user_email");
+    }else{
+        document.getElementById('email').innerHTML = window.sessionStorage.getItem("SomeoneEmail");
+    }
+    if(window.sessionStorage.getItem("passport_file").localeCompare("undefined")!=0){
+        document.getElementById('passportFile').innerHTML = "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/" 
+                                                        + window.sessionStorage.getItem("orderId") + "/" 
+                                                        + window.sessionStorage.getItem("passport_file")
+                                                        + "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";
+    }
+    if(window.sessionStorage.getItem("visa_file").localeCompare("undefined")!=0){
+        document.getElementById('visaFile').innerHTML = "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/" 
+                                                        + window.sessionStorage.getItem("orderId") + "/" 
+                                                        + window.sessionStorage.getItem("visa_file")
+                                                        + "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";
+    }
+    if(window.sessionStorage.getItem("registration_file").localeCompare("undefined")!=0){
+        document.getElementById('registrationFile').innerHTML = "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/" 
+                                                        + window.sessionStorage.getItem("orderId") + "/" 
+                                                        + window.sessionStorage.getItem("registration_file")
+                                                        + "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";
+    }
+    if(window.sessionStorage.getItem("car_file").localeCompare("undefined")!=0){
+        document.getElementById('carFile').innerHTML = "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/" 
+                                                        + window.sessionStorage.getItem("orderId") + "/" 
+                                                        + window.sessionStorage.getItem("car_file")
+                                                        + "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";
+    }
+    if(window.sessionStorage.getItem("rental_file").localeCompare("undefined")!=0){
+        document.getElementById('carRentalFile').innerHTML = "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/" 
+                                                        + window.sessionStorage.getItem("orderId") + "/" 
+                                                        + window.sessionStorage.getItem("rental_file")
+                                                        + "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";
+    }
+    if(window.sessionStorage.getItem("airfare_file").localeCompare("undefined")!=0){
+        document.getElementById('airfareFile').innerHTML = "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/" 
+                                                        + window.sessionStorage.getItem("orderId") + "/" 
+                                                        + window.sessionStorage.getItem("airfare_file")
+                                                        + "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";
+    }
+    if(window.sessionStorage.getItem("train_file").localeCompare("undefined")!=0){
+        document.getElementById('trainFile').innerHTML = "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/" 
+                                                        + window.sessionStorage.getItem("orderId") + "/" 
+                                                        + window.sessionStorage.getItem("train_file")
+                                                        + "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";
+    }
+    if(window.sessionStorage.getItem("hotel_file").localeCompare("undefined")!=0){
+        document.getElementById('hotelFile').innerHTML = "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/" 
+                                                        + window.sessionStorage.getItem("orderId") + "/" 
+                                                        + window.sessionStorage.getItem("hotel_file")
+                                                        + "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";
+    }
+    document.getElementById('personalTravel').innerHTML = window.sessionStorage.getItem("personalTravel");
+    document.getElementById('affliation').innerHTML = window.sessionStorage.getItem("SomeoneAffliation")+"&nbsp;";
+    document.getElementById('travelDetail').innerHTML = window.sessionStorage.getItem("personalTravelDetails");
+    document.getElementById('registration').innerHTML = "$"+window.sessionStorage.getItem("registration")+"&nbsp;";
+    document.getElementById('carFee').innerHTML = "$"+window.sessionStorage.getItem("car")+"&nbsp;";
+    document.getElementById('carRental').innerHTML = "$"+window.sessionStorage.getItem("carRental")+"&nbsp;";
+    document.getElementById('airfare').innerHTML = "$"+window.sessionStorage.getItem("airfare")+"&nbsp;";
+    document.getElementById('train').innerHTML = "$"+window.sessionStorage.getItem("train")+"&nbsp;";
+    document.getElementById('hotel').innerHTML = "$"+window.sessionStorage.getItem("hotelFee")+"&nbsp;";
+    if(window.sessionStorage.getItem("meal").localeCompare("meal1")==0){
+        document.getElementById('meal').innerHTML = "Yes, maximum allowable perdiem";
+    }else if(window.sessionStorage.getItem("meal").localeCompare("meal2")==0){
+        document.getElementById('meal').innerHTML = "Yes, specifc days and meals";
+    }else if(window.sessionStorage.getItem("meal").localeCompare("meal3")==0){
+        document.getElementById('meal').innerHTML = "Yes, specific amount";
+    }else if(window.sessionStorage.getItem("meal").localeCompare("meal4")==0){
+        document.getElementById('meal').innerHTML = "No";
+    }
+    document.getElementById('mealAmount').innerHTML = "$"+window.sessionStorage.getItem("meal_amount")+"&nbsp;";
+    document.getElementById('mealProvid').innerHTML = window.sessionStorage.getItem("mealProvided")+"&nbsp;";
+    var onSuccess = function(data){
+        var col1=1;
+        var orderinfo = JSON.parse(data.data.OrderInfo);
+        var table = document.getElementById("meal_table1");
 
+        var i;
+        var col=2;
+        for(i=0;i<orderinfo.Meal_table1.length;i++){
+            var row = table.insertRow(col+i);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);//space
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            cell1.innerHTML=orderinfo.Meal_table1[i].Date;
+            if(orderinfo.Meal_table1[i].Breakfast==true){
+                cell2.innerHTML="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*";
+            }
+            if(orderinfo.Meal_table1[i].Lunch==true){
+                cell3.innerHTML="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*";
+            }
+            if(orderinfo.Meal_table1[i].Dinner==true){
+                cell4.innerHTML="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*";
+            }
+        }
 
+        var col2=2;
+        var table2 = document.getElementById("meal_table2");
+        for(i=0;i<orderinfo.Meal_table2.length;i++){
+            var row = table2.insertRow(col+i);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);//space
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            cell1.innerHTML=orderinfo.Meal_table2[i].Date;
+            if(orderinfo.Meal_table2[i].Breakfast==true){
+                cell2.innerHTML="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*";
+            }
+            if(orderinfo.Meal_table2[i].Lunch==true){
+                cell3.innerHTML="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*";
+            }
+            if(orderinfo.Meal_table2[i].Dinner==true){
+                cell4.innerHTML="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*";
+            }
+        }
+        request_id = window.sessionStorage.getItem('orderId');
+        requestInfo = getRequestInfo(request_id);
+        //console.log(requestInfo);
+        updateHistory(requestInfo);
+        prepareNotesArr(requestInfo);
+        updateNotes();
 
-
-function updateNotes(data) {
-    noteCard.style.height = `${historyCard.clientHeight}px`;
-    //noteContent.innerHTML = data.ChatInfo;
+        updateActionField(requestInfo);
+    }
+    var onFaliure = function(){
+        alert("fail");
+    }
+    makeGetRequest("getOrderInformation/"+js_id,onSuccess,onFaliure);
 }
 
-/**
- * Get the user information, return the JSON object
- * @param {int} user_id 
- */
-function getUserInfo(user_id) {
-    var info = null;
+function updateActionField(data) {
+    var request_status = data.OrderStatus;
+    var originalAssigndeTo = data.assignedTo;
+    var self_id = sessionStorage.getItem('id');
+    if (request_status == "Approved" && self_id == originalAssigndeTo) {
+        var acceptBtn = document.getElementById('accept-btn');
+        acceptBtn.disabled = false;
+        var sendBackBtn = document.getElementById('send-back-btn');
+        sendBackBtn.disabled = false;
+    }
+    if (request_status == "Accepted") {
+        var completeBtn = document.getElementById('complete-btn');
+        completeBtn.disabled = false;
+    }
+}
+
+function takeNoteClicked() {
+    // send data
+    var data = {
+        userName: window.sessionStorage.getItem("id"),
+        comment: feedback.value
+    };
     var onSuccess = function(data) {
         if (data.status == true) {
-            info = data.data;
+            console.log("update success");
         } else {
             //error message
             info = null;
@@ -110,10 +253,10 @@ function getUserInfo(user_id) {
         // failure message
         info = null;
     }
-
-    makeGetRequest("getuserInformation/" + user_id, onSuccess, onFailure);
-    return info;
+    makePostRequest("updateChatInfo/" + request_id, data, onSuccess, onFailure);
+    location.reload();
 }
+
 
 /**
  * Get the request information with the global variable request_id
@@ -143,60 +286,16 @@ function getRequestInfo(request_id) {
 }
 
 
-
-/**
- * Get names of all attached files
- * Return the JSON Object
- * @param {string} request_id 
- */
-function getDocsName(request_id) {
-    var info = null;
-    var onSuccess = function(data) {
-        if (data.status == true) {
-            info = data.data;
-        } else {
-            //error message
-            info = null;
-        }
-    }
-
-    var onFailure = function() {
-        // failure message
-        info = null;
-    }
-
-    makeGetRequest("getfilesAttached/" + request_id, onSuccess, onFailure);
-    return info;
-}
-
-/**
- * Collect history information based on the ApprovalResponses item in request info
- * @param {JSON Object} responses 
- * @param {array} reqApproverArr global JSON Object array, e.g:
- *                reqApproverArr = [{
- *                                      Approver: Jieling Wang,
- *                                      Reponses: [true, true]
- *                                  }]
- */
 function collectHistoryInfo(data) {
     var responses = data.ApprovalResponses;
     for (var i = 0; i < responses.length; i++) {
-        var r = responses[i].approverResponses;
-        for (var j = 0; j < r.length; j++) {
-            var approverName = getUserInfo(r[j].approverID_ref).userInfo.Name;
-            var idx = findApprover(approverName);
-            if (idx > -1) {
-                if (r[j].response) {
-                    reqApproverArr[idx].Responses.push(r[j].response);
-                }
-            } else {
-                var res = [];
-                if (r[j].response) {
-                    res.push(r[j].response);
-                }
-                reqApproverArr.push({
-                    Approver: approverName,
-                    Responses: res
+        var responseData = responses[i].approverResponses;
+        for (var x = 0; x < responseData.length; x++) {
+            var approver_id = responseData[x].approverID_ref;
+            if (!approverResponseMap.has(approver_id)) {
+                approverResponseMap.set(approver_id, {
+                    name: getUserInfo(approver_id).userInfo.Name,
+                    response: responseData[x].response
                 });
             }
         }
@@ -210,18 +309,21 @@ function collectHistoryInfo(data) {
         Status: data.OrderStatus,
         AssignedTo: buyerName
     };
-}
 
-function updateRequestHistory() {
-    requestHistory.appendChild(genFormStamp("Submitted"));
-    for (var i = 0; i < reqApproverArr.length; i++) {
-        var approver = reqApproverArr[i].Approver;
-        var responses = reqApproverArr[i].Responses;
-        requestHistory.appendChild(genApprovalStamp(approver, responses));
+    requestHistory.appendChild(genFormStamp("Submitted", data.submittedOn));
+    if (approverResponseMap.size == 0) {
+        requestHistory.appendChild(genApprovalStamp(null, null));
+    } else {
+        for (const [key, value] of approverResponseMap.entries()) {
+            var appr = value.name;
+            var resp = value.response;
+            requestHistory.appendChild(genApprovalStamp(appr, resp));
+        }
     }
-    requestHistory.appendChild(genFiscalStaffStamp(reqBuyer.Status, reqBuyer.AssignedTo));
-    requestHistory.appendChild(genClaimStamp(reqBuyer.Status));
-    requestHistory.appendChild(genFinishStamp(reqBuyer.Status));
+    // add status and timestamp
+    requestHistory.appendChild(genFiscalStaffStamp(reqBuyer.Status, reqBuyer.AssignedTo, data.lastModified));
+    requestHistory.appendChild(genClaimStamp(reqBuyer.Status, data.lastModified));
+    requestHistory.appendChild(genFinishStamp(reqBuyer.Status, data.lastModified));
 }
 
 /**
@@ -229,30 +331,32 @@ function updateRequestHistory() {
  * @param {string} name the approver's name
  * Return the index in reqApproverArr array
  */
-function findApprover(name) {
-    var result = -1;
-    for (var i = 0; i < reqApproverArr.length; i++) {
-        if (reqApproverArr[i].Approver) {
-            if (reqApproverArr[i].Approver == name) {
-                result = i;
-            }
-        }
+// function findApprover(name) {
+//     var result = -1;
+//     for (var i = 0; i < reqApproverArr.length; i++) {
+//         if (reqApproverArr[i].Approver) {
+//             if (reqApproverArr[i].Approver == name) {
+//                 result = i;
+//             }
+//         }
         
-    }
-    return result;
-}
+//     }
+//     return result;
+// }
 
 /**
  * Generate the history stamp of approval chain
  * @param {string} approver 
  * @param {array} responses
  */
-function genApprovalStamp(approver, responses) {
+function genApprovalStamp(approver, response) {
+     
     var stamp = document.createElement('li');
     var signal = document.createElement('div');
     var info = document.createElement('div');
 
-    var done = isDone(responses);
+    // var done = isDone(responses);
+    var done = response;
 
     var i = document.createElement('i');
     i.setAttribute('class', 'feather icon-alert-circle font-medium-2');
@@ -273,7 +377,11 @@ function genApprovalStamp(approver, responses) {
     
     info.appendChild(p);
     var span = document.createElement('span');
-    span.innerHTML = "By approver " + approver;
+    if (approver == null) {
+        span.innerHTML = "Not got approvers yet";
+    } else {
+        span.innerHTML = "By approver " + approver;
+    }
     info.appendChild(span);
     stamp.appendChild(signal);
     stamp.appendChild(info);
@@ -284,21 +392,22 @@ function genApprovalStamp(approver, responses) {
  * Check if this approver approved all budgets belongs to him
  * @param {array} responses array of responses of this approver
  */
-function isDone(responses) {
-    if (responses.length == 0) return false;
-    for (var i = 0; i < responses.length; i++) {
-        if (!responses[i]) return false;
-    }
-    return true;
-}
+// function isDone(responses) {
+//     if (responses.length == 0) return false;
+//     for (var i = 0; i < responses.length; i++) {
+//         if (!responses[i]) return false;
+//     }
+//     return true;
+// }
 
-function genFiscalStaffStamp(request_status, assignedTo) {
+function genFiscalStaffStamp(request_status, assignedTo, timeStamp) {
     var stamp = document.createElement('li');
     var signal = document.createElement('div');
     var info = document.createElement('div');
+    var time = document.createElement('small');
 
     var done = false;
-    if (request_status == "Accepted") {
+    if (request_status.indexOf("Accepted") >= 0) {
         done = true;
     }
 
@@ -325,9 +434,15 @@ function genFiscalStaffStamp(request_status, assignedTo) {
     } else {
         span.innerHTML = "Not assigned yet";
     }
+
+    if (done) {
+        time.innerHTML = moment(timeStamp).fromNow();
+    }
+
     info.appendChild(span);
     stamp.appendChild(signal);
     stamp.appendChild(info);
+    stamp.appendChild(time);
     return stamp;
 }
 
@@ -335,10 +450,11 @@ function genFiscalStaffStamp(request_status, assignedTo) {
  * Generate the stamp related to form
  * @param {string} action e.g. "Submitted"
  */
-function genFormStamp(action) {
+function genFormStamp(action, timeStamp) {
     var stamp = document.createElement('li');
     var signal = document.createElement('div');
     var info = document.createElement('div');
+    var time = document.createElement('small');
 
     var i = document.createElement('i');
     i.setAttribute('class', 'feather icon-plus font-medium-2');
@@ -352,18 +468,23 @@ function genFormStamp(action) {
     span.innerHTML = "Good job!";
     info.appendChild(p);
     info.appendChild(span);
+
+    time.innerHTML = moment(timeStamp).fromNow();
+
     stamp.appendChild(signal);
     stamp.appendChild(info);
+    stamp.appendChild(time);
     return stamp;
 }
 
-function genClaimStamp(request_status) {
+function genClaimStamp(request_status, timeStamp) {
     var stamp = document.createElement('li');
     var signal = document.createElement('div');
     var info = document.createElement('div');
+    var time = document.createElement('small');
 
     var done = false;
-    if (request_status == "Claimed") {
+    if (request_status.indexOf("Accepted") >= 0) {
         done = true;
     }
 
@@ -383,18 +504,25 @@ function genClaimStamp(request_status) {
     span.innerHTML = "Good job!";
     info.appendChild(p);
     info.appendChild(span);
+
+    if (done) {
+        time.innerHTML = moment(timeStamp).fromNow();
+    }
+
     stamp.appendChild(signal);
     stamp.appendChild(info);
+    stamp.appendChild(time);
     return stamp;
 }
 
-function genFinishStamp(request_status) {
+function genFinishStamp(request_status, timeStamp) {
     var stamp = document.createElement('li');
     var signal = document.createElement('div');
     var info = document.createElement('div');
+    var time = document.createElement('small');
 
     var done = false;
-    if (request_status == "Accepted") {
+    if (request_status.indexOf("Completed") >= 0) {
         done = true;
     }
 
@@ -414,125 +542,15 @@ function genFinishStamp(request_status) {
     span.innerHTML = "Good job!";
     info.appendChild(p);
     info.appendChild(span);
+
+    if (done) {
+        time.innerHTML = moment(timeStamp).fromNow();
+    }
+
     stamp.appendChild(signal);
     stamp.appendChild(info);
+    stamp.appendChild(time);
     return stamp;
 }
 
-
-function genNewTimeStamp(type, note) {
-    var stamp = document.createElement('li');
-    
-    var signal = document.createElement('div');
-    var info = document.createElement('div');
-    var time = document.createElement('div');
-
-    if (type == "submitted") {
-        var i = document.createElement('i');
-        i.setAttribute('class', 'feather icon-plus font-medium-2');
-        signal.setAttribute('class', 'timeline-icon bg-primary');
-        signal.appendChild(i);
-
-        var p = document.createElement('p');
-        p.setAttribute('class', 'font-weight-bold');
-        p.innerHTML = "Request Submitted";
-        var span = document.createElement('span');
-        span.innerHTML = note;
-        info.appendChild(p);
-        info.appendChild(span);
-    } else if (type == "approved") {
-        var i = document.createElement('i');
-        i.setAttribute('class', 'feather icon-alert-circle font-medium-2');
-        signal.setAttribute('class', 'timeline-icon bg-warning');
-        signal.appendChild(i);
-
-        var p = document.createElement('p');
-        p.setAttribute('class', 'font-weight-bold');
-        p.innerHTML = "Waiting for approval";
-        var span = document.createElement('span');
-        span.innerHTML = note;
-        info.appendChild(p);
-        info.appendChild(span);
-    } else if (type == "completed") {
-        var i = document.createElement('i');
-        i.setAttribute('class', 'feather icon-check font-medium-2');
-        signal.setAttribute('class', 'timeline-icon bg-success');
-        signal.appendChild(i);
-
-        var p = document.createElement('p');
-        p.setAttribute('class', 'font-weight-bold');
-        p.innerHTML = "Request Completed";
-        var span = document.createElement('span');
-        span.innerHTML = note;
-        info.appendChild(p);
-        info.appendChild(span);
-    }
-    
-    stamp.appendChild(signal);
-    stamp.appendChild(info);
-    // stamp.appendChild(time);
-    return stamp;
-}
-
-function accept() {
-    var data = {"OrderStatus": "Accepted"};
-    var onSuccess = function(data) {
-        if (data.status == true) {
-            info = data.data;
-        } else {
-            //error message
-            info = null;
-        }
-    }
-
-    var onFailure = function() {
-        // failure message
-        info = null;
-    }
-    makePutRequest("updateOrderStatus/order_id", data, onSuccess, onFailure);
-}
-
-var feedback = document.getElementById("feedback_input");
-
-function sendBackClicked() {
-    var notes = feedback.value;
-    var data = {
-        ChatInfo: window.sessionStorage.getItem("name") + ": " + notes
-    };
-    var onSuccess = function(data) {
-        if (data.status == true) {
-            console.log("update success");
-        } else {
-            //error message
-            info = null;
-        }
-    }
-
-    var onFailure = function() {
-        // failure message
-        info = null;
-    }
-    makePostRequest("updateChatInfo/" + request_id, data, onSuccess, onFailure);
-}
-
-function approveClicked() {
-    console.log('clicked');
-    var data = {
-        OrderStatus: "Accepted"
-    };
-    var onSuccess = function(data) {
-        if (data.status == true) {
-            console.log("update success");
-        } else {
-            //error message
-            info = null;
-        }
-    }
-
-    var onFailure = function() {
-        // failure message
-        info = null;
-    }
-    makePostRequest("updateOrderStatus/" + request_id, data, onSuccess, onFailure);
-}
 

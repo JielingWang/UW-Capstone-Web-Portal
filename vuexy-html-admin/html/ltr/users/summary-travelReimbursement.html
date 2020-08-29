@@ -9,7 +9,7 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Travel Request</title>
+    <title>Travel Reimbursement Summary</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
@@ -243,11 +243,12 @@
                         <div id="invoice-company-details" class="row">
                             <div class="col-sm-6 col-12 text-left">
                                 <h1 id="request-type">
-                                   
+                                  
                                 </h1>
                             </div>
                             <div class="col-sm-6 col-12 text-right">
                                 <h1>Request ID: <span id="requestID">
+                                  
                                 </span></h1>
                             </div>
                         </div>
@@ -256,7 +257,7 @@
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">REQUESTER</h6>
                                     <p id="requester">
-                                       
+                                      
                                     </p>
                                     <h6 class="mt-2">SUB-UNIT</h6>
                                     <p id="subunit">
@@ -264,7 +265,7 @@
                                     </p>
                                     <h6 class="mt-2">Email</h6>
                                     <p id="userEmail">
-                                        
+                                      
                                     </p>
                                 </div>
                             </div>
@@ -272,11 +273,11 @@
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">UW ID</h6>
                                     <p id="userUWID">
-      
+                                       
                                     </p>
                                     <h6 class="mt-2">Access Level</h6>
                                     <p id="accessLevel">
-                                        
+                                      
                                     </p>
                                 </div>
                             </div>
@@ -284,8 +285,8 @@
                             <div class="col-sm-6 col-12 text-right">
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">STATUS</h6>
-                                    <p id="status">
-                                    </p>
+                                    <p id="status"><i class="fa fa-circle font-small-3 text-warning mr-50"></i>  
+                                       </p>
                                     <h6 class="mt-2">ASSIGNED TO</h6>
                                     <p id="assignedTo"></p>
                                 </div>
@@ -300,23 +301,13 @@
                                     </p>
                                 </div>
                             </div>
-                            
-
-                            <div class="col-sm-3 col-6 text-left">
-                                <div class="invoice-details mt-2">
-                                    <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Amount</h6>
-                                    <p>
-                                      N/A  
-                                    </p>
-                                </div>
-                            </div>
+                           
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">Budget</h6>
                                     <p id="budget">
-                                        
+                                       
                                     </p>
                                 </div>
                             </div>
@@ -328,83 +319,89 @@
                             </div>
                             <!-- Request Information End-->
 
-                            <!-- reason -->
-                             <div class="col-sm-12 col-6" text-left>
-                                <div class="invoice-details mt-2">
-                                    <h4>Request Reason</h4>
-                                    <p id="reason">
-                                       
-                                    </p>
-                                </div>
-                            </div>                            
-                            <!-- Request Information End-->
-
                             <!-- Travel Information-->
-                            <div class="col-sm-3 col-6 text-left">
+                            <div class="col-sm-4 col-6 text-left">
                                 <div class="invoice-details mt-2">
-                                    <h4>Travel Information</h4>
-                                    <h6 class="mt-2">FirstName</h6>
-                                    <p id="firstName">
+                                    <h4>Reimbursement Information </h4>
+                                    <h6 class="mt-2">Have you been reimbursed before this trip?</h6>
+                                    <p id="travelBefore">
                                        
                                     </p>
-                                    <h6 class="mt-2">Departing Date</h6>
-                                    <p id="departDate">
+                                    <h6 class="mt-2">Request For</h6>
+                                    <p id="requestFor">
+                                      
+                                    </p>
+                                    <h6 class="mt-2">US Citizen or Permanent Resident?</h6>
+                                    <p id="us">
+                                 
+                                    </p>
+                                    <h6 class="mt-2">Purpose of Travel?</h6>
+                                    <p id="purpose">
                                        
                                     </p>
 
                                 </div>
                             </div>
+                           
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">LastName</h6>
-                                    <p id="lastName">
+                                    <h6 class="mt-2">Reference Number</h6>
+                                    <p id="referenceNumber">
+                                      
+                                    </p>
+                                    <h6 class="mt-2">Email</h6>
+                                    <p id="email">
                                        
                                     </p>
-                                    <h6 class="mt-2">Returning Date</h6>
-                                    <p id="returnDate">
-                                        
+                                    <h6 class="mt-2">Copy of Passport Identity Page</h6>
+                                    <p id="passportFile">
+                                    &nbsp;
+                                    </p>
+                                    <h6 class="mt-2">Was personal travel included?</h6>
+                                    <p id="personalTravel">
+                                       
                                     </p>
                                 </div>
                             </div>
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Departure</h6>
-                                    <p id="departure">
-                                       
+                                    <h6 class="mt-2">&nbsp;</h6>
+                                    <p>
+                                       &nbsp;
                                     </p>
-                                    <h6 class="mt-2">Birthday</h6>
-                                    <p id="birthday">
-                                       
+                                    <h6 class="mt-2">Affliation</h6>
+                                    <p id="affliation">
+                                         &nbsp;
+                                    </p>
+                                    <h6 class="mt-2">US Port Entry Stamp,Visa Info</h6>
+                                    <p id="visaFile">
+                                         &nbsp;
+                                    </p>
+                                    <h6 class="mt-2">Personal Travel Starting/End Dates & Times</h6>
+                                    <p id="travelDetail">
+                                      
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-6 text-left">
-                                <div class="invoice-details mt-2">
-                                    <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Destination</h6>
-                                    <p id="destination">
-                                       
-                                    </p>
-                                </div>
-                            </div>
+                            
                             <!-- Travel Information End-->
 
                             <!-- Flight Information-->
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
-                                    <h4>Flight Information</h4>
-                                    <h6 class="mt-2">Need unit to pay the flight?</h6>
-                                    <p id="flight">
+                                    <h4>Travel Costs</h4>
+                                    <h6 class="mt-2">Registration</h6>
+                                    <p id="registration">
                                        
                                     </p>
-                                    <h6 class="mt-2">Flight From</h6>
-                                    <p id="flightFrom">
-                                      
+                                    <h6 class="mt-2">Car Service Fee</h6>
+                                    <p id="carFee">
+                                       
                                     </p>
-                                    <h6 class="mt-2">Flight Reference</h6>
-                                    <p id="flightReference">
+                                    <h6 class="mt-2">Car Rental</h6>
+                                    <p id="carRental">
                                        
                                     </p>
 
@@ -413,12 +410,33 @@
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Airline</h6>
-                                    <p id="airline">
+                                    <h6 class="mt-2">Registration Receipt</h6>
+                                    <p id="registrationFile">
+                                        &nbsp;
+                                    </p>
+                                    <h6 class="mt-2">Car Service Receipt</h6>
+                                    <p id="carFile">
+                                        &nbsp;
+                                    </p>
+                                    <h6 class="mt-2">Final Car Rental Agreement</h6>
+                                    <p id="carRentalFile">
+                                        &nbsp;
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-6 text-left">
+                                <div class="invoice-details mt-2">
+                                    <h4> &nbsp; </h4>
+                                    <h6 class="mt-2">Airfare Fee</h6>
+                                    <p id="airfare">
                                        
                                     </p>
-                                    <h6 class="mt-2">Flight To</h6>
-                                    <p id="flightTo">
+                                    <h6 class="mt-2">Train/Rail Fee</h6>
+                                    <p id="train">
+                                       
+                                    </p>
+                                    <h6 class="mt-2">Hotel Fee</h6>
+                                    <p id="hotel">
                                        
                                     </p>
                                 </div>
@@ -426,96 +444,97 @@
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Flight Number</h6>
-                                    <p id="flightNumber">
-                                       
+                                    <h6 class="mt-2">Airfare Receipt</h6>
+                                    <p id="airfareFile">
+                                        &nbsp;
                                     </p>
-                                    <h6 class="mt-2">Departing Date</h6>
-                                    <p id="flightDepartDate">
-                                       
+                                    <h6 class="mt-2">Train/Rail Receipt</h6>
+                                    <p id="trainFile">
+                                        &nbsp;
                                     </p>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-6 text-left">
-                                <div class="invoice-details mt-2">
-                                    <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Amount</h6>
-                                    <p id="flightAmount">
-                                       
-                                    </p>
-                                    <h6 class="mt-2">Returning Date</h6>
-                                    <p id="flightReturnDate">
-                                        
+                                    <h6 class="mt-2">Hotel Receipt</h6>
+                                    <p id="hotelFile">
+                                        &nbsp;
                                     </p>
                                 </div>
                             </div>
                             <!-- Flight Information End-->
-                             <!-- Hotel Information-->
-                             <div class="col-sm-3 col-6 text-left">
-                                <div class="invoice-details mt-2">
-                                    <h4>Hotel Information</h4>
-                                    <h6 class="mt-2">Need unit to pay the hotel?</h6>
-                                    <p id="hotel">
-                                      
-                                    </p>
-                                    <h6 class="mt-2">Number of People</h6>
-                                    <p id="hotelNum">
-                                       
-                                    </p>
-                                    <h6 class="mt-2">Link</h6>
-                                    <p id="hotelLink">
-                                      
-                                    </p>
 
-                                </div>
-                            </div>
+                            <!-- Meal Per Diem-->
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
-                                    <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Hotel Name</h6>
-                                    <p id="hotelName">
+                                    <h4>Meal Per Diem</h4>
+                                    <h6 class="mt-2">Are you claiming meal per diem?</h6>
+                                    <p id="meal">
                                        
-                                    </p>
-                                    <h6 class="mt-2">Check in Date</h6>
-                                    <p id="hotelCheckIn">
-                                       
-                                    </p>
-                                    <h6 class="mt-2">Hotel Note</h6>
-                                    <p id="hotelNote">
-                                       
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-6 text-left">
-                                <div class="invoice-details mt-2">
-                                    <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Hotel Address</h6>
-                                    <p id="hotelAddress">
+                                    </p> 
+                                    <h6 class="mt-2">Specific Days and Meals</h6>
+                                    <p>
+                                            <table id="meal_table1">
+                                            <thead>
+                                                <tr>
+                                                    <th>DATE&nbsp;&nbsp;</th>
+                                                    <th>Breakfast&nbsp;&nbsp;</th>
+                                                    <th>Lunch&nbsp;&nbsp;</th>
+                                                    <th>Dinner</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                               <tr>
+                                                    <td><span></span></td>
+                                                    <td><span></span></td>
+                                                    <td><span></span> </td>
+                                                    <td><span></span></td>
+                                                </tr>                                             
+                                            </tbody>
+                                        </table>
+
                                         
                                     </p>
-                                    <h6 class="mt-2">Check out Date</h6>
-                                    <p id="hotelCheckout">
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-6 text-left">
+                                <div class="invoice-details mt-2">
+                                    <h4>&nbsp;</h4>
+                                    <h6 class="mt-2">Specific Amount</h6>
+                                    <p id="mealAmount">
                                        
                                     </p>
                                 </div>
                             </div>
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
-                                    <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Zip Code</h6>
-                                    <p id="hotelZip">
+                                    <h4>Meal Provided</h4>
+                                    <h6 class="mt-2">Were meals provided to you?</h6>
+                                    <p id="mealProvid">
                                        
                                     </p>
-                                    <h6 class="mt-2">Amount</h6>
-                                    <p id="hotelAmount">
-                                       
+                                    <h6 class="mt-2">Specifc Days and Meals</h6>
+                                    <p>
+                                        <table id="meal_table2">
+                                            <thead>
+                                                <tr>
+                                                    <th>DATE&nbsp;&nbsp;</th>
+                                                    <th>Breakfast&nbsp;&nbsp;</th>   
+                                                    <th>Lunch&nbsp;&nbsp;</th>                             
+                                                    <th>Dinner</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                               <tr>
+                                                    <td><span></span></td>
+                                                    <td><span></span></td>
+                                                    <td><span></span> </td>
+                                                    <td><span></span></td>
+                                                </tr>                                             
+                                            </tbody>
+                                        </table>
                                     </p>
                                 </div>
                             </div>
-                            <!-- Hotel Information End-->
-                            
+  
                         </div>
-                        <!--/ Invoice Company Details -->
+                        <!--/Meal Per Diem end-->
 
                     </div>
                 </section>
@@ -547,14 +566,11 @@
                                 <div class="card-content" id="notes" style="padding-top: 1.5rem; padding-left: 1.5rem;">
                                    
                                 </div>
-                                
                             </div>
                         </div>
-
                     </div>
                 </section>
                 <!-- Timeline Ends -->
-
                 <!-- add note start-->
                 <div class="row" id="feedback-block">
                     <div class="col-md-12">
@@ -570,7 +586,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-actions">
-                                                <button type="button" class="btn btn-primary mr-1" onclick="addNote()">Add a note</button>
+                                                <button type="button" class="btn btn-primary mr-1" onclick="takeNoteClicked()">Add a note</button>
                                               
                                             </div>
                                         </form>
@@ -580,10 +596,17 @@
                     </div>
                 </div>
                 <!-- add note end-->
+
             </div>
         </div>
     </div>
     <!-- END: Content-->
+    
+      
+                            
+
+    
+
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>
 
@@ -593,7 +616,6 @@
     </footer>
     <!-- END: Footer-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
 
 
     <!-- BEGIN: Vendor JS-->
@@ -630,127 +652,41 @@
     <!-- BEGIN: Page JS-->
     <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
     <script src="../../../app-assets/js/scripts/forms/validation/form-validation.js"></script>
-    <!--<script src="../../../app-assets/js/scripts/myScripts/users/travelRequest-summary.js"></script>-->
+    <!--<script src="../../../app-assets/js/scripts/myScripts/users/travelReim-summary.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <!-- END: Page JS-->
 
     <!-- BEGIN: Page JS-->
     
 
     <script>
-        const baseURL = "https://coe-api.azurewebsites.net/api/";
-        var user_id = "5e8e4bcaa148b90044206526";   
-        var makePostRequest = function(url, data, onSuccess, onFailure) {
-        $.ajax({
-            async:false,
-            type: 'POST',
-            url: baseURL + url,
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            dataType: "json",
-            success: onSuccess,
-            error: onFailure
-            });
+    var js_id=window.sessionStorage.getItem("orderId");
+    function takeNoteClicked() {
+        // send data
+        var data = {
+            userName: "Haotian Yuan",
+            comment: document.getElementById("feedback_input").value,
         };
-
-        // Template GET request Ajax call
-        var makeGetRequest = function(url, onSuccess, onFailure) {
-            $.ajax({
-                async:false,
-                type: 'GET',
-                url: baseURL + url,
-                dataType: "json",
-                success: onSuccess,
-                error: onFailure
-            });
-        };
-        var i;
-        var file_name;
-        var js_id=window.sessionStorage.getItem("orderId");
-        window.onload = function(){
-            document.getElementById('requestID').innerHTML = window.sessionStorage.getItem("orderId");
-            document.getElementById('requester').innerHTML = window.sessionStorage.getItem("user_name");
-            document.getElementById('subunit').innerHTML = window.sessionStorage.getItem("user_subunitName");
-            document.getElementById('userEmail').innerHTML = window.sessionStorage.getItem("user_email");
-            document.getElementById('userUWID').innerHTML = window.sessionStorage.getItem("user_uwid");
-            document.getElementById('accessLevel').innerHTML = window.sessionStorage.getItem("user_AccessLevel");
-            document.getElementById('status').innerHTML ="<i class=\"fa fa-circle font-small-3 text-warning mr-50\"></i>" + window.sessionStorage.getItem("status");
-            document.getElementById('submitDate').innerHTML = window.sessionStorage.getItem("submit_date");
-            if(window.sessionStorage.getItem("budget_length").localeCompare("1")==0){
-                document.getElementById('budget').innerHTML = window.sessionStorage.getItem("budget1") +" "+window.sessionStorage.getItem("split1");
-            }else{
-                document.getElementById('budget').innerHTML = window.sessionStorage.getItem("budget1") +" "+window.sessionStorage.getItem("split1")
-                                                     +"<br>"+window.sessionStorage.getItem("budget2") +" "+window.sessionStorage.getItem("split2");
+        var onSuccess = function(data) {
+            if (data.status == true) {
+                console.log("update success");
+            } else {
+                //error message
+                info = null;
             }
-            document.getElementById('reason').innerHTML = window.sessionStorage.getItem("reason");
-            document.getElementById('firstName').innerHTML = window.sessionStorage.getItem("firstname");
-            document.getElementById('departDate').innerHTML = window.sessionStorage.getItem("date");
-            document.getElementById('lastName').innerHTML = window.sessionStorage.getItem("lastname");
-            document.getElementById('returnDate').innerHTML = window.sessionStorage.getItem("returndate");
-            document.getElementById('departure').innerHTML = window.sessionStorage.getItem("departure");
-            document.getElementById('birthday').innerHTML = window.sessionStorage.getItem("birthday")+"&nbsp;";
-            document.getElementById('destination').innerHTML = window.sessionStorage.getItem("destionation");
-            document.getElementById('flight').innerHTML = window.sessionStorage.getItem("flight")+"&nbsp;";
-            document.getElementById('flightFrom').innerHTML = window.sessionStorage.getItem("flight_from")+"&nbsp;";
-            document.getElementById('flightReference').innerHTML = window.sessionStorage.getItem("flight_reference")+"&nbsp;";
-            document.getElementById('airline').innerHTML = window.sessionStorage.getItem("flight_company")+"&nbsp;";
-            document.getElementById('flightTo').innerHTML = window.sessionStorage.getItem("flight_to")+"&nbsp;";
-            document.getElementById('flightNumber').innerHTML = window.sessionStorage.getItem("flight_number")+"&nbsp;";
-            document.getElementById('flightDepartDate').innerHTML = window.sessionStorage.getItem("flight_departdate")+"&nbsp;";
-            document.getElementById('flightAmount').innerHTML = window.sessionStorage.getItem("flight_amount")+"&nbsp;";
-            document.getElementById('flightReturnDate').innerHTML = window.sessionStorage.getItem("flight_returndate")+"&nbsp;";
-            document.getElementById('hotel').innerHTML = window.sessionStorage.getItem("hotel")+"&nbsp;";
-            document.getElementById('hotelNum').innerHTML = window.sessionStorage.getItem("hotel_num")+"&nbsp;";
-            document.getElementById('hotelLink').innerHTML = window.sessionStorage.getItem("hotel_link")+"&nbsp;";
-            document.getElementById('hotelName').innerHTML = window.sessionStorage.getItem("hotel_name")+"&nbsp;";
-            document.getElementById('hotelCheckIn').innerHTML = window.sessionStorage.getItem("hotel_movein")+"&nbsp;";
-            document.getElementById('hotelNote').innerHTML = window.sessionStorage.getItem("hotel_note")+"&nbsp;";
-            document.getElementById('hotelAddress').innerHTML = window.sessionStorage.getItem("hotel_address")+"&nbsp;";
-            document.getElementById('hotelCheckout').innerHTML = window.sessionStorage.getItem("hotel_moveout")+"&nbsp;";
-            document.getElementById('hotelZip').innerHTML = window.sessionStorage.getItem("hotel_zip")+"&nbsp;";
-            document.getElementById('hotelAmount').innerHTML = window.sessionStorage.getItem("hotel_amount")+"&nbsp;";
-            document.getElementById('request-type').innerHTML = window.sessionStorage.getItem("type")+"&nbsp;";
         }
-       
 
-    function update_order(orderinfo){
-        alert("Update!!!");
-        //var note_approver = document.getElementById("approver_note").value;
-        console.log(orderinfo);
-        var JSON_data = {
-            "OrderInfo": orderinfo
+        var onFailure = function() {
+            // failure message
+            info = null;
         }
-        var onSuccess = function(data){
-            alert("update success");
-        }
-        var onFaliure = function(){
-            alert("fail");
-        }
-        makePostRequest("updateOrderInfo/"+js_id,JSON_data,onSuccess,onFaliure);
-    }
-    function addNote(){
-        var onSuccess = function(data){
-            var user_name = window.sessionStorage.getItem("user_name");
-            var temp = JSON.parse(data.data.OrderInfo);   
-            var today = new Date();
-            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-            var dateTime = date+' '+time;
-            temp.NoteFromApprover+="<br>";   
-            temp.NoteFromApprover+= user_name;  
-            temp.NoteFromApprover+= " ";   
-            temp.NoteFromApprover+=dateTime;
-            temp.NoteFromApprover+=" ";
-            temp.NoteFromApprover+=document.getElementById("feedback_input").value;
-            alert(temp.NoteFromApprover);
-            update_order(JSON.stringify(temp));
-        }
-        var onFaliure = function(){
-            alert("fail");
-        }
-        makeGetRequest("getOrderInformation/"+js_id,onSuccess,onFaliure);
+        makePostRequest("updateChatInfo/" + js_id, data, onSuccess, onFailure);
+        location.reload();
     }
 
     </script>
+    <script src="../../../app-assets/js/scripts/myScripts/requests/historyandnote.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/users/travelReim-summary.js"></script>
 </body>
 <!-- END: Body-->
 <!--<script src="travelRequest.js"></script>-->

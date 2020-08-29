@@ -210,7 +210,7 @@
                                     <div class="card-body card-dashboard">
                                         <div class="table-responsive">
                                             <!--class="table zero-configuration"-->
-                                            <table id="table" style="width: 100%;">
+                                            <table id="table" class="table zero-configuration table-hover">
                                                 <thead>
                                                     <tr>
                                                         <th>Request ID</th>
@@ -325,286 +325,21 @@
                 var table = $("#table").DataTable({
                      "order": [[4, "desc"]]
                 }); 
-                var createClickHandler = function(arg,user_id1,user_name1,user_uwid1,user_email1,user_subunitName1,user_accessLevel1,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23,arg24,arg25,arg26,arg27,arg28,arg29,arg30,arg31,arg32,arg33,arg34,arg35,arg36,arg37) {
-                            return function() {
-                                window.sessionStorage.setItem('orderId',arg);
-                                window.sessionStorage.setItem('user_id',user_id1);
-                                window.sessionStorage.setItem('user_name',user_name1);
-                                window.sessionStorage.setItem('user_uwid',user_uwid1);
-                                window.sessionStorage.setItem('user_email',user_email1);
-                                window.sessionStorage.setItem('user_subunitName',user_subunitName1);
-                                window.sessionStorage.setItem('user_AccessLevel',user_accessLevel1);
-                                window.sessionStorage.setItem('type',arg1);
-                                window.sessionStorage.setItem('submit_date',arg2);
-                                window.sessionStorage.setItem('status',arg3);
-                                window.sessionStorage.setItem('amount',arg4);
-                                window.sessionStorage.setItem('firstname',arg5);
-                                window.sessionStorage.setItem('lastname',arg6);
-                                window.sessionStorage.setItem('departure',arg7);
-                                window.sessionStorage.setItem('destionation',arg8);
-                                window.sessionStorage.setItem('date',arg9);
-                                window.sessionStorage.setItem('returndate',arg10);
-                                window.sessionStorage.setItem('reason',arg11);
-                                window.sessionStorage.setItem('flight',arg12);
-                                window.sessionStorage.setItem('flight_company',arg13);
-                                window.sessionStorage.setItem('flight_number',arg14);
-                                window.sessionStorage.setItem('flight_from',arg15);
-                                window.sessionStorage.setItem('flight_to',arg16);
-                                window.sessionStorage.setItem('flight_departdate',arg17);
-                                window.sessionStorage.setItem('flight_returndate',arg18);
-                                window.sessionStorage.setItem('flight_amount',arg19);
-                                window.sessionStorage.setItem('hotel',arg20);
-                                window.sessionStorage.setItem('hotel_name',arg21);
-                                window.sessionStorage.setItem('hotel_address',arg22);
-                                window.sessionStorage.setItem('hotel_num',arg23);
-                                window.sessionStorage.setItem('hotel_zip',arg24);
-                                window.sessionStorage.setItem('hotel_amount',arg25);
-                                window.sessionStorage.setItem('hotel_link',arg26);
-                                window.sessionStorage.setItem('flight_reference',arg27);
-                                window.sessionStorage.setItem('hotel_note',arg28);
-                                window.sessionStorage.setItem('birthday',arg29);
-                                window.sessionStorage.setItem('note',arg30);
-                                window.sessionStorage.setItem('budget1',arg31);
-                                window.sessionStorage.setItem('split1',arg32);
-                                window.sessionStorage.setItem('budget_length',arg33);
-                                window.sessionStorage.setItem('budget2',arg34);
-                                window.sessionStorage.setItem('split2',arg35);
-                                window.sessionStorage.setItem('hotel_movein',arg36);
-                                window.sessionStorage.setItem('hotel_moveout',arg37);
-                                window.location.href = "summary.php";
-                                                   
-                            };
+                for (var x = 0; x < requestsInfo.length; x++) {
+                    table.row.add([
+                        requestsInfo[x].RequestID,
+                        requestsInfo[x].Name,
+                        requestsInfo[x].Type,
+                        requestsInfo[x].Amount,
+                        requestsInfo[x].Date,
+                        requestsInfo[x].Status
+                    ]).draw();
                 }
-                var createClickHandler1 = function(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,
-                arg20,arg21,arg22,arg23,arg24,arg25,arg26,arg27,arg28,arg29,arg30,arg31,arg32,arg33,arg34,arg35,arg36,arg37,arg38,arg39,arg40,arg41,arg42,arg43,arg44) {
-                            return function() {
-                                window.sessionStorage.setItem('orderId',arg1);
-                                window.sessionStorage.setItem('user_id',arg2);
-                                window.sessionStorage.setItem('user_name',arg3);
-                                window.sessionStorage.setItem('user_uwid',arg4);
-                                window.sessionStorage.setItem('user_email',arg5);
-                                window.sessionStorage.setItem('user_subunitName',arg6);
-                                window.sessionStorage.setItem('user_AccessLevel',arg7);
-                                window.sessionStorage.setItem('type',arg8);
-                                window.sessionStorage.setItem('submit_date',arg9);
-                                window.sessionStorage.setItem('status',arg10);
-                                window.sessionStorage.setItem('note',arg11);
-                                window.sessionStorage.setItem('budget1',arg12);
-                                window.sessionStorage.setItem('split1',arg13);
-                                window.sessionStorage.setItem('budget_length',arg14);
-                                window.sessionStorage.setItem('budget2',arg15);
-                                window.sessionStorage.setItem('split2',arg16);
-                                window.sessionStorage.setItem('TravelBefore',arg17);
-                                window.sessionStorage.setItem('ReferenceNumber',arg18);
-                                window.sessionStorage.setItem('ForMyself',arg19);
-                                window.sessionStorage.setItem('SomeoneName',arg20);
-                                window.sessionStorage.setItem('SomeoneAffliation',arg21);
-                                window.sessionStorage.setItem('SomeoneEmail',arg22);
-                                window.sessionStorage.setItem('US',arg23);
-                                window.sessionStorage.setItem('purpose',arg24);
-                                window.sessionStorage.setItem('personalTravel',arg25);
-                                window.sessionStorage.setItem('personalTravelDetails',arg26);
-                                window.sessionStorage.setItem('registration',arg27);
-                                window.sessionStorage.setItem('airfare',arg28);
-                                window.sessionStorage.setItem('car',arg29);
-                                window.sessionStorage.setItem('train',arg30);
-                                window.sessionStorage.setItem('carRental',arg31);
-                                window.sessionStorage.setItem('hotelFee',arg32);
-                                window.sessionStorage.setItem('visa_file',arg33);
-                                window.sessionStorage.setItem('passport_file',arg34);
-                                window.sessionStorage.setItem('airfare_file',arg35);
-                                window.sessionStorage.setItem('train_file',arg36);
-                                window.sessionStorage.setItem('rental_file',arg37);
-                                window.sessionStorage.setItem('hotel_file',arg38);
-                                window.sessionStorage.setItem('meal',arg39);
-                                window.sessionStorage.setItem('meal_amount',arg40);
-                                window.sessionStorage.setItem('mealProvided',arg41);
-                                window.sessionStorage.setItem('registration_file',arg42);
-                                window.sessionStorage.setItem('car_file',arg43);
-                                window.sessionStorage.setItem('amount',arg44);
-                                window.location.href = "summary-travelReimbursement.php";
-                            };
-                }
-                    for (var x = 0; x < requestsInfo.length; x++) {
-                        table.row.add([
-                            requestsInfo[x].RequestID,
-                            requestsInfo[x].Name,
-                            requestsInfo[x].Type,
-                            requestsInfo[x].Amount,
-                            requestsInfo[x].Date,
-                            requestsInfo[x].Status
-                        ]).draw();
-                    }
-                    var rows = document.getElementById("table").rows;
-                    //alert(rows.length);
-                    for (i = 1; i < requestsInfo.length; i++) {
-                        var currentRow = rows[i];
-                        currentRow.style="cursor:pointer";
-                        var temp = requestsInfo[i-1].OrderInfo;
-                        //alert(i);
-                        if(requestsInfo[i-1].Type.localeCompare("Travel Request")==0){
-                            if(temp.LineItems[0].Budgets.length==1){
-                            currentRow.onclick = createClickHandler(requestsInfo[i-1].RequestID,user_id,user_name,user_uwid,user_email,user_subunitName, user_accessLevel,requestsInfo[i-1].Type,requestsInfo[i-1].Date,requestsInfo[i-1].Status,requestsInfo[i-1].Amount
-                                                    ,temp.FirstName
-                                                    ,temp.LastName
-                                                    ,temp.Departure
-                                                    ,temp.Destination
-                                                    ,temp.Date
-                                                    ,temp.ReturnDate
-                                                    ,temp.Reason
-                                                    ,temp.Flight
-                                                    ,temp.FlightCompany
-                                                    ,temp.FlightNumber
-                                                    ,temp.FlightFrom
-                                                    ,temp.FlightTo
-                                                    ,temp.FlightDepartingDate
-                                                    ,temp.FlightReturningDate
-                                                    ,temp.FlightAmount
-                                                    ,temp.Hotel
-                                                    ,temp.HotelName
-                                                    ,temp.HotelAddress
-                                                    ,temp.HotelNum
-                                                    ,temp.HotelZip
-                                                    ,temp.HotelAmount
-                                                    ,temp.HotelLink
-                                                    ,temp.FlightReference
-                                                    ,temp.HotelNote
-                                                    ,temp.Birthday
-                                                    ,temp.NoteFromApprover
-                                                    ,temp.LineItems[0].Budgets[0].Number
-                                                    ,temp.LineItems[0].Budgets[0].Split
-                                                    ,temp.LineItems[0].Budgets.length
-                                                    ,null
-                                                    ,null
-                                                    ,temp.HotelMovein
-                                                    ,temp.HotelMoveout
-                                                    );
-                            }else if(temp.LineItems[0].Budgets.length==2){
-                                currentRow.onclick = createClickHandler(requestsInfo[i-1].RequestID,user_id,user_name,user_uwid,user_email,user_subunitName, user_accessLevel,requestsInfo[i-1].Type,requestsInfo[i-1].Date,requestsInfo[i-1].Status,requestsInfo[i-1].Amount
-                                                    ,temp.FirstName
-                                                    ,temp.LastName
-                                                    ,temp.Departure
-                                                    ,temp.Destination
-                                                    ,temp.Date
-                                                    ,temp.ReturnDate
-                                                    ,temp.Reason
-                                                    ,temp.Flight
-                                                    ,temp.FlightCompany
-                                                    ,temp.FlightNumber
-                                                    ,temp.FlightFrom
-                                                    ,temp.FlightTo
-                                                    ,temp.FlightDepartingDate
-                                                    ,temp.FlightReturningDate
-                                                    ,temp.FlightAmount
-                                                    ,temp.Hotel
-                                                    ,temp.HotelName
-                                                    ,temp.HotelAddress
-                                                    ,temp.HotelNum
-                                                    ,temp.HotelZip
-                                                    ,temp.HotelAmount
-                                                    ,temp.HotelLink
-                                                    ,temp.FlightReference
-                                                    ,temp.HotelNote
-                                                    ,temp.Birthday
-                                                    ,temp.NoteFromApprover
-                                                    ,temp.LineItems[0].Budgets[0].Number
-                                                    ,temp.LineItems[0].Budgets[0].Split
-                                                    ,temp.LineItems[0].Budgets.length
-                                                    ,temp.LineItems[0].Budgets[1].Number
-                                                    ,temp.LineItems[0].Budgets[1].Split
-                                                    ,temp.HotelMovein
-                                                    ,temp.HotelMoveout
-                                                    );
-                            }
-                         }else if(requestsInfo[i-1].Type.localeCompare("Travel Reimbursement")==0){
-                            if(temp.LineItems[0].Budgets.length==1){
-                                currentRow.onclick = createClickHandler1(requestsInfo[i-1].RequestID
-                                                    ,user_id
-                                                    ,user_name
-                                                    ,user_uwid
-                                                    ,user_email
-                                                    ,user_subunitName
-                                                    ,user_accessLevel
-                                                    ,requestsInfo[i-1].Type
-                                                    ,requestsInfo[i-1].Date
-                                                    ,requestsInfo[i-1].Status
-                                                    ,temp.NoteFromApprover
-                                                    ,temp.LineItems[0].Budgets[0].Number
-                                                    ,temp.LineItems[0].Budgets[0].Split
-                                                    ,temp.LineItems[0].Budgets.length
-                                                    ,null
-                                                    ,null
-                                                    ,temp.TravelBefore
-                                                    ,temp.ReferenceNumber
-                                                    ,temp.ForMyself
-                                                    ,temp.SomeoneName
-                                                    ,temp.SomeoneAffliation
-                                                    ,temp.SomeoneEmail
-                                                    ,temp.UScitizen
-                                                    ,temp.Purpose
-                                                    ,temp.PersonalTravel
-                                                    ,temp.PersonalTravelDetail
-                                                    ,temp.Registration
-                                                    ,temp.AirFare
-                                                    ,temp.Car
-                                                    ,temp.Train
-                                                    ,temp.CarRental
-                                                    ,temp.HotelFee
-                                                    ,temp.Visa_file
-                                                    ,temp.Passport_file
-                                                    ,temp.Airfare_file
-                                                    ,temp.Train_file
-                                                    ,temp.Rental_file
-                                                    ,temp.Hotel_file
-                                                    ,temp.Meal
-                                                    ,temp.Meal_amount
-                                                    ,temp.MealProvided
-                                                    ,temp.Registration_file
-                                                    ,temp.Car_file
-                                                    ,temp.amount
-                                                    );
-                            }else if(temp.LineItems[0].Budgets.length==2){
-                                currentRow.onclick = createClickHandler1(equestsInfo[i-1].RequestID,user_id,user_name,user_uwid,user_email,user_subunitName, user_accessLevel,requestsInfo[i-1].Type,requestsInfo[i-1].Date,requestsInfo[i-1].Status
-                                                    ,temp.NoteFromApprover
-                                                    ,temp.LineItems[0].Budgets[0].Number
-                                                    ,temp.LineItems[0].Budgets[0].Split
-                                                    ,temp.LineItems[0].Budgets.length
-                                                    ,temp.LineItems[0].Budgets[1].Number
-                                                    ,temp.LineItems[0].Budgets[1].Split
-
-                                                    ,temp.TravelBefore
-                                                    ,temp.ReferenceNumber
-                                                    ,temp.ForMyself
-                                                    ,temp.SomeoneName
-                                                    ,temp.SomeoneAffliation
-                                                    ,temp.SomeoneEmail
-                                                    ,temp.UScitizen
-                                                    ,temp.Purpose
-                                                    ,temp.PersonalTravel
-                                                    ,temp.PersonalTravelDetail
-                                                    ,temp.Registration
-                                                    ,temp.AirFare
-                                                    ,temp.Car
-                                                    ,temp.Train
-                                                    ,temp.CarRental
-                                                    ,temp.HotelFee
-
-                                                    ,temp.Visa_file
-                                                    ,temp.Passport_file
-                                                    ,temp.Airfare_file
-                                                    ,temp.Train_file
-                                                    ,temp.Rental_file
-                                                    ,temp.Hotel_file
-                                                    ,temp.Meal
-                                                    ,temp.Meal_amount
-                                                    ,temp.MealProvided
-                                                    ,temp.Registration_file
-                                                    ,temp.Car_file
-                                                    ,temp.amount
-                                                    );
-                            }
-                         }
-                        }
+            
+                $('#table').on( 'click', 'tr', function () {
+                    var data = table.row( $(this) ).data();
+                    directToSummary(data[0]);
+                });
             }
             var onFaliure = function(){
                 alert("fail");
@@ -655,15 +390,27 @@
                 var date = data.data[index].submittedOn.substring(0,10);
                 var status = data.data[index].OrderStatus;
                 var temp = JSON.parse(data.data[index].OrderInfo);
-                requestsInfo.push({
-                    RequestID: id,
-                    Name: name,
-                    Type: type,
-                    Amount: "N/A",
-                    Date: date,
-                    Status: status,
-                    OrderInfo: temp,
-                });          
+                if(type.localeCompare("Travel Reimbursement") == 0){
+                    requestsInfo.push({
+                        RequestID: id,
+                        Name: name,
+                        Type: type,
+                        Amount: "$"+temp.amount,
+                        Date: date,
+                        Status: status,
+                        OrderInfo: temp,
+                    });          
+                }else if(type.localeCompare("Travel Request") == 0){
+                    requestsInfo.push({
+                        RequestID: id,
+                        Name: name,
+                        Type: type,
+                        Amount: "N/A",
+                        Date: date,
+                        Status: status,
+                        OrderInfo: temp,
+                    });          
+                }
                 index++;
             }
         }
@@ -673,6 +420,205 @@
         makeGetRequest("getOrders/5e8e4bcaa148b90044206526", onSuccess, onFailure);
     }
 
+    function directToSummary(orderId){
+        var index=0;
+        for (var x = 0; x < requestsInfo.length; x++) {
+            if(requestsInfo[x].RequestID.localeCompare(orderId)==0){
+                index=x;
+                break;
+            }
+        }
+        var temp = requestsInfo[x].OrderInfo;
+        if(requestsInfo[x].Type.localeCompare("Travel Request")==0){
+            if(temp.LineItems[0].Budgets.length==1){
+                window.sessionStorage.setItem('orderId',orderId);
+                window.sessionStorage.setItem('user_id',user_id);
+                window.sessionStorage.setItem('user_name',user_name);
+                window.sessionStorage.setItem('user_uwid',user_uwid);
+                window.sessionStorage.setItem('user_email',user_email);
+                window.sessionStorage.setItem('user_subunitName',user_subunitName);
+                window.sessionStorage.setItem('user_AccessLevel',user_accessLevel);
+                window.sessionStorage.setItem('type',requestsInfo[index].Type);
+                window.sessionStorage.setItem('submit_date',requestsInfo[index].Date);
+                window.sessionStorage.setItem('status',requestsInfo[index].Status);
+                window.sessionStorage.setItem('amount',requestsInfo[index].Amount);
+                window.sessionStorage.setItem('firstname',temp.FirstName);
+                window.sessionStorage.setItem('lastname',temp.LastName);
+                window.sessionStorage.setItem('departure',temp.Departure);
+                window.sessionStorage.setItem('destionation',temp.Destination);
+                window.sessionStorage.setItem('date',temp.Date);
+                window.sessionStorage.setItem('returndate',temp.ReturnDate);
+                window.sessionStorage.setItem('reason',temp.Reason);
+                window.sessionStorage.setItem('flight',temp.Flight);
+                window.sessionStorage.setItem('flight_company',temp.FlightCompany);
+                window.sessionStorage.setItem('flight_number',temp.FlightNumber);
+                window.sessionStorage.setItem('flight_from',temp.FlightFrom);
+                window.sessionStorage.setItem('flight_to',temp.FlightTo);
+                window.sessionStorage.setItem('flight_departdate',temp.FlightDepartingDate);
+                window.sessionStorage.setItem('flight_returndate',temp.FlightReturningDate);
+                window.sessionStorage.setItem('flight_amount',temp.FlightAmount);
+                window.sessionStorage.setItem('hotel',temp.Hotel);
+                window.sessionStorage.setItem('hotel_name',temp.HotelName);
+                window.sessionStorage.setItem('hotel_address',temp.HotelAddress);
+                window.sessionStorage.setItem('hotel_num',temp.HotelNum);
+                window.sessionStorage.setItem('hotel_zip',temp.HotelZip);
+                window.sessionStorage.setItem('hotel_amount',temp.HotelAmount);
+                window.sessionStorage.setItem('hotel_link',temp.HotelLink);
+                window.sessionStorage.setItem('flight_reference',temp.FlightReference);
+                window.sessionStorage.setItem('hotel_note',temp.HotelNote);
+                window.sessionStorage.setItem('birthday',temp.Birthday);
+                window.sessionStorage.setItem('note',temp.NoteFromApprover);
+                window.sessionStorage.setItem('budget1',temp.LineItems[0].Budgets[0].Number);
+                window.sessionStorage.setItem('split1',temp.LineItems[0].Budgets[0].Split);
+                window.sessionStorage.setItem('budget_length',temp.LineItems[0].Budgets.length);
+                window.sessionStorage.setItem('budget2',null);
+                window.sessionStorage.setItem('split2',null);
+                window.sessionStorage.setItem('hotel_movein',temp.HotelMovein);
+                window.sessionStorage.setItem('hotel_moveout',temp.HotelMoveout);
+                window.location.href = "summary.html";
+            }else{
+                window.sessionStorage.setItem('orderId',orderId);
+                window.sessionStorage.setItem('user_id',user_id);
+                window.sessionStorage.setItem('user_name',user_name);
+                window.sessionStorage.setItem('user_uwid',user_uwid);
+                window.sessionStorage.setItem('user_email',user_email);
+                window.sessionStorage.setItem('user_subunitName',user_subunitName);
+                window.sessionStorage.setItem('user_AccessLevel',user_accessLevel);
+                window.sessionStorage.setItem('type',requestsInfo[index].Type);
+                window.sessionStorage.setItem('submit_date',requestsInfo[index].Date);
+                window.sessionStorage.setItem('status',requestsInfo[index].Status);
+                window.sessionStorage.setItem('amount',requestsInfo[index].Amount);
+                window.sessionStorage.setItem('firstname',temp.FirstName);
+                window.sessionStorage.setItem('lastname',temp.LastName);
+                window.sessionStorage.setItem('departure',temp.Departure);
+                window.sessionStorage.setItem('destionation',temp.Destination);
+                window.sessionStorage.setItem('date',temp.Date);
+                window.sessionStorage.setItem('returndate',temp.ReturnDate);
+                window.sessionStorage.setItem('reason',temp.Reason);
+                window.sessionStorage.setItem('flight',temp.Flight);
+                window.sessionStorage.setItem('flight_company',temp.FlightCompany);
+                window.sessionStorage.setItem('flight_number',temp.FlightNumber);
+                window.sessionStorage.setItem('flight_from',temp.FlightFrom);
+                window.sessionStorage.setItem('flight_to',temp.FlightTo);
+                window.sessionStorage.setItem('flight_departdate',temp.FlightDepartingDate);
+                window.sessionStorage.setItem('flight_returndate',temp.FlightReturningDate);
+                window.sessionStorage.setItem('flight_amount',temp.FlightAmount);
+                window.sessionStorage.setItem('hotel',temp.Hotel);
+                window.sessionStorage.setItem('hotel_name',temp.HotelName);
+                window.sessionStorage.setItem('hotel_address',temp.HotelAddress);
+                window.sessionStorage.setItem('hotel_num',temp.HotelNum);
+                window.sessionStorage.setItem('hotel_zip',temp.HotelZip);
+                window.sessionStorage.setItem('hotel_amount',temp.HotelAmount);
+                window.sessionStorage.setItem('hotel_link',temp.HotelLink);
+                window.sessionStorage.setItem('flight_reference',temp.FlightReference);
+                window.sessionStorage.setItem('hotel_note',temp.HotelNote);
+                window.sessionStorage.setItem('birthday',temp.Birthday);
+                window.sessionStorage.setItem('note',temp.NoteFromApprover);
+                window.sessionStorage.setItem('budget1',temp.LineItems[0].Budgets[0].Number);
+                window.sessionStorage.setItem('split1',temp.LineItems[0].Budgets[0].Split);
+                window.sessionStorage.setItem('budget_length',temp.LineItems[0].Budgets.length);
+                window.sessionStorage.setItem('budget2',temp.LineItems[0].Budgets[1].Number);
+                window.sessionStorage.setItem('split2',temp.LineItems[0].Budgets[1].Split);
+                window.sessionStorage.setItem('hotel_movein',temp.HotelMovein);
+                window.sessionStorage.setItem('hotel_moveout',temp.HotelMoveout);
+                window.location.href = "summary.html";
+            }
+        }else if(requestsInfo[x].Type.localeCompare("Travel Reimbursement")==0){
+            if(temp.LineItems[0].Budgets.length==1){
+                window.sessionStorage.setItem('orderId',orderId);
+                window.sessionStorage.setItem('user_id',user_id);
+                window.sessionStorage.setItem('user_name',user_name);
+                window.sessionStorage.setItem('user_uwid',user_uwid);
+                window.sessionStorage.setItem('user_email',user_email);
+                window.sessionStorage.setItem('user_subunitName',user_subunitName);
+                window.sessionStorage.setItem('user_AccessLevel',user_accessLevel);
+                window.sessionStorage.setItem('type',requestsInfo[index].Type);
+                window.sessionStorage.setItem('submit_date',requestsInfo[index].Date);
+                window.sessionStorage.setItem('status',requestsInfo[index].Status);
+                window.sessionStorage.setItem('note',temp.NoteFromApprover);
+                window.sessionStorage.setItem('budget1',temp.LineItems[0].Budgets[0].Number);
+                window.sessionStorage.setItem('split1',temp.LineItems[0].Budgets[0].Split);
+                window.sessionStorage.setItem('budget_length',temp.LineItems[0].Budgets.length);
+                window.sessionStorage.setItem('budget2',null);
+                window.sessionStorage.setItem('split2',null);
+                window.sessionStorage.setItem('TravelBefore',temp.TravelBefore);
+                window.sessionStorage.setItem('ReferenceNumber',temp.ReferenceNumber);
+                window.sessionStorage.setItem('ForMyself',temp.ForMyself);
+                window.sessionStorage.setItem('SomeoneName',temp.SomeoneName);
+                window.sessionStorage.setItem('SomeoneAffliation',temp.SomeoneAffliation);
+                window.sessionStorage.setItem('SomeoneEmail',temp.SomeoneEmail);
+                window.sessionStorage.setItem('US',temp.UScitizen);
+                window.sessionStorage.setItem('purpose',temp.Purpose);
+                window.sessionStorage.setItem('personalTravel',temp.PersonalTravel);
+                window.sessionStorage.setItem('personalTravelDetails',temp.PersonalTravelDetail);
+                window.sessionStorage.setItem('registration',temp.Registration);
+                window.sessionStorage.setItem('airfare',temp.AirFare);
+                window.sessionStorage.setItem('car',temp.Car);
+                window.sessionStorage.setItem('train',temp.Train);
+                window.sessionStorage.setItem('carRental',temp.CarRental);
+                window.sessionStorage.setItem('hotelFee',temp.HotelFee);
+                window.sessionStorage.setItem('visa_file',temp.Visa_file);
+                window.sessionStorage.setItem('passport_file',temp.Passport_file);
+                window.sessionStorage.setItem('airfare_file',temp.Airfare_file);
+                window.sessionStorage.setItem('train_file',temp.Train_file);
+                window.sessionStorage.setItem('rental_file',temp.Rental_file);
+                window.sessionStorage.setItem('hotel_file',temp.Hotel_file);
+                window.sessionStorage.setItem('meal',temp.Meal);
+                window.sessionStorage.setItem('meal_amount',temp.Meal_amount);
+                window.sessionStorage.setItem('mealProvided',temp.MealProvided);
+                window.sessionStorage.setItem('registration_file',temp.Registration_file);
+                window.sessionStorage.setItem('car_file',temp.Car_file);
+                window.sessionStorage.setItem('amount',temp.amount);
+                window.location.href = "summary-travelReimbursement.html";
+            }else{
+                window.sessionStorage.setItem('orderId',orderId);
+                window.sessionStorage.setItem('user_id',user_id);
+                window.sessionStorage.setItem('user_name',user_name);
+                window.sessionStorage.setItem('user_uwid',user_uwid);
+                window.sessionStorage.setItem('user_email',user_email);
+                window.sessionStorage.setItem('user_subunitName',user_subunitName);
+                window.sessionStorage.setItem('user_AccessLevel',user_accessLevel);
+                window.sessionStorage.setItem('type',requestsInfo[index].Type);
+                window.sessionStorage.setItem('submit_date',requestsInfo[index].Date);
+                window.sessionStorage.setItem('status',requestsInfo[index].Status);
+                window.sessionStorage.setItem('note',temp.NoteFromApprover);
+                window.sessionStorage.setItem('budget1',temp.LineItems[0].Budgets[0].Number);
+                window.sessionStorage.setItem('split1',temp.LineItems[0].Budgets[0].Split);
+                window.sessionStorage.setItem('budget_length',temp.LineItems[0].Budgets.length);
+                window.sessionStorage.setItem('budget2',temp.LineItems[0].Budgets[1].Number);
+                window.sessionStorage.setItem('split2',temp.LineItems[0].Budgets[1].Split);
+                window.sessionStorage.setItem('TravelBefore',temp.TravelBefore);
+                window.sessionStorage.setItem('ReferenceNumber',temp.ReferenceNumber);
+                window.sessionStorage.setItem('ForMyself',temp.ForMyself);
+                window.sessionStorage.setItem('SomeoneName',temp.SomeoneName);
+                window.sessionStorage.setItem('SomeoneAffliation',temp.SomeoneAffliation);
+                window.sessionStorage.setItem('SomeoneEmail',temp.SomeoneEmail);
+                window.sessionStorage.setItem('US',temp.UScitizen);
+                window.sessionStorage.setItem('purpose',temp.Purpose);
+                window.sessionStorage.setItem('personalTravel',temp.PersonalTravel);
+                window.sessionStorage.setItem('personalTravelDetails',temp.PersonalTravelDetail);
+                window.sessionStorage.setItem('registration',temp.Registration);
+                window.sessionStorage.setItem('airfare',temp.AirFare);
+                window.sessionStorage.setItem('car',temp.Car);
+                window.sessionStorage.setItem('train',temp.Train);
+                window.sessionStorage.setItem('carRental',temp.CarRental);
+                window.sessionStorage.setItem('hotelFee',temp.HotelFee);
+                window.sessionStorage.setItem('visa_file',temp.Visa_file);
+                window.sessionStorage.setItem('passport_file',temp.Passport_file);
+                window.sessionStorage.setItem('airfare_file',temp.Airfare_file);
+                window.sessionStorage.setItem('train_file',temp.Train_file);
+                window.sessionStorage.setItem('rental_file',temp.Rental_file);
+                window.sessionStorage.setItem('hotel_file',temp.Hotel_file);
+                window.sessionStorage.setItem('meal',temp.Meal);
+                window.sessionStorage.setItem('meal_amount',temp.Meal_amount);
+                window.sessionStorage.setItem('mealProvided',temp.MealProvided);
+                window.sessionStorage.setItem('registration_file',temp.Registration_file);
+                window.sessionStorage.setItem('car_file',temp.Car_file);
+                window.sessionStorage.setItem('amount',temp.amount);
+                window.location.href = "summary-travelReimbursement.html";
+            }
+        }
+    }
     </script>
 
 

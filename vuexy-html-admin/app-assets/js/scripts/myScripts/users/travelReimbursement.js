@@ -6,12 +6,13 @@ var formData = new FormData();
 var type = "";
 var unitID = "";
 const baseURL = "https://coe-api.azurewebsites.net/api/";
-var user_id = "5e8e4bcaa148b90044206526";
+var user_id = "5e8e45eea148b9004420651f";
 var user_name="";
 var user_uwid="";
 var user_email="";
 var user_subunitName="";
 var user_accessLevel="";
+var budgets_database = [];
 
 /******************************************************* BEGIN: Wizard step control ************************************************/
 
@@ -78,6 +79,17 @@ var makeGetRequest = function(url, onSuccess, onFailure) {
     });
 };
 
+window.onload = function() {
+    this.getUserInfo();
+    this.getBudgetsInfo();
+    var budget_select = this.document.getElementById('budget_num_1');
+    var budget_select2 = this.document.getElementById('budget_num_2');
+    for (var i = 0; i < this.budgets_database.length; i++) {
+        var num = budgets_database[i];
+        budget_select.appendChild(addBudgetData(num));
+        budget_select2.appendChild(addBudgetData(num));
+    }
+};
 
 
 $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS() {
@@ -332,7 +344,35 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
         
         formData.append("files", fileSelect.files[x]);
         //---------------------------------------------------------------------
-        getUserInfo1();
+        
+        //-------------------------Amount--------------------------------------
+        var amount=0;
+        var registrationAmount=0;
+        var airfareAmount=0;
+        var carAmount=0;
+        var trainAmount=0;
+        var carRentalAmount=0;
+        var hotelAmount=0;
+        if($("input[name='registration']").val().length!=0){
+            registrationAmount=parseInt($("input[name='registration']").val());
+        }
+        if($("input[name='airfare']").val().length!=0){
+            airfareAmount=parseInt($("input[name='airfare']").val());
+        }
+        if($("input[name='car']").val().length!=0){
+            carAmount=parseInt($("input[name='car']").val());
+        }
+        if($("input[name='train']").val().length!=0){
+            trainAmount=parseInt($("input[name='train']").val());
+        }
+        if($("input[name='carRental']").val().length!=0){
+            carRentalAmount=parseInt($("input[name='carRental']").val());
+        }
+        if($("input[name='hotel']").val().length!=0){
+            hotelAmount=parseInt($("input[name='hotel']").val());
+        }
+        amount = registrationAmount + airfareAmount + carRentalAmount + carAmount + trainAmount + hotelAmount;
+        //
         var requestInfo = {
             TravelBefore: $("input[name='beforeRadio']:checked").val(),
             ReferenceNumber: $("input[name='reference_number_input']").val(),
@@ -362,7 +402,7 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
             Hotel_file: hotel_name,
             Registration_file: registration_name,
             Car_file: car_name,
-            amount: parseInt($("input[name='registration']").val())+parseInt($("input[name='airfare']").val())+parseInt($("input[name='car']").val())+parseInt($("input[name='train']").val())+ parseInt($("input[name='carRental']").val())+parseInt($("input[name='hotel']").val()),
+            amount: amount,
             Col1: $("input[name='colNum1']").val(),
             Col2: $("input[name='colNum2']").val(),
             Meal_amount: $("input[name='meal_amount']").val(),
@@ -377,8 +417,8 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
         JSON_toServer.OrderType = "Travel Reimbursement";
         JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
         // console.log(typeof(requestInfo));
-        JSON_toServer.OrderStatus = "Pending"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
-        JSON_toServer.ChatInfo = "TEST CHAT INFO2234"; //leaving this empty since there's no chat when user upload a order first
+        JSON_toServer.OrderStatus = "Awaiting Approval"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
+        //JSON_toServer.ChatInfo = "TEST CHAT INFO2234"; //leaving this empty since there's no chat when user upload a order first
         JSON_toServer.assignedTo = null; //leaving this as null since there's no one assigned when a user upload/submit a order.
         
         //here we just pass in the JSON object we need to pass to the server. "JSON_body" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request
@@ -395,8 +435,8 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
                 const data_obj = response_obj.data;
                 //convert order info to JSON
                 const requestInfo_obj = JSON.parse(data_obj.OrderInfo);
+                sendRequestHistory(data_obj._id, "Submitted");
                 console.log(requestInfo_obj);
-                var amount = parseInt($("input[name='registration']").val())+parseInt($("input[name='airfare']").val())+parseInt($("input[name='car']").val())+parseInt($("input[name='train']").val())+ parseInt($("input[name='carRental']").val())+parseInt($("input[name='hotel']").val());
                 window.sessionStorage.setItem('orderId',data_obj._id);
                 window.sessionStorage.setItem('user_id',user_id);
                 window.sessionStorage.setItem('user_name',user_name);
@@ -441,7 +481,7 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
                 window.sessionStorage.setItem('registration_file',registration_name);
                 window.sessionStorage.setItem('car_file',car_name);
                 window.sessionStorage.setItem('amount',amount);
-                window.location.href = "summary-travelReimbursement.php";
+                window.location.href = "summary-travelReimbursement.html";
             }
         }
         request.open('POST', baseURL + "uploadOrder/" + type + "/" + unitID);
@@ -509,32 +549,6 @@ function getUserInfo() {
                 type = "unit";
                 unitID = data.data.UnitID;
             }
-        } else {
-            //error message
-        }
-    }
-
-    var onFailure = function() {
-        // failure message
-    }
-
-    makeGetRequest("getuserInformation/" + user_id, onSuccess, onFailure);
-}
-
-function getUserInfo1() {
-    //alert("getUserInfo");
-    var onSuccess = function(data) {
-        if (data.status == true) {
-            console.log("user information is here");
-            console.log(data.data);
-            var level = data.data.AccessLevel;
-            if (level == "Submitter" || level == "Approver") {
-                type = "subunit";
-                unit_id = data.data.SubUnitID;
-            } else if (level == "Fiscal Staff" || level == "Fiscal Administrator") {
-                type = "unit";
-                unit_id = data.data.UnitID;
-            }
             user_name = data.data.userInfo.Name;
             user_uwid=data.data.userInfo.UWID;
             user_email=data.data.userInfo.email;
@@ -549,128 +563,11 @@ function getUserInfo1() {
         // failure message
     }
 
-    makeGetRequest("getuserInformation/5e8e4bcaa148b90044206526" , onSuccess, onFailure);
+    makeGetRequest("getuserInformation/" + user_id, onSuccess, onFailure);
 }
-
 
 /************************************************ END: Wizard step control *******************************************************/
 
-
-
-
-/**************************************************** BEGIN: Form Control ********************************************************/
-
-/***************** BEGIN: Step3 *******************/
-
-/** 
- * Generate input group with prepend or append label
- * @param _id id for line item
- * @param _budget_id id for budget number in this line item
- * @param {boolean} isPre a mark to indicate need prepend label or append label
- * @param {string} label what's the label is (e.g. "$" or "%")
- * @param {string} name use to set the input id
- * The input group is unique for every budget number, 
- * so we use format split_{dollar-or-percent}_input_value_{line-item-id}_{budget-id} to set input id
- */
-function inputGroup(_id, _budget_id, isPre, label, name) {
-    var f = document.createElement('fieldset');
-    var d = document.createElement('div');
-    d.setAttribute('class', 'input-group');
-
-    var sig = document.createElement('div');
-    if (isPre) {
-        sig.setAttribute('class', 'input-group-prepend');
-    } else {
-        sig.setAttribute('class', 'input-group-append');
-    }
-    var s = document.createElement('span');
-    s.setAttribute('class', 'input-group-text');
-    s.innerHTML = label;
-    sig.appendChild(s);
-
-    var i = document.createElement('input');
-    i.setAttribute('class', 'form-control');
-    i.setAttribute('type', 'text');
-    i.setAttribute('id', 'split_' + name + '_input_value_' + _id + '_' + _budget_id);
-
-    if (isPre) {
-        d.appendChild(sig);
-        d.appendChild(i);
-    } else {
-        d.appendChild(i);
-        d.appendChild(sig);
-    }
-
-    f.appendChild(d);
-    return f;
-
-}
-
-/** 
- * Generate task/option/project options behind each budget number 
- */
-function addBudgetOptions(_id, _budget_id) {
-    var row = document.createElement('div');
-    row.setAttribute('class', 'form-group row');
-
-    var first = document.createElement('div');
-    first.setAttribute('class', 'col-md-1');
-    first.appendChild(genOption(_id, _budget_id, "Task", "option_task"));
-
-    var second = document.createElement('div');
-    second.setAttribute('class', 'col-md-1');
-    second.appendChild(genOption(_id, _budget_id, "Option", "option_option"));
-
-    var third = document.createElement('div');
-    third.setAttribute('class', 'col-md-1');
-    third.appendChild(genOption(_id, _budget_id, "Project", "option_project"));
-    
-    row.appendChild(first);
-    row.appendChild(genOptionInput("task_input", _id, _budget_id));
-    row.appendChild(second);
-    row.appendChild(genOptionInput("option_input", _id, _budget_id));
-    row.appendChild(third);
-    row.appendChild(genOptionInput("project_input", _id, _budget_id));
-
-    return row;
-}
-
-/** 
- * Generate option of task/option/project 
- * @param _id id for line item
- * @param _budget_id id for budget number in this line item
- * @param {string} label the label for this options (Task/Option/Project)
- * @param {string} name use to set the name of this option
- * Each option group is bound to a single budget number
- */
-function genOption(_id, _budget_id, label, name) {
-    var list = document.createElement('ul');
-    list.setAttribute('class', 'list-unstyled mb-0');
-    var bullet = document.createElement('li');
-    bullet.setAttribute('class', 'd-inline-block mr-2');
-    var f = document.createElement('fieldset');
-    var d = document.createElement('div');
-    d.setAttribute('class', 'custom-control custom-checkbox');
-    var i = document.createElement('input');
-    i.setAttribute('type', 'checkbox');
-    i.setAttribute('class', 'custom-control-input');
-    i.setAttribute('name', name);
-    i.setAttribute('id', name + _id + '_' + _budget_id);
-    // i.onclick = function() {
-    //     var text = document.getElementById(name + _id + '_' + _budget_id);
-    //     text.setAttribute('class', 'col-md-3 hidden');
-    // };
-    var l = document.createElement('label');
-    l.setAttribute('class', 'custom-control-label');
-    l.setAttribute('for', name + _id + '_' + _budget_id);
-    l.innerHTML = label;
-    d.appendChild(i);
-    d.appendChild(l);
-    f.appendChild(d);
-    bullet.appendChild(f);
-    list.appendChild(bullet);
-    return list;
-}
 
 /** 
  * Generate the input box behind each task/option/project 
@@ -687,16 +584,6 @@ function genOptionInput(name, _id, _budget_id) {
     return div;
 }
 
-/**
- * Add budget numbers to selected box from database
- * For now this is just test
- */
-function addTestBudgetData(num) {
-    var op = document.createElement('option');
-    op.setAttribute('value', num);
-    op.innerHTML = num;
-    return op;
-}
 
 /**
  * Deprecated
@@ -728,204 +615,55 @@ $(document).on('click', '#option_project', function() {
 
 /** END: Budgets Controller */
 
-
-
-/** 
- * BEGIN: New Line Item Controller 
- * @param _id line item id
- * @param itemNum this is a global variable, starts from 1,
- *                each time when uses add a new line item it will increase by 1 
- *                to generate a unique id for all components inside this line item
- *                but it will not decrease when users delete a line item
- *                so itemNum cannot reflect the real number of line items, it just use to set id
- * Users can add one more line item by clicking add-new-line-item button
- * This funtion will generate all needed components of each line item,
- * exactly the same as original box,
- * and each component and input value have unique id
- */
-
-/** Core function */
-function addNewLineItem(_id) {
-    console.log('item id: ' + _id);
-
-    var newBox = document.createElement('div');
-    newBox.setAttribute('class', 'row d-flex justify-content-center');
-    newBox.setAttribute('id', 'lineItemBox_' + _id);
-
-    var newFeild = document.createElement('div');
-    newFeild.setAttribute('class', 'col-11');
-    newFeild.setAttribute('style', 'margin-top: 1rem; padding-top: 1.5rem; border-top: 1px dashed #d9d9d9;');
-
-    var form = document.createElement('div');
-    form.setAttribute('class', 'form form-horizontal');
-    
-    var formBody = document.createElement('div');
-    formBody.setAttribute('class', 'form-body');
-
-    var row = document.createElement('div');
-    row.setAttribute('class', 'row');
-
-    // append new line item content
-    row.appendChild(addNewExpense(_id));
-    row.appendChild(addNewPurpose(_id));
-    row.appendChild(addNewCategory(_id));
-    row.appendChild(addNewAmount(_id));
-    row.appendChild(addNewTax(_id));
-    row.appendChild(addBudget(_id, 1, true));
-    row.appendChild(addOneMoreFile(_id, 1, true));
-
-    formBody.appendChild(row);
-    form.appendChild(formBody);
-    newFeild.appendChild(form);
-    newBox.appendChild(newFeild);
-    var end = document.getElementById('new_line_item');
-    end.before(newBox);
-
+function getBudgetsInfo() {
+    var onSuccess = function(data) {
+        if (data.status == true) {
+            // console.log("budgets information is here");
+            // console.log(data.data);
+            for (var i = 0; i < data.data.length; i++) {
+                budgets_database.push(data.data[i].budgetNumber);
+            }
+        } else {
+            //error message
+        }
+    }
+    var onFailure = function() {
+        // failure message
+    }
+    makeGetRequest("getBudgetsUnderSubUnit/" + unitID, onSuccess, onFailure);
 }
 
-/** Bind to the initialized button */
-$(document).on('click', '#add_new_line_item', function(){
-    itemNum ++;
-    addNewLineItem(itemNum);
-});
+function addBudgetData(num) {
+    var op = document.createElement('option');
+    if (num == "0") {
+        op.setAttribute('value', '');
+        op.innerHTML = "Please select"
+    } else {
+        op.setAttribute('value', num);
+        op.innerHTML = num;
+    }
+    return op;
+}
 
-
-
-/** Helper Functions */
-/** 
- * Add expense block
- * @param {int} _id line item id
- */
-function addNewExpense(_id) {
-    var box = document.createElement('div');
-    box.setAttribute('class', 'col-12');
-
-    var row = document.createElement('div');
-    row.setAttribute('class', 'form-group row');
-
-    var first = document.createElement('div');
-    first.setAttribute('class', 'col-md-4');
-    first.innerHTML = "<span>Expense Description</span>";
-
-    var second = document.createElement('div');
-    second.setAttribute('class', 'col-md-7');
-    var input = document.createElement('input');
-    input.setAttribute('type', 'text');
-    input.setAttribute('id', 'expense_' + _id);
-    input.setAttribute('class', 'form-control');
-    input.setAttribute('name', 'expense');
-    input.setAttribute('placeholder', 'Expense Description');
-    second.appendChild(input);
-
-    var third = document.createElement('div');
-    third.setAttribute('class', 'col-md-1');
-    var button = document.createElement('button');
-    button.setAttribute('class', 'btn btn-icon rounded-circle btn-flat-danger');
-    button.setAttribute('id', 'delete_' + _id);
-    button.setAttribute('type', 'button');
-    button.onclick = function() {
-        removeLineItem(_id);
+function sendRequestHistory(request_id, actionstr) {
+    var history = {
+        userName: window.sessionStorage.getItem("id"),
+        action: actionstr
     };
-    var icon = document.createElement('i');
-    icon.setAttribute('class', 'feather icon-x-circle');
-    button.appendChild(icon);
-    third.appendChild(button);
-    
-    row.appendChild(first);
-    row.appendChild(second);
-    row.appendChild(third);
-    box.appendChild(row);
 
-    return box; 
-}
-
-/** 
- * Helper function: generate a table cell to display split budget 
- * @param {array} arr the budget number array
- */
-function genBudgetsCell(arr) {
-    var td = document.createElement('td');
-    var n = arr.length;
-    if (n == 1) {
-        td.innerHTML = arr[0].Number;
-        return td;
+    var onSuccess = function(data) {
+        if (data.status == true) {
+            console.log("update success");
+        } else {
+            //error message
+        }
     }
 
-    for (var i = 0; i < n; i++) {
-        var p = document.createElement('p');
-        p.setAttribute('style', 'border-bottom: 1px dashed #d9d9d9;');
-        p.innerHTML = arr[i].Split + ' on ' + arr[i].Number;
-        td.appendChild(p);
+    var onFailure = function() {
+        // failure message
     }
-
-    return td;
+    makePostRequest("updateOrderHistory/" + request_id, history, onSuccess, onFailure);
 }
-
-/**
- * Helper function: generate a new item summary row with given parameters
- * @param {int} _id line item id
- * @param {string} Expense content to fill in the expense cell
- * @param {string} Purpose content to fill in the purpose cell
- * @param {string} Category content to fill in the category cell
- * @param {table cell} Budgets a generated table cell which can be added to the table directly
- * @param {string} Amount content to fill in the amount cell
- */
-function genNewLineItemRow(_id, Expense, Purpose, Category, Budgets, Amount) {
-
-    var _id_td = document.createElement('td');
-    _id_td.innerHTML = _id;
-
-    var expense_purpose_td = document.createElement('td');
-    var exp = document.createElement('p');
-    exp.setAttribute('style', 'margin-bottom: 0;');
-    exp.innerHTML = Expense;
-    var pur = document.createElement('p');
-    pur.setAttribute('style', 'margin-bottom: 0;');
-    pur.innerHTML = Purpose;
-    expense_purpose_td.appendChild(exp);
-    expense_purpose_td.appendChild(pur);
-
-    var category_td = document.createElement('td');
-    category_td.innerHTML = Category;
-
-    var budgets_td = genBudgetsCell(Budgets);
-    
-    var amount_td = document.createElement('td');
-    amount_td.innerHTML = Amount;
-
-    var receipt_td = document.createElement('td');
-    var viewBtn = document.createElement('button');
-    var editBtn = document.createElement('button');
-    viewBtn.setAttribute('class', 'btn btn-icon btn-flat-success');
-    editBtn.setAttribute('class', 'btn btn-icon btn-flat-success');
-    var viewIcon = document.createElement('i');
-    var editIcon = document.createElement('i');
-    viewIcon.className = 'feather icon-file';
-    editIcon.className = 'feather icon-edit';
-    viewBtn.appendChild(viewIcon);
-    editBtn.appendChild(editIcon);
-    receipt_td.appendChild(viewBtn);
-    receipt_td.appendChild(editBtn);
-    // if (Receipt == null) {
-    //     receipt_td.appendChild(editBtn);
-    // } else {
-    //     receipt_td.appendChild(viewBtn);
-    //     receipt_td.appendChild(editBtn);
-    // }
-
-    // create tr element
-    var tr = document.createElement('tr');
-    tr.setAttribute('id', 'summary_row_' + _id);
-    tr.appendChild(_id_td);
-    tr.appendChild(expense_purpose_td);
-    tr.appendChild(category_td);
-    tr.appendChild(budgets_td);
-    tr.appendChild(amount_td);
-    tr.appendChild(receipt_td);
-
-    return tr;
-}
-
 /** END: Summary Table Display Controller */
 
 
