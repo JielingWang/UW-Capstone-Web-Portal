@@ -124,12 +124,12 @@
                             </ul>
                         </li>
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">Ted Hanson</span><span class="user-status">CEE Administrator</span></div><span><img class="round" src="../../../app-assets/images/portrait/small/avatar-s-9.jpg" alt="avatar" height="40" width="40"></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a>
-                                <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i class="feather icon-power"></i> Logout</a>
-                            </div>
-                        </li>
+                            <div class="user-nav d-sm-flex d-none"><span id="navigationBarName" class="user-name text-bold-600">Name</span><span class="user-status">General User</span></div><span><img id="navigationBarImage" class="round" src="" alt="avatar" height="40" width="40"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a>
+                            <div class="dropdown-divider"></div><a class="dropdown-item" href="../login/auth-login.html" onclick="logout()"><i class="feather icon-power"></i> Logout</a>
+                        </div>
+                    </li>
                     </ul>
                 </div>
             </div>
@@ -175,7 +175,7 @@
                     </ul>
                 </li>
                 
-				<li class="nav-item"><a href="orderHistory-new.html"><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">My Requests</span></a></li>
+				<li class="nav-item"><a href="user-myrequests.html"><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">My Requests</span></a></li>
                 
 				<li class=" navigation-header"><span>Settings</span></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
@@ -523,62 +523,60 @@
 
               <!-- Timeline Starts -->
               <section>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="card" id="history_card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Request History</h4>
-                                </div>
-                                <div class="card-content">
-                                    <div class="card-body">
-                                        <ul id="request-history" class="activity-timeline timeline-left list-unstyled">
-                                           
-                                        </ul>
-                                    </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card" id="history_card">
+                            <div class="card-header">
+                                <h4 class="card-title">Request History</h4>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <ul id="request-history" class="activity-timeline timeline-left list-unstyled">
+                                    
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-6">
-                            <div class="card" id="note_card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Notes</h4>
-                                </div>
-                                <div class="card-content" id="notes" style="padding-top: 1.5rem; padding-left: 1.5rem;">
-                                   
-                                </div>
-                                
-                            </div>
-                        </div>
-
                     </div>
-                </section>
-                <!-- Timeline Ends -->
 
-                <!-- add note start-->
+                    <div class="col-6">
+                        <div class="card overflow-auto" id="note_card">
+                            <div class="card-header">
+                                <h4 class="card-title">Notes</h4>
+                            </div>
+                            <div class="card-content" id="notes" style="padding: 1.5rem;">
+
+                            </div>
+                          
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+                <!-- Timeline Ends -->
                 <div class="row" id="feedback-block">
                     <div class="col-md-12">
-                          <div class="card">
-                                <div class="card-content">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Note</h4>
-                                        <form class="form">
-                                            <div class="form-body">
-                                                <div class="form-group">
-                                                    <label for="feedback_input" class="sr-only">Notes</label>
-                                                        <textarea id="feedback_input" rows="3" class="form-control" name="message" placeholder="Add a note"></textarea>
-                                                </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <h4 class="card-title">Add new notes</h4>
+                                    <form class="form">
+                                        <div class="form-body">
+                                            <div class="form-group">
+                                                <label for="feedback_input" class="sr-only">Notes</label>
+                                                <textarea id="feedback_input" rows="3" class="form-control" name="message" placeholder="Notes"></textarea>
                                             </div>
-                                            <div class="form-actions">
-                                                <button type="button" class="btn btn-primary mr-1" onclick="addNote()">Add a note</button>
-                                              
-                                            </div>
-                                        </form>
-                                    </div>
+                                        </div>
+                                        <div class="form-actions">
+                                            <button type="button" class="btn btn-outline-primary mr-1" onclick="takeNoteClicked()"><i class="mr-1 fa fa-pencil"></i>Add Note</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
+               
                 <!-- add note end-->
             </div>
         </div>
@@ -631,126 +629,40 @@
     <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
     <script src="../../../app-assets/js/scripts/forms/validation/form-validation.js"></script>
     <!--<script src="../../../app-assets/js/scripts/myScripts/users/travelRequest-summary.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <!-- END: Page JS-->
 
     <!-- BEGIN: Page JS-->
-    
 
     <script>
-        const baseURL = "https://coe-api.azurewebsites.net/api/";
-        var user_id = "5e8e4bcaa148b90044206526";   
-        var makePostRequest = function(url, data, onSuccess, onFailure) {
-        $.ajax({
-            async:false,
-            type: 'POST',
-            url: baseURL + url,
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            dataType: "json",
-            success: onSuccess,
-            error: onFailure
-            });
+    var js_id=window.sessionStorage.getItem("orderId");
+    function takeNoteClicked() {
+        // send data
+        var data = {
+            userName: "Haotian Yuan",
+            comment: document.getElementById("feedback_input").value,
         };
-
-        // Template GET request Ajax call
-        var makeGetRequest = function(url, onSuccess, onFailure) {
-            $.ajax({
-                async:false,
-                type: 'GET',
-                url: baseURL + url,
-                dataType: "json",
-                success: onSuccess,
-                error: onFailure
-            });
-        };
-        var i;
-        var file_name;
-        var js_id=window.sessionStorage.getItem("orderId");
-        window.onload = function(){
-            document.getElementById('requestID').innerHTML = window.sessionStorage.getItem("orderId");
-            document.getElementById('requester').innerHTML = window.sessionStorage.getItem("user_name");
-            document.getElementById('subunit').innerHTML = window.sessionStorage.getItem("user_subunitName");
-            document.getElementById('userEmail').innerHTML = window.sessionStorage.getItem("user_email");
-            document.getElementById('userUWID').innerHTML = window.sessionStorage.getItem("user_uwid");
-            document.getElementById('accessLevel').innerHTML = window.sessionStorage.getItem("user_AccessLevel");
-            document.getElementById('status').innerHTML ="<i class=\"fa fa-circle font-small-3 text-warning mr-50\"></i>" + window.sessionStorage.getItem("status");
-            document.getElementById('submitDate').innerHTML = window.sessionStorage.getItem("submit_date");
-            if(window.sessionStorage.getItem("budget_length").localeCompare("1")==0){
-                document.getElementById('budget').innerHTML = window.sessionStorage.getItem("budget1") +" "+window.sessionStorage.getItem("split1");
-            }else{
-                document.getElementById('budget').innerHTML = window.sessionStorage.getItem("budget1") +" "+window.sessionStorage.getItem("split1")
-                                                     +"<br>"+window.sessionStorage.getItem("budget2") +" "+window.sessionStorage.getItem("split2");
+        var onSuccess = function(data) {
+            if (data.status == true) {
+                console.log("update success");
+            } else {
+                //error message
+                info = null;
             }
-            document.getElementById('reason').innerHTML = window.sessionStorage.getItem("reason");
-            document.getElementById('firstName').innerHTML = window.sessionStorage.getItem("firstname");
-            document.getElementById('departDate').innerHTML = window.sessionStorage.getItem("date");
-            document.getElementById('lastName').innerHTML = window.sessionStorage.getItem("lastname");
-            document.getElementById('returnDate').innerHTML = window.sessionStorage.getItem("returndate");
-            document.getElementById('departure').innerHTML = window.sessionStorage.getItem("departure");
-            document.getElementById('birthday').innerHTML = window.sessionStorage.getItem("birthday")+"&nbsp;";
-            document.getElementById('destination').innerHTML = window.sessionStorage.getItem("destionation");
-            document.getElementById('flight').innerHTML = window.sessionStorage.getItem("flight")+"&nbsp;";
-            document.getElementById('flightFrom').innerHTML = window.sessionStorage.getItem("flight_from")+"&nbsp;";
-            document.getElementById('flightReference').innerHTML = window.sessionStorage.getItem("flight_reference")+"&nbsp;";
-            document.getElementById('airline').innerHTML = window.sessionStorage.getItem("flight_company")+"&nbsp;";
-            document.getElementById('flightTo').innerHTML = window.sessionStorage.getItem("flight_to")+"&nbsp;";
-            document.getElementById('flightNumber').innerHTML = window.sessionStorage.getItem("flight_number")+"&nbsp;";
-            document.getElementById('flightDepartDate').innerHTML = window.sessionStorage.getItem("flight_departdate")+"&nbsp;";
-            document.getElementById('flightAmount').innerHTML = window.sessionStorage.getItem("flight_amount")+"&nbsp;";
-            document.getElementById('flightReturnDate').innerHTML = window.sessionStorage.getItem("flight_returndate")+"&nbsp;";
-            document.getElementById('hotel').innerHTML = window.sessionStorage.getItem("hotel")+"&nbsp;";
-            document.getElementById('hotelNum').innerHTML = window.sessionStorage.getItem("hotel_num")+"&nbsp;";
-            document.getElementById('hotelLink').innerHTML = window.sessionStorage.getItem("hotel_link")+"&nbsp;";
-            document.getElementById('hotelName').innerHTML = window.sessionStorage.getItem("hotel_name")+"&nbsp;";
-            document.getElementById('hotelCheckIn').innerHTML = window.sessionStorage.getItem("hotel_movein")+"&nbsp;";
-            document.getElementById('hotelNote').innerHTML = window.sessionStorage.getItem("hotel_note")+"&nbsp;";
-            document.getElementById('hotelAddress').innerHTML = window.sessionStorage.getItem("hotel_address")+"&nbsp;";
-            document.getElementById('hotelCheckout').innerHTML = window.sessionStorage.getItem("hotel_moveout")+"&nbsp;";
-            document.getElementById('hotelZip').innerHTML = window.sessionStorage.getItem("hotel_zip")+"&nbsp;";
-            document.getElementById('hotelAmount').innerHTML = window.sessionStorage.getItem("hotel_amount")+"&nbsp;";
-            document.getElementById('request-type').innerHTML = window.sessionStorage.getItem("type")+"&nbsp;";
         }
-       
 
-    function update_order(orderinfo){
-        alert("Update!!!");
-        //var note_approver = document.getElementById("approver_note").value;
-        console.log(orderinfo);
-        var JSON_data = {
-            "OrderInfo": orderinfo
+        var onFailure = function() {
+            // failure message
+            info = null;
         }
-        var onSuccess = function(data){
-            alert("update success");
-        }
-        var onFaliure = function(){
-            alert("fail");
-        }
-        makePostRequest("updateOrderInfo/"+js_id,JSON_data,onSuccess,onFaliure);
-    }
-    function addNote(){
-        var onSuccess = function(data){
-            var user_name = window.sessionStorage.getItem("user_name");
-            var temp = JSON.parse(data.data.OrderInfo);   
-            var today = new Date();
-            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-            var dateTime = date+' '+time;
-            temp.NoteFromApprover+="<br>";   
-            temp.NoteFromApprover+= user_name;  
-            temp.NoteFromApprover+= " ";   
-            temp.NoteFromApprover+=dateTime;
-            temp.NoteFromApprover+=" ";
-            temp.NoteFromApprover+=document.getElementById("feedback_input").value;
-            alert(temp.NoteFromApprover);
-            update_order(JSON.stringify(temp));
-        }
-        var onFaliure = function(){
-            alert("fail");
-        }
-        makeGetRequest("getOrderInformation/"+js_id,onSuccess,onFaliure);
+        makePostRequest("updateChatInfo/" + js_id, data, onSuccess, onFailure);
+        location.reload();
     }
 
     </script>
+    <script src="../../../app-assets/js/scripts/myScripts/requests/historyandnote.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/users/summary.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/Admin/navigation_handler.js"></script>
 </body>
 <!-- END: Body-->
 <!--<script src="travelRequest.js"></script>-->

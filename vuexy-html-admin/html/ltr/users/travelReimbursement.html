@@ -124,12 +124,12 @@
                             </ul>
                         </li>
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">Ted Hanson</span><span class="user-status">CEE Administrator</span></div><span><img class="round" src="../../../app-assets/images/portrait/small/avatar-s-9.jpg" alt="avatar" height="40" width="40"></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a>
-                                <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i class="feather icon-power"></i> Logout</a>
-                            </div>
-                        </li>
+                            <div class="user-nav d-sm-flex d-none"><span id="navigationBarName" class="user-name text-bold-600">Name</span><span class="user-status">General User</span></div><span><img id="navigationBarImage" class="round" src="" alt="avatar" height="40" width="40"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a>
+                            <div class="dropdown-divider"></div><a class="dropdown-item" href="../login/auth-login.html" onclick="logout()"><i class="feather icon-power"></i> Logout</a>
+                        </div>
+                    </li>
                     </ul>
                 </div>
             </div>
@@ -146,7 +146,7 @@
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item mr-auto"><a class="navbar-brand" href="../../../html/ltr/vertical-menu-template/index.html">
                         <div class="brand-logo"></div>
-                        <h2 class="brand-text mb-0">Davinci</h2>
+                        <h2 class="brand-text mb-0">ENGINE</h2>
                     </a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary" data-ticon="icon-disc"></i></a></li>
             </ul>
@@ -175,7 +175,7 @@
                     </ul>
                 </li>
                 
-				<li class="nav-item"><a href="orderHistory-new.html"><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">My Requests</span></a></li>
+				<li class="nav-item"><a href="user-myrequests.html"><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">My Requests</span></a></li>
                 
 				<li class=" navigation-header"><span>Settings</span></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
@@ -355,9 +355,6 @@
                                 <div class="col-md-2">
                                     <select class="custom-select form-control" id="budget_num_1" name="budget_num_1">
                                         <option value="">Please select</option>
-                                        <option value="910-11">910-11</option>
-                                        <option value="910-22">910-22</option>
-                                        <option value="922-266">922-266</option>
                                     </select>
                                 </div>
                                 <!-- <div class="col-md-1">Split with:</div> -->
@@ -451,9 +448,6 @@
                                 <div class="col-md-2">
                                     <select class="custom-select form-control" id="budget_num_2" name="budget_num_2">
                                         <option value="select">Please select</option>
-                                        <option value="910-11">910-11</option>
-                                        <option value="910-22">910-22</option>
-                                        <option value="922-266">922-266</option>
                                     </select>
                                 </div>
                                 <!-- <div class="col-md-1">Split with:</div> -->
@@ -993,7 +987,7 @@
                                                         <div class="col-12">
                                                             <div class="card">
                                                                 <div class="card-header">
-                                                                    <h4 class="mb-0">MEAL PER DIEM</h4> 
+                                                                    <h4 class="mb-0">MEAL PROVIDED</h4> 
                                                                     <button type="button" onclick="addCol1()"> Add Additional dates </button>
                                                                 </div>
                                                                 <div class="card-content">
@@ -1347,4 +1341,5 @@
 </body>
 <!-- END: Body-->
 <script src="../../../app-assets/js/scripts/myScripts/users/travelReimbursement.js"></script>
+<script src="../../../app-assets/js/scripts/myScripts/Admin/navigation_handler.js"></script>
 </html>
