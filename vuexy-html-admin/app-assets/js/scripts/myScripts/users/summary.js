@@ -91,7 +91,7 @@ window.onload = function() {
     document.getElementById('flightTo').innerHTML = window.sessionStorage.getItem("flight_to")+"&nbsp;";
     document.getElementById('flightNumber').innerHTML = window.sessionStorage.getItem("flight_number")+"&nbsp;";
     document.getElementById('flightDepartDate').innerHTML = window.sessionStorage.getItem("flight_departdate")+"&nbsp;";
-    document.getElementById('flightAmount').innerHTML = window.sessionStorage.getItem("flight_amount")+"&nbsp;";
+    document.getElementById('flightAmount').innerHTML = "$"+window.sessionStorage.getItem("flight_amount")+"&nbsp;";
     document.getElementById('flightReturnDate').innerHTML = window.sessionStorage.getItem("flight_returndate")+"&nbsp;";
     document.getElementById('hotel').innerHTML = window.sessionStorage.getItem("hotel")+"&nbsp;";
     document.getElementById('hotelNum').innerHTML = window.sessionStorage.getItem("hotel_num")+"&nbsp;";
@@ -102,7 +102,7 @@ window.onload = function() {
     document.getElementById('hotelAddress').innerHTML = window.sessionStorage.getItem("hotel_address")+"&nbsp;";
     document.getElementById('hotelCheckout').innerHTML = window.sessionStorage.getItem("hotel_moveout")+"&nbsp;";
     document.getElementById('hotelZip').innerHTML = window.sessionStorage.getItem("hotel_zip")+"&nbsp;";
-    document.getElementById('hotelAmount').innerHTML = window.sessionStorage.getItem("hotel_amount")+"&nbsp;";
+    document.getElementById('hotelAmount').innerHTML = "$"+window.sessionStorage.getItem("hotel_amount")+"&nbsp;";
     document.getElementById('request-type').innerHTML = window.sessionStorage.getItem("type")+"&nbsp;";
     request_id = window.sessionStorage.getItem('orderId');
     this.console.log(request_id);

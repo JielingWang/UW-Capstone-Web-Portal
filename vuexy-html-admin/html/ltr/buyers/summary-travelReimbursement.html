@@ -9,7 +9,7 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Travel Request</title>
+    <title>Travel Reimbursement Summary</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
@@ -140,13 +140,13 @@
     <!-- END: Header-->
 
 
-    <!-- BEGIN: Main Menu-->
-    <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
+     <!-- BEGIN: Main Menu-->
+     <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
         <div class="navbar-header">
             <ul class="nav navbar-nav flex-row">
-                <li class="nav-item mr-auto"><a class="navbar-brand" href="user-dashboard.html">
+                <li class="nav-item mr-auto"><a class="navbar-brand" href="../../../html/ltr/vertical-menu-template/index.html">
                         <div class="brand-logo"></div>
-                        <h2 class="brand-text mb-0">AWFT</h2>
+                        <h2 class="brand-text mb-0">ENGINE</h2>
                     </a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary" data-ticon="icon-disc"></i></a></li>
             </ul>
@@ -154,31 +154,12 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-			    <li><a href="user-dashboard.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
+			    <li class="active"><a href="buyer-dashboard.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
+                <li class=" navigation-header"><span>Financial Staff</span></li>
+				<li class=" nav-item"><a href="buyer-dashboard.html"><i class="feather icon-aperture"></i><span class="menu-title" data-i18n="UserSettings">Pending Requests</span></a></li>
 				
-				<li class=" navigation-header"><span>General User</span></li>
-				<li class=" nav-item"><a href="#"><i class="feather icon-file-plus"></i><span class="menu-title" data-i18n="User">Create Request</span></a>
-                    <ul class="menu-content" style="margin-left:10px;">
-                        <li><a href="user-reimbursement-3.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Reimbursement</span></a>
-                        </li>
-                        <li><a href="travelReimbursement.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="View">Travel Reimbursement</span></a>
-                        </li>
-                        <li><a href="user-purchase.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Purchase Request</span></a>
-                        </li>
-						<li><a href="user-invoice.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Pay an Invoice</span></a>
-                        </li>
-						<li><a href="procardReceipt.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Procard Receipt</span></a>
-                        </li>
-                        <li><a href="travelRequest.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Travel Request</span></a>
-                        </li>
-
-                    </ul>
-                </li>
-                
-				<li class="nav-item"><a href="user-myrequests.html"><i class="feather icon-refresh-ccw"></i><span class="menu-title" data-i18n="PendingOrders">My Requests</span></a></li>
-                
 				<li class=" navigation-header"><span>Settings</span></li>
-				<li class=" nav-item"><a href=""><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
+				<li class=" nav-item"><a href="buyer-user-settings.html"><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-bell"></i><span class="menu-title" data-i18n="Notifications">Notifications</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-power"></i><span class="menu-title" data-i18n="Logout">Logout</span></a></li>
 				
@@ -243,11 +224,12 @@
                         <div id="invoice-company-details" class="row">
                             <div class="col-sm-6 col-12 text-left">
                                 <h1 id="request-type">
-                                   
+                                  
                                 </h1>
                             </div>
                             <div class="col-sm-6 col-12 text-right">
                                 <h1>Request ID: <span id="requestID">
+                                  
                                 </span></h1>
                             </div>
                         </div>
@@ -256,7 +238,7 @@
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">REQUESTER</h6>
                                     <p id="requester">
-                                       
+                                      
                                     </p>
                                     <h6 class="mt-2">SUB-UNIT</h6>
                                     <p id="subunit">
@@ -264,7 +246,7 @@
                                     </p>
                                     <h6 class="mt-2">Email</h6>
                                     <p id="userEmail">
-                                        
+                                      
                                     </p>
                                 </div>
                             </div>
@@ -272,11 +254,11 @@
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">UW ID</h6>
                                     <p id="userUWID">
-      
+                                       
                                     </p>
                                     <h6 class="mt-2">Access Level</h6>
                                     <p id="accessLevel">
-                                        
+                                      
                                     </p>
                                 </div>
                             </div>
@@ -284,8 +266,8 @@
                             <div class="col-sm-6 col-12 text-right">
                                 <div class="invoice-details mt-2">
                                     <h6 class="mt-2">STATUS</h6>
-                                    <p id="status">
-                                    </p>
+                                    <p id="status"><i class="fa fa-circle font-small-3 text-warning mr-50"></i>  
+                                       </p>
                                     <h6 class="mt-2">ASSIGNED TO</h6>
                                     <p id="assignedTo"></p>
                                 </div>
@@ -300,23 +282,13 @@
                                     </p>
                                 </div>
                             </div>
-                            
-
-                            <div class="col-sm-3 col-6 text-left">
-                                <div class="invoice-details mt-2">
-                                    <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Amount</h6>
-                                    <p>
-                                      N/A  
-                                    </p>
-                                </div>
-                            </div>
+                           
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
                                     <h6 class="mt-2">Budget</h6>
                                     <p id="budget">
-                                        
+                                       
                                     </p>
                                 </div>
                             </div>
@@ -328,83 +300,89 @@
                             </div>
                             <!-- Request Information End-->
 
-                            <!-- reason -->
-                             <div class="col-sm-12 col-6" text-left>
-                                <div class="invoice-details mt-2">
-                                    <h4>Request Reason</h4>
-                                    <p id="reason">
-                                       
-                                    </p>
-                                </div>
-                            </div>                            
-                            <!-- Request Information End-->
-
                             <!-- Travel Information-->
-                            <div class="col-sm-3 col-6 text-left">
+                            <div class="col-sm-4 col-6 text-left">
                                 <div class="invoice-details mt-2">
-                                    <h4>Travel Information</h4>
-                                    <h6 class="mt-2">FirstName</h6>
-                                    <p id="firstName">
+                                    <h4>Reimbursement Information </h4>
+                                    <h6 class="mt-2">Have you been reimbursed before this trip?</h6>
+                                    <p id="travelBefore">
                                        
                                     </p>
-                                    <h6 class="mt-2">Departing Date</h6>
-                                    <p id="departDate">
+                                    <h6 class="mt-2">Request For</h6>
+                                    <p id="requestFor">
+                                      
+                                    </p>
+                                    <h6 class="mt-2">US Citizen or Permanent Resident?</h6>
+                                    <p id="us">
+                                 
+                                    </p>
+                                    <h6 class="mt-2">Purpose of Travel?</h6>
+                                    <p id="purpose">
                                        
                                     </p>
 
                                 </div>
                             </div>
+                           
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">LastName</h6>
-                                    <p id="lastName">
+                                    <h6 class="mt-2">Reference Number</h6>
+                                    <p id="referenceNumber">
+                                      
+                                    </p>
+                                    <h6 class="mt-2">Email</h6>
+                                    <p id="email">
                                        
                                     </p>
-                                    <h6 class="mt-2">Returning Date</h6>
-                                    <p id="returnDate">
-                                        
+                                    <h6 class="mt-2">Copy of Passport Identity Page</h6>
+                                    <p id="passportFile">
+                                    &nbsp;
+                                    </p>
+                                    <h6 class="mt-2">Was personal travel included?</h6>
+                                    <p id="personalTravel">
+                                       
                                     </p>
                                 </div>
                             </div>
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Departure</h6>
-                                    <p id="departure">
-                                       
+                                    <h6 class="mt-2">&nbsp;</h6>
+                                    <p>
+                                       &nbsp;
                                     </p>
-                                    <h6 class="mt-2">Birthday</h6>
-                                    <p id="birthday">
-                                       
+                                    <h6 class="mt-2">Affliation</h6>
+                                    <p id="affliation">
+                                         &nbsp;
+                                    </p>
+                                    <h6 class="mt-2">US Port Entry Stamp,Visa Info</h6>
+                                    <p id="visaFile">
+                                         &nbsp;
+                                    </p>
+                                    <h6 class="mt-2">Personal Travel Starting/End Dates & Times</h6>
+                                    <p id="travelDetail">
+                                      
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-6 text-left">
-                                <div class="invoice-details mt-2">
-                                    <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Destination</h6>
-                                    <p id="destination">
-                                       
-                                    </p>
-                                </div>
-                            </div>
+                            
                             <!-- Travel Information End-->
 
                             <!-- Flight Information-->
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
-                                    <h4>Flight Information</h4>
-                                    <h6 class="mt-2">Need unit to pay the flight?</h6>
-                                    <p id="flight">
+                                    <h4>Travel Costs</h4>
+                                    <h6 class="mt-2">Registration</h6>
+                                    <p id="registration">
                                        
                                     </p>
-                                    <h6 class="mt-2">Flight From</h6>
-                                    <p id="flightFrom">
-                                      
+                                    <h6 class="mt-2">Car Service Fee</h6>
+                                    <p id="carFee">
+                                       
                                     </p>
-                                    <h6 class="mt-2">Flight Reference</h6>
-                                    <p id="flightReference">
+                                    <h6 class="mt-2">Car Rental</h6>
+                                    <p id="carRental">
                                        
                                     </p>
 
@@ -413,12 +391,33 @@
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Airline</h6>
-                                    <p id="airline">
+                                    <h6 class="mt-2">Registration Receipt</h6>
+                                    <p id="registrationFile">
+                                        &nbsp;
+                                    </p>
+                                    <h6 class="mt-2">Car Service Receipt</h6>
+                                    <p id="carFile">
+                                        &nbsp;
+                                    </p>
+                                    <h6 class="mt-2">Final Car Rental Agreement</h6>
+                                    <p id="carRentalFile">
+                                        &nbsp;
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-6 text-left">
+                                <div class="invoice-details mt-2">
+                                    <h4> &nbsp; </h4>
+                                    <h6 class="mt-2">Airfare Fee</h6>
+                                    <p id="airfare">
                                        
                                     </p>
-                                    <h6 class="mt-2">Flight To</h6>
-                                    <p id="flightTo">
+                                    <h6 class="mt-2">Train/Rail Fee</h6>
+                                    <p id="train">
+                                       
+                                    </p>
+                                    <h6 class="mt-2">Hotel Fee</h6>
+                                    <p id="hotel">
                                        
                                     </p>
                                 </div>
@@ -426,96 +425,97 @@
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
                                     <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Flight Number</h6>
-                                    <p id="flightNumber">
-                                       
+                                    <h6 class="mt-2">Airfare Receipt</h6>
+                                    <p id="airfareFile">
+                                        &nbsp;
                                     </p>
-                                    <h6 class="mt-2">Departing Date</h6>
-                                    <p id="flightDepartDate">
-                                       
+                                    <h6 class="mt-2">Train/Rail Receipt</h6>
+                                    <p id="trainFile">
+                                        &nbsp;
                                     </p>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-6 text-left">
-                                <div class="invoice-details mt-2">
-                                    <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Amount</h6>
-                                    <p id="flightAmount">
-                                       
-                                    </p>
-                                    <h6 class="mt-2">Returning Date</h6>
-                                    <p id="flightReturnDate">
-                                        
+                                    <h6 class="mt-2">Hotel Receipt</h6>
+                                    <p id="hotelFile">
+                                        &nbsp;
                                     </p>
                                 </div>
                             </div>
                             <!-- Flight Information End-->
-                             <!-- Hotel Information-->
-                             <div class="col-sm-3 col-6 text-left">
-                                <div class="invoice-details mt-2">
-                                    <h4>Hotel Information</h4>
-                                    <h6 class="mt-2">Need unit to pay the hotel?</h6>
-                                    <p id="hotel">
-                                      
-                                    </p>
-                                    <h6 class="mt-2">Number of People</h6>
-                                    <p id="hotelNum">
-                                       
-                                    </p>
-                                    <h6 class="mt-2">Link</h6>
-                                    <p id="hotelLink">
-                                      
-                                    </p>
 
-                                </div>
-                            </div>
+                            <!-- Meal Per Diem-->
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
-                                    <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Hotel Name</h6>
-                                    <p id="hotelName">
+                                    <h4>Meal Per Diem</h4>
+                                    <h6 class="mt-2">Are you claiming meal per diem?</h6>
+                                    <p id="meal">
                                        
-                                    </p>
-                                    <h6 class="mt-2">Check in Date</h6>
-                                    <p id="hotelCheckIn">
-                                       
-                                    </p>
-                                    <h6 class="mt-2">Hotel Note</h6>
-                                    <p id="hotelNote">
-                                       
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-6 text-left">
-                                <div class="invoice-details mt-2">
-                                    <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Hotel Address</h6>
-                                    <p id="hotelAddress">
+                                    </p> 
+                                    <h6 class="mt-2">Specific Days and Meals</h6>
+                                    <p>
+                                            <table id="meal_table1">
+                                            <thead>
+                                                <tr>
+                                                    <th>DATE&nbsp;&nbsp;</th>
+                                                    <th>Breakfast&nbsp;&nbsp;</th>
+                                                    <th>Lunch&nbsp;&nbsp;</th>
+                                                    <th>Dinner</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                               <tr>
+                                                    <td><span></span></td>
+                                                    <td><span></span></td>
+                                                    <td><span></span> </td>
+                                                    <td><span></span></td>
+                                                </tr>                                             
+                                            </tbody>
+                                        </table>
+
                                         
                                     </p>
-                                    <h6 class="mt-2">Check out Date</h6>
-                                    <p id="hotelCheckout">
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-6 text-left">
+                                <div class="invoice-details mt-2">
+                                    <h4>&nbsp;</h4>
+                                    <h6 class="mt-2">Specific Amount</h6>
+                                    <p id="mealAmount">
                                        
                                     </p>
                                 </div>
                             </div>
                             <div class="col-sm-3 col-6 text-left">
                                 <div class="invoice-details mt-2">
-                                    <h4> &nbsp; </h4>
-                                    <h6 class="mt-2">Zip Code</h6>
-                                    <p id="hotelZip">
+                                    <h4>Meal Provided</h4>
+                                    <h6 class="mt-2">Were meals provided to you?</h6>
+                                    <p id="mealProvid">
                                        
                                     </p>
-                                    <h6 class="mt-2">Amount</h6>
-                                    <p id="hotelAmount">
-                                       
+                                    <h6 class="mt-2">Specifc Days and Meals</h6>
+                                    <p>
+                                        <table id="meal_table2">
+                                            <thead>
+                                                <tr>
+                                                    <th>DATE&nbsp;&nbsp;</th>
+                                                    <th>Breakfast&nbsp;&nbsp;</th>   
+                                                    <th>Lunch&nbsp;&nbsp;</th>                             
+                                                    <th>Dinner</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                               <tr>
+                                                    <td><span></span></td>
+                                                    <td><span></span></td>
+                                                    <td><span></span> </td>
+                                                    <td><span></span></td>
+                                                </tr>                                             
+                                            </tbody>
+                                        </table>
                                     </p>
                                 </div>
                             </div>
-                            <!-- Hotel Information End-->
-                            
+  
                         </div>
-                        <!--/ Invoice Company Details -->
+                        <!--/Meal Per Diem end-->
 
                     </div>
                 </section>
@@ -523,65 +523,71 @@
 
               <!-- Timeline Starts -->
               <section>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="card" id="history_card">
-                            <div class="card-header">
-                                <h4 class="card-title">Request History</h4>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card" id="history_card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Request History</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <ul id="request-history" class="activity-timeline timeline-left list-unstyled">
+                                           
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <ul id="request-history" class="activity-timeline timeline-left list-unstyled">
-                                    
-                                    </ul>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="card" id="note_card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Notes</h4>
+                                </div>
+                                <div class="card-content" id="notes" style="padding-top: 1.5rem; padding-left: 1.5rem;">
+                                   
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-6">
-                        <div class="card overflow-auto" id="note_card">
-                            <div class="card-header">
-                                <h4 class="card-title">Notes</h4>
-                            </div>
-                            <div class="card-content" id="notes" style="padding: 1.5rem;">
-
-                            </div>
-                          
-                        </div>
-                    </div>
-
-                </div>
-            </section>
+                </section>
                 <!-- Timeline Ends -->
+                <!-- add note start-->
                 <div class="row" id="feedback-block">
                     <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <h4 class="card-title">Add new notes</h4>
-                                    <form class="form">
-                                        <div class="form-body">
-                                            <div class="form-group">
-                                                <label for="feedback_input" class="sr-only">Notes</label>
-                                                <textarea id="feedback_input" rows="3" class="form-control" name="message" placeholder="Notes"></textarea>
+                          <div class="card">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Note</h4>
+                                        <form class="form">
+                                            <div class="form-body">
+                                                <div class="form-group">
+                                                    <label for="feedback_input" class="sr-only">Notes</label>
+                                                        <textarea id="feedback_input" rows="3" class="form-control" name="message" placeholder="Add a note"></textarea>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="form-actions">
-                                            <button type="button" class="btn btn-outline-primary mr-1" onclick="takeNoteClicked()"><i class="mr-1 fa fa-pencil"></i>Add Note</button>
-                                        </div>
-                                    </form>
+                                            <div class="form-actions">
+                                                <button type="button" class="btn btn-primary mr-1" onclick="takeNoteClicked()">Add a note</button>
+                                              
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
-               
                 <!-- add note end-->
+
             </div>
         </div>
     </div>
     <!-- END: Content-->
+    
+      
+                            
+
+    
+
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>
 
@@ -591,7 +597,6 @@
     </footer>
     <!-- END: Footer-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
 
 
     <!-- BEGIN: Vendor JS-->
@@ -628,11 +633,12 @@
     <!-- BEGIN: Page JS-->
     <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
     <script src="../../../app-assets/js/scripts/forms/validation/form-validation.js"></script>
-    <!--<script src="../../../app-assets/js/scripts/myScripts/users/travelRequest-summary.js"></script>-->
+    <!--<script src="../../../app-assets/js/scripts/myScripts/users/travelReim-summary.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <!-- END: Page JS-->
 
     <!-- BEGIN: Page JS-->
+    
 
     <script>
     var js_id=window.sessionStorage.getItem("orderId");
@@ -661,7 +667,7 @@
 
     </script>
     <script src="../../../app-assets/js/scripts/myScripts/requests/historyandnote.js"></script>
-    <script src="../../../app-assets/js/scripts/myScripts/users/summary.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/users/travelReim-summary.js"></script>
     <script src="../../../app-assets/js/scripts/myScripts/Admin/navigation_handler.js"></script>
 </body>
 <!-- END: Body-->
