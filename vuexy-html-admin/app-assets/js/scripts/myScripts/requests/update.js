@@ -77,7 +77,7 @@ function prepareLineItem(itemObj, type) {
 function setBudgetsValueById(itemId, budgetObj) {
     for (var x = 1; x <= budgetObj.length; x++) {
         if (x >= budgetIds[itemId - 1]) {
-            document.getElementById(`budget_1_${budgetIds[itemId - 1] - 1}`).after(addBudget(1, budgetIds[itemId - 1]++, false));
+            document.getElementById(`budget_${itemId}_${budgetIds[itemId - 1] - 1}`).after(addBudget(itemId, budgetIds[itemId - 1]++, false));
         }
         var data = budgetObj[x - 1];
         // set budget number

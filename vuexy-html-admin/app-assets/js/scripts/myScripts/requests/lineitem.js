@@ -3,9 +3,11 @@
  * lineitem controller
  */
 
-var request_type = window.sessionStorage.getItem('RequestType');
+var request_type = null;
 
 function lineItemInit(type) {
+    request_type = type;
+    
     var budgetBtnEl = document.getElementById("budget_btn_1_1");
     budgetBtnEl.addEventListener('click', function() {
         document.getElementById(`budget_1_${budgetIds[0]-1}`).after(addBudget(1, budgetIds[0]++, false));
@@ -537,6 +539,9 @@ function genBudgetsSelectBox(_id, _budget_id) {
 
 /** Confirm function */
 function confirmItem(_id) {
+    if (window.sessionStorage.getItem('RequestType')) {
+        request_type = window.sessionStorage.getItem('RequestType');
+    }
     // If this id exists (the item is not deleted)
     if (idFlags[_id]) {
 
@@ -653,6 +658,9 @@ function removeLineItem(_id) {
 
 /** Core function */
 function addNewLineItem(_id) {
+    if (window.sessionStorage.getItem('RequestType')) {
+        request_type = window.sessionStorage.getItem('RequestType');
+    }
     idFlags.push(true);
 
     var newBox = document.createElement('div');
