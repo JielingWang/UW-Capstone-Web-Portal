@@ -2,13 +2,21 @@ var reqApproverArr = [];
 var reqBuyer = {};
 let approverResponseMap = new Map(); // key: approverid, value: {name, response}
 
-var feedbackBlock = document.getElementById("feedback-block");
+// var feedbackBlock = document.getElementById("feedback-block");
 var feedback = document.getElementById("feedback_input");
+var actionTable = document.getElementById("action_table");
 
 var request_id = null;
+var requestInfo = null;
+var userID = null;
+
+var actionArr = [];
+var action_card = document.getElementById('action_card');
+var note_add_card = document.getElementById('note_add_card');
 
 window.onload = function() {
     request_id = window.sessionStorage.getItem('RequestID');
+    userID = window.sessionStorage.getItem("id");
     this.console.log(request_id);
 
     // Request Example: Reimbursement
@@ -27,6 +35,8 @@ window.onload = function() {
     updateNotes();
 
     updateActionField(requestInfo);
+    adjustActionHeight();
+
     // changeOrderStatus();
 }
 
@@ -53,26 +63,131 @@ function changeOrderStatus() {
 
 
 function updateActionField(data) {
-    var request_status = data.OrderStatus;
-    var request_history = data.OrderHistory;
-    var n = request_history.length;
-    if (request_history[n - 1].action == "Submitted" || request_history[n - 1].action == "Updated") {
-        var approveBtn = document.getElementById('approve-btn');
-        approveBtn.disabled = false;
-        var sendBackBtn = document.getElementById('send-back-btn');
-        sendBackBtn.disabled = false;
+    // collect awaiting approval information
+    var ar = data.ApprovalResponses;
+    for (var i = 0; i < ar.length; i++) {
+        var ari = ar[i].approverResponses;
+        for (var j = 0; j < ari.length; j++) {
+            if (ari[j].approverID_ref === userID) {
+                if (ari[j].response) {
+                    actionArr.push({
+                        budgetnum : ar[i].BudgetNumber,
+                        lineitemid : ar[i].lineItemID,
+                        response: true
+                    });
+                } else {
+                    actionArr.push({
+                        budgetnum : ar[i].BudgetNumber,
+                        lineitemid : ar[i].lineItemID,
+                        response: false
+                    });
+                }
+                
+            }
+        }
     }
+    // console.log(actionArr);
+
+    // generate action table
+    if (actionArr.length > 0) {
+        document.getElementById('no-data').classList.add('hidden');
+    }
+    for (var i = 0; i < actionArr.length; i++) {
+        actionTable.appendChild(genApprovalCell(actionArr[i].budgetnum, actionArr[i].lineitemid, actionArr[i].response));
+    }
+
+    // var request_status = data.OrderStatus;
+    // var request_history = data.OrderHistory;
+    // var n = request_history.length;
+    // var notApproved = false;
+    // if (request_history[n - 1].action == "Approved" && request_history[n - 1].userName != window.sessionStorage.getItem('name')) {
+    //     notApproved = true;
+    // }
+    // if (request_history[n - 1].action == "Submitted" || request_history[n - 1].action == "Updated" || notApproved) {
+    //     var approveBtn = document.getElementById('approve-btn');
+    //     approveBtn.disabled = false;
+    //     var sendBackBtn = document.getElementById('send-back-btn');
+    //     sendBackBtn.disabled = false;
+    // }
 }
 
 
-function sendBackClicked() {
-    var orderData = {
-        OrderStatus: "Awaiting Approval"
+function genApprovalCell(budgetnum, lineitemid, response) {
+    var tr = document.createElement('tr');
+    var td1 = document.createElement('td');
+    var td2 = document.createElement('td');
+    var td3 = document.createElement('td');
+    td1.innerHTML = budgetnum;
+    td2.innerHTML = lineitemid;
+
+    if (response) {
+        var i = document.createElement('i');
+        i.setAttribute('class', 'mr-2 fa fa-check success');
+        var s = document.createElement('span');
+        s.setAttribute('class', 'success');
+        s.innerHTML = "Approved";
+        td3.appendChild(i);
+        td3.appendChild(s);
+    } else {
+        var btn = document.createElement('button');
+        btn.setAttribute('type', 'button');
+        btn.setAttribute('class', 'btn mr-1 mb-0 btn-outline-success btn-sm');
+        var i1 = document.createElement('i');
+        i1.setAttribute('class', 'mr-1 fa fa-check');
+        btn.appendChild(i1);
+        btn.innerHTML = "Approve";
+        btn.addEventListener('click', function() {
+            var row = this.parentNode.parentNode;
+            approveClicked(row.cells[0].innerHTML, parseInt(row.cells[1].innerHTML));
+        });
+        td3.appendChild(btn);
+    
+        var btn2 = document.createElement('button');
+        btn2.setAttribute('type', 'button');
+        btn2.setAttribute('class', 'btn mr-1 mb-0 btn-outline-danger btn-sm');
+        var i2 = document.createElement('i');
+        i2.setAttribute('class', 'mr-1 fa fa-times');
+        btn2.appendChild(i2);
+        btn2.innerHTML = "Send Back";
+        btn2.addEventListener('click', function() {
+            var row = this.parentNode.parentNode;
+            sendBackClicked(row.cells[0].innerHTML, parseInt(row.cells[1].innerHTML));
+        });
+        td3.appendChild(btn2);
+    }
+
+
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+    return tr;
+}
+
+
+function adjustActionHeight() {
+    var ha = action_card.clientHeight;
+    var hn = note_add_card.clientHeight;
+    if (ha < hn) {
+        action_card.style.height = `${hn}px`;
+    } else if (ha > hn) {
+        var h = ha - hn + 86;
+        feedback.style.height = `${h}px`;
+    }
+}
+
+function sendBackClicked(budgetnum, lineitemid) {
+
+    var data = {
+        orderID: request_id,
+        approverID: userID,
+        budgetNumber: budgetnum,
+        LineItemNumber: lineitemid,
+        response: false
     };
 
     var history = {
         userName: window.sessionStorage.getItem("id"),
-        action: "Sent Back"
+        action: "Budget Number " + budgetnum + " Sent Back"
     };
 
     var onSuccess = function(data) {
@@ -89,24 +204,39 @@ function sendBackClicked() {
         info = null;
     }
     // makePostRequest("updateChatInfo/" + request_id, chatData, onSuccess, onFailure);
-    makePostRequest("updateOrderStatus/" + request_id, orderData, onSuccess, onFailure);
+    makePutRequest("ApproverResponse", data, onSuccess, onFailure);
     makePostRequest("updateOrderHistory/" + request_id, history, onSuccess, onFailure);
     location.reload();
 }
 
-function approveClicked() {
+function approveClicked(budgetnum, lineitemid) {
+
     var data = {
-        OrderStatus: "Approved"
+        orderID: request_id,
+        approverID: userID,
+        budgetNumber: budgetnum,
+        LineItemNumber: lineitemid,
+        response: true
     };
 
     var history = {
         userName: window.sessionStorage.getItem("id"),
-        action: "Approved"
+        action: "Budget Number " + budgetnum + " Approved"
     };
 
     var onSuccess = function(data) {
         if (data.status == true) {
-            console.log("update success");
+            if (data.data.AwaitingResponses.length == 0) {
+                var status = {
+                    OrderStatus: "Approved"
+                };
+                var onSuccess = function(data) {
+                    if (data.status == true) console.log('order status updated');
+                    else console.log('there is something wrong');
+                }
+                var onFailure = function() {}
+                makePostRequest("updateOrderStatus/" + request_id, status, onSuccess, onFailure);
+            }
         } else {
             //error message
         }
@@ -115,7 +245,7 @@ function approveClicked() {
     var onFailure = function() {
         // failure message
     }
-    makePostRequest("updateOrderStatus/" + request_id, data, onSuccess, onFailure);
+    makePutRequest("ApproverResponse", data, onSuccess, onFailure);
     makePostRequest("updateOrderHistory/" + request_id, history, onSuccess, onFailure);
     location.reload();
 }

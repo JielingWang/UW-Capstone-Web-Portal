@@ -64,16 +64,16 @@ function genHistoryStamp(action, name, timestamp) {
     if (action == "Submitted" || action == "Updated") {
         i.setAttribute('class', 'feather icon-file-text font-medium-2');
         signal.setAttribute('class', 'timeline-icon bg-primary');
-    } else if (action == "Approved" || action == "Accepted") {
+    } else if (action.indexOf("Approved") > -1 || action.indexOf("Accepted") > -1) {
         i.setAttribute('class', 'feather icon-thumbs-up font-medium-2');
         signal.setAttribute('class', 'timeline-icon bg-warning');
-    } else if (action == "Sent Back") {
+    } else if (action.indexOf("Sent") > -1) {
         i.setAttribute('class', 'feather icon-alert-circle font-medium-2');
         signal.setAttribute('class', 'timeline-icon bg-danger');
     } else if (action == "Claimed" || action == "Completed") {
         i.setAttribute('class', 'feather icon-check font-medium-2');
         signal.setAttribute('class', 'timeline-icon bg-success');
-    } else { // assign / reassign / uptake
+    } else { // assign / reassign / untake
         i.setAttribute('class', 'feather icon-flag font-medium-2');
         signal.setAttribute('class', 'timeline-icon bg-info');
     }

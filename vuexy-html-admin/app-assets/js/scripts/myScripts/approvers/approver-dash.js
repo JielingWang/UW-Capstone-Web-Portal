@@ -205,32 +205,6 @@ function update_Dashboard_welcomebar_navigationbar() {
 }
 
 /**
- * Get all users id of all requests from datebase
- * @param {array} users store all users id
- */
-function getAllUsers() {
-    var onSuccess = function(data) {
-        if (data.status == true) {
-            var data_subunits = data.data.SubUnits;
-            for (var i = 0; i < data_subunits.length; i++) {
-                var info = data_subunits[i].orders;
-                for (var j = 0; j < info.length; j++) {
-                    users.push(info[j].userID_ref);
-                }
-            }
-        } else {
-            //error message
-        }
-    }
-
-    var onFailure = function() {
-        // failure message
-    }
-
-    makeGetRequest("findOrdersForFiscal/" + window.sessionStorage.getItem("unitID"), onSuccess, onFailure);
-}
-
-/**
  * Get all request information from getAllOrders api
  */
 function getAllRequestsInfo() {
@@ -289,9 +263,7 @@ function getAllRequestsInfo() {
     var onFailure = function() {
         // failure message
     }
-
-    // makeGetRequest("findApproverOrders/" + window.sessionStorage.getItem('_id') + '/' + window.sessionStorage.getItem("subunitID"), onSuccess, onFailure);
-    makeGetRequest("findApproverOrders/5e8e4d7ba148b90044206527/5e966440b6c02e0044724660", onSuccess, onFailure);
+    makeGetRequest("findApproverOrders/" + window.sessionStorage.getItem('id') + '/' + window.sessionStorage.getItem("subunitID"), onSuccess, onFailure);
 }
 
 /**

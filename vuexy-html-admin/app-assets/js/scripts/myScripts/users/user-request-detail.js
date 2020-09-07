@@ -57,7 +57,7 @@ function updateActionField(data) {
     var request_status = data.OrderStatus;
     var request_history = data.OrderHistory;
     var n = request_history.length;
-    if (request_history[n - 1].action == "Sent Back") {
+    if (request_history[n - 1].action.indexOf("Sent") > -1) {
         var updateBtn = document.getElementById('update-btn');
         updateBtn.disabled = false;
     }
