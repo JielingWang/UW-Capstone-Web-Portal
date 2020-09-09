@@ -381,7 +381,7 @@
                         <div class="col-6">
                             <div class="card overflow-auto" id="note_card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Notes</h4>
+                                    <h4 class="card-title">Notes History</h4>
                                 </div>
                                 <div class="card-content" id="notes" style="padding: 1.5rem;">
 
@@ -398,55 +398,39 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="card" id="action_card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Budget Approvals</h4>
+                                </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <h4 class="card-title">Budget Numbers Awaiting Approval</h4>
                                         <div class="table-responsive">
                                             <table class="table table-bordered zero-configuration">
                                                 <thead>
                                                     <tr>
                                                         <th>Budget Number</th>
+                                                        <th>Approver</th>
                                                         <th>Line Item ID</th>
-                                                        <th>Approve or Not</th>
+                                                        <th>Approval Status</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table zero-configuration" id="action_table">
-                                                    <!-- <tr>
-                                                        <td>910-11</td>
-                                                        <td>1</td>
-                                                        <td>
-                                                            <i class="mr-1 fa fa-check success"></i>
-                                                            <span class="success">Approved</span>
-                                                        </td>
-                                                    </tr> -->
                                                     <tr id="no-data">
-                                                        <td style="text-align: center;" colspan="3">No Budget Number Awaiting Approval</td>
+                                                        <td style="text-align: center;" colspan="4">No Budget Number Awaiting Approval</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
-                                        
-                                        <!-- <form class="form">
-                                            <div class="form-body">
-                                                <div class="form-group">
-                                                    <label for="feedback_input" class="sr-only">Notes</label>
-                                                    <textarea id="feedback_input" rows="3" class="form-control" name="message" placeholder="Notes"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="form-actions">
-                                                <button type="button" class="btn btn-outline-success mr-1" id="approve-btn" disabled onclick="approveClicked()"><i class="mr-1 fa fa-check"></i>Approve</button>
-                                                <button type="button" class="btn btn-outline-danger mr-1" id="send-back-btn" disabled onclick="sendBackClicked()"><i class="mr-1 fa fa-times"></i>Send Back</button>
-                                            </div>
-                                        </form> -->
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="card" id="note_add_card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Add a note here</h4>
+                                </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <h4 class="card-title">Add new notes</h4>
                                         <form class="form">
                                             <div class="form-body">
                                                 <div class="form-group">
@@ -456,9 +440,6 @@
                                             </div>
                                             <div class="form-actions">
                                                 <button type="button" class="btn btn-outline-primary mr-1" onclick="takeNoteClicked()"><i class="mr-1 fa fa-pencil"></i>Add Note</button>
-                                                <!-- <button type="button" class="btn btn-outline-success mr-1" id="approve-btn" disabled onclick="approveClicked()"><i class="mr-1 fa fa-check"></i>Approve</button>
-                                                <button type="button" class="btn btn-outline-danger mr-1" id="send-back-btn" disabled onclick="sendBackClicked()"><i class="mr-1 fa fa-times"></i>Send Back</button> -->
-                                                <!-- <button type="button" class="btn btn-success mr-1" id="complete-btn" disabled onclick="finishClicked()"><i class="mr-1 fa fa-check-square-o"></i>Complete</button> -->
                                             </div>
                                         </form>
                                     </div>
@@ -537,7 +518,8 @@
     <script src="../../../app-assets/js/scripts/myScripts/Admin/navigation_handler.js"></script>
     <script src="../../../app-assets/js/scripts/myScripts/requests/requestinfo.js"></script>
     <script src="../../../app-assets/js/scripts/myScripts/requests/historyandnote.js"></script>
-    <script src="../../../app-assets/js/scripts/myScripts/approvers/approver-request-detail.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/requests/aprvandnewnote.js"></script>
+    <!-- <script src="../../../app-assets/js/scripts/myScripts/approvers/approver-request-detail.js"></script> -->
     <!-- END: My JS-->
 
 </body>

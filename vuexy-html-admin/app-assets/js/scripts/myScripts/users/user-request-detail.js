@@ -113,24 +113,6 @@ function takeNoteClicked() {
 }
 
 function updateClicked() {
-
-    // var history = {
-    //     userName: window.sessionStorage.getItem("id"),
-    //     action: "Updated"
-    // };
-
-    // var onSuccess = function(data) {
-    //     if (data.status == true) {
-    //         console.log("update success");
-    //     } else {
-    //         //error message
-    //     }
-    // }
-
-    // var onFailure = function() {
-    //     // failure message
-    // }
-    // makePostRequest("updateOrderHistory/" + request_id, history, onSuccess, onFailure);
     if (requestInfo.OrderType == "Reimbursement") {
         window.sessionStorage.setItem('RequestType', "Reimbursement");
         window.location.href = "../../../html/ltr/users/user-reimbursement-3.html";

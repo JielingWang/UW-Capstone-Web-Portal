@@ -18,6 +18,47 @@ var lineItemTableBody = document.getElementById('line-item-table-body');
 var itemAmount = 0;
 var additionalTax = 0;
 
+var request_id = null;
+var userID = null;
+var requestInfo = null;
+
+window.addEventListener('load', function() {
+    request_id = window.sessionStorage.getItem('RequestID');
+    userID = window.sessionStorage.getItem("id");
+
+    requestInfo = getRequestInfo(request_id);
+    updateRequestInfo(requestInfo);
+});
+
+
+/**
+ * Get the request information with the global variable request_id
+ * @param {int} request_id 
+ */
+function getRequestInfo(request_id) {
+    var info = null;
+    var onSuccess = function(data) {
+        if (data.status == true) {
+            console.log("request information is here");
+            console.log(data.data);
+            info = data.data;
+            
+        } else {
+            //error message
+            info = null;
+        }
+    }
+
+    var onFailure = function() {
+        // failure message
+        info = null;
+    }
+
+    makeGetRequest("getOrderInformation/" + request_id, onSuccess, onFailure);
+    return info;
+}
+
+
 /**
  * Update request information for the whole page
  * @param {JSON Object} request_data contains all the information of this request
@@ -29,12 +70,7 @@ function updateRequestInfo(request_data) {
     var request_type = basicInfo.OrderType;
     requestType.innerHTML = request_type;
     requestDate.innerHTML = basicInfo.submittedOn.substr(0, 10);
-    var idx = basicInfo.OrderStatus.indexOf(',');
-    if (idx > 0) {
-        requestStatus.innerHTML = basicInfo.OrderStatus.substring(0, idx);
-    } else {
-        requestStatus.innerHTML = basicInfo.OrderStatus;
-    }
+    requestStatus.innerHTML = basicInfo.OrderStatus;
     
     requestID.innerHTML = basicInfo._id;
     requester.innerHTML = basicInfo.userName;

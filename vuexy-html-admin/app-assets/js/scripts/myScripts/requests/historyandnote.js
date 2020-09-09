@@ -7,6 +7,13 @@ var noteContent = document.getElementById("notes");
 var notesArr = [];
 
 
+window.addEventListener('load', function() {
+    updateHistory(requestInfo);
+    prepareNotesArr(requestInfo);
+    updateNotes();
+});
+
+
 /**
  * Collect note information into global variable notesArr from database
  * @param {JSON Object} data Request data got from database

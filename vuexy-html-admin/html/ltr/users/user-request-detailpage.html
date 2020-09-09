@@ -407,7 +407,7 @@
                         <div class="col-6">
                             <div class="card" id="note_card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Notes</h4>
+                                    <h4 class="card-title">Notes History</h4>
                                 </div>
                                 <div class="card-content" id="notes" style="padding-top: 1.5rem; padding-left: 1.5rem;">
 
@@ -504,9 +504,68 @@
                 </section>
                 <!-- Timeline Ends -->
 
+                <!-- Action Starts -->
+                <section>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card" id="action_card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Budget Approvals</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered zero-configuration">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Budget Number</th>
+                                                        <th>Approver</th>
+                                                        <th>Line Item ID</th>
+                                                        <th>Approval Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table zero-configuration" id="action_table">
+                                                    <tr id="no-data">
+                                                        <td style="text-align: center;" colspan="4">No Budget Number Awaiting Approval</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card" id="note_add_card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Action Board</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <form class="form">
+                                            <div class="form-body">
+                                                <div class="form-group">
+                                                    <label for="feedback_input" class="sr-only">Notes</label>
+                                                    <textarea id="feedback_input" rows="3" class="form-control" name="message" placeholder="Notes"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-actions">
+                                                <button type="button" class="btn btn-outline-primary mr-1" onclick="takeNoteClicked()"><i class="mr-1 fa fa-pencil"></i>Add Note</button>
+                                                <button type="button" class="btn btn-outline-warning mr-1" id="update-btn" disabled onclick="updateClicked()"><i class="mr-1 fa fa-repeat"></i>Update</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+                <!-- Action Ends -->
+
                 
 
-                <div class="row" id="feedback-block">
+                <!-- <div class="row" id="feedback-block">
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-content">
@@ -528,7 +587,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
             </div>
         </div>
@@ -571,7 +630,8 @@
     <script src="../../../app-assets/js/scripts/myScripts/Admin/navigation_handler.js"></script>
     <script src="../../../app-assets/js/scripts/myScripts/requests/requestinfo.js"></script>
     <script src="../../../app-assets/js/scripts/myScripts/requests/historyandnote.js"></script>
-    <script src="../../../app-assets/js/scripts/myScripts/users/user-request-detail.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/requests/aprvandnewnote.js"></script>
+    <!-- <script src="../../../app-assets/js/scripts/myScripts/users/user-request-detail.js"></script> -->
     <!-- END: My JS-->
 
 </body>

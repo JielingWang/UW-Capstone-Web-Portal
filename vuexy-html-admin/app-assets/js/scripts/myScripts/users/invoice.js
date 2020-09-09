@@ -483,10 +483,6 @@ function updateRequest(request_id) {
         action: "Updated"
     };
 
-    var status = {
-        OrderStatus: "Awaiting Approval"
-    }
-
     var onSuccess = function(data) {
         if (data.status == true) {
             console.log("update success");
@@ -498,9 +494,8 @@ function updateRequest(request_id) {
     var onFailure = function() {
         // failure message
     }
-    makePostRequest("updateOrderInfo/" + request_id, updateInfo, onSuccess, onFailure);
+    makePostRequest("updateOrder/" + request_id + "/" + type, updateInfo, onSuccess, onFailure);
     makePostRequest("updateOrderHistory/" + request_id, history, onSuccess, onFailure);
-    makePostRequest("updateOrderStatus/" + request_id, status, onSuccess, onFailure);
     
     window.location.href = "../../../html/ltr/users/user-request-detailpage.html";
 

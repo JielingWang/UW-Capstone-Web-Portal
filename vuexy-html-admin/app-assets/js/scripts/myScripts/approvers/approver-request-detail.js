@@ -274,33 +274,11 @@ function takeNoteClicked() {
 }
 
 
-/**
- * Get the request information with the global variable request_id
- * @param {int} request_id 
- */
-function getRequestInfo(request_id) {
-    var info = null;
-    var onSuccess = function(data) {
-        if (data.status == true) {
-            console.log("request information is here");
-            console.log(data.data);
-            info = data.data;
-            
-        } else {
-            //error message
-            info = null;
-        }
-    }
 
-    var onFailure = function() {
-        // failure message
-        info = null;
-    }
 
-    makeGetRequest("getOrderInformation/" + request_id, onSuccess, onFailure);
-    return info;
-}
 
+
+// --------------- DEPRECATED ------------------------
 
 function collectHistoryInfo(data) {
     var responses = data.ApprovalResponses;

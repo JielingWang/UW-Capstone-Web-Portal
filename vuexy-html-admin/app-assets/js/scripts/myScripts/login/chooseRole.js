@@ -113,6 +113,7 @@ function card_click(elementID, cardType)
         var unitID = document.getElementById("unitSubunitID"+elementID).innerHTML;
         window.sessionStorage.setItem("unitID",unitID);
         window.sessionStorage.setItem("unitName",unitName);
+        window.sessionStorage.setItem("level","Admin");
 
         window.location.replace("../Admin/dashboard_admin.html");
         //window.sessionStorage.setItem("unitName",data.userInfo._id);
@@ -122,6 +123,7 @@ function card_click(elementID, cardType)
         var unitID = document.getElementById("unitSubunitID"+elementID).innerHTML;
         window.sessionStorage.setItem("unitID",unitID);
         window.sessionStorage.setItem("unitName",unitName);
+        window.sessionStorage.setItem("level","FiscalStaff");
 
         window.location.replace("../buyers/buyer-dashboard.html");
 
@@ -132,6 +134,7 @@ function card_click(elementID, cardType)
         var subunitID = document.getElementById("unitSubunitID"+elementID).innerHTML;
         window.sessionStorage.setItem("subunitID",subunitID);
         window.sessionStorage.setItem("subunitName",SubunitName);
+        window.sessionStorage.setItem("level","Submitter");
 
         window.location.replace("../users/user-dashboard.html");
 
@@ -141,6 +144,7 @@ function card_click(elementID, cardType)
         var subunitID = document.getElementById("unitSubunitID"+elementID).innerHTML;
         window.sessionStorage.setItem("subunitID",subunitID);
         window.sessionStorage.setItem("subunitName",SubunitName);
+        window.sessionStorage.setItem("level","Approver");
 
         window.location.replace("../approvers/approver-dashboard.html");
     }
