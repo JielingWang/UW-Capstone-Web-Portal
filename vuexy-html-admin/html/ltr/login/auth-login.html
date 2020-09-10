@@ -135,6 +135,10 @@
     <script src="../../../app-assets/js/scripts/myScripts/connections/connections.js"></script>
     <script src="../../../app-assets/js/scripts/myScripts/login/login.js"></script>
     <!--End of myscripts-->
+    <!-- Enter Key disAbled-->
+    <script type="text/javascript">
+        window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='text'){e.preventDefault();return false;}}},true);
+    </script>
 
 </body>
 <!-- END: Body-->
