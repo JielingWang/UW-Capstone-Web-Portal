@@ -14,6 +14,11 @@ let reqIdMap = new Map(); // <K, V> -> <request id, request index in requestsInf
 // contacts.delete('Raymond') // false
 // contacts.delete('Jessie') // true
 // console.log(contacts.size) // 1
+var user_name="";
+var user_uwid="";
+var user_email="";
+var user_subunitName="";
+var user_accessLevel="";
 
 /**
  * Initialize the window
@@ -54,64 +59,12 @@ function updateAllRequestsTable() {
     $('#DataTables_Table_1 tbody').on( 'click', 'tr', function () {
         var data = table.row( $(this) ).data();
         console.log('row id: ' + data[0]);
-        sendRequestId(data[0]);
+        if(data[2].localeCompare("Travel Request")==0 || data[2].localeCompare("Travel Reimbursement")==0){
+            directToSummary(data[0]);
+        }else{
+            sendRequestId(data[0]);
+        }
     } );
-    
-    // $('#DataTables_Table_1 tbody').on( 'click', "button[name='takeButton']", function () {
-    //     var data = table.row( $(this).parents('tr') ).data();
-    //     // console.log('take id: ' + data[0]);
-    //     var cell = table.cell($(this).parents('td'));
-    //     cell.data('<button type="button" class="btn mr-0 mb-0 btn-outline-danger btn-sm" name="untakeButton" data-toggle="modal" data-target="#reassignModal">Untake</button>').draw();
-    //     var assign_id = window.sessionStorage.getItem("id");
-    //     updateAssignedInfo(data[0], assign_id);
-
-    //     getMyPendingRequestsInfo();
-    //     updatePendingCards();
-
-    //     // update datatable
-    //     var table_0 = $("#DataTables_Table_0").DataTable().clear().draw();
-    //     for (var i = 0; i < myReqArr.length; i++) {
-    //         var x = reqIdMap.get(myReqArr[i].RequestID);
-    //         table_0.row.add([
-    //             requestsInfo[x].RequestID,
-    //             requestsInfo[x].Requester,
-    //             requestsInfo[x].Type,
-    //             requestsInfo[x].Subunit,
-    //             requestsInfo[x].Date,
-    //             requestsInfo[x].Status
-    //         ]).draw();
-    //     }
-    // } );
-
-    // $('#DataTables_Table_1 tbody').on( 'click', "button[name='untakeButton']", function () {
-    //     var data = table.row( $(this).parents('tr') ).data();
-    //     console.log('untake id: ' + data[0]);
-    //     var cell = table.cell( $(this).parents('td') );
-    //     $('#reassignModal').on('click', "button[name='reassign']", function() {
-    //         var newAssign = modalReassignClicked(data[0]);
-    //         if (newAssign) {
-    //             cell.data(newAssign).draw();
-    //         } else {
-    //             cell.data('<button type="button" class="btn mr-0 mb-0 btn-outline-primary btn-sm" name="takeButton">Take</button>');
-    //         }
-    //         getMyPendingRequestsInfo();
-    //         updatePendingCards();
-            
-    //         // update datatable
-    //         var table_0 = $("#DataTables_Table_0").DataTable().clear().draw();
-    //         for (var i = 0; i < myReqArr.length; i++) {
-    //             var x = reqIdMap.get(myReqArr[i].RequestID);
-    //             table_0.row.add([
-    //                 requestsInfo[x].RequestID,
-    //                 requestsInfo[x].Requester,
-    //                 requestsInfo[x].Type,
-    //                 requestsInfo[x].Subunit,
-    //                 requestsInfo[x].Date,
-    //                 requestsInfo[x].Status
-    //             ]).draw();
-    //         }
-    //     });
-    // } );
 }
 
 
@@ -136,7 +89,11 @@ function updateMyPendingRequestsTable() {
     $('#DataTables_Table_0 tbody').on( 'click', 'tr', function () {
         var data = table.row( $(this) ).data();
         console.log('row id: ' + data[0]);
-        sendRequestId(data[0]);
+        if(data[2].localeCompare("Travel Request")==0 || data[2].localeCompare("Travel Reimbursement")==0){
+            directToSummary(data[0]);
+        }else{
+            sendRequestId(data[0]);
+        }
     } );
 }
 
@@ -236,14 +193,9 @@ function getAllRequestsInfo() {
                     assignedValue = getUserInfo(assigned).userInfo.Name;
                 } else {
                     assignedValue = "Routing";
-                    // assigned_td = document.createElement('td');
-                    // var span = document.createElement('span');
-                    // span.setAttribute('class', 'badge badge-warning');
-                    // span.setAttribute('id', `${_id}`);
-                    // span.innerHTML = "Routing";
-                    // assigned_td.appendChild(span);
-                    // assigned_td.innerHTML = "Routing";
                 }
+                var temp = JSON.parse(info.OrderInfo);
+                var userId = info.userID_ref;
                 requestsInfo.push({
                     RequestID: id,
                     Requester: requester,
@@ -251,7 +203,9 @@ function getAllRequestsInfo() {
                     Subunit: subunitName,
                     Date: date,
                     Status: status,
-                    Assigned: assignedValue
+                    Assigned: assignedValue,
+                    OrderInfo: temp,
+                    UserId: userId,
                 });
                 reqIdMap.set(id, i);
             }
@@ -275,6 +229,19 @@ function getUserInfo(user_id) {
     var onSuccess = function(data) {
         if (data.status == true) {
             info = data.data;
+            var level = data.data.AccessLevel;
+            if (level == "Submitter" || level == "Approver") {
+                type = "subunit";
+                unit_id = data.data.SubUnitID;
+            } else if (level == "Fiscal Staff" || level == "Fiscal Administrator") {
+                type = "unit";
+                unit_id = data.data.UnitID;
+            }
+            user_name = data.data.userInfo.Name;
+            user_uwid=data.data.userInfo.UWID;
+            user_email=data.data.userInfo.email;
+            user_subunitName=data.data.SubUnitName;
+            user_accessLevel=data.data.AccessLevel;
         } else {
             //error message
             info = null;
@@ -289,120 +256,6 @@ function getUserInfo(user_id) {
     makeGetRequest("getuserInformation/" + user_id, onSuccess, onFailure);
     return info;
 }
-
-/**
- * Core function
- * Update the request table
- */
-// function updateSummaryTable() {
-//     var len = requestsInfo.length;
-//     var itemTable = document.getElementById('request_table_body');
-//     itemTable.innerHTML = '';
-//     for (var i = 0; i < len; i++) {
-//         var id = requestsInfo[i].RequestID;
-//         var requester = requestsInfo[i].Requester;
-//         var type = requestsInfo[i].Type;
-//         var subunit = requestsInfo[i].Subunit;
-//         var date = requestsInfo[i].Date;
-//         var status = requestsInfo[i].Status;
-//         var assigned = requestsInfo[i].Assigned;
-//         itemTable.appendChild(genRequestRow(id, requester, type, subunit, date, status, assigned));
-//     }
-// }
-
-
-/**
- * Helper function, generate a single row for request table
- * @param {int} _id real id of this request
- * @param {string} requester requester name
- * @param {string} type type of this request
- * @param {string} subunit subunit of this request
- * @param {string} date submitted date of this request
- * @param {string} status status of this request
- * @param {string} assigned assigned to which fiscal staff
- */
-// function genRequestRow(_id, requester, type, subunit, date, status, assigned) {
-
-//     var _id_td = document.createElement('td');
-//     _id_td.innerHTML = _id;
-
-//     var requester_td = document.createElement('td');
-//     requester_td.innerHTML = requester;
-
-//     var type_td = document.createElement('td');
-//     type_td.innerHTML = type;
-    
-//     var subunit_td = document.createElement('td');
-//     subunit_td.innerHTML = subunit;
-
-//     var date_td = document.createElement('td');
-//     date_td.innerHTML = date;
-    
-//     var status_td = document.createElement('td');
-//     status_td.innerHTML = status;
-
-//     var assigned_td = null;
-//     if (status == "Approved" && assigned == null) { // take button cell
-//         assigned_td = genAssignedButtonCell(_id);
-//     } else if (assigned == window.sessionStorage.getItem("id")) { // check cell
-//         assigned_td = document.createElement('td');
-//         var icon = document.createElement('i');
-//         icon.setAttribute('class', 'fa fa-check');
-//         assigned_td.appendChild(icon);
-//     } else if (assigned != null) { // taken by others cell
-//         assigned_td = document.createElement('td');
-//         assigned_td.innerHTML = getUserInfo(assigned);
-//     } else {
-//         assigned_td = document.createElement('td');
-//         // var span = document.createElement('span');
-//         // span.setAttribute('class', 'badge badge-warning');
-//         // span.setAttribute('id', `${_id}`);
-//         // span.innerHTML = "Routing";
-//         // assigned_td.appendChild(span);
-//         assigned_td.innerHTML = "Routing";
-//     }
-    
-//     // create tr element
-//     var tr = document.createElement('tr');
-//     tr.setAttribute('id', 'summary_row_' + _id);
-//     tr.appendChild(_id_td);
-//     tr.appendChild(requester_td);
-//     tr.appendChild(type_td);
-//     tr.appendChild(subunit_td);
-//     tr.appendChild(date_td);
-//     tr.appendChild(status_td);
-//     tr.appendChild(assigned_td);
-
-//     return tr;
-// }
-
-
-/**
- * Helper function, generate the assigned cell for requests table
- * @param {int} request_id real id of this request, 
- *                         use to tie the button to the correct request
- */
-// function genAssignedButtonCell() {
-//     var assigned_td = document.createElement('td');
-//     var btn = document.createElement('button');
-//     btn.setAttribute('type', 'button');
-//     btn.setAttribute('class', 'btn mr-0 mb-0 btn-outline-primary btn-sm');
-//     btn.setAttribute('id', request_id);
-//     btn.innerHTML = "Take";
-//     btn.onclick = function() {
-//         btn.remove();
-//         var icon = document.createElement('i');
-//         icon.setAttribute('class', 'fa fa-check');
-//         assigned_td.appendChild(icon);
-//         updateAssignedInfo(request_id);
-//         getMyPendingRequestsInfo();
-//         updatePendingCards();
-//     };
-//     assigned_td.appendChild(btn);
-//     return assigned_td;
-//     var assignedValue = '<button type="button" class="btn mr-0 mb-0 btn-outline-primary btn-sm" name="takeButton">Take</button>';
-//     return assignedValue;
-// }
 
 /**
  * Update the assigned information of this request when clicking take button
@@ -573,5 +426,206 @@ function updatePendingCards() {
     for (var i = 0; i < myReqArr.length; i++) {
         card_block.appendChild(genPendingRequestCard(myReqArr[i].RequestID, 
             myReqArr[i].Requester, myReqArr[i].Type, myReqArr[i].Date));
+    }
+}//------------------------------------------------------------------------------------
+//Haotian Yuan
+function directToSummary(orderId){
+    var index=0;
+    for (var x = 0; x < requestsInfo.length; x++) {
+        if(requestsInfo[x].RequestID.localeCompare(orderId)==0){
+            index=x;
+            break;
+        }
+    }
+    var temp = requestsInfo[index].OrderInfo;
+    getUserInfo(requestsInfo[index].UserId);
+    if(requestsInfo[x].Type.localeCompare("Travel Request")==0){
+        if(temp.LineItems[0].Budgets.length==1){
+            window.sessionStorage.setItem('orderId',orderId);
+            window.sessionStorage.setItem('user_id',requestsInfo[index].UserId);
+            window.sessionStorage.setItem('user_name',user_name);
+            window.sessionStorage.setItem('user_uwid',user_uwid);
+            window.sessionStorage.setItem('user_email',user_email);
+            window.sessionStorage.setItem('user_subunitName',user_subunitName);
+            window.sessionStorage.setItem('user_AccessLevel',user_accessLevel);
+            window.sessionStorage.setItem('type',requestsInfo[index].Type);
+            window.sessionStorage.setItem('submit_date',requestsInfo[index].Date);
+            window.sessionStorage.setItem('status',requestsInfo[index].Status);
+            window.sessionStorage.setItem('amount',requestsInfo[index].Amount);
+            window.sessionStorage.setItem('firstname',temp.FirstName);
+            window.sessionStorage.setItem('lastname',temp.LastName);
+            window.sessionStorage.setItem('departure',temp.Departure);
+            window.sessionStorage.setItem('destionation',temp.Destination);
+            window.sessionStorage.setItem('date',temp.Date);
+            window.sessionStorage.setItem('returndate',temp.ReturnDate);
+            window.sessionStorage.setItem('reason',temp.Reason);
+            window.sessionStorage.setItem('flight',temp.Flight);
+            window.sessionStorage.setItem('flight_company',temp.FlightCompany);
+            window.sessionStorage.setItem('flight_number',temp.FlightNumber);
+            window.sessionStorage.setItem('flight_from',temp.FlightFrom);
+            window.sessionStorage.setItem('flight_to',temp.FlightTo);
+            window.sessionStorage.setItem('flight_departdate',temp.FlightDepartingDate);
+            window.sessionStorage.setItem('flight_returndate',temp.FlightReturningDate);
+            window.sessionStorage.setItem('flight_amount',temp.FlightAmount);
+            window.sessionStorage.setItem('hotel',temp.Hotel);
+            window.sessionStorage.setItem('hotel_name',temp.HotelName);
+            window.sessionStorage.setItem('hotel_address',temp.HotelAddress);
+            window.sessionStorage.setItem('hotel_num',temp.HotelNum);
+            window.sessionStorage.setItem('hotel_zip',temp.HotelZip);
+            window.sessionStorage.setItem('hotel_amount',temp.HotelAmount);
+            window.sessionStorage.setItem('hotel_link',temp.HotelLink);
+            window.sessionStorage.setItem('flight_reference',temp.FlightReference);
+            window.sessionStorage.setItem('hotel_note',temp.HotelNote);
+            window.sessionStorage.setItem('birthday',temp.Birthday);
+            window.sessionStorage.setItem('note',temp.NoteFromApprover);
+            window.sessionStorage.setItem('budget1',temp.LineItems[0].Budgets[0].Number);
+            window.sessionStorage.setItem('split1',temp.LineItems[0].Budgets[0].Split);
+            window.sessionStorage.setItem('budget_length',temp.LineItems[0].Budgets.length);
+            window.sessionStorage.setItem('budget2',null);
+            window.sessionStorage.setItem('split2',null);
+            window.sessionStorage.setItem('hotel_movein',temp.HotelMovein);
+            window.sessionStorage.setItem('hotel_moveout',temp.HotelMoveout);
+            window.location.href = "summary.html";
+        }else{
+            window.sessionStorage.setItem('orderId',orderId);
+            window.sessionStorage.setItem('user_id',user_id);
+            window.sessionStorage.setItem('user_name',user_name);
+            window.sessionStorage.setItem('user_uwid',user_uwid);
+            window.sessionStorage.setItem('user_email',user_email);
+            window.sessionStorage.setItem('user_subunitName',user_subunitName);
+            window.sessionStorage.setItem('user_AccessLevel',user_accessLevel);
+            window.sessionStorage.setItem('type',requestsInfo[index].Type);
+            window.sessionStorage.setItem('submit_date',requestsInfo[index].Date);
+            window.sessionStorage.setItem('status',requestsInfo[index].Status);
+            window.sessionStorage.setItem('amount',requestsInfo[index].Amount);
+            window.sessionStorage.setItem('firstname',temp.FirstName);
+            window.sessionStorage.setItem('lastname',temp.LastName);
+            window.sessionStorage.setItem('departure',temp.Departure);
+            window.sessionStorage.setItem('destionation',temp.Destination);
+            window.sessionStorage.setItem('date',temp.Date);
+            window.sessionStorage.setItem('returndate',temp.ReturnDate);
+            window.sessionStorage.setItem('reason',temp.Reason);
+            window.sessionStorage.setItem('flight',temp.Flight);
+            window.sessionStorage.setItem('flight_company',temp.FlightCompany);
+            window.sessionStorage.setItem('flight_number',temp.FlightNumber);
+            window.sessionStorage.setItem('flight_from',temp.FlightFrom);
+            window.sessionStorage.setItem('flight_to',temp.FlightTo);
+            window.sessionStorage.setItem('flight_departdate',temp.FlightDepartingDate);
+            window.sessionStorage.setItem('flight_returndate',temp.FlightReturningDate);
+            window.sessionStorage.setItem('flight_amount',temp.FlightAmount);
+            window.sessionStorage.setItem('hotel',temp.Hotel);
+            window.sessionStorage.setItem('hotel_name',temp.HotelName);
+            window.sessionStorage.setItem('hotel_address',temp.HotelAddress);
+            window.sessionStorage.setItem('hotel_num',temp.HotelNum);
+            window.sessionStorage.setItem('hotel_zip',temp.HotelZip);
+            window.sessionStorage.setItem('hotel_amount',temp.HotelAmount);
+            window.sessionStorage.setItem('hotel_link',temp.HotelLink);
+            window.sessionStorage.setItem('flight_reference',temp.FlightReference);
+            window.sessionStorage.setItem('hotel_note',temp.HotelNote);
+            window.sessionStorage.setItem('birthday',temp.Birthday);
+            window.sessionStorage.setItem('note',temp.NoteFromApprover);
+            window.sessionStorage.setItem('budget1',temp.LineItems[0].Budgets[0].Number);
+            window.sessionStorage.setItem('split1',temp.LineItems[0].Budgets[0].Split);
+            window.sessionStorage.setItem('budget_length',temp.LineItems[0].Budgets.length);
+            window.sessionStorage.setItem('budget2',temp.LineItems[0].Budgets[1].Number);
+            window.sessionStorage.setItem('split2',temp.LineItems[0].Budgets[1].Split);
+            window.sessionStorage.setItem('hotel_movein',temp.HotelMovein);
+            window.sessionStorage.setItem('hotel_moveout',temp.HotelMoveout);
+            window.location.href = "summary.html";
+        }
+    }else if(requestsInfo[x].Type.localeCompare("Travel Reimbursement")==0){
+        if(temp.LineItems[0].Budgets.length==1){
+            window.sessionStorage.setItem('orderId',orderId);
+            window.sessionStorage.setItem('user_id',requestsInfo[index].UserId);
+            window.sessionStorage.setItem('user_name',user_name);
+            window.sessionStorage.setItem('user_uwid',user_uwid);
+            window.sessionStorage.setItem('user_email',user_email);
+            window.sessionStorage.setItem('user_subunitName',user_subunitName);
+            window.sessionStorage.setItem('user_AccessLevel',user_accessLevel);
+            window.sessionStorage.setItem('type',requestsInfo[index].Type);
+            window.sessionStorage.setItem('submit_date',requestsInfo[index].Date);
+            window.sessionStorage.setItem('status',requestsInfo[index].Status);
+            window.sessionStorage.setItem('note',temp.NoteFromApprover);
+            window.sessionStorage.setItem('budget1',temp.LineItems[0].Budgets[0].Number);
+            window.sessionStorage.setItem('split1',temp.LineItems[0].Budgets[0].Split);
+            window.sessionStorage.setItem('budget_length',temp.LineItems[0].Budgets.length);
+            window.sessionStorage.setItem('budget2',null);
+            window.sessionStorage.setItem('split2',null);
+            window.sessionStorage.setItem('TravelBefore',temp.TravelBefore);
+            window.sessionStorage.setItem('ReferenceNumber',temp.ReferenceNumber);
+            window.sessionStorage.setItem('ForMyself',temp.ForMyself);
+            window.sessionStorage.setItem('SomeoneName',temp.SomeoneName);
+            window.sessionStorage.setItem('SomeoneAffliation',temp.SomeoneAffliation);
+            window.sessionStorage.setItem('SomeoneEmail',temp.SomeoneEmail);
+            window.sessionStorage.setItem('US',temp.UScitizen);
+            window.sessionStorage.setItem('purpose',temp.Purpose);
+            window.sessionStorage.setItem('personalTravel',temp.PersonalTravel);
+            window.sessionStorage.setItem('personalTravelDetails',temp.PersonalTravelDetail);
+            window.sessionStorage.setItem('registration',temp.Registration);
+            window.sessionStorage.setItem('airfare',temp.AirFare);
+            window.sessionStorage.setItem('car',temp.Car);
+            window.sessionStorage.setItem('train',temp.Train);
+            window.sessionStorage.setItem('carRental',temp.CarRental);
+            window.sessionStorage.setItem('hotelFee',temp.HotelFee);
+            window.sessionStorage.setItem('visa_file',temp.Visa_file);
+            window.sessionStorage.setItem('passport_file',temp.Passport_file);
+            window.sessionStorage.setItem('airfare_file',temp.Airfare_file);
+            window.sessionStorage.setItem('train_file',temp.Train_file);
+            window.sessionStorage.setItem('rental_file',temp.Rental_file);
+            window.sessionStorage.setItem('hotel_file',temp.Hotel_file);
+            window.sessionStorage.setItem('meal',temp.Meal);
+            window.sessionStorage.setItem('meal_amount',temp.Meal_amount);
+            window.sessionStorage.setItem('mealProvided',temp.MealProvided);
+            window.sessionStorage.setItem('registration_file',temp.Registration_file);
+            window.sessionStorage.setItem('car_file',temp.Car_file);
+            window.sessionStorage.setItem('amount',temp.amount);
+            window.location.href = "summary-travelReimbursement.html";
+        }else{
+            window.sessionStorage.setItem('orderId',orderId);
+            window.sessionStorage.setItem('user_id',user_id);
+            window.sessionStorage.setItem('user_name',user_name);
+            window.sessionStorage.setItem('user_uwid',user_uwid);
+            window.sessionStorage.setItem('user_email',user_email);
+            window.sessionStorage.setItem('user_subunitName',user_subunitName);
+            window.sessionStorage.setItem('user_AccessLevel',user_accessLevel);
+            window.sessionStorage.setItem('type',requestsInfo[index].Type);
+            window.sessionStorage.setItem('submit_date',requestsInfo[index].Date);
+            window.sessionStorage.setItem('status',requestsInfo[index].Status);
+            window.sessionStorage.setItem('note',temp.NoteFromApprover);
+            window.sessionStorage.setItem('budget1',temp.LineItems[0].Budgets[0].Number);
+            window.sessionStorage.setItem('split1',temp.LineItems[0].Budgets[0].Split);
+            window.sessionStorage.setItem('budget_length',temp.LineItems[0].Budgets.length);
+            window.sessionStorage.setItem('budget2',temp.LineItems[0].Budgets[1].Number);
+            window.sessionStorage.setItem('split2',temp.LineItems[0].Budgets[1].Split);
+            window.sessionStorage.setItem('TravelBefore',temp.TravelBefore);
+            window.sessionStorage.setItem('ReferenceNumber',temp.ReferenceNumber);
+            window.sessionStorage.setItem('ForMyself',temp.ForMyself);
+            window.sessionStorage.setItem('SomeoneName',temp.SomeoneName);
+            window.sessionStorage.setItem('SomeoneAffliation',temp.SomeoneAffliation);
+            window.sessionStorage.setItem('SomeoneEmail',temp.SomeoneEmail);
+            window.sessionStorage.setItem('US',temp.UScitizen);
+            window.sessionStorage.setItem('purpose',temp.Purpose);
+            window.sessionStorage.setItem('personalTravel',temp.PersonalTravel);
+            window.sessionStorage.setItem('personalTravelDetails',temp.PersonalTravelDetail);
+            window.sessionStorage.setItem('registration',temp.Registration);
+            window.sessionStorage.setItem('airfare',temp.AirFare);
+            window.sessionStorage.setItem('car',temp.Car);
+            window.sessionStorage.setItem('train',temp.Train);
+            window.sessionStorage.setItem('carRental',temp.CarRental);
+            window.sessionStorage.setItem('hotelFee',temp.HotelFee);
+            window.sessionStorage.setItem('visa_file',temp.Visa_file);
+            window.sessionStorage.setItem('passport_file',temp.Passport_file);
+            window.sessionStorage.setItem('airfare_file',temp.Airfare_file);
+            window.sessionStorage.setItem('train_file',temp.Train_file);
+            window.sessionStorage.setItem('rental_file',temp.Rental_file);
+            window.sessionStorage.setItem('hotel_file',temp.Hotel_file);
+            window.sessionStorage.setItem('meal',temp.Meal);
+            window.sessionStorage.setItem('meal_amount',temp.Meal_amount);
+            window.sessionStorage.setItem('mealProvided',temp.MealProvided);
+            window.sessionStorage.setItem('registration_file',temp.Registration_file);
+            window.sessionStorage.setItem('car_file',temp.Car_file);
+            window.sessionStorage.setItem('amount',temp.amount);
+            window.location.href = "summary-travelReimbursement.html";
+        }
     }
 }
