@@ -95,20 +95,6 @@ function updateActionField(data) {
     for (var i = 0; i < actionArr.length; i++) {
         actionTable.appendChild(genApprovalCell(actionArr[i].budgetnum, actionArr[i].lineitemid, actionArr[i].response));
     }
-
-    // var request_status = data.OrderStatus;
-    // var request_history = data.OrderHistory;
-    // var n = request_history.length;
-    // var notApproved = false;
-    // if (request_history[n - 1].action == "Approved" && request_history[n - 1].userName != window.sessionStorage.getItem('name')) {
-    //     notApproved = true;
-    // }
-    // if (request_history[n - 1].action == "Submitted" || request_history[n - 1].action == "Updated" || notApproved) {
-    //     var approveBtn = document.getElementById('approve-btn');
-    //     approveBtn.disabled = false;
-    //     var sendBackBtn = document.getElementById('send-back-btn');
-    //     sendBackBtn.disabled = false;
-    // }
 }
 
 
@@ -155,7 +141,6 @@ function genApprovalCell(budgetnum, lineitemid, response) {
         });
         td3.appendChild(btn2);
     }
-
 
     tr.appendChild(td1);
     tr.appendChild(td2);

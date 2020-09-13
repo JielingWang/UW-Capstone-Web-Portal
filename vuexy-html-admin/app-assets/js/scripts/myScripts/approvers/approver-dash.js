@@ -488,7 +488,7 @@ function directToSummary(orderId){
             window.location.href = "summary.html";
         }else{
             window.sessionStorage.setItem('orderId',orderId);
-            window.sessionStorage.setItem('user_id',user_id);
+            window.sessionStorage.setItem('user_id',requestsInfo[index].UserId);
             window.sessionStorage.setItem('user_name',user_name);
             window.sessionStorage.setItem('user_uwid',user_uwid);
             window.sessionStorage.setItem('user_email',user_email);
@@ -582,7 +582,7 @@ function directToSummary(orderId){
             window.location.href = "summary-travelReimbursement.html";
         }else{
             window.sessionStorage.setItem('orderId',orderId);
-            window.sessionStorage.setItem('user_id',user_id);
+            window.sessionStorage.setItem('user_id',requestsInfo[index].UserId);
             window.sessionStorage.setItem('user_name',user_name);
             window.sessionStorage.setItem('user_uwid',user_uwid);
             window.sessionStorage.setItem('user_email',user_email);

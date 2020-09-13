@@ -158,6 +158,7 @@ function updateMyPendingRequestsTable() {
     $('#DataTables_Table_0 tbody').on( 'click', 'tr', function () {
         var data = table.row( $(this) ).data();
         console.log('row id: ' + data[0]);
+        console.log(data);
         if(data[2].localeCompare("Travel Request")==0 || data[2].localeCompare("Travel Reimbursement")==0){
             directToSummary(data[0]);
         }else{
@@ -358,120 +359,6 @@ function getUserInfo(user_id) {
 }
 
 /**
- * Core function
- * Update the request table
- */
-// function updateSummaryTable() {
-//     var len = requestsInfo.length;
-//     var itemTable = document.getElementById('request_table_body');
-//     itemTable.innerHTML = '';
-//     for (var i = 0; i < len; i++) {
-//         var id = requestsInfo[i].RequestID;
-//         var requester = requestsInfo[i].Requester;
-//         var type = requestsInfo[i].Type;
-//         var subunit = requestsInfo[i].Subunit;
-//         var date = requestsInfo[i].Date;
-//         var status = requestsInfo[i].Status;
-//         var assigned = requestsInfo[i].Assigned;
-//         itemTable.appendChild(genRequestRow(id, requester, type, subunit, date, status, assigned));
-//     }
-// }
-
-
-/**
- * Helper function, generate a single row for request table
- * @param {int} _id real id of this request
- * @param {string} requester requester name
- * @param {string} type type of this request
- * @param {string} subunit subunit of this request
- * @param {string} date submitted date of this request
- * @param {string} status status of this request
- * @param {string} assigned assigned to which fiscal staff
- */
-// function genRequestRow(_id, requester, type, subunit, date, status, assigned) {
-
-//     var _id_td = document.createElement('td');
-//     _id_td.innerHTML = _id;
-
-//     var requester_td = document.createElement('td');
-//     requester_td.innerHTML = requester;
-
-//     var type_td = document.createElement('td');
-//     type_td.innerHTML = type;
-    
-//     var subunit_td = document.createElement('td');
-//     subunit_td.innerHTML = subunit;
-
-//     var date_td = document.createElement('td');
-//     date_td.innerHTML = date;
-    
-//     var status_td = document.createElement('td');
-//     status_td.innerHTML = status;
-
-//     var assigned_td = null;
-//     if (status == "Approved" && assigned == null) { // take button cell
-//         assigned_td = genAssignedButtonCell(_id);
-//     } else if (assigned == window.sessionStorage.getItem("id")) { // check cell
-//         assigned_td = document.createElement('td');
-//         var icon = document.createElement('i');
-//         icon.setAttribute('class', 'fa fa-check');
-//         assigned_td.appendChild(icon);
-//     } else if (assigned != null) { // taken by others cell
-//         assigned_td = document.createElement('td');
-//         assigned_td.innerHTML = getUserInfo(assigned);
-//     } else {
-//         assigned_td = document.createElement('td');
-//         // var span = document.createElement('span');
-//         // span.setAttribute('class', 'badge badge-warning');
-//         // span.setAttribute('id', `${_id}`);
-//         // span.innerHTML = "Routing";
-//         // assigned_td.appendChild(span);
-//         assigned_td.innerHTML = "Routing";
-//     }
-    
-//     // create tr element
-//     var tr = document.createElement('tr');
-//     tr.setAttribute('id', 'summary_row_' + _id);
-//     tr.appendChild(_id_td);
-//     tr.appendChild(requester_td);
-//     tr.appendChild(type_td);
-//     tr.appendChild(subunit_td);
-//     tr.appendChild(date_td);
-//     tr.appendChild(status_td);
-//     tr.appendChild(assigned_td);
-
-//     return tr;
-// }
-
-
-/**
- * Helper function, generate the assigned cell for requests table
- * @param {int} request_id real id of this request, 
- *                         use to tie the button to the correct request
- */
-// function genAssignedButtonCell() {
-//     var assigned_td = document.createElement('td');
-//     var btn = document.createElement('button');
-//     btn.setAttribute('type', 'button');
-//     btn.setAttribute('class', 'btn mr-0 mb-0 btn-outline-primary btn-sm');
-//     btn.setAttribute('id', request_id);
-//     btn.innerHTML = "Take";
-//     btn.onclick = function() {
-//         btn.remove();
-//         var icon = document.createElement('i');
-//         icon.setAttribute('class', 'fa fa-check');
-//         assigned_td.appendChild(icon);
-//         updateAssignedInfo(request_id);
-//         getMyPendingRequestsInfo();
-//         updatePendingCards();
-//     };
-//     assigned_td.appendChild(btn);
-//     return assigned_td;
-//     var assignedValue = '<button type="button" class="btn mr-0 mb-0 btn-outline-primary btn-sm" name="takeButton">Take</button>';
-//     return assignedValue;
-// }
-
-/**
  * Update the assigned information of this request when clicking take button
  * @param {int} request_id request id
  */
@@ -630,7 +517,12 @@ function genPendingRequestCard(request_id, requester, type, date) {
     edit_btn.setAttribute('type', 'button');
     edit_btn.setAttribute('class', 'btn gradient-light-primary btn-block mt-2');
     edit_btn.setAttribute('id', "edit_" + request_id);
-    edit_btn.setAttribute('onclick',`sendRequestId('${request_id}');`);
+    console.log(type);
+    if(type.localeCompare("Travel Request")==0 || type.localeCompare("Travel Reimbursement")==0){
+        edit_btn.setAttribute('onclick',`directToSummary('${request_id}');`);
+    }else{
+        edit_btn.setAttribute('onclick',`sendRequestId('${request_id}');`);
+    }
     edit_btn.innerHTML = "Edit";
 
     body_block.appendChild(request_id_block);
@@ -724,7 +616,7 @@ function directToSummary(orderId){
             window.location.href = "summary.html";
         }else{
             window.sessionStorage.setItem('orderId',orderId);
-            window.sessionStorage.setItem('user_id',user_id);
+            window.sessionStorage.setItem('user_id',requestsInfo[index].UserId);
             window.sessionStorage.setItem('user_name',user_name);
             window.sessionStorage.setItem('user_uwid',user_uwid);
             window.sessionStorage.setItem('user_email',user_email);
@@ -818,7 +710,7 @@ function directToSummary(orderId){
             window.location.href = "summary-travelReimbursement.html";
         }else{
             window.sessionStorage.setItem('orderId',orderId);
-            window.sessionStorage.setItem('user_id',user_id);
+            window.sessionStorage.setItem('user_id',requestsInfo[index].UserId);
             window.sessionStorage.setItem('user_name',user_name);
             window.sessionStorage.setItem('user_uwid',user_uwid);
             window.sessionStorage.setItem('user_email',user_email);

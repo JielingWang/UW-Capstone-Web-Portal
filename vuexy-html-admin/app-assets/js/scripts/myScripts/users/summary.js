@@ -8,7 +8,10 @@ var feedback = document.getElementById("feedback_input");
 var request_id = null;
 const baseURL = "https://coe-api.azurewebsites.net/api/";
 var user_id = "5e8e45eea148b9004420651f";
+var userID = null;
+var actionTable = document.getElementById("action_table");
 
+var actionArr = [];
 // Template POst request Ajax call
 var makePostRequest = function(url, data, onSuccess, onFailure) {
     $.ajax({
@@ -62,6 +65,7 @@ var makeDeleteRequest = function(url, onSuccess, onFailure) {
     });
 };
 window.onload = function() {
+    userID = window.sessionStorage.getItem("id");
     document.getElementById('requestID').innerHTML = window.sessionStorage.getItem("orderId");
     document.getElementById('requester').innerHTML = window.sessionStorage.getItem("user_name");
     document.getElementById('subunit').innerHTML = window.sessionStorage.getItem("user_subunitName");
@@ -108,27 +112,12 @@ window.onload = function() {
     this.console.log(request_id);
     requestInfo = getRequestInfo(request_id);
     //console.log(requestInfo);
-    updateHistory(requestInfo);
-    prepareNotesArr(requestInfo);
-    updateNotes();
+    //updateHistory(requestInfo);
+    //prepareNotesArr(requestInfo);
+    //updateNotes();
 
-    updateActionField(requestInfo);
-}
-
-function updateActionField(data) {
-    var request_status = data.OrderStatus;
-    var originalAssigndeTo = data.assignedTo;
-    var self_id = sessionStorage.getItem('id');
-    if (request_status == "Approved" && self_id == originalAssigndeTo) {
-        var acceptBtn = document.getElementById('accept-btn');
-        acceptBtn.disabled = false;
-        var sendBackBtn = document.getElementById('send-back-btn');
-        sendBackBtn.disabled = false;
-    }
-    if (request_status == "Accepted") {
-        var completeBtn = document.getElementById('complete-btn');
-        completeBtn.disabled = false;
-    }
+    //updateActionField(requestInfo);
+    //adjustActionHeight();
 }
 
 function takeNoteClicked() {
@@ -448,6 +437,45 @@ function genFinishStamp(request_status, timeStamp) {
     stamp.appendChild(info);
     stamp.appendChild(time);
     return stamp;
+}
+
+function updateActionField(data) {
+    // collect awaiting approval information
+    var ar = data.ApprovalResponses;
+    for (var i = 0; i < ar.length; i++) {
+        var ari = ar[i].approverResponses;
+        console.log(ari);
+        for (var j = 0; j < ari.length; j++) {
+            if (ari[j].approverID_ref === userID) {
+                if (ari[j].response) {
+                    actionArr.push({
+                        budgetnum : ar[i].BudgetNumber,
+                        lineitemid : ar[i].lineItemID,
+                        response: true
+                    });
+                } else {
+                    actionArr.push({
+                        budgetnum : ar[i].BudgetNumber,
+                        lineitemid : ar[i].lineItemID,
+                        response: false
+                    });
+                }
+                
+            }
+        }
+    }
+}
+
+
+function adjustActionHeight() {
+    var ha = action_card.clientHeight;
+    var hn = note_add_card.clientHeight;
+    if (ha < hn) {
+        action_card.style.height = `${hn}px`;
+    } else if (ha > hn) {
+        var h = ha - hn + 86;
+        feedback.style.height = `${h}px`;
+    }
 }
 
 

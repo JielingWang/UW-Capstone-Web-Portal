@@ -8,6 +8,7 @@ var feedback = document.getElementById("feedback_input");
 var request_id = null;
 const baseURL = "https://coe-api.azurewebsites.net/api/";
 var user_id = "5e8e45eea148b9004420651f";
+var userID = null;
 
 // Template POst request Ajax call
 var makePostRequest = function(url, data, onSuccess, onFailure) {
@@ -62,6 +63,7 @@ var makeGetRequest = function(url, onSuccess, onFailure) {
     });
 };
 window.onload = function() {
+    userID = window.sessionStorage.getItem("id");
     document.getElementById('requestID').innerHTML = window.sessionStorage.getItem("orderId");
     document.getElementById('request-type').innerHTML = window.sessionStorage.getItem("type")+"&nbsp;";
     document.getElementById('requester').innerHTML = window.sessionStorage.getItem("user_name");
@@ -206,11 +208,11 @@ window.onload = function() {
         request_id = window.sessionStorage.getItem('orderId');
         requestInfo = getRequestInfo(request_id);
         //console.log(requestInfo);
-        updateHistory(requestInfo);
-        prepareNotesArr(requestInfo);
-        updateNotes();
+        //updateHistory(requestInfo);
+        //prepareNotesArr(requestInfo);
+        //updateNotes();
 
-        updateActionField(requestInfo);
+        //updateActionField(requestInfo);
     }
     var onFaliure = function(){
         alert("fail");

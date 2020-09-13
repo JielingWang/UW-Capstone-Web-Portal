@@ -140,8 +140,8 @@
     <!-- END: Header-->
 
 
-     <!-- BEGIN: Main Menu-->
-     <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
+    <!-- BEGIN: Main Menu-->
+    <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
         <div class="navbar-header">
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item mr-auto"><a class="navbar-brand" href="../../../html/ltr/vertical-menu-template/index.html">
@@ -154,12 +154,13 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-			    <li class="active"><a href="buyer-dashboard.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
+			    <li><a href="approver-dashboard.html"><i class="feather icon-home"></i><span class="menu-item" data-i18n="Dashboard">Dashboard</span></a></li>
+                
                 <li class=" navigation-header"><span>Financial Staff</span></li>
-				<li class=" nav-item"><a href="buyer-dashboard.html"><i class="feather icon-aperture"></i><span class="menu-title" data-i18n="UserSettings">Pending Requests</span></a></li>
+				<li class="active nav-item"><a href="../approvers/approver-dashboard.html"><i class="feather icon-aperture"></i><span class="menu-title" data-i18n="UserSettings">Pending Requests</span></a></li>
 				
 				<li class=" navigation-header"><span>Settings</span></li>
-				<li class=" nav-item"><a href="buyer-user-settings.html"><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
+				<li class=" nav-item"><a href=""><i class="feather icon-user"></i><span class="menu-title" data-i18n="UserSettings">User Settings</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-bell"></i><span class="menu-title" data-i18n="Notifications">Notifications</span></a></li>
 				<li class=" nav-item"><a href=""><i class="feather icon-power"></i><span class="menu-title" data-i18n="Logout">Logout</span></a></li>
 				
@@ -553,29 +554,61 @@
                 </section>
                 <!-- Timeline Ends -->
                 <!-- add note start-->
-                <div class="row" id="feedback-block">
-                    <div class="col-md-12">
-                          <div class="card">
+                <section>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card" id="action_card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Budget Approvals</h4>
+                                </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <h4 class="card-title">Note</h4>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered zero-configuration">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Budget Number</th>
+                                                        <th>Approver</th>
+                                                        <th>Line Item ID</th>
+                                                        <th>Approval Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table zero-configuration" id="action_table">
+                                                    <tr id="no-data">
+                                                        <td style="text-align: center;" colspan="4">No Budget Number Awaiting Approval</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card" id="note_add_card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Add a note here</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
                                         <form class="form">
                                             <div class="form-body">
                                                 <div class="form-group">
                                                     <label for="feedback_input" class="sr-only">Notes</label>
-                                                        <textarea id="feedback_input" rows="3" class="form-control" name="message" placeholder="Add a note"></textarea>
+                                                    <textarea id="feedback_input" rows="3" class="form-control" name="message" placeholder="Notes"></textarea>
                                                 </div>
                                             </div>
                                             <div class="form-actions">
-                                                <button type="button" class="btn btn-primary mr-1" onclick="takeNoteClicked()">Add a note</button>
-                                              
+                                                <button type="button" class="btn btn-outline-primary mr-1" onclick="takeNoteClicked()"><i class="mr-1 fa fa-pencil"></i>Add Note</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+    
                     </div>
-                </div>
+                </section>
                 <!-- add note end-->
 
             </div>
@@ -666,9 +699,10 @@
     }
 
     </script>
-    <script src="../../../app-assets/js/scripts/myScripts/requests/historyandnote.js"></script>
     <script src="../../../app-assets/js/scripts/myScripts/users/travelReim-summary.js"></script>
     <script src="../../../app-assets/js/scripts/myScripts/Admin/navigation_handler.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/requests/historyandnote.js"></script>
+    <script src="../../../app-assets/js/scripts/myScripts/requests/aprvandnewnote.js"></script>
 </body>
 <!-- END: Body-->
 <!--<script src="travelRequest.js"></script>-->
