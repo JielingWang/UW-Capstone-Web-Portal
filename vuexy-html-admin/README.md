@@ -1,18 +1,13 @@
-Product Name
----------------
-Vuexy HTML Admin Template
+## Administrative and Financial Web Portal for UW College of Enginnering
+
+This is a web application built for University of Washington College of Engineering to manage their daily transaction duties. We're still in the testing phase, if you wanna have a try, here is the testing server URL: http://v2227.host.s.uw.edu/
+
+And we provide several testing IDs so that you can go around within this system:
+Submitter:      1969740
+Approver:       1969766
+Fiscal Staff:   1969420
 
 
-Product Description
--------------------
-Vuexy admin is super flexible, powerful, clean & modern responsive bootstrap admin template with unlimited possibilities. It includes 4 pre-built templates with organized folder structure, clean & commented code, 100+ pages, 70+ components, 50+ charts, 50+ advance cards (widgets) and many more.
+For front-end, we use (Vuexy HTML Admin Template)[https://pixinvent.com/demo/vuexy-html-bootstrap-admin-template/documentation] which is built based on Bootstrap4 as a frame.
 
-
-Online Documentation
---------------------
-You will find documentation in your downloaded zip file from ThemeForest. You can access documentation online as well.
-Documentation URL: https://pixinvent.com/demo/vuexy-html-bootstrap-admin-template/documentation
-
-Change Log
-----------
-Read CHANGELOG.md file
+For back-end, we use Node.js and Express framework to build API, and now the back-end work is deployed on Azure.
