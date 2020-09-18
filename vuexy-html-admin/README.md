@@ -8,6 +8,6 @@ Approver:       1969766
 Fiscal Staff:   1969420
 
 
-For front-end, we use (Vuexy HTML Admin Template)[https://pixinvent.com/demo/vuexy-html-bootstrap-admin-template/documentation] which is built based on Bootstrap4 as a frame.
+For front-end, we use [Vuexy HTML Admin Template](https://pixinvent.com/demo/vuexy-html-bootstrap-admin-template/documentation) which is built based on Bootstrap4 as a frame.
 
 For back-end, we use Node.js and Express framework to build API, and now the back-end work is deployed on Azure.
