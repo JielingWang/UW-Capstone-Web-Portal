@@ -35,16 +35,16 @@ In general we have four access levels. The functions of each access level are sh
 
 Requests are definitely the most important element of our system. Now let's see the status and corresponding available operations of a request within each step. Currently the involved access levels only include Submitter, Approver and Fiscal Staff.
 
-| Pre-Status        | Action               | Post-Status                    | Operator     | Notes                                                        |
-| ----------------- | -------------------- | ------------------------------ | ------------ | ------------------------------------------------------------ |
-| *Not Applicable*  | Submit               | Awaiting Approval              | Submitter    | Marks the beginning of the lifecycle for a request.          |
-| Awaiting Update   | Update               | Awaiting Approval or Approved* | Submitter    | When the status is Awaiting Update, that means this request is sent back by Approver or Fiscal Staff, so submitter have to modify some contents and submit it again. |
-| Awaiting Approval | Approve              | Approved                       | Approver     | Only when the status is Awaiting Approval, approvers have the right to approve or send back this request. |
-| Awaiting Approval | Send Back            | Awaiting Update                | Approver     | If the request is sent back by Approver, the lifecycle of this request will be restart after update. |
-| Approved          | Take/Untake/Reassign | *Status will not be changed*   | Fiscal Staff | Only when the status change to Approved, Fiscal Staff have the right to take this request. If this request is not taken by others, they can take it. Then they can untake it or reassign it to others. |
-| Approved          | Accept               | Accepted                       | Fiscal Staff | Only when Fiscal Staff "take" this request, he/she has the right to accept or send back this request. |
-| Approved          | Send Back            | Awaiting Update                | Fiscal Staff | If Fiscal Staff want to send back this request, the status will change to Awaiting Update. |
-| Accepted          | Complete             | Completed                      | Fiscal Staff | Only when a request "accept" by Fiscal Staff, they have the right to "complete" it. This marks the end of the lifecycle for a request. |
+| Pre-Status        | Action                   | Post-Status                   | Operator     | Notes                                                        |
+| ----------------- | ------------------------ | ----------------------------- | ------------ | ------------------------------------------------------------ |
+| *Not Applicable*  | Submit                   | Awaiting Approval             | Submitter    | Marks the beginning of the lifecycle for a request.          |
+| Awaiting Update   | Update                   | Awaiting Approval or Approved | Submitter    | When the status is Awaiting Update, that means this request is sent back by Approver or Fiscal Staff, so submitter have to modify some contents and submit it again. |
+| Awaiting Approval | Approve                  | Approved                      | Approver     | Only when the status is Awaiting Approval, approvers have the right to approve or send back this request. |
+| Awaiting Approval | Send Back                | Awaiting Update               | Approver     | If the request is sent back by Approver, the lifecycle of this request will be restart after update. |
+| Approved          | Take / Untake / Reassign | *Status will not be changed*  | Fiscal Staff | Only when the status change to Approved, Fiscal Staff have the right to take this request. If this request is not taken by others, they can take it. Then they can untake it or reassign it to others. |
+| Approved          | Accept                   | Accepted                      | Fiscal Staff | Only when Fiscal Staff "take" this request, he/she has the right to accept or send back this request. |
+| Approved          | Send Back                | Awaiting Update               | Fiscal Staff | If Fiscal Staff want to send back this request, the status will change to Awaiting Update. |
+| Accepted          | Complete                 | Completed                     | Fiscal Staff | Only when a request "accept" by Fiscal Staff, they have the right to "complete" it. This marks the end of the lifecycle for a request. |
 
 *Notice: Why there are two possible post-status when a request is updated by submitter? That because when a Fiscal Staff send back a request, there are two options for them: Bypass Approvers or Require Re-approval. If they pick the former one, that means this request won't need the approval again, so the request status will become Approved directly after update. And if they pick the latter one, that means the lifecycle of this request need to be restart, so that the request status will become Awaiting Approval.*
 
