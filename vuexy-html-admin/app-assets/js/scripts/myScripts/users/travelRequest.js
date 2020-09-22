@@ -3,7 +3,7 @@ var lineItems = [];
 var formData = new FormData();
 var type = "";
 var unitID = "";
-const baseURL = "https://coe-api.azurewebsites.net/api/";
+const baseURL = "https://uwcoe-api.azurewebsites.net/api/";
 var user_id = "5e8e45eea148b9004420651f";
 
 var user_name="";
@@ -78,9 +78,10 @@ var makeGetRequest = function(url, onSuccess, onFailure) {
 };
 
 window.onload = function() {
-    this.getUserInfo();
-    this.getBudgetsInfo();
+    this.getUserInfo();//get user info 
+    this.getBudgetsInfo();//get budget info
 
+    //handle budget field
     var budget_select = this.document.getElementById('budget_num_1');
     var budget_select2 = this.document.getElementById('budget_num_2');
     for (var i = 0; i < this.budgets_database.length; i++) {
@@ -90,7 +91,11 @@ window.onload = function() {
     }
 };
 
+/*
+    click the submit button
+*/
 $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS() {
+    //***********************  input validation check ******************************************/
         if(document.getElementById("firstName").value==""){
             alert("Please fill out the First Name field.");
             document.getElementById("warning").innerHTML="Please fill out all * field.";
@@ -150,6 +155,7 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
                 return false;
             }
         }
+        //***********************  input validation check end******************************************/
 
         //------------- budget validation -------------------------------------------------------------------------------------------- 
         if(document.getElementById("budget_num_1").value==""){
@@ -305,10 +311,8 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
         JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
         // console.log(typeof(requestInfo));
         JSON_toServer.OrderStatus = "Awaiting Approval"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
-        //JSON_toServer.ChatInfo = "TEST CHAT INFO2234"; //leaving this empty since there's no chat when user upload a order first
         JSON_toServer.assignedTo = null; //leaving this as null since there's no one assigned when a user upload/submit a order.
 
-        
         //here we just pass in the JSON object we need to pass to the server. "JSON_body" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request
         formData.set("JSON_body", JSON.stringify(JSON_toServer));
         // Http Request  
@@ -325,6 +329,7 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
                 const requestInfo_obj = JSON.parse(data_obj.OrderInfo);
                 console.log(requestInfo_obj);
                 sendRequestHistory(data_obj._id, "Submitted");
+                // transfer data and direct to summary.html 
                 window.sessionStorage.setItem('orderId',data_obj._id);
                 window.sessionStorage.setItem('user_id',user_id);
                 window.sessionStorage.setItem('user_name',user_name);
@@ -377,18 +382,16 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
         return true;
 });
 
+/*
+    clear all order history of a user
+*/
 function deleteOrder(order_id)
 {
-    //
-    var onSuccess = function(data)
-    {
+    var onSuccess = function(data){
     }
 
-    //this function will be called when data exchange with backend occured an error
-    var onFaliure = function()
-    {
+    var onFaliure = function(){
         alert("fail");
-        //on faliure this is where you update front end (example: inform user unexpected error occured)
         document.getElementById("result").innerHTML = "Backend faliure occured";
     }
     makeDeleteRequest("removeOrder/"+order_id,onSuccess,onFaliure);
@@ -396,12 +399,12 @@ function deleteOrder(order_id)
     //makeDeleteRequest("removeOrder/5ed59c100598f40045c315d4",onSuccess,onFaliure);
 }
 
+/*
+    click tge delete button to delete all order history of a user
+*/
 $(document).on('click', '#delete',function getAllOrders(){
     var onSuccess = function(data)
     {
-        //alert("success");
-        //On success execution this is where you update your frontend
-        //document.getElementById("result").innerHTML = JSON.stringify(data);
         console.log(data.data);
         var i;
         for(i=0;i<data.data.length;i++){
@@ -409,15 +412,16 @@ $(document).on('click', '#delete',function getAllOrders(){
         }
     }
 
-    //this function will be called when data exchange with backend occured an error
     var onFaliure = function()
     {
         alert("fail");
-        //on faliure this is where you update front end (example: inform user unexpected error occured)
     }
     makeGetRequest("getOrders/5e8e4bcaa148b90044206526",onSuccess,onFaliure);
 });
 
+/*
+    get the user information
+*/
 function getUserInfo() {
     var onSuccess = function(data) {
         if (data.status == true) {
@@ -444,7 +448,6 @@ function getUserInfo() {
     var onFailure = function() {
         // failure message
     }
-
     makeGetRequest("getuserInformation/" + user_id, onSuccess, onFailure);
 }
 
@@ -553,10 +556,6 @@ function genOption(_id, _budget_id, label, name) {
     i.setAttribute('class', 'custom-control-input');
     i.setAttribute('name', name);
     i.setAttribute('id', name + _id + '_' + _budget_id);
-    // i.onclick = function() {
-    //     var text = document.getElementById(name + _id + '_' + _budget_id);
-    //     text.setAttribute('class', 'col-md-3 hidden');
-    // };
     var l = document.createElement('label');
     l.setAttribute('class', 'custom-control-label');
     l.setAttribute('for', name + _id + '_' + _budget_id);

@@ -6,7 +6,7 @@ var feedbackBlock = document.getElementById("feedback-block");
 var feedback = document.getElementById("feedback_input");
 
 var request_id = null;
-const baseURL = "https://coe-api.azurewebsites.net/api/";
+const baseURL = "https://uwcoe-api.azurewebsites.net/api/";
 var user_id = "5e8e45eea148b9004420651f";
 var userID = null;
 
@@ -62,6 +62,10 @@ var makeGetRequest = function(url, onSuccess, onFailure) {
         error: onFailure
     });
 };
+
+/*
+    update the page content
+*/
 window.onload = function() {
     userID = window.sessionStorage.getItem("id");
     document.getElementById('requestID').innerHTML = window.sessionStorage.getItem("orderId");
@@ -73,12 +77,14 @@ window.onload = function() {
     document.getElementById('accessLevel').innerHTML = window.sessionStorage.getItem("user_AccessLevel");
     document.getElementById('status').innerHTML ="<i class=\"fa fa-circle font-small-3 text-warning mr-50\"></i>" + window.sessionStorage.getItem("status");
     document.getElementById('submitDate').innerHTML = window.sessionStorage.getItem("submit_date");
+    //check how many budgets
     if(window.sessionStorage.getItem("budget_length").localeCompare("1")==0){
         document.getElementById('budget').innerHTML = window.sessionStorage.getItem("budget1") +" "+window.sessionStorage.getItem("split1");
     }else{
         document.getElementById('budget').innerHTML = window.sessionStorage.getItem("budget1") +" "+window.sessionStorage.getItem("split1")
                                                 +"<br>"+window.sessionStorage.getItem("budget2") +" "+window.sessionStorage.getItem("split2");
     }
+    //-----------------------
     document.getElementById('travelBefore').innerHTML = window.sessionStorage.getItem("TravelBefore");
     if(window.sessionStorage.getItem("SomeoneName").length==0){
         document.getElementById('requestFor').innerHTML = window.sessionStorage.getItem("user_name");
@@ -93,6 +99,7 @@ window.onload = function() {
     }else{
         document.getElementById('email').innerHTML = window.sessionStorage.getItem("SomeoneEmail");
     }
+    //check the attached file
     if(window.sessionStorage.getItem("passport_file").localeCompare("undefined")!=0){
         document.getElementById('passportFile').innerHTML = "<a href=\"https://coe-api.azurewebsites.net/api/downloadAttachment/" 
                                                         + window.sessionStorage.getItem("orderId") + "/" 
@@ -141,6 +148,7 @@ window.onload = function() {
                                                         + window.sessionStorage.getItem("hotel_file")
                                                         + "\" style=\"cursor:pointer;color:blue;text-decoration:underline;\">Download</a>";
     }
+    //----------------------------------------------------------------------------------------------------------------------------------------
     document.getElementById('personalTravel').innerHTML = window.sessionStorage.getItem("personalTravel");
     document.getElementById('affliation').innerHTML = window.sessionStorage.getItem("SomeoneAffliation")+"&nbsp;";
     document.getElementById('travelDetail').innerHTML = window.sessionStorage.getItem("personalTravelDetails");
@@ -161,6 +169,7 @@ window.onload = function() {
     }
     document.getElementById('mealAmount').innerHTML = "$"+window.sessionStorage.getItem("meal_amount")+"&nbsp;";
     document.getElementById('mealProvid').innerHTML = window.sessionStorage.getItem("mealProvided")+"&nbsp;";
+    
     var onSuccess = function(data){
         var col1=1;
         var orderinfo = JSON.parse(data.data.OrderInfo);
@@ -168,6 +177,7 @@ window.onload = function() {
 
         var i;
         var col=2;
+        //update the meal per dim table
         for(i=0;i<orderinfo.Meal_table1.length;i++){
             var row = table.insertRow(col+i);
             var cell1 = row.insertCell(0);
@@ -207,17 +217,11 @@ window.onload = function() {
         }
         request_id = window.sessionStorage.getItem('orderId');
         requestInfo = getRequestInfo(request_id);
-        //console.log(requestInfo);
-        //updateHistory(requestInfo);
-        //prepareNotesArr(requestInfo);
-        //updateNotes();
-
-        //updateActionField(requestInfo);
     }
     var onFaliure = function(){
         alert("fail");
     }
-    makeGetRequest("getOrderInformation/"+js_id,onSuccess,onFaliure);
+    makeGetRequest("getOrderInformation/"+window.sessionStorage.getItem('orderId'),onSuccess,onFaliure);
 }
 
 function updateActionField(data) {
@@ -327,24 +331,6 @@ function collectHistoryInfo(data) {
     requestHistory.appendChild(genClaimStamp(reqBuyer.Status, data.lastModified));
     requestHistory.appendChild(genFinishStamp(reqBuyer.Status, data.lastModified));
 }
-
-/**
- * Find the index of the given approver's name in reqApproverArr array
- * @param {string} name the approver's name
- * Return the index in reqApproverArr array
- */
-// function findApprover(name) {
-//     var result = -1;
-//     for (var i = 0; i < reqApproverArr.length; i++) {
-//         if (reqApproverArr[i].Approver) {
-//             if (reqApproverArr[i].Approver == name) {
-//                 result = i;
-//             }
-//         }
-        
-//     }
-//     return result;
-// }
 
 /**
  * Generate the history stamp of approval chain

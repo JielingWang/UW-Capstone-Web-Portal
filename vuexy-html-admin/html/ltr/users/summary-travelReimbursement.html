@@ -601,11 +601,6 @@
         </div>
     </div>
     <!-- END: Content-->
-    
-      
-                            
-
-    
 
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>
@@ -652,37 +647,11 @@
     <!-- BEGIN: Page JS-->
     <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
     <script src="../../../app-assets/js/scripts/forms/validation/form-validation.js"></script>
-    <!--<script src="../../../app-assets/js/scripts/myScripts/users/travelReim-summary.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <!-- END: Page JS-->
 
     <!-- BEGIN: Page JS-->
-    
 
-    <script>
-    var js_id=window.sessionStorage.getItem("orderId");
-    function takeNoteClicked() {
-        // send data
-        var data = {
-            userName: "Haotian Yuan",
-            comment: document.getElementById("feedback_input").value,
-        };
-        var onSuccess = function(data) {
-            if (data.status == true) {
-                console.log("update success");
-            } else {
-                //error message
-                info = null;
-            }
-        }
-
-        var onFailure = function() {
-            // failure message
-            info = null;
-        }
-        makePostRequest("updateChatInfo/" + js_id, data, onSuccess, onFailure);
-        location.reload();
-    }
 
     </script>
     <script src="../../../app-assets/js/scripts/myScripts/users/travelReim-summary.js"></script>

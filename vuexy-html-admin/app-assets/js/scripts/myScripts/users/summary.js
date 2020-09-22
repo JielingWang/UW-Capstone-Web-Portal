@@ -6,7 +6,7 @@ var feedbackBlock = document.getElementById("feedback-block");
 var feedback = document.getElementById("feedback_input");
 
 var request_id = null;
-const baseURL = "https://coe-api.azurewebsites.net/api/";
+const baseURL = "https://uwcoe-api.azurewebsites.net/api/";
 var user_id = "5e8e45eea148b9004420651f";
 var userID = null;
 var actionTable = document.getElementById("action_table");
@@ -64,6 +64,10 @@ var makeDeleteRequest = function(url, onSuccess, onFailure) {
         error: onFailure
     });
 };
+
+/*
+    update the page content
+*/
 window.onload = function() {
     userID = window.sessionStorage.getItem("id");
     document.getElementById('requestID').innerHTML = window.sessionStorage.getItem("orderId");
@@ -111,13 +115,6 @@ window.onload = function() {
     request_id = window.sessionStorage.getItem('orderId');
     this.console.log(request_id);
     requestInfo = getRequestInfo(request_id);
-    //console.log(requestInfo);
-    //updateHistory(requestInfo);
-    //prepareNotesArr(requestInfo);
-    //updateNotes();
-
-    //updateActionField(requestInfo);
-    //adjustActionHeight();
 }
 
 function takeNoteClicked() {
@@ -211,24 +208,6 @@ function collectHistoryInfo(data) {
     requestHistory.appendChild(genClaimStamp(reqBuyer.Status, data.lastModified));
     requestHistory.appendChild(genFinishStamp(reqBuyer.Status, data.lastModified));
 }
-
-/**
- * Find the index of the given approver's name in reqApproverArr array
- * @param {string} name the approver's name
- * Return the index in reqApproverArr array
- */
-// function findApprover(name) {
-//     var result = -1;
-//     for (var i = 0; i < reqApproverArr.length; i++) {
-//         if (reqApproverArr[i].Approver) {
-//             if (reqApproverArr[i].Approver == name) {
-//                 result = i;
-//             }
-//         }
-        
-//     }
-//     return result;
-// }
 
 /**
  * Generate the history stamp of approval chain

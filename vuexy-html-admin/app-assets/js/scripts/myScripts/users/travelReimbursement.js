@@ -5,7 +5,7 @@ var table2 = [];
 var formData = new FormData();
 var type = "";
 var unitID = "";
-const baseURL = "https://coe-api.azurewebsites.net/api/";
+const baseURL = "https://uwcoe-api.azurewebsites.net/api/";
 var user_id = "5e8e45eea148b9004420651f";
 var user_name="";
 var user_uwid="";
@@ -91,8 +91,11 @@ window.onload = function() {
     }
 };
 
-
+/*
+    submit the form
+*/
 $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS() {
+        //***************** check the input validation *****************************/
         if($("input[name='beforeRadio']:checked").val()!="yes" && $("input[name='beforeRadio']:checked").val()!="no"){
             alert("Please fill out \"Have you been reimbursed before this trip?\".");
             document.getElementById("warning").innerHTML="Please fill out all * field.";
@@ -157,6 +160,7 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
                 return false;
             }
         }
+        //***************** check the input validation end*****************************/
 
         //------------- budget validation -------------------------------------------------------------------------------------------- 
          if(document.getElementById("budget_num_1").value==""){
@@ -255,6 +259,7 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
             Amount: "0"
         });
 
+        //* meal per dim table */
         var i;
         var c1=$("input[name='colNum1']").val();
         for(i=1;i<=c1;i++){
@@ -291,6 +296,7 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
                 Dinner:  document.getElementById(dinnerId).checked
             });
         }
+        //* meal per dim table end*/
 
          //-------------------------files -----------------------------------
         var visa_name;
@@ -301,6 +307,7 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
         var hotel_name;
         var car_name;
         var registration_name;
+        // ******************** save the attached files ************************
         var fileSelect = document.getElementById("passport");
         for(var x = 0; x < fileSelect.files.length; x++) {
             formData.append(fileSelect.files[x].name, fileSelect.files[x]);
@@ -343,6 +350,7 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
         }
         
         formData.append("files", fileSelect.files[x]);
+        // ******************** save the attached files end************************
         //---------------------------------------------------------------------
         
         //-------------------------Amount--------------------------------------
@@ -372,7 +380,7 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
             hotelAmount=parseInt($("input[name='hotel']").val());
         }
         amount = registrationAmount + airfareAmount + carRentalAmount + carAmount + trainAmount + hotelAmount;
-        //
+        //--------------------------Amount end----------------------------------------------
         var requestInfo = {
             TravelBefore: $("input[name='beforeRadio']:checked").val(),
             ReferenceNumber: $("input[name='reference_number_input']").val(),
@@ -418,7 +426,6 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
         JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
         // console.log(typeof(requestInfo));
         JSON_toServer.OrderStatus = "Awaiting Approval"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
-        //JSON_toServer.ChatInfo = "TEST CHAT INFO2234"; //leaving this empty since there's no chat when user upload a order first
         JSON_toServer.assignedTo = null; //leaving this as null since there's no one assigned when a user upload/submit a order.
         
         //here we just pass in the JSON object we need to pass to the server. "JSON_body" should stay as it is, becuase this is how server can identify files from the JSON information, when it get this HTTP request
@@ -437,6 +444,7 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
                 const requestInfo_obj = JSON.parse(data_obj.OrderInfo);
                 sendRequestHistory(data_obj._id, "Submitted");
                 console.log(requestInfo_obj);
+                // transfer data and direct to summary-travelReimbursement.html
                 window.sessionStorage.setItem('orderId',data_obj._id);
                 window.sessionStorage.setItem('user_id',user_id);
                 window.sessionStorage.setItem('user_name',user_name);
@@ -489,51 +497,6 @@ $(document).on('click', '#confirm_item', function uploadFiles_without_HTML_FORMS
         return true;
         // window.location.href = "../../../html/ltr/users/user-summary.html";
         // window.location.replace("../../../html/ltr/users/user-summary.html");
-});
-
-function deleteOrder(order_id)
-{
-    //
-    var onSuccess = function(data)
-    {
-        alert(order_id);
-        //On success execution this is where you update your frontend
-        //document.getElementById("result").innerHTML = JSON.stringify(data);
-        
-    }
-
-    //this function will be called when data exchange with backend occured an error
-    var onFaliure = function()
-    {
-        alert("fail");
-        //on faliure this is where you update front end (example: inform user unexpected error occured)
-        document.getElementById("result").innerHTML = "Backend faliure occured";
-    }
-    makeDeleteRequest("removeOrder/"+order_id,onSuccess,onFaliure);
-    //makeDeleteRequest("removeOrder/5ed59a800598f40045c315d3",onSuccess,onFaliure);
-    //makeDeleteRequest("removeOrder/5ed59c100598f40045c315d4",onSuccess,onFaliure);
-}
-
-$(document).on('click', '#delete',function getAllOrders(){
-    var onSuccess = function(data)
-    {
-        //alert("success");
-        //On success execution this is where you update your frontend
-        //document.getElementById("result").innerHTML = JSON.stringify(data);
-        console.log(data.data);
-        var i;
-        for(i=0;i<data.data.length;i++){
-            deleteOrder(data.data[i]._id);
-        }
-    }
-
-    //this function will be called when data exchange with backend occured an error
-    var onFaliure = function()
-    {
-        alert("fail");
-        //on faliure this is where you update front end (example: inform user unexpected error occured)
-    }
-    makeGetRequest("getOrders/5e8e4bcaa148b90044206526",onSuccess,onFaliure);
 });
 
 function getUserInfo() {

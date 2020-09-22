@@ -843,8 +843,6 @@
                         </div>
                     </div>   
                 
-                    <button id="delete">delete</button>
- 
                 </fieldset>
 
             </div>
@@ -910,6 +908,9 @@
     
 
     <script>
+        /*
+            check the flight box
+        */
         function need_flight(CheckboxLogic){
             if(CheckboxLogic==1){
                 document.getElementById("flight-information0").className = "col-12 visible";
@@ -940,6 +941,9 @@
             }
         }
 
+         /*
+            check the hotel box
+        */
         function need_hotel(CheckboxLogic){
             if(CheckboxLogic==1){
                 document.getElementById("hotel-information1").className = "col-12 visible";
@@ -967,6 +971,9 @@
             }
         }
 
+        /*
+            maximum 2 budgets allowed
+        */
         function addBudget(){
          //alert("add Budget!!!");
             document.getElementById("budget_1_2").className = "col-12 visible";
