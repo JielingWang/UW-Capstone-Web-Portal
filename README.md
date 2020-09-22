@@ -31,7 +31,7 @@ In general we have four access levels. The functions of each access level are sh
 
 *Notice: Approvers will be assigned automatically when a request submit, based on Administrator's settings, and they can only see the requests that assigned to them. Fiscal Staffs can see all requests under their own unit, and they can take/untake/reassign a request if that's available, which means the assignment of Fiscal Staff is controlled by users themselves.*
 
-### Requests
+### Lifecycle of a Request
 
 Requests are definitely the most important element of our system. Now let's see the status and corresponding available operations of a request within each step. Currently the involved access levels only include Submitter, Approver and Fiscal Staff.
 
