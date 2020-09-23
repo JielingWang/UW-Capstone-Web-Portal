@@ -293,17 +293,6 @@ function uploadRequest() {
     // getUserInfo();
     var formData = new FormData();
 
-    // var itemsCost = 0;
-    // for (var i = 0; i < lineItems.length; i++) {
-    //     var firstChar = lineItems[i].Amount.charAt(0);
-    //     if (firstChar === "$") {
-    //         var amountNum = lineItems[i].Amount.substr(1);
-    //         itemsCost += parseFloat(amountNum);
-    //     } else {
-    //         itemsCost += parseFloat(lineItems[i].Amount);
-    //     }
-    // }
-
     //this is the JSON Object we are sending to the server
     var JSON_toServer = {
         "userID_ref": null, 

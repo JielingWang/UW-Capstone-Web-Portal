@@ -224,34 +224,7 @@ function getUserInfo() {
 /************ Step1 & Step2 *****************/
 
 $(document).on('click', 'input', function(){
-    /** cardholder */
-    // var cardholder = document.getElementById('name-on-card').value;
 
-    // /** myself or onbehalf radio */
-    // var mySelf = $("input[name='myself-onbehalf']:checked").val();
-    // if (mySelf == "myself") {
-    //     $('#onBehalf_Yes').attr('class', 'hidden');
-    // } else if (mySelf == "onbehalf") {
-    //     $('#onBehalf_Yes').attr('class', 'visible');
-    // }
-
-    // /** payment method part */
-    // var individual = $("input[name='individual-reimbursed']:checked").val();
-    // if (individual == "employee") {
-    //     $('#emplyee_payment').attr('class', 'col-11 visible');
-    //     $('#nonemplyee_payment').attr('class', 'col-11 hidden');
-    // } else {
-    //     $('#emplyee_payment').attr('class', 'col-11 hidden');
-    //     $('#nonemplyee_payment').attr('class', 'col-11 visible');
-    // }
-
-    // /** control mail-addr */
-    // var needsAddr = $("input[name='paymentRadio']:checked").val();
-    // if (needsAddr == "Check mail") {
-    //     $('#mail-addr').attr('class', 'visible');
-    // } else {
-    //     $('#mail-addr').attr('class', 'hidden');
-    // }
 });
 
 
@@ -268,17 +241,6 @@ function uploadRequest() {
     // getUserInfo();
     var formData = new FormData();
 
-    // var itemsCost = 0;
-    // for (var i = 0; i < lineItems.length; i++) {
-    //     var firstChar = lineItems[i].Amount.charAt(0);
-    //     if (firstChar === "$") {
-    //         var amountNum = lineItems[i].Amount.substr(1);
-    //         itemsCost += parseFloat(amountNum);
-    //     } else {
-    //         itemsCost += parseFloat(lineItems[i].Amount);
-    //     }
-    // }
-
     //this is the JSON Object we are sending to the server
     var JSON_toServer = {
         "userID_ref": null, 
@@ -288,15 +250,6 @@ function uploadRequest() {
         "ChatInfo": null,
         "assignedTo": null
     }
-
-    // var addrInfo = {
-    //     FullName: $("input[name='full-name']").val(),
-    //     AddrLine1: $("input[name='addr-line-1']").val(),
-    //     AddrLine2: $("input[name='addr-line-2']").val(),
-    //     AddrCity: $("input[name='addr-city']").val(),
-    //     AddrState: $("input[name='addr-state']").val(),
-    //     AddrZip: $("input[name='addr-zip']").val()
-    // }
 
     var vendor_info = {
         Name: $("input[name='vendor-name']").val(),
@@ -311,18 +264,6 @@ function uploadRequest() {
         LineItems: lineItems
         // ItemsCost: itemsCost
     };
-
-    // var requestInfo = {
-    //     ReimburseFor: $("input[name='myself-onbehalf']:checked").val(),
-    //     OnbehalfName: $("input[name='onbehalf-name']").val(),
-    //     OnbehalfEmail: $("input[name='onbehalf-email']").val(),
-    //     OnbehalfAffiliation: $("input[name='onbehalf-affiliation']").val(),
-    //     Individual: $("input[name='individual-reimbursed']").val(),
-    //     Payment: $("input[name='paymentRadio']:checked").val(),
-    //     Addr: addrInfo,
-    //     LineItems: lineItems
-    //     // ItemsCost: itemsCost
-    // }
 
     //now lets set up the JSON_toServer JSON Object
     JSON_toServer.userID_ref = user_id;  // 5e63127145f8e019d1f26ddc

@@ -63,32 +63,6 @@ function updateActionField(data) {
     }
 }
 
-// function approveClicked() {
-//     var data = {
-//         OrderStatus: "Approved"
-//     };
-
-//     var history = {
-//         userName: window.sessionStorage.getItem("id"),
-//         action: "Approved"
-//     };
-
-//     var onSuccess = function(data) {
-//         if (data.status == true) {
-//             console.log("update success");
-//         } else {
-//             //error message
-//         }
-//     }
-
-//     var onFailure = function() {
-//         // failure message
-//     }
-//     makePostRequest("updateOrderStatus/" + request_id, data, onSuccess, onFailure);
-//     makePostRequest("updateOrderHistory/" + request_id, history, onSuccess, onFailure);
-//     location.reload();
-// }
-
 function takeNoteClicked() {
     // send data
     var data = {
@@ -198,23 +172,6 @@ function collectHistoryInfo(data) {
     requestHistory.appendChild(genFinishStamp(reqBuyer.Status, data.lastModified));
 }
 
-/**
- * Find the index of the given approver's name in reqApproverArr array
- * @param {string} name the approver's name
- * Return the index in reqApproverArr array
- */
-// function findApprover(name) {
-//     var result = -1;
-//     for (var i = 0; i < reqApproverArr.length; i++) {
-//         if (reqApproverArr[i].Approver) {
-//             if (reqApproverArr[i].Approver == name) {
-//                 result = i;
-//             }
-//         }
-        
-//     }
-//     return result;
-// }
 
 /**
  * Generate the history stamp of approval chain
@@ -260,17 +217,6 @@ function genApprovalStamp(approver, response) {
     return stamp;
 }
 
-/**
- * Check if this approver approved all budgets belongs to him
- * @param {array} responses array of responses of this approver
- */
-// function isDone(responses) {
-//     if (responses.length == 0) return false;
-//     for (var i = 0; i < responses.length; i++) {
-//         if (!responses[i]) return false;
-//     }
-//     return true;
-// }
 
 function genFiscalStaffStamp(request_status, assignedTo, timeStamp) {
     var stamp = document.createElement('li');
