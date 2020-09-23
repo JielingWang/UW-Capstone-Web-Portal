@@ -201,24 +201,6 @@ $(".steps-validation").validate({
 });
 
 
-
-// jQuery.validator.addMethod("radioCheck", function(value, element, params) {
-//     if ($("input[name='myself_onbehalf_radio']:checked").length == 1) {
-//         return true;
-//     } else {
-//         return false;
-//     }
-// }, jQuery.validator.format("This field is required"));
-
-// $("input[name='myself_onbehalf_radio']").rules('add', {
-//     required: true
-// });
-
-// $("input[name='individual_reimbursed]").rules('add', {
-//     required: true
-// });
-
-
 /************************************************ END: Wizard step control *******************************************************/
 
 
@@ -329,17 +311,6 @@ function uploadRequest() {
     // getUserInfo();
     var formData = new FormData();
 
-    // var itemsCost = 0;
-    // for (var i = 0; i < lineItems.length; i++) {
-    //     var firstChar = lineItems[i].Amount.charAt(0);
-    //     if (firstChar === "$") {
-    //         var amountNum = lineItems[i].Amount.substr(1);
-    //         itemsCost += parseFloat(amountNum);
-    //     } else {
-    //         itemsCost += parseFloat(lineItems[i].Amount);
-    //     }
-    // }
-
     //this is the JSON Object we are sending to the server
     var JSON_toServer = {
         "userID_ref": null, 
@@ -378,7 +349,6 @@ function uploadRequest() {
     JSON_toServer.OrderInfo = JSON.stringify(requestInfo);
     // console.log(typeof(requestInfo));
     JSON_toServer.OrderStatus = "Awaiting Approval"; //leave this as Submitted, this represent current status of the Order. Example Order Status: Submitted, approved, etc:
-    // JSON_toServer.ChatInfo = "TEST CHAT INFO"; //leaving this empty since there's no chat when user upload a order first
     JSON_toServer.assignedTo = null; //leaving this as null since there's no one assigned when a user upload/submit a order.
 
 

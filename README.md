@@ -31,9 +31,19 @@ In general we have four access levels. The functions of each access level are sh
 
 *Notice: Approvers will be assigned automatically when a request submit, based on Administrator's settings, and they can only see the requests that assigned to them. Fiscal Staffs can see all requests under their own unit, and they can take/untake/reassign a request if that's available, which means the assignment of Fiscal Staff is controlled by users themselves.*
 
-### Lifecycle of a Request
+### Request
 
-Requests are definitely the most important element of our system. Now let's see the status and corresponding available operations of a request within each step. Currently the involved access levels only include Submitter, Approver and Fiscal Staff.
+Requests are definitely the most important element of our system. Basically we have six kinds of requests in total, four general types: reimbursement, purchase request, procard receipt, pay an invoice and two types related to travel: travel request and travel reimbursement. 
+
+#### Lifecycle
+
+A typical lifecycle for a request (which means there's no send back or untake or reassign these "accidental" operations) is like this:
+
+```
+submitted -> approved -> taken by a certain fiscal staff -> accepted -> completed
+```
+
+But during this process, there might be other actions which may lead the request go back to a previous status. So here we listed all possible actions tied to a request below.
 
 | Pre-Status        | Action                   | Post-Status                   | Operator     | Notes                                                        |
 | ----------------- | ------------------------ | ----------------------------- | ------------ | ------------------------------------------------------------ |
@@ -48,3 +58,16 @@ Requests are definitely the most important element of our system. Now let's see 
 
 *Notice: Why there are two possible post-status when a request is updated by submitter? That because when a Fiscal Staff send back a request, there are two options for them: Bypass Approvers or Require Re-approval. If they pick the former one, that means this request won't need the approval again, so the request status will become Approved directly after update. And if they pick the latter one, that means the lifecycle of this request need to be restart, so that the request status will become Awaiting Approval.*
 
+#### Line Item
+
+For the four general request types, we use [jQuery Steps](http://www.jquery-steps.com/) to make sure them look like in the same format. Some of them are different with each other in step 1 and step 2, but all of them have nearly the same content in step 3, which we called as *Line Item*. Within a request users can create any numbers of line item, so that we have *Add New Line Items* button below the line item block. Also we have a delete button at the most right of the first line of each line item block, so that users can delete the whole block if they'd like to. For attachments we put it at the very last line, and we also allows users to upload multiple documents. 
+
+![lineitem](./lineitem.png)
+
+An important element within a line item is the **budget number**. Users can split budget by amount or percentage. For example, the total amount is $100, and you want to reimburse $50 on budget number 910-88, and reimburse another $50 on budget number 920-88. The split value input box for the last budget number will always be disabled, it will calculate automatically by the total amount and previous split value users type in, to make sure the budget number split in a correct way.
+
+Also we use [jQuery Validation](https://jqueryvalidation.org/) to create the validation rule for each request.
+
+#### Detail Page
+
+The request detail page should be look like the same for all access levels. We split the request detail page into three modules, which uses three `.js` files to control.
