@@ -32,7 +32,7 @@
                 console.log(data);
                 window.sessionStorage.setItem('infomation',JSON.stringify(data.data));
 
-                window.location.replace("chooseRole.html");
+                window.location.replace("./UW-Capstone-Web-Portal/vuexy-html-admin/html/ltr/login/chooseRole.html");
             } else {
                 alert(data.data);
             }
