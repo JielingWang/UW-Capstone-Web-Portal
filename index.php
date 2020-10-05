@@ -7,15 +7,15 @@
 </head>
 <body>
     <?php
-        $name = "Jieling";
-        print "<h1>Hello " . $name . "!!!</h1>";
+        // $name = "Jieling";
+        // print "<h1>Hello " . $name . "!!!</h1>";
 
-        print "<p>Let see all other attributes:</p>";
-        print "<p>Your REMOTE_USER is <strong>" . $_SERVER["REMOTE_USER"] . "</strong></p>";
-        print "<p>Your email is <strong>" . $_SERVER['mail'] . "</strong></p>";
-        print "<p>Your eduPersonPrincipalName is <strong>" . $_SERVER["eppn"] . "</strong></p>";
-        print "<p>Your schacHomeOrganization is <strong>" . $_SERVER["schacHomeOrganization"] . "</strong></p>";
-        print "<p>Your schacHomeOrganizationType is <strong>" . $_SERVER["schacHomeOrganizationType"] . "</strong></p>";
+        // print "<p>Let see all other attributes:</p>";
+        // print "<p>Your REMOTE_USER is <strong>" . $_SERVER["REMOTE_USER"] . "</strong></p>";
+        // print "<p>Your email is <strong>" . $_SERVER['mail'] . "</strong></p>";
+        // print "<p>Your eduPersonPrincipalName is <strong>" . $_SERVER["eppn"] . "</strong></p>";
+        // print "<p>Your schacHomeOrganization is <strong>" . $_SERVER["schacHomeOrganization"] . "</strong></p>";
+        // print "<p>Your schacHomeOrganizationType is <strong>" . $_SERVER["schacHomeOrganizationType"] . "</strong></p>";
 
         $eppn = $_SERVER["eppn"];
     ?>
@@ -32,7 +32,7 @@
                 console.log(data);
                 window.sessionStorage.setItem('infomation',JSON.stringify(data.data));
 
-                // window.location.replace("chooseRole.html");
+                window.location.replace("chooseRole.html");
             } else {
                 alert(data.data);
             }
