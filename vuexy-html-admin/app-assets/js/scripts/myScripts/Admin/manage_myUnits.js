@@ -510,11 +510,12 @@ function validate_input_fields()
         UWIDError.innerHTML = "* UW ID required";
         errorFound = true;
     }        
-    else if (!UWID_comp.value.isNumber())
-    {
-        UWIDError.innerHTML = "* Only digits allowed";
-        errorFound = true;
-    }else
+    // else if (!UWID_comp.value.isNumber())
+    // {
+    //     UWIDError.innerHTML = "* Only digits allowed";
+    //     errorFound = true;
+    // }
+    else
         UWIDError.innerHTML = "";
 
     if(email_comp.value == "" || email_comp.value == null)

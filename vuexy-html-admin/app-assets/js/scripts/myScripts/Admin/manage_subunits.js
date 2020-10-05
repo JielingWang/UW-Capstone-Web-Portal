@@ -458,11 +458,12 @@ function submitter_overview_input_validator()
         submitter_UWID_input_error.innerHTML = "* UW ID required";
         errorFound = true;
     }        
-    else if (!submitter_UWID_input.value.isNumber())
-    {
-        submitter_UWID_input_error.innerHTML = "* Only digits allowed";
-        errorFound = true;
-    }else
+    // else if (!submitter_UWID_input.value.isNumber())
+    // {
+    //     submitter_UWID_input_error.innerHTML = "* Only digits allowed";
+    //     errorFound = true;
+    // }
+    else
         submitter_UWID_input_error.innerHTML = "";
         
         
@@ -505,11 +506,12 @@ function approver_overview_input_validator()
         approver_UWID_input_error.innerHTML = "* UW ID required";
         errorFound = true;
     }        
-    else if (!approver_UWID_input.value.isNumber())
-    {
-        approver_UWID_input_error.innerHTML = "* Only digits allowed";
-        errorFound = true;
-    }else
+    // else if (!approver_UWID_input.value.isNumber())
+    // {
+    //     approver_UWID_input_error.innerHTML = "* Only digits allowed";
+    //     errorFound = true;
+    // }
+    else
         approver_UWID_input_error.innerHTML = "";
         
         
