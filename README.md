@@ -33,7 +33,7 @@ In general we have four access levels. The functions of each access level are sh
 
 ## Request Features
 
-Requests are definitely the most important element of our system. Basically we have six kinds of requests in total, four general types: reimbursement, purchase request, procard receipt, pay an invoice and two types related to travel: travel request and travel reimbursement. 
+Requests are definitely the most important element of our system. Basically we have six types of requests in total, four general types: reimbursement, purchase request, procard receipt, pay an invoice and two types related to travel: travel request and travel reimbursement. 
 
 ### Lifecycle
 
@@ -56,7 +56,7 @@ But during this process, there might be other actions which may lead the request
 | Approved          | Send Back                | Awaiting Update               | Fiscal Staff | If Fiscal Staff want to send back this request, the status will change to Awaiting Update. |
 | Accepted          | Complete                 | Completed                     | Fiscal Staff | Only when a request "accept" by Fiscal Staff, they have the right to "complete" it. This marks the end of the lifecycle for a request. |
 
-*Notice: Why there are two possible post-status when a request is updated by submitter? That because when a Fiscal Staff send back a request, there are two options for them: Bypass Approvers or Require Re-approval. If they pick the former one, that means this request won't need the approval again, so the request status will become Approved directly after update. And if they pick the latter one, that means the lifecycle of this request need to be restart, so that the request status will become Awaiting Approval.*
+*Notice: Why are there two possible post-status when a request is updated by submitter? That because when a Fiscal Staff send back a request, there are two options for them: Bypass Approvers or Require Re-approval. If they pick the former one, that means this request won't need the approval again, so the request status will become Approved directly after update. And if they pick the latter one, that means the lifecycle of this request need to be restart, so that the request status will become Awaiting Approval.*
 
 ### Line Item
 
@@ -68,11 +68,11 @@ An important element within a line item is the **budget number**. Users can spli
 
 Also we use [jQuery Validation](https://jqueryvalidation.org/) to create the validation rule for each request.
 
-### How to Use
+## How to use
 
 Unfortunately, only authorized users can login this system. When goes to either above website, it will redirect users to UW SSO system, you need to sign in with your UW NetID. Then the website will jump to the *chooseRole* page, which will show all access levels available to you, then click the corresponding card you want to login as, so that you can enter one of below roles.
 
-#### Submitter
+### Submitter
 
 The key feature for Submitter level is to submit requests. We have six types of requests that can be submitted, including reimbursement, purchase request, procard receipt, pay an invoice, travel request and travel reimbursement. You can create any type of request under *Create Request* tab. 
 
@@ -87,21 +87,21 @@ After submission, the website will jump to the detail page of this request, also
 
 In the request detail page, you will see history of all actions and notes left by approvers or fiscal staff that tied to this request, and also there is an approval board so that you can see who is responsible for approval of this request and what's the decision.
 
-#### Approver
+### Approver
 
 Approvers are responsible for request approval, more precisely, for budget number approval. Under either *Dashboard* or *Pending Request* tab you can see all requests that need to be approved by you. By clicking the corresponding row, you can go into the detail page of a certain request. At the bottom there is an Approval Board so that you can make your decision on budget numbers assigned to you, also you can see status of other budget numbers.
 
-#### Fiscal Staff
+### Fiscal Staff
 
 Fiscal Staff can see all requests in their own units in the *General Requests* table. When you take an available request (requests that approved by approvers) the corresponding request will be added into *My Pending Request* section. Additionally you can click on the *List* or *Card* button aside to change the style between list or card.
 
 After taking a request, you can also *untake* it. There will be a dialog to indicate that you can *reassign* this request to someone else or just push it back to the request queue.
 
-Only when you take a request, you have the authority to *Accept* or *Send Back* this request. And when you click *Send Back* button, you will have two options, one is *Required Approval*, which means this request need to approval again (just like restart the request life cycle) after update by submitter. The other one is *Bypass Approvers*, which means this request don't need to be approved again, so after updating you can make next decision to them directly.
+Only when you take a request, you have the authority to *Accept* or *Send Back* this request. And when you click *Send Back* button, you will have two options, one is *Required Approval*, which means this request need to approval again (just like restart the request life cycle) after update by submitter. The other one is *Bypass Approvers*, which means this request don't need to be approved again, so after updating you can make next decision to them directly. Finally mark this request as *Completed* when there there is no other things to do.
 
 Notice: When you take a request, this request will be always yours, even when you send it back, you don't have to take it again. Of course, you can untake it or reassign to others at any time.
 
-#### Administrator
+### Administrator
 
 Administrators are typically control high-level settings. You can add new users in your unit or subunit, and also you can add new budget numbers for a certain subunit.
 
@@ -109,19 +109,21 @@ Administrators are typically control high-level settings. You can add new users 
 * Subunits. This tab is used for setting subunits under your unit. You can add a new subunit in the Subunit Overview section. To add a new submitter, you need to pick a subunit in the Subunit Overview section firstly, and then *add* a new submitter in the Submitter Overview section on the right hand. Also you can *update* or *remove* the information of a certain submitter. Then in the Budget Overview section you can see all budget numbers under this subunit, and for each budget number, you can add/update/remove approvers in the Approvers Overview section.
 * All Budgets. Under this tab you can see all budget numbers and edit them if needed.
 
-#### Common Features
+Notice: Under current settings, it's not able to authorize a user as Approver and Submitter together, or authorize as Administrator and Fiscal Staff together.
 
-* In request detail page, all users can take a note anytime. Every notes that tied to this request will be displayed in the Notes section.
-* Under User Settings tab, you can edit your profile.
+### Common Features
 
-### Features need to be enhanced
+* In request detail page, all users can take a note anytime. All notes that tied to this request will be displayed in the Notes section.
+* Under User Settings tab, you can edit your profile (user setting page for submitter is not functional yet).
+
+## Features need to be enhanced
 
 * Notification system is not finished.
-* Under current settings, it's not able to make a user both approvers and submitters, or both fiscal staffs and administrators. 
-* For request update function (when the request is sent back by approvers or fiscal staff), since we use the same `.html` file with create-a-new-request, we just distinguish these two cases by detecting if there is a `RequestID` item in `systemStorage` variable, which may cause problems when users just want to create a new request while there is such a `RequestID` stored in `sessionStorage`.
-* Still for update function, the attachments update function is not working correctly.
+* Under current settings, it's not able to make a user both Approver and Submitter, or both Fiscal Staff and Administrator. 
+* For request update function (when the request is sent back by approvers or fiscal staff), since we use the same `.html` file with create-a-new-request action, we just distinguish these two cases by detecting if there is a `RequestID` item in `systemStorage` variable, which may cause problems when users just want to create a new request while there is such a `RequestID` stored in `sessionStorage`.
+* Still for update function, the attachments update and budget number update is not working correctly.
 * For Purchase Request and Procard Receipt, the *Save as Default Address* in first step is actually implemented through `localStorage` , not tied to database yet.
 
-### Web Deployment
+## Web Deployment
 
-Currently we are using UW server, whose environment is Apache + Linux. And the `index.php` is the entry file, so make sure put it under `/var/www/html` folder directly, and then put this whole github repo under `/var/www/html` folder as well, which means just replace the existing `index.php` file and `UW-Capstone-Web-Portal` folder with the new one.
+Currently we put our websites on UW Server, whose environment is Apache + Linux. The `index.php` is the entry file, so make sure put it under `/var/www/html` folder directly, and then put this whole github repo under `/var/www/html` folder as well, which means just replace the existing `index.php` file and `UW-Capstone-Web-Portal` folder with the new one when there is any update.
