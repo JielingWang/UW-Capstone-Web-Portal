@@ -16,3 +16,6 @@
 
 `users/` : All specific `.js` files related to **Submitter** access level.
 
+
+
+**Notice:** all `*-request-detail.js` file under corresponding access level are deprecated. Currently we just need to include the three modules under `requests/` folder to control request detail page in all access levels.
